@@ -7,25 +7,28 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-        ShapeRenderer s;
-	
+	private Stage stage;
+	private Skin skin;
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("evil.png");
+		skin = new Skin(Gdx.files.internal("uiskin.json"));
+		stage = new Stage(new ScreenViewport());
+
+		Gdx.input.setInputProcessor(stage);
+
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 1, 0, 1);
-                
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw()
 	}
 }
