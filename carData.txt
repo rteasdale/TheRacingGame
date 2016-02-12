@@ -1,3 +1,5 @@
-name=“audi-sportsback”,
-maxVelocity=280,
-acceleration= 
+name=“audi-sportsback”, maxVelocity=280,
+acceleration=3.7, weight=2030, tankCapacity=75, 
+fuelConsumption=13
+
+name=“
