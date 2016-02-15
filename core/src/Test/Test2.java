@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import static com.badlogic.gdx.math.MathUtils.cos;
+import static com.badlogic.gdx.math.MathUtils.sin;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  *
@@ -39,14 +42,8 @@ private Sprite evil;
     public void resize(int width, int height) {
     }
 
-    
-    @Override
-    public void render() {
-    Gdx.gl.glClearColor(1, 1, 1, 1); //change background color to white
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    
-    
-    /** move sprite */
+    void moveSprite() {
+            /** move sprite */
     
     if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
         if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
@@ -79,6 +76,25 @@ private Sprite evil;
             evil.translateY(-10.0f);
         }
     }
+    
+    }
+    
+    @Override
+    public void render() {
+    Gdx.gl.glClearColor(1, 1, 1, 1); //change background color to white
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    
+    moveSprite(); 
+     
+    Vector2 carLocationX;
+    float carHeading = 40;
+    float carSpeed = 200;
+    float steerAngle = 70;
+    float wheelBase = 20; // the distance between the two axles
+  
+    Vector2 frontWheelX = carLocationX + wheelBase/2 * cos(carHeading);
+    
+    Vector2 backWheel = carLocation - wheelBase/2 * new Vector2(cos(carHeading), sin(carHeading));
     
     batch.begin();
     evil.draw(batch);
