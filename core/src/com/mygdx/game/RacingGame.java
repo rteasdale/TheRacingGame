@@ -7,17 +7,27 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import sun.net.www.ApplicationLaunchException;
 
 /**
  *
  * @author ROSY
  */
-public class TheRacingGame extends Game {
+public class RacingGame extends Game {
 
+    public SpriteBatch batch; 
+    
     @Override
     public void create() {
         
-        setScreen(new GameScreen());
-        
+    }
+
+    public enum GameState {
+        GameState_Menu,
+        GameState_321Go,
+        GameState_Racing, 
+        GameState_Pause,
+        GameState_Results        
     }
 }
