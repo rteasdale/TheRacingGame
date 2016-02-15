@@ -8,6 +8,6 @@ import Test.Test1;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
             LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-            new LwjglApplication(new Test1(), cfg);
+            new LwjglApplication(new Test2(), cfg);
 	}
 }
