@@ -1,12 +1,13 @@
 /*
- * ApplicationListener 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package Test;
+package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,36 +17,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  *
  * @author ROSY
  */
-public class Test2 implements ApplicationListener {
-private SpriteBatch batch;
-private Texture evilTexture;
-private Sprite evil;
+public class GameScreen extends ScreenAdapter {
+
+    private SpriteBatch batch;
+    private Sprite evil;
     
     @Override
-    public void create() {
-        float h = Gdx.graphics.getHeight();
-        float w = Gdx.graphics.getWidth();
-        
+    public void show() {
         batch = new SpriteBatch();
-        FileHandle evilFileHandle = Gdx.files.internal("car.png");
-        evilTexture = new Texture(evilFileHandle);
-        
-        evil = new Sprite(evilTexture);
-        
-        evil.setPosition(w/2 - evil.getWidth()/2, h/2 - evil.getHeight()/2); //set position
+        evil = new Sprite(new Texture("car.png"));
     }
 
+    private int carX = 0, carY = 0;
+     
     @Override
-    public void resize(int width, int height) {
-    }
-
-    
-    @Override
-    public void render() {
-    Gdx.gl.glClearColor(1, 1, 1, 1); //change background color to white
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    
-    
+    public void render(float delta) {
+        
     /** move sprite */
     
     if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -83,21 +70,13 @@ private Sprite evil;
     batch.begin();
     evil.draw(batch);
     batch.end();
+    Gdx.gl.glClearColor(0,0,0,0); //screen color
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);        
+    batch.begin();
+    batch.draw(evil, carX, carY);
+    batch.end();
     
     }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        evilTexture.dispose();
-    }
+    
     
 }

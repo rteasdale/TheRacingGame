@@ -6,35 +6,18 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 
 /**
  *
  * @author ROSY
  */
-public class TheRacingGame implements ApplicationListener {
+public class TheRacingGame extends Game {
 
     @Override
     public void create() {
+        
+        setScreen(new GameScreen());
+        
     }
-
-    @Override
-    public void resize(int i, int i1) {
-    }
-
-    @Override
-    public void render() {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-    }
-    
 }
