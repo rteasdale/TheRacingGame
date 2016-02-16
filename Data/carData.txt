@@ -1,1 +1,12 @@
-name=“
+name=“Volkswagen Golf 2015”, velocity=0, maxVelocity=250, maxRevVelocity=75, acceleration=6.3, weight=1300, fuelTank= 50, consumption=6.4, handling=8, brakes=35, sprite=“golf.png”,
+
+name=“Lamborghini Gallardo”, velocity=0, maxVelocity=320, maxRevVelocity=96, acceleration=3.9, weight=1380, fuelTank=75, consumption=13, handling=8, brakes=40, sprite=“Lamborghini.png”,
+
+name=“Toyota Prius”, velocity=0 maxVelocity=180, maxRevVelocity=54, acceleration=10, weight=1360, fuelTank=45, consumption=5, handling=10, brakes=30, sprite=“Prius.png”,
+
+name=“Porsche 911 GT3 RS”, velocity=0, maxVelocity=310, maxRevVelocity=93, acceleration=3.1, weight=3800, fuelTank=90, consumption=15, handling=6, brakes=50, sprite=“Porsche.png”,
+
+name=“Ford F-150  Raptor”, velocity=0, maxVelocity=280, maxRevVelocity=84, acceleration=6.4, weight=2500, fuelTank=90, consumption=14, handling=3, brakes=30, sprite=“Truck.png”,
+
+name=“Pagani Zonda F”, velocity=0, maxVelocity=345, maxRevVelocity=103, acceleration=3.6, weight=1230, fuelTank=90, consumption=17, handling=6, brakes=50, sprite=“ZondaF.png”,
+
