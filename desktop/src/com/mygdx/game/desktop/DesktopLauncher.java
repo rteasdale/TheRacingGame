@@ -6,12 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
-            LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-<<<<<<< HEAD
-            new LwjglApplication(new Test2(), cfg);
-=======
+    public static void main (String[] arg) {
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         new LwjglApplication(new Test2(), cfg);
->>>>>>> origin/master
-	}
+    }
 }

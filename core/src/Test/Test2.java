@@ -87,15 +87,17 @@ private Sprite evil;
     moveSprite(); 
      
     Vector2 carLocationX;
-    float carHeading = 40;
-    float carSpeed = 200;
-    float steerAngle = 70;
-    float wheelBase = 20; // the distance between the two axles
+    float carHeading = 40.0f;
+    float carSpeed = 200.0f;
+    float steerAngle = 70.0f;
+    float wheelBase = 20.0f; // the distance between the two axles
   
-    Vector2 frontWheelX = carLocationX + wheelBase/2 * cos(carHeading);
+    /*Vector2 frontWheelX = carLocationX + wheelBase/2 * cos(carHeading);
+    Vector2 frontWheelY = carLocationY + wheelBase/2 * sin(carHeading);
+    
     
     Vector2 backWheel = carLocation - wheelBase/2 * new Vector2(cos(carHeading), sin(carHeading));
-    
+    */
     batch.begin();
     evil.draw(batch);
     batch.end();
