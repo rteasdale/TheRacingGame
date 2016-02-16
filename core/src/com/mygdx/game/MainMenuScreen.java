@@ -12,6 +12,10 @@ import com.badlogic.gdx.Screen;
  * @author ROSY
  */
 public class MainMenuScreen implements Screen {
+    
+    public MainMenuScreen(final RacingGame game) {
+        
+    }
 
     @Override
     public void show() {

@@ -5,10 +5,9 @@
  */
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import sun.net.www.ApplicationLaunchException;
 
 /**
  *
@@ -17,12 +16,26 @@ import sun.net.www.ApplicationLaunchException;
 public class RacingGame extends Game {
 
     public SpriteBatch batch; 
+    public BitmapFont font;
     
     @Override
     public void create() {
-        
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        this.setScreen(new TestCarMoving(this));
     }
 
+    @Override
+    public void render() {
+        super.render();
+    }
+    
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+    }
+    
     public enum GameState {
         GameState_Menu,
         GameState_321Go,

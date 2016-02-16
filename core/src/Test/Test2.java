@@ -42,7 +42,7 @@ private Sprite evil;
     public void resize(int width, int height) {
     }
 
-    void moveSprite() {
+    public void moveSprite() {
             /** move sprite */
     
     if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
