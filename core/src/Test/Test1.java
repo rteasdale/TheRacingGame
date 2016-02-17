@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class Test1 extends ApplicationAdapter {
 	private Stage stage;
 	private Skin skin;
-        private Image image;
+    private Image image;
 
 	@Override
 	public void create () {
@@ -29,19 +29,20 @@ public class Test1 extends ApplicationAdapter {
             stage = new Stage(new ScreenViewport());
             skin = new Skin(Gdx.files.internal("uiskin.json"));
 		
-
+/*
             image = new Image(new Texture("shark.png"));
             image.setX(100);
             image.setY(100);
-
+*/
             final TextButton button = new TextButton("Click Me", skin, "default");
             button.setWidth(200);
             button.setHeight(50);
-
+            button.setX(100);
+            button.setY(100);
             final Dialog dialog = new Dialog("Click Message", skin);
 
             stage.addActor(button);
-            stage.addActor(image);
+         //   stage.addActor(image);
             Gdx.input.setInputProcessor(stage);
 
 	}
