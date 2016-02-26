@@ -5,8 +5,11 @@
  */
 package com.mygdx.game;
 
+import Screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -14,33 +17,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author ROSY
  */
 public class RacingGame extends Game {
-
     public SpriteBatch batch; 
-    public BitmapFont font;
+    
+    public static final String TITLE = "Fuel2D";
+    public static final int V_WIDTH = 1280; //virtual dimensions
+    public static final int V_HEIGHT = 720;
+    public OrthographicCamera camera;
     
     @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
-        this.setScreen(new TestCarMoving(this));
+        this.setScreen(new MainMenuScreen(this));
     }
 
     @Override
     public void render() {
-        super.render();
+        super.render(); //delegates render method to the active screen
     }
     
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
     }
     
-    public enum GameState {
-        GameState_Menu,
-        GameState_321Go,
-        GameState_Racing, 
-        GameState_Pause,
-        GameState_Results        
+    public void fileHandling() {
+        FileHandle file = Gdx.files.internal("Data/carData.txt");
+        String text = file.readString();
+        
+        System.out.println(text);
     }
 }
