@@ -2,6 +2,7 @@ package com.mygdx.game.desktop;
 
 
 import Test.Game;
+import Test.Test2;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -17,6 +18,6 @@ public class DesktopLauncher {
         cfg.width = RacingGame.V_WIDTH;
         cfg.height = RacingGame.V_HEIGHT;
         
-        new LwjglApplication(new RacingGame(), cfg);
+        new LwjglApplication(new Test2(), cfg);
     }
 }

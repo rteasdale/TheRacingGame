@@ -39,11 +39,4 @@ public class RacingGame extends Game {
     public void dispose() {
         batch.dispose();
     }
-    
-    public void fileHandling() {
-        FileHandle file = Gdx.files.internal("Data/carData.txt");
-        String text = file.readString();
-        
-        System.out.println(text);
-    }
 }
