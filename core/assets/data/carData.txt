@@ -1,12 +1,11 @@
-name=“Volkswagen Golf 2015”, velocity=0, maxVelocity=250, maxRevVelocity=75, acceleration=6.3, weight=1300, fuelTank= 50, consumption=6.4, handling=8, brakes=35, sprite=“golf.png”,
-
-name=“Lamborghini Gallardo”, velocity=0, maxVelocity=320, maxRevVelocity=96, acceleration=3.9, weight=1380, fuelTank=75, consumption=13, handling=8, brakes=40, sprite=“Lamborghini.png”,
-
-name=“Toyota Prius”, velocity=0 maxVelocity=180, maxRevVelocity=54, acceleration=10, weight=1360, fuelTank=45, consumption=5, handling=10, brakes=30, sprite=“Prius.png”,
-
-name=“Porsche 911 GT3 RS”, velocity=0, maxVelocity=310, maxRevVelocity=93, acceleration=3.1, weight=3800, fuelTank=90, consumption=15, handling=6, brakes=50, sprite=“Porsche.png”,
-
-name=“Ford F-150  Raptor”, velocity=0, maxVelocity=280, maxRevVelocity=84, acceleration=6.4, weight=2500, fuelTank=90, consumption=14, handling=3, brakes=30, sprite=“Truck.png”,
-
-name=“Pagani Zonda F”, velocity=0, maxVelocity=345, maxRevVelocity=103, acceleration=3.6, weight=1230, fuelTank=90, consumption=17, handling=6, brakes=50, sprite=“ZondaF.png”,
-
+“Volkswagen Golf 2015”,1300,0,6.3,250,75,50,6.4,7,Math.PI/50,Math.PI/6,0,2,7,5,5,4,”golf/golf_lightblue.png”,”golf/golf_darkblue.png”,”golf/golf_yellow.png”,”golf/golf_green.png”,”golf/golf_white.png”,”golf/golf_red.png”,”golf/golf_purple.png”,”golf/golf.orange.png”
+*
+“Lamborghini Gallardo”,1380,0,3.9,320,96,75,13,7,Math.PI/50,Math.PI/6,0,3,8,9,9,7,”lamborghini/lamborghini_lightblue.png”,”lamborghini/lamborghini_darkblue.png”,”lamborghini/lamborghini_yellow.png”,”lamborghini/lamborghini_green.png”,”lamborghini/lamborghini_white.png”,”lamborghini/lamborghini_red.png”,”lamborghini/lamborghini_purple.png”,”lamborghini/lamborghini_orange.png”
+*
+“Toyota Prius”,1360,0,10,180,54,45,5,10,Math.PI/50,Math.PI/6,0,2,4,6,5,2,”prius/prius_lightblue.png”,”prius/prius_darkblue.png”,”prius/prius_yellow.png”,”prius/prius_green.png”,”prius/prius_white.png”,”prius/prius_red.png”,”prius/prius_purple.png”,”prius/prius_orange.png”
+*
+“Porsche 911 GT3 RS”,3800,0,3.1,310,93,90,15,6,Math.PI/50,Math.PI/6,0,9,10,8,7,9,”porsche/porsche_lightblue.png”,”porsche/porsche_lightblue.png”,”porsche/porsche_darkblue.png”,”porsche/porsche_yellow.png”,”porsche/porsche_green.png”,”porsche/porsche_white.png”,”porsche/porsche_purple.png”,”porsche/porsche_orange.png”
+*
+“Ford F-150  Raptor”,2500,0,6.4,280,84,90,14,6,Math.PI/50,Math.PI/6,0,6,6,6,8,8,”truck/truck_lightblue.png”,”truck/truck_darkblue.png”,”truck/truck_yellow.png”,”truck/truck_green.png”,”truck/truck_white.png”,”truck/truck_red.png”,”truck/truck_purple.png”,”truck/truck_orange.png”
+*
+“Pagani Zonda F”,1230,0,3.6,345,103,90,17,9,Math.PI/50,Math.PI/6,0,1,8,10,9,10,”zondaf/zondaf_lightblue.png”,”zondaf/zondaf_darkblue.png”,”zondaf/zondaf_yellow.png”,”zondaf/zondaf_green.png”,”zondaf/zondaf_white.png”,”zondaf/zondaf_red.png”,”zondaf/zondaf_purple.png”,”zondaf/zondaf_orange.png”

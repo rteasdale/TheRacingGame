@@ -24,16 +24,16 @@ public class Test1 extends ApplicationAdapter {
 	@Override
 	public void create () {
             stage = new Stage(new ScreenViewport());            
-            FileHandle evilFileHandle = Gdx.files.internal("evil.png");
+            FileHandle carFileHandle = Gdx.files.internal("prius/prius_white.png");
             
             stage = new Stage(new ScreenViewport());
             skin = new Skin(Gdx.files.internal("uiskin.json"));
 		
-/*
-            image = new Image(new Texture("shark.png"));
+
+            image = new Image(new Texture("prius/prius_white.png"));
             image.setX(100);
             image.setY(100);
-*/
+
             final TextButton button = new TextButton("Click Me", skin, "default");
             button.setWidth(200);
             button.setHeight(50);
@@ -42,7 +42,7 @@ public class Test1 extends ApplicationAdapter {
             final Dialog dialog = new Dialog("Click Message", skin);
 
             stage.addActor(button);
-         //   stage.addActor(image);
+           stage.addActor(image);
             Gdx.input.setInputProcessor(stage);
 
 	}
