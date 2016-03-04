@@ -33,7 +33,12 @@ private final String PATH_RED;
 private final String PATH_PURPLE;
 private final String PATH_ORANGE;
 
-
+public String[] golfProperties;
+public String[] lamboProperties;
+public String[] priusProperties;
+public String[] porscheProperties;
+public String[] fordProperties;
+public String[] zondaProperties;
 	
 
 public Car(){
@@ -257,58 +262,58 @@ public void setSteeringAngle(Double steeringAngle){
 	this.steeringAngle = steeringAngle;
 }
 
-public String getGolfData(){
-    String GolfData = null;
+public String[] getGolfData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    GolfData = str_array[0];
-    return GolfData;
+    String[] str_array = WholeText.split("\n");
+    String golfData = str_array[0];
+    golfProperties = golfData.split(",");
+    return golfProperties;
 }
 
-public String getLamboData(){
-    String LamboData = null;
+public String[] getLamboData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    LamboData = str_array[1];
-    return LamboData;
+    String[] str_array = WholeText.split("\n");
+    String lamboData = str_array[1];
+    lamboProperties = lamboData.split(",");
+    return lamboProperties;
 }
 
-public String getPriusData(){
-    String PriusData = null;
+public String[] getPriusData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    PriusData = str_array[2];
-    return PriusData;
+    String[] str_array = WholeText.split("\n");
+    String priusData = str_array[2];
+    priusProperties = priusData.split(",");
+    return priusProperties;
 }
 
-public String getPorscheData(){
-    String PorscheData = null;
-     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    PorscheData = str_array[3];
-    return PorscheData;
-}
-
-public String getFordData(){
-    String FordData = null;
+public String[] getPorscheData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    FordData = str_array[4];
-    return FordData;
+    String[] str_array = WholeText.split("\n");
+    String porscheData = str_array[3];
+    porscheProperties = porscheData.split(",");
+    return porscheProperties;
 }
 
-public String getZondaData(){
-    String ZondaData = null;
+public String[] getFordData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.toString();
-    String[] str_array = WholeText.split("*");
-    ZondaData = str_array[5];
-    return ZondaData;
+    String[] str_array = WholeText.split("\n");
+    String fordData = str_array[4];
+        fordProperties = fordData.split(",");
+        return fordProperties;
+}
+
+public String[] getZondaData(){
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("\n");
+    String zondaData = str_array[5];
+         zondaProperties = zondaData.split(",");
+        return zondaProperties;
 }
 
 
@@ -328,7 +333,6 @@ public String toString(){
             + "\n ROTATION_VELOCITY : " + getRotationVelocity()
             + "\n Max Steering Angle : " + getMaxSteeringAngle()
             + "\n Steering Angle : " + getSteeringAngle()
-            
             + "\n\n PATH_LIGHT_BLUE : " + getPATH_LIGHT_BLUE()
             + "\n PATH_DARK_BLUE : " + getPATH_DARK_BLUE()
             + "\n PATH_GREEN : " + getPATH_GREEN()

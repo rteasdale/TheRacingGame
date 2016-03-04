@@ -6,6 +6,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
+import java.util.Arrays;
 
 /**
  *
@@ -21,8 +22,9 @@ public class CarTest implements ApplicationListener {
     @Override
     public void create() {
         Car car = new Car();
-        String priusInfo = car.getPriusData();
-        System.out.print(priusInfo);
+        System.out.print(car.toString());
+        String[] prius = car.getGolfData();
+        System.out.print(prius[0]);
     }
 
     @Override
