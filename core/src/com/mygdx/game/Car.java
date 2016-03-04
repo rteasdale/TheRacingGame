@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 public class Car {
 private String carName;
 private double weight;
@@ -253,6 +256,61 @@ public void setmaxSteeringAngle(Double maxSteeringAngle){
 public void setSteeringAngle(Double steeringAngle){
 	this.steeringAngle = steeringAngle;
 }
+
+public String getGolfData(){
+    String GolfData = null;
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    GolfData = str_array[0];
+    return GolfData;
+}
+
+public String getLamboData(){
+    String LamboData = null;
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    LamboData = str_array[1];
+    return LamboData;
+}
+
+public String getPriusData(){
+    String PriusData = null;
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    PriusData = str_array[2];
+    return PriusData;
+}
+
+public String getPorscheData(){
+    String PorscheData = null;
+     FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    PorscheData = str_array[3];
+    return PorscheData;
+}
+
+public String getFordData(){
+    String FordData = null;
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    FordData = str_array[4];
+    return FordData;
+}
+
+public String getZondaData(){
+    String ZondaData = null;
+    FileHandle file = Gdx.files.internal("data/carData.txt");
+    String WholeText = file.toString();
+    String[] str_array = WholeText.split("*");
+    ZondaData = str_array[5];
+    return ZondaData;
+}
+
 
 @Override
 public String toString(){
