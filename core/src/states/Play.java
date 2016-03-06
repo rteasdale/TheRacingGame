@@ -30,28 +30,30 @@ public class Play extends GameState{
     
     private World world;
     private Box2DDebugRenderer b2dr;
-    
+    private Body body;
     private OrthographicCamera b2dCam;
     
     public Play(GameStateManager gsm) {
         
         super(gsm);
         
-        world = new World(new Vector2(0,-9.81f), true);
+        world = new World(new Vector2(0,0), true);
         b2dr = new Box2DDebugRenderer();
         
         //create platform
         BodyDef bdef = new BodyDef();
         bdef.position.set(160/ PPM,120 / PPM);
-        bdef.type = BodyType.StaticBody;
-        Body body = world.createBody(bdef);
+        bdef.type = BodyType.DynamicBody;
+        body = world.createBody(bdef);
         
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(50 / PPM, 5 / PPM);
+        shape.setAsBox(0.5f / PPM, 1.25f / PPM);
         
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         body.createFixture(fdef);
+        
+        body.setUserData(this);
         
         //Static body - don't move, unnaffected by forces (ground)
         
@@ -75,7 +77,20 @@ public class Play extends GameState{
         b2dCam = new OrthographicCamera();
         b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT/PPM);
         
+       
+        }
+         public Vector2  getLateralVelocity(){
+        Vector2 currentRightNormal = body.getWorldVector(new Vector2(1,0));
+             
+         return body.getLinearVelocity().scl(currentRightNormal);
     }
+         
+         public void updateFriction() {
+             Vector2 impulse = getLateralVelocity().scl(-body.getMass());  //Multiplying a vector and a float value
+             body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+         }
+         
+         
     
     public void handleInput() {}
     
