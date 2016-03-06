@@ -9,25 +9,25 @@
  <tileset firstgid="830" name="Curves" tilewidth="288" tileheight="288" tilecount="4" columns="2">
   <image source="Curves.png" width="576" height="576"/>
  </tileset>
- <tileset firstgid="834" name="Finish line" tilewidth="48" tileheight="48" tilecount="1" columns="1">
-  <image source="Finish Line.png" width="48" height="48"/>
+ <tileset firstgid="834" name="Finish line" tilewidth="48" tileheight="48" tilecount="1" columns="0">
+  <image source="Finish Line.png" width="24" height="24"/>
  </tileset>
- <tileset firstgid="835" name="Tire" tilewidth="48" tileheight="48" tilecount="1" columns="1">
+ <tileset firstgid="835" name="Tire" tilewidth="48" tileheight="48" tilecount="4" columns="1">
   <image source="Tire.png" width="48" height="48"/>
  </tileset>
- <tileset firstgid="836" name="BigTire" tilewidth="96" tileheight="96" tilecount="1" columns="1">
+ <tileset firstgid="839" name="BigTire" tilewidth="96" tileheight="96" tilecount="1" columns="1">
   <image source="BigTire.png" width="96" height="96"/>
  </tileset>
- <tileset firstgid="837" name="Map 1 - grass area lane" tilewidth="96" tileheight="672" tilecount="1" columns="1">
+ <tileset firstgid="840" name="Map 1 - grass area lane" tilewidth="96" tileheight="672" tilecount="1" columns="1">
   <image source="Map 1 - grass area lane.png" width="96" height="672"/>
  </tileset>
- <tileset firstgid="838" name="grass" tilewidth="48" tileheight="48" tilecount="1" columns="1">
+ <tileset firstgid="841" name="grass" tilewidth="48" tileheight="48" tilecount="1" columns="1">
   <image source="grass block.png" width="48" height="48"/>
  </tileset>
- <tileset firstgid="839" name="Fuel arrow" tilewidth="288" tileheight="192" tilecount="1" columns="1">
+ <tileset firstgid="842" name="Fuel arrow" tilewidth="288" tileheight="192" tilecount="1" columns="1">
   <image source="Fuel arrow.png" width="288" height="192"/>
  </tileset>
- <tileset firstgid="840" name="Fuel arrow OUT" tilewidth="192" tileheight="192" tilecount="1" columns="1">
+ <tileset firstgid="843" name="Fuel arrow OUT" tilewidth="192" tileheight="192" tilecount="1" columns="1">
   <image source="Out fuel arrow.png" width="192" height="192"/>
  </tileset>
  <layer name="Road" width="38" height="28" offsetx="-30" offsety="16">
@@ -68,7 +68,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,835,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,835,835,835,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,835,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -84,7 +84,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,836,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,839,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,835,835,835,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
