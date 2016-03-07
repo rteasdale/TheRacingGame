@@ -20,6 +20,6 @@ public class DesktopLauncher {
         cfg.width = Game.V_WIDTH*Game.SCALE;
         cfg.height = Game.V_HEIGHT*Game.SCALE;
 
-        new LwjglApplication(new Game(), cfg);
+        new LwjglApplication(new CarTest(), cfg);
     }
 }

@@ -264,7 +264,7 @@ public void setSteeringAngle(Double steeringAngle){
 
 public String[] getGolfData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
     String golfData = str_array[0];
     golfProperties = golfData.split(",");
@@ -273,45 +273,45 @@ public String[] getGolfData(){
 
 public String[] getLamboData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
-    String lamboData = str_array[1];
+    String lamboData = str_array[2];
     lamboProperties = lamboData.split(",");
     return lamboProperties;
 }
 
 public String[] getPriusData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
-    String priusData = str_array[2];
+    String priusData = str_array[4];
     priusProperties = priusData.split(",");
     return priusProperties;
 }
 
 public String[] getPorscheData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
-    String porscheData = str_array[3];
+    String porscheData = str_array[6];
     porscheProperties = porscheData.split(",");
     return porscheProperties;
 }
 
 public String[] getFordData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
-    String fordData = str_array[4];
+    String fordData = str_array[8];
         fordProperties = fordData.split(",");
         return fordProperties;
 }
 
 public String[] getZondaData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
-    String WholeText = file.toString();
+    String WholeText = file.readString();
     String[] str_array = WholeText.split("\n");
-    String zondaData = str_array[5];
+    String zondaData = str_array[10];
          zondaProperties = zondaData.split(",");
         return zondaProperties;
 }

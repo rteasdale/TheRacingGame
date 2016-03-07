@@ -23,8 +23,9 @@ public class CarTest implements ApplicationListener {
     public void create() {
         Car car = new Car();
         System.out.print(car.toString());
-        String[] prius = car.getGolfData();
-        System.out.print(prius[0]);
+        String[] automobile = car.getZondaData();
+        System.out.println();
+        System.out.println(automobile[0]);
     }
 
     @Override
