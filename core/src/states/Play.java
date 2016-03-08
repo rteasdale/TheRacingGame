@@ -42,12 +42,12 @@ public class Play extends GameState{
         
         //create platform
         BodyDef bdef = new BodyDef();
-        bdef.position.set(160/ PPM,120 / PPM);
+        bdef.position.set(160,120);
         bdef.type = BodyType.DynamicBody;
         body = world.createBody(bdef);
         
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f / PPM, 1.25f / PPM);
+        shape.setAsBox(2.5f, 6.25f);
         
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
@@ -71,14 +71,15 @@ public class Play extends GameState{
         shape.setAsBox(5/PPM,5/PPM);
         fdef.shape = shape;
         fdef.restitution = 1;
-        body.createFixture(fdef);
+        body.createFixture(fdef, 1);
         
         // set up box2d cam
         b2dCam = new OrthographicCamera();
-        b2dCam.setToOrtho(false, Game.V_WIDTH / PPM, Game.V_HEIGHT/PPM);
+        b2dCam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
         
        
         }
+    
          public Vector2  getLateralVelocity(){
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1,0));
              
@@ -86,8 +87,7 @@ public class Play extends GameState{
     }
          
          public void updateFriction() {
-             Vector2 impulse = getLateralVelocity().scl(-body.getMass());  //Multiplying a vector and a float value
-             body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+             
          }
          
          
@@ -95,8 +95,13 @@ public class Play extends GameState{
     public void handleInput() {}
     
     public void update(float dt) {
-    
-        world.step(dt, 6, 2);
+        
+    Vector2 impulse = getLateralVelocity().scl(-body.getMass());  //Multiplying a vector and a float value
+             body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
+             
+       //      body.applyAngularImpulse(0.1f * body.getInertia() * -body.getAngularVelocity(), true);
+             
+             world.step(dt, 6, 2);
     
     }
     
