@@ -20,7 +20,7 @@ import com.mygdx.game.RacingGame;
  *
  * @author ROSY
  */
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends Stage implements Screen {
     private final RacingGame game;
     private Viewport menuPort;
     

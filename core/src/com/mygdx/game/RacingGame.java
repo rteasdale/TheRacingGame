@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import Screens.GameScreen;
 import Screens.MainMenuScreen;
 import Screens.TestCarMoving;
 import com.badlogic.gdx.Game;
@@ -26,7 +27,7 @@ public class RacingGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        this.setScreen(new TestCarMoving(this));
+        this.setScreen(new GameScreen(this));
     }
 
     @Override

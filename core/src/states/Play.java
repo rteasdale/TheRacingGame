@@ -71,7 +71,7 @@ public class Play extends GameState{
         shape.setAsBox(5/PPM,5/PPM);
         fdef.shape = shape;
         fdef.restitution = 1;
-        body.createFixture(fdef, 1);
+        body.createFixture(fdef);
         
         // set up box2d cam
         b2dCam = new OrthographicCamera();
