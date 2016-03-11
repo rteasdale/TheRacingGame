@@ -7,6 +7,7 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.RacingGame;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.InputController;
 import com.mygdx.game.RacingGame;
 
 /**
@@ -33,61 +35,63 @@ public class TestCarMoving implements Screen {
 private World world;
 private Box2DDebugRenderer debugRenderer;
 private OrthographicCamera camera;
-
+private float speed = 500;
 private float PixelperMeter = 32;
 
    public TestCarMoving(RacingGame game) {
         this.game = game;
     }
     
+   
     @Override
     public void show() {
-        world = new World(new Vector2(0,-9.18f) , true);
+        world = new World(new Vector2(0,0) , true);
         debugRenderer = new Box2DDebugRenderer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth() / PixelperMeter, Gdx.graphics.getHeight() / PixelperMeter);
         
-        Gdx.input.setInputProcessor(new InputProcessor() {
-
+        Gdx.input.setInputProcessor(new InputController() {
             @Override
             public boolean keyDown(int keycode) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean keyUp(int keycode) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean keyTyped(char character) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean mouseMoved(int screenX, int screenY) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public boolean scrolled(int amount) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               switch(keycode) {
+                   case Keys.ESCAPE: 
+                   Gdx.app.exit();
+                   break;
+                    
+                   case Keys.W : //Something
+                       movement.y  = speed;
+                   break;
+                       
+                   case Keys.A : //Something
+                       movement.x = -speed;
+                   break;
+                   
+                   case Keys.S : //Something
+                       movement.y = -speed;
+                   break;
+                                    
+                   case Keys.D : //Something
+                       movement.x = speed;
+                    
+                }
+                return true;
             }
             
+            @Override
+            public boolean keyUp(int keycode) {
+                switch(keycode) {
+                    
+                   case Keys.W : 
+                   case Keys.S : 
+                       movement.y  = 0;
+                   break;
+                       
+                   case Keys.A : 
+                   case Keys.D : 
+                       movement.x = 0;
+                       
+                }
+                return true;
+            }
             
         });
         
@@ -107,7 +111,7 @@ private float PixelperMeter = 32;
         //Fixture Def
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
-        fixtureDef.density = 2.5f;
+        fixtureDef.density = 100f;
         fixtureDef.friction = 0.25f;         //Between 0 and 1;    1 = Max friction (100% friction);  0 = No friction (0% friction)
         fixtureDef.restitution = 1f;
         
@@ -164,16 +168,23 @@ private float PixelperMeter = 32;
     private final float TIMESTEP = 1/60f;
     private final int VELOCITYETIRATIONS = 8, POSITIONITERATIONS = 3;
     private Body box;
+    private Vector2 movement = new Vector2();
     
-    @Override
+    
+    
+@Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        debugRenderer.render(world, camera.combined);
         
         world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
+        box.applyForceToCenter(movement, true);
         
+        camera.position.set(box.getPosition().x,box.getPosition().y , 0);
+        camera.update();
+        
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override

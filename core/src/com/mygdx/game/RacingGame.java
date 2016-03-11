@@ -27,7 +27,7 @@ public class RacingGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new TestCarMoving(this));
     }
 
     @Override
