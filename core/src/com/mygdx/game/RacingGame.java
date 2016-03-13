@@ -9,6 +9,7 @@ import Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -30,7 +31,9 @@ public class RacingGame extends Game {
         Gdx.app.log("RacingGame", "App created");
         startTime = TimeUtils.millis();
         setScreen(new SplashScreen(this)); //** start SpashSreen, with Game parameter **//
-    } 
+    
+        this.setScreen(new SplashScreen(this));
+    }
 
     @Override
     public void render() {
