@@ -6,21 +6,11 @@
 package Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.RacingGame;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.InputController;
 import com.mygdx.game.RacingGame;
@@ -77,6 +67,12 @@ private float PixelperMeter = 32;
             }
             
             @Override
+            public boolean scrolled(int amount) {
+                camera.zoom += amount / 25f;
+                return true;
+            }
+            
+            @Override
             public boolean keyUp(int keycode) {
                 switch(keycode) {
                     
@@ -95,21 +91,20 @@ private float PixelperMeter = 32;
             
         });
         
-        
-        
+        BodyDef bodyDef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
         
         //Body Def
-        BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 1);
         
-        //ball shape
+
+        //BALL shape
         CircleShape ballShape = new CircleShape();
         ballShape.setPosition(new Vector2(0, 1));
         ballShape.setRadius(0.25f);
         
         //Fixture Def
-        FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
         fixtureDef.density = 100f;
         fixtureDef.friction = 0.25f;         //Between 0 and 1;    1 = Max friction (100% friction);  0 = No friction (0% friction)
@@ -119,6 +114,30 @@ private float PixelperMeter = 32;
         
         ballShape.dispose();
         
+       
+        
+        //BOX
+        //Body definition
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(2.25f, 10);
+        
+        
+        //box shape
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(.5f , 1);
+        
+        //Fixture definition
+        fixtureDef.shape = boxShape;
+        fixtureDef.friction = .75f;
+        fixtureDef.restitution = .1f;
+        fixtureDef.density = 5;
+        
+        box = world.createBody(bodyDef);
+        box.createFixture(fixtureDef);
+        
+        boxShape.dispose();
+        
+         
         //Ground
         //Body definition
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -140,28 +159,7 @@ private float PixelperMeter = 32;
         
         groundShape.dispose();
         
-        //BOX
-        //Body definition
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(2.25f, 10);
         
-        
-        //box shape
-        PolygonShape boxShape = new PolygonShape();
-        boxShape.setAsBox(.5f , 1);
-        
-        //Fisture definition
-        fixtureDef.shape = boxShape;
-        fixtureDef.friction = .75f;
-        fixtureDef.restitution = .1f;
-        fixtureDef.density = 5;
-        
-        box = world.createBody(bodyDef);
-        box.createFixture(fixtureDef);
-        
-        boxShape.dispose();
-        
-        box.applyAngularImpulse(250, true);
         
     }
 
