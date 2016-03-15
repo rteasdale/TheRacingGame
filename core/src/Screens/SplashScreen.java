@@ -59,6 +59,7 @@ public class SplashScreen extends InputListener implements Screen {
         batch.setProjectionMatrix(camera.combined);
         
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            //CHANGE BACK INTO MENU LATER!!
             game.setScreen(new MainMenuScreen(game));
         }
         
