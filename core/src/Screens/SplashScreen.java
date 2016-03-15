@@ -48,8 +48,9 @@ public class SplashScreen extends InputListener implements Screen {
     @Override
     public void show() {
         Gdx.app.log("SplashScreen", "show called");
-        splash_image = new Texture(Gdx.files.internal("menu/splashscreen_image.jpeg")); //** texture is now the splash image **//
-        //startTime = TimeUtils.millis();
+        splash_image = new Texture(Gdx.files.internal("menu/splashscreen_image.jpeg")); //** texture is now the background image **//      
+
+//startTime = TimeUtils.millis();
     }
 
     @Override

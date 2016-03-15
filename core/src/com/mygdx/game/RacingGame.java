@@ -5,11 +5,11 @@
  */
 package com.mygdx.game;
 
+import Screens.CarSelectionScreen;
 import Screens.SplashScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -30,9 +30,9 @@ public class RacingGame extends Game {
     public void create() {
         Gdx.app.log("RacingGame", "App created");
         startTime = TimeUtils.millis();
-        setScreen(new SplashScreen(this)); //** start SpashSreen, with Game parameter **//
+        setScreen(new CarSelectionScreen(this)); //** start SpashSreen, with Game parameter **//
     
-        this.setScreen(new SplashScreen(this));
+        //this.setScreen(new CarSelectionScreen(this));
     }
 
     @Override
