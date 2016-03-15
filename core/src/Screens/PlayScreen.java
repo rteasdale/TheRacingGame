@@ -22,21 +22,21 @@ import com.mygdx.game.RacingGame;
 
 /**
  *
- * @author ROSY
+ * @author JONATHAN
  */
-public class Play implements Screen {
+public class PlayScreen implements Screen {
 
   private RacingGame game;
 private World world;
 private Box2DDebugRenderer debugRenderer;
 private SpriteBatch batch;
 private OrthographicCamera camera;
-private float speed = 500;
+private float speed = 200;
 private final float PIXELS_TO_METERS = 32;
 private Sprite boxSprite;
 
 
-   public Play(RacingGame game) {
+   public PlayScreen(RacingGame game) {
         this.game = game;
     }
     
@@ -58,33 +58,22 @@ private Sprite boxSprite;
                    Gdx.app.exit();
                    break;
                     
-                   case Keys.W : //Something
-                       movement.y  = speed;
-                   break;
-                       
-                       case Keys.UP : //Something
+                   case Keys.W : //Something 
+                   case Keys.UP : //Something
                        movement.y  = speed;
                    break;
                        
                    case Keys.A : //Something
-                       movement.x = -speed;
-                   break;
-                       
-                       case Keys.LEFT : //Something
+                   case Keys.LEFT : //Something
                        movement.x = -speed;
                    break;
                    
+                   case Keys.DOWN : //Something
                    case Keys.S : //Something
                        movement.y = -speed;
                    break;
-                       
-                       case Keys.DOWN : //Something
-                       movement.y = -speed;
-                   break;
                                     
-                   case Keys.D : //Something
-                       movement.x = speed;
-                       
+                    case Keys.D :   
                     case Keys.RIGHT : //Something
                        movement.x = speed;
                     
@@ -103,16 +92,17 @@ private Sprite boxSprite;
                 switch(keycode) {
                     
                    case Keys.W : 
-                   case Keys.S : 
                    case Keys.UP:
+                   case Keys.S : 
                    case Keys.DOWN:
                        movement.y  = 0;
                    break;
+
                        
                    case Keys.A : 
-                   case Keys.D : 
                    case Keys.LEFT:
                    case Keys.RIGHT:
+                   case Keys.D : 
                        movement.x = 0;
                        
                 }
@@ -127,7 +117,7 @@ private Sprite boxSprite;
         //Body Def
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 1);
-        
+       
         //BALL shape
         CircleShape ballShape = new CircleShape();
         ballShape.setPosition(new Vector2(0, 1));
@@ -214,9 +204,12 @@ private Sprite boxSprite;
         world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
         box.applyForceToCenter(movement, true);
         
+        Vector2 impulse = box.getMass().(-body.getLateralVelocity());
+        //box.setLinearDamping(0.75f);
+        //box.setAngularDamping(0.99f);
+        
         camera.position.set(box.getPosition().x,box.getPosition().y , 0);
         camera.update();
-        
         
         //To create Sprites for cars with SpriteBatch
         batch.setProjectionMatrix(camera.combined);

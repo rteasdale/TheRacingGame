@@ -72,9 +72,9 @@ public Car(){
                      this.PATH_ORANGE = "";                         //Path for the image address for the orange car
 }
 
-public Car(double acceleration, double breakingRate, double weight, double maxVelocity, double tankCapacity, double speedOfTurning,
-        String carName, double velocity, double maxReverseVelocity, double consumption, double steeringAngle,
-        int WEIGHT_STAT, int  ACCELERATION_STAT, int TOPSPEED_STAT, int HANDLING_STAT, int TANK_CAPACITY_STAT, int FUEL_CONSUMPTION_STAT,
+public Car(String carName,double weight, double velocity, double acceleration, double maxVelocity, double maxReverseVelocity,
+        double tankCapacity, double consumption, double breakingRate,double maxSteeringAngle, double steeringAngle, int WEIGHT_STAT,
+        int  ACCELERATION_STAT, int TOPSPEED_STAT, int HANDLING_STAT, int TANK_CAPACITY_STAT, int FUEL_CONSUMPTION_STAT,
         String PATH_LIGHT_BLUE, String PATH_DARK_BLUE, String PATH_YELLOW, String PATH_GREEN, String PATH_WHITE, String PATH_RED, 
         String PATH_PURPLE, String PATH_ORANGE){
 	
@@ -88,7 +88,7 @@ public Car(double acceleration, double breakingRate, double weight, double maxVe
                      this.velocity = velocity;                                                            
                      this.maxReverseVelocity = maxReverseVelocity;                     
                      this.consumption = consumption;                                             
-                     this.maxSteeringAngle = Math.PI/6;                                           
+                     this.maxSteeringAngle = maxSteeringAngle;                                           
                      this.steeringAngle = steeringAngle;        
         
                      this.WEIGHT_STAT = WEIGHT_STAT;
@@ -316,6 +316,15 @@ public String[] getZondaData(){
         return zondaProperties;
 }
 
+public void createCarInstance(){
+    String[] carData = getZondaData();
+    Car player1 = new Car(carData[0], Double.parseDouble(carData[1]), Double.parseDouble(carData[2]), 
+    Double.parseDouble(carData[3]), Double.parseDouble(carData[4]), Double.parseDouble(carData[5]), Double.parseDouble(carData[6]),
+     Double.parseDouble(carData[7]), Double.parseDouble(carData[8]), Double.parseDouble(carData[9]),Double.parseDouble(carData[10]),Integer.parseInt(carData[11]), Integer.parseInt(carData[12]), Integer.parseInt(carData[13]), Integer.parseInt(carData[14]), Integer.parseInt(carData[15]), Integer.parseInt(carData[16]),
+            carData[17], carData[18], carData[19], carData[20], carData[21], carData[22], carData[23], carData[24]);
+    
+    System.out.println(player1.getPATH_RED());
+}
 
 @Override
 public String toString(){
