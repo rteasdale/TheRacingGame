@@ -59,7 +59,7 @@ public class MainMenuScreen extends Stage implements Screen {
     @Override
     public void show() {
         Gdx.app.log("MainMenuScreen", "show called");
-        menu_bg = new Texture(Gdx.files.internal("menu/menu_bg.png")); //** texture is now the splash image **//
+        menu_bg = new Texture(Gdx.files.internal("menu/menu_bg.jpeg")); //** texture is now the splash image **//
     }
 
     @Override
