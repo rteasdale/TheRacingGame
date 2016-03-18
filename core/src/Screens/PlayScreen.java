@@ -204,7 +204,7 @@ private Sprite boxSprite;
         world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
         box.applyForceToCenter(movement, true);
         
-        Vector2 impulse = box.getMass().(-body.getLateralVelocity());
+        //Vector2 impulse = box.getMass().(-body.getLateralVelocity());
         //box.setLinearDamping(0.75f);
         //box.setAngularDamping(0.99f);
         

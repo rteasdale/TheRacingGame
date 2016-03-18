@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.RacingGame;
@@ -36,15 +39,21 @@ public class CarSelectionScreen implements Screen {
 
     private OrthographicCamera camera;
     private Texture background;
-    private Stage stage;
+    private final Stage stage;
     
     private Image title;
     private ImageButton selectNextCarButton;
     private Button selectPreviousCarButton;
     private TextArea carDescriptionBox;
     private ComboBox selectCarColor;
+    private TextButton next_btn;
     
-    private Skin skin;
+    private final TextureAtlas atlas;
+    private final ImageButtonStyle style;
+    private Texture texture;
+    private TextureRegion region;
+    
+    private final Skin skin;
     
     
     public CarSelectionScreen(RacingGame game) {
@@ -55,8 +64,13 @@ public class CarSelectionScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
 
+        atlas = new TextureAtlas(Gdx.files.internal("menu/atlas/menu_buttons1.txt"));
         skin = new Skin();
-
+        skin.addRegions(atlas);
+        
+        style = new ImageButtonStyle();
+        style.up = skin.getDrawable("nextarrow_small");
+       
     }
 
     @Override
@@ -68,24 +82,30 @@ public class CarSelectionScreen implements Screen {
         title.setX(300);
         title.setY(648);
         
-        selectNextCarButton = new ImageButton();
+        //next_btn = new TextButton();
         
-        carDescriptionBox = new TextArea("Description", skin);
+        selectNextCarButton = new ImageButton(style);
+        selectNextCarButton.setX(200);
+        selectNextCarButton.setY(200);
         
+        texture = new Texture(Gdx.files.internal("menu/atlas/menu_buttons1.png"));
+        region = new TextureRegion(texture, 100, 100, 300, 350);
+        
+        //carDescriptionBox = new TextArea("Description", null);
+        
+        stage.addActor(selectNextCarButton);
         stage.addActor(title);
     }
 
     @Override
     public void render(float delta) {
-        
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         stage.getBatch().begin();
-        //stage.act();
+        stage.act();
         stage.getBatch().draw(background, 0, 0);
         stage.getBatch().end();
-        
         stage.draw();
 
 
