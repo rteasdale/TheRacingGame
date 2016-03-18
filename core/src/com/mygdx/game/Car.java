@@ -39,7 +39,6 @@ public String[] priusProperties;
 public String[] porscheProperties;
 public String[] fordProperties;
 public String[] zondaProperties;
-	
 
 public Car(){
                      this.carName = "Default Car";                      //Name of Car
@@ -70,6 +69,37 @@ public Car(){
                      this.PATH_RED = "";                                //Path for the image address for the red car
                      this.PATH_PURPLE = "";                         //Path for the image address for the purple car
                      this.PATH_ORANGE = "";                         //Path for the image address for the orange car
+}
+
+public Car(String[] array){
+    this.carName = array[0];
+    this.weight = Double.parseDouble(array[1]);
+    this.velocity = Double.parseDouble(array[2]);
+    this.acceleration = Double.parseDouble(array[3]);
+    this.maxVelocity = Double.parseDouble (array[4]);
+    this.maxReverseVelocity = Double.parseDouble(array[5]);
+    this.tankCapacity = Double.parseDouble(array[6]);
+    this.consumption = Double.parseDouble(array[7]);
+    this.breakingRate = Double.parseDouble(array[8]);
+    this.maxSteeringAngle = Math.PI/6;
+    this.steeringAngle = Double.parseDouble(array[10]);
+    this.ROTATION_VELOCITY = Math.PI/50;
+    
+    this.WEIGHT_STAT = Integer.parseInt(array[11]);
+    this.ACCELERATION_STAT = Integer.parseInt(array[12]);
+    this.TOPSPEED_STAT = Integer.parseInt(array[13]);
+    this.HANDLING_STAT = Integer.parseInt(array[14]);
+    this.TANK_CAPACITY_STAT = Integer.parseInt(array[15]);
+    this.FUEL_CONSUMPTION_STAT = Integer.parseInt(array[16]);
+    
+    this.PATH_LIGHT_BLUE = array[17];
+    this.PATH_DARK_BLUE = array[18];
+    this.PATH_YELLOW = array[19];
+    this.PATH_GREEN = array[20];
+    this.PATH_WHITE = array[21];
+    this.PATH_RED = array[22];
+    this.PATH_PURPLE = array[23];
+    this.PATH_ORANGE = array [24];
 }
 
 public Car(String carName,double weight, double velocity, double acceleration, double maxVelocity, double maxReverseVelocity,
@@ -262,6 +292,8 @@ public void setSteeringAngle(Double steeringAngle){
 	this.steeringAngle = steeringAngle;
 }
 
+
+
 public String[] getGolfData(){
     FileHandle file = Gdx.files.internal("data/carData.txt");
     String WholeText = file.readString();
@@ -316,15 +348,7 @@ public String[] getZondaData(){
         return zondaProperties;
 }
 
-public void createCarInstance(){
-    String[] carData = getZondaData();
-    Car player1 = new Car(carData[0], Double.parseDouble(carData[1]), Double.parseDouble(carData[2]), 
-    Double.parseDouble(carData[3]), Double.parseDouble(carData[4]), Double.parseDouble(carData[5]), Double.parseDouble(carData[6]),
-     Double.parseDouble(carData[7]), Double.parseDouble(carData[8]), Double.parseDouble(carData[9]),Double.parseDouble(carData[10]),Integer.parseInt(carData[11]), Integer.parseInt(carData[12]), Integer.parseInt(carData[13]), Integer.parseInt(carData[14]), Integer.parseInt(carData[15]), Integer.parseInt(carData[16]),
-            carData[17], carData[18], carData[19], carData[20], carData[21], carData[22], carData[23], carData[24]);
-    
-    System.out.println(player1.getPATH_RED());
-}
+
 
 @Override
 public String toString(){
@@ -342,6 +366,14 @@ public String toString(){
             + "\n ROTATION_VELOCITY : " + getRotationVelocity()
             + "\n Max Steering Angle : " + getMaxSteeringAngle()
             + "\n Steering Angle : " + getSteeringAngle()
+            
+            +"\n\n Weight Stat : " + getWEIGHT_STAT()
+            +"\n Acceleration Stat : " + getACCELERATION_STAT()
+            +"\n Top Speed Stat : " + getTOPSPEED_STAT()
+            +"\n Handling Stat : " + getHANDLING_STAT()
+            +"\n Tank Capacity Stat : " + getTANK_CAPACITY_STAT()
+            +"\n Fuel Consumption Stat : " + getFUEL_CONSUMPTION_STAT()
+            
             + "\n\n PATH_LIGHT_BLUE : " + getPATH_LIGHT_BLUE()
             + "\n PATH_DARK_BLUE : " + getPATH_DARK_BLUE()
             + "\n PATH_GREEN : " + getPATH_GREEN()
