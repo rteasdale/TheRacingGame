@@ -1,0 +1,103 @@
+menubtns_atlas.png
+size: 1503, 172
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+OK_button
+  rotate: false
+  xy: 363, 75
+  size: 240, 96
+  orig: 240, 96
+  offset: 0, 0
+  index: -1
+READY_button
+  rotate: false
+  xy: 605, 75
+  size: 240, 96
+  orig: 240, 96
+  offset: 0, 0
+  index: -1
+back_button
+  rotate: false
+  xy: 847, 75
+  size: 240, 96
+  orig: 240, 96
+  offset: 0, 0
+  index: -1
+backarrow_big
+  rotate: false
+  xy: 1331, 75
+  size: 52, 96
+  orig: 72, 96
+  offset: 20, 0
+  index: -1
+backarrow_small
+  rotate: false
+  xy: 1439, 123
+  size: 28, 48
+  orig: 48, 48
+  offset: 20, 0
+  index: -1
+menu_credits
+  rotate: true
+  xy: 1449, 1
+  size: 120, 48
+  orig: 120, 48
+  offset: 0, 0
+  index: -1
+menu_exit
+  rotate: false
+  xy: 1, 99
+  size: 360, 72
+  orig: 360, 72
+  offset: 0, 0
+  index: -1
+menu_leaderboard
+  rotate: false
+  xy: 1, 1
+  size: 360, 96
+  orig: 360, 96
+  offset: 0, 0
+  index: -1
+menu_settings
+  rotate: false
+  xy: 363, 1
+  size: 360, 72
+  orig: 360, 72
+  offset: 0, 0
+  index: -1
+menu_singleP
+  rotate: false
+  xy: 725, 1
+  size: 360, 72
+  orig: 360, 72
+  offset: 0, 0
+  index: -1
+menu_twoP
+  rotate: false
+  xy: 1087, 1
+  size: 360, 72
+  orig: 360, 72
+  offset: 0, 0
+  index: -1
+next_button
+  rotate: false
+  xy: 1089, 75
+  size: 240, 96
+  orig: 240, 96
+  offset: 0, 0
+  index: -1
+nextarrow_big
+  rotate: false
+  xy: 1385, 75
+  size: 52, 96
+  orig: 72, 96
+  offset: 0, 0
+  index: -1
+nextarrow_small
+  rotate: false
+  xy: 1469, 123
+  size: 28, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
