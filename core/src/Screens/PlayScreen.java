@@ -27,6 +27,8 @@ import com.mygdx.game.RacingGame;
 public class PlayScreen implements Screen {
 
   private RacingGame game;
+  private Texture bg;
+  
 private World world;
 private Box2DDebugRenderer debugRenderer;
 private SpriteBatch batch;
@@ -36,6 +38,19 @@ private final float PIXELS_TO_METERS = 32;
 private Sprite boxSprite;
 
 
+private final int LEFT = -1;
+private final int VSTOP = 0;
+private final int RIGHT = 1;
+
+private final int DOWN = -1;
+private final int HSTOP = 0;
+private final int UP = 1;
+
+private int currentVState = VSTOP;
+private int currentHState = HSTOP;
+
+
+
    public PlayScreen(RacingGame game) {
         this.game = game;
     }
@@ -43,7 +58,9 @@ private Sprite boxSprite;
    
     @Override
     public void show() {
-        world = new World(new Vector2(0,0) , true);
+        bg = new Texture(Gdx.files.internal("menu/texture.png"));
+        
+        world = new World(new Vector2(0,-9.81f) , true);
         debugRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
         
@@ -60,22 +77,22 @@ private Sprite boxSprite;
                     
                    case Keys.W : //Something 
                    case Keys.UP : //Something
-                       movement.y  = speed;
+                       currentVState = UP;                       
                    break;
                        
                    case Keys.A : //Something
                    case Keys.LEFT : //Something
-                       movement.x = -speed;
+                      currentHState = LEFT;
                    break;
                    
                    case Keys.DOWN : //Something
                    case Keys.S : //Something
-                       movement.y = -speed;
+                       currentVState = DOWN;
                    break;
                                     
                     case Keys.D :   
                     case Keys.RIGHT : //Something
-                       movement.x = speed;
+                        currentHState = RIGHT;
                     
                 }
                 return true;
@@ -95,7 +112,7 @@ private Sprite boxSprite;
                    case Keys.UP:
                    case Keys.S : 
                    case Keys.DOWN:
-                       movement.y  = 0;
+                       currentVState = VSTOP;
                    break;
 
                        
@@ -103,7 +120,7 @@ private Sprite boxSprite;
                    case Keys.LEFT:
                    case Keys.RIGHT:
                    case Keys.D : 
-                       movement.x = 0;
+                       currentHState = HSTOP;
                        
                 }
                 return true;
@@ -171,6 +188,14 @@ private Sprite boxSprite;
         ChainShape groundShape  = new ChainShape();  //POLYLINE
         groundShape.createChain(new Vector2[] {new Vector2(-500, 0), new Vector2(500,0)});
         
+        ChainShape LWallShape = new ChainShape();
+        LWallShape.createChain(new Vector2[]{ new Vector2(-500,0), new Vector2(-500, 500)});
+        
+        ChainShape RWallShape = new ChainShape();
+        RWallShape.createChain(new Vector2[]{ new Vector2(500,0), new Vector2(500, 500)});
+        
+        ChainShape CeilingShape = new ChainShape();
+        CeilingShape.createChain(new Vector2[]{ new Vector2(-500,500), new Vector2(500, 500)});
         
         
         //fixture definition
@@ -180,10 +205,28 @@ private Sprite boxSprite;
         
         world.createBody(bodyDef).createFixture(fixtureDef);
         
+        fixtureDef.shape = LWallShape;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
         
+        world.createBody(bodyDef).createFixture(fixtureDef);
+        
+        fixtureDef.shape = RWallShape;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
+        
+        world.createBody(bodyDef).createFixture(fixtureDef);
+        
+        fixtureDef.shape = CeilingShape;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0;
+        
+        world.createBody(bodyDef).createFixture(fixtureDef);
+        
+        LWallShape.dispose();
+        RWallShape.dispose();
+        CeilingShape.dispose();
         groundShape.dispose();
-        
-        
         
     }
 
@@ -194,15 +237,63 @@ private Sprite boxSprite;
     
     private Array<Body> tmpBodies = new Array<Body>();
     
+    public Vector2 getLateralVelocity() {
+        Vector2 currentRightNormal = box.getWorldVector(new Vector2(1,0));
+        return currentRightNormal.scl(currentRightNormal.dot(box.getLinearVelocity()));
+    }
+    
+    public void updateFriction() {
+        Vector2 impulse = getLateralVelocity().scl(-box.getMass());
+        box.applyLinearImpulse(impulse, box.getWorldCenter(), true);
+    }
+    
+    public void movements(int CurrentVState, int CurrentHState){
+
+        if(CurrentVState == UP){
+            movement.y  = speed;
+        }
+        
+        if(CurrentVState == DOWN){
+            movement.y = -speed;
+        }
+        
+        if(CurrentHState == LEFT){
+             movement.x = -speed;
+        }
+        
+        if(CurrentHState == RIGHT){
+            movement.x = speed;
+        }
+        
+        if(CurrentVState == VSTOP){
+            movement.y = 0;
+            
+        }
+        
+        if(CurrentHState == HSTOP){
+            movement.x = 0;
+        
+        }
+        
+        
+        System.out.println("Vertical : " + CurrentVState + "\n Horizontal : " + CurrentHState);
+        
+        
+        
+        world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
+        box.applyForceToCenter(movement, true);
+        
+    }
+    
+    
+    
     
 @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        
-        world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
-        box.applyForceToCenter(movement, true);
+        movements(currentVState , currentHState);
         
         //Vector2 impulse = box.getMass().(-body.getLateralVelocity());
         //box.setLinearDamping(0.75f);
@@ -211,9 +302,12 @@ private Sprite boxSprite;
         camera.position.set(box.getPosition().x,box.getPosition().y , 0);
         camera.update();
         
+        
+        
         //To create Sprites for cars with SpriteBatch
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        batch.draw(bg, -500, 0);
         world.getBodies(tmpBodies);
         for(Body body : tmpBodies)
             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
@@ -223,9 +317,14 @@ private Sprite boxSprite;
                 
                 sprite.draw(batch);
             }
+        
+        
         batch.end();
         
         debugRenderer.render(world, camera.combined);
+        
+        
+        
     }
 
     @Override
