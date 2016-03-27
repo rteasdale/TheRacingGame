@@ -1,103 +1,131 @@
 menubtns_atlas.png
-size: 1503, 172
+size: 332, 1021
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 OK_button
   rotate: false
-  xy: 363, 75
-  size: 240, 96
-  orig: 240, 96
+  xy: 1, 943
+  size: 192, 77
+  orig: 192, 77
   offset: 0, 0
   index: -1
 READY_button
-  rotate: false
-  xy: 605, 75
-  size: 240, 96
-  orig: 240, 96
+  rotate: true
+  xy: 99, 725
+  size: 194, 78
+  orig: 194, 78
   offset: 0, 0
   index: -1
 back_button
-  rotate: false
-  xy: 847, 75
+  rotate: true
+  xy: 1, 701
   size: 240, 96
   orig: 240, 96
   offset: 0, 0
   index: -1
 backarrow_big
   rotate: false
-  xy: 1331, 75
+  xy: 279, 653
   size: 52, 96
   orig: 72, 96
   offset: 20, 0
   index: -1
 backarrow_small
-  rotate: false
-  xy: 1439, 123
+  rotate: true
+  xy: 179, 895
   size: 28, 48
   orig: 48, 48
   offset: 20, 0
   index: -1
+leaderboard_mainbutton
+  rotate: true
+  xy: 1, 363
+  size: 336, 96
+  orig: 336, 96
+  offset: 0, 0
+  index: -1
 menu_credits
   rotate: true
-  xy: 1449, 1
+  xy: 279, 849
   size: 120, 48
   orig: 120, 48
   offset: 0, 0
   index: -1
 menu_exit
-  rotate: false
-  xy: 1, 99
+  rotate: true
+  xy: 99, 1
   size: 360, 72
   orig: 360, 72
   offset: 0, 0
   index: -1
 menu_leaderboard
-  rotate: false
+  rotate: true
   xy: 1, 1
   size: 360, 96
   orig: 360, 96
   offset: 0, 0
   index: -1
 menu_settings
-  rotate: false
-  xy: 363, 1
+  rotate: true
+  xy: 173, 1
   size: 360, 72
   orig: 360, 72
   offset: 0, 0
   index: -1
 menu_singleP
-  rotate: false
-  xy: 725, 1
+  rotate: true
+  xy: 247, 1
   size: 360, 72
   orig: 360, 72
   offset: 0, 0
   index: -1
 menu_twoP
-  rotate: false
-  xy: 1087, 1
+  rotate: true
+  xy: 99, 363
   size: 360, 72
   orig: 360, 72
   offset: 0, 0
   index: -1
 next_button
-  rotate: false
-  xy: 1089, 75
+  rotate: true
+  xy: 173, 363
   size: 240, 96
   orig: 240, 96
   offset: 0, 0
   index: -1
 nextarrow_big
   rotate: false
-  xy: 1385, 75
+  xy: 279, 751
   size: 52, 96
   orig: 72, 96
   offset: 0, 0
   index: -1
 nextarrow_small
   rotate: false
-  xy: 1469, 123
+  xy: 195, 925
   size: 28, 48
   orig: 48, 48
+  offset: 0, 0
+  index: -1
+pause_restart
+  rotate: true
+  xy: 271, 363
+  size: 288, 48
+  orig: 288, 48
+  offset: 0, 0
+  index: -1
+pause_resume
+  rotate: true
+  xy: 179, 605
+  size: 288, 48
+  orig: 288, 48
+  offset: 0, 0
+  index: -1
+pause_return
+  rotate: true
+  xy: 229, 653
+  size: 288, 48
+  orig: 288, 48
   offset: 0, 0
   index: -1
