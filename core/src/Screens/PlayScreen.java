@@ -37,7 +37,7 @@ private float speed = 200;
 private final float PIXELS_TO_METERS = 32;
 private Sprite boxSprite;
 
-
+private final int SPACE = -2;
 private final int LEFT = -1;
 private final int VSTOP = 0;
 private final int RIGHT = 1;
@@ -49,7 +49,13 @@ private final int UP = 1;
 private int currentVState = VSTOP;
 private int currentHState = HSTOP;
 
+private float maxForwardSpeed = 300;
+private float maxBackwardSpeed = -20;
+private float maxDriveForce = 150;
+private int PosTorque = 30;
+private int NegTorque = -30;
 
+private Vector2 movement = new Vector2(0,0);
 
    public PlayScreen(RacingGame game) {
         this.game = game;
@@ -58,9 +64,9 @@ private int currentHState = HSTOP;
    
     @Override
     public void show() {
-        bg = new Texture(Gdx.files.internal("menu/texture.png"));
+        bg = new Texture(Gdx.files.internal("maps/map2.png"));
         
-        world = new World(new Vector2(0,-9.81f) , true);
+        world = new World(new Vector2(0,0) , true);
         debugRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
         
@@ -93,6 +99,9 @@ private int currentHState = HSTOP;
                     case Keys.D :   
                     case Keys.RIGHT : //Something
                         currentHState = RIGHT;
+                        
+                    case Keys.SPACE:
+                        currentVState = SPACE;
                     
                 }
                 return true;
@@ -112,6 +121,7 @@ private int currentHState = HSTOP;
                    case Keys.UP:
                    case Keys.S : 
                    case Keys.DOWN:
+                   case Keys.SPACE:
                        currentVState = VSTOP;
                    break;
 
@@ -233,19 +243,87 @@ private int currentHState = HSTOP;
     private final float TIMESTEP = 1/60f;
     private final int VELOCITYETIRATIONS = 8, POSITIONITERATIONS = 3;
     private Body box;
-    private Vector2 movement = new Vector2();
+   //private Vector2 movement = new Vector2();
     
     private Array<Body> tmpBodies = new Array<Body>();
+    
+//    private float currentVelocity = getForwardVelocity().dot(box.getWorldVector(new Vector2(0,1)));
     
     public Vector2 getLateralVelocity() {
         Vector2 currentRightNormal = box.getWorldVector(new Vector2(1,0));
         return currentRightNormal.scl(currentRightNormal.dot(box.getLinearVelocity()));
     }
     
-    public void updateFriction() {
-        Vector2 impulse = getLateralVelocity().scl(-box.getMass());
-        box.applyLinearImpulse(impulse, box.getWorldCenter(), true);
+    public Vector2 getForwardVelocity(){
+        Vector2 currentForwardNormal = box.getWorldVector(new Vector2(0,1));
+        return currentForwardNormal.scl(currentForwardNormal.dot(box.getLinearVelocity()));
     }
+    
+    public void updateFriction() {
+        float maxLateralImpulse = 2.5f;
+        Vector2 impulse = getLateralVelocity().scl(-box.getMass());
+        if(impulse.len() > maxLateralImpulse){
+            impulse.x *= maxLateralImpulse / impulse.len();
+            impulse.y *= maxLateralImpulse / impulse.len();
+        }
+        box.applyLinearImpulse(impulse, box.getWorldCenter(), true);
+        box.applyAngularImpulse(0.1f * box.getInertia() * -box.getAngularVelocity(), true);
+        
+        Vector2 currentForwardNormal = getForwardVelocity(); 
+        float currentForwardSpeed = currentForwardNormal.nor().len(); // Basically 1
+        float dragForceMagnitude = -2 * currentForwardSpeed;
+        box.applyForce((currentForwardNormal.scl(dragForceMagnitude)), box.getWorldCenter(), true);
+    }
+    
+    public void updateDrive(int currentVState){
+        
+        float desiredSpeed = 0;
+        switch(currentVState){
+            case UP: desiredSpeed = maxForwardSpeed; break;
+            case DOWN : desiredSpeed = maxBackwardSpeed; break;
+            case SPACE : desiredSpeed = 0.01f; break;
+            case VSTOP : return;
+        }
+        
+        Vector2 currentForwardNormal = box.getWorldVector(new Vector2(0,1));
+        
+        float x = currentForwardNormal.x;
+        float y = currentForwardNormal.y;
+
+        
+        float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
+        
+        float force = 0;
+        System.out.println(currentSpeed);
+        
+        if(desiredSpeed > currentSpeed){
+            force = maxDriveForce;
+        }
+        else if (desiredSpeed < currentSpeed){
+            force = -maxDriveForce;
+        }
+        else{
+            return;
+        }
+        
+        
+        box.applyForce(new Vector2(x * force,y * force), box.getWorldCenter(), true);
+        System.out.println(new Vector2(x * force,y * force));
+    }
+    
+    public void updateTurn(int currentHState){
+        
+       
+           float desiredTorque = 0;
+        switch(currentHState){
+            case LEFT: desiredTorque = PosTorque; break;
+            case RIGHT: desiredTorque = NegTorque;break;
+            default : ;
+        }
+        box.applyTorque(desiredTorque, true);
+        
+    }
+    
     
     public void movements(int CurrentVState, int CurrentHState){
 
@@ -257,47 +335,56 @@ private int currentHState = HSTOP;
             movement.y = -speed;
         }
         
-        if(CurrentHState == LEFT){
-             movement.x = -speed;
-        }
-        
-        if(CurrentHState == RIGHT){
-            movement.x = speed;
-        }
+//        if(CurrentHState == LEFT){
+//             movement.x = -speed;
+//        }
+//        
+//        if(CurrentHState == RIGHT){
+//            movement.x = speed;
+//        }
         
         if(CurrentVState == VSTOP){
             movement.y = 0;
             
         }
         
-        if(CurrentHState == HSTOP){
-            movement.x = 0;
-        
-        }
+//        if(CurrentHState == HSTOP){
+//            movement.x = 0;
+//        
+//        }
         
         
         System.out.println("Vertical : " + CurrentVState + "\n Horizontal : " + CurrentHState);
         
         
         
-        world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
+        
         box.applyForceToCenter(movement, true);
         
     }
-    
-    
+
     
     
 @Override
     public void render(float delta) {
+        
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        movements(currentVState , currentHState);
-        
+   //    System.out.println("V State : " + currentVState);
+     //   System.out.println("H State : " + currentHState);
+        movements(currentVState , currentHState); 
+       updateFriction();
+        //updateDrive(currentVState);
+        updateTurn(currentHState);
+        System.out.println(box.getAngle());
+        world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);
+       
         //Vector2 impulse = box.getMass().(-body.getLateralVelocity());
-        //box.setLinearDamping(0.75f);
+        box.setLinearDamping(0.50f);
         //box.setAngularDamping(0.99f);
+        
+        
         
         camera.position.set(box.getPosition().x,box.getPosition().y , 0);
         camera.update();
