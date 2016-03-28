@@ -281,17 +281,13 @@ private Vector2 movement = new Vector2(0,0);
         switch(currentVState){
             case UP: desiredSpeed = maxForwardSpeed; break;
             case DOWN : desiredSpeed = maxBackwardSpeed; break;
-            case SPACE : desiredSpeed = 0.01f; break;
             case VSTOP : return;
         }
         
         Vector2 currentForwardNormal = box.getWorldVector(new Vector2(0,1));
-        
-        float x = currentForwardNormal.x;
-        float y = currentForwardNormal.y;
-
-        
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
+        
+        System.out.print(currentForwardNormal);
         
         float force = 0;
         System.out.println(currentSpeed);
@@ -306,9 +302,9 @@ private Vector2 movement = new Vector2(0,0);
             return;
         }
         
+        System.out.print(currentForwardNormal);
         
-        box.applyForce(new Vector2(x * force,y * force), box.getWorldCenter(), true);
-        System.out.println(new Vector2(x * force,y * force));
+        box.applyForce(currentForwardNormal.scl(force), box.getWorldCenter(), true);
     }
     
     public void updateTurn(int currentHState){
@@ -373,9 +369,9 @@ private Vector2 movement = new Vector2(0,0);
         
    //    System.out.println("V State : " + currentVState);
      //   System.out.println("H State : " + currentHState);
-        movements(currentVState , currentHState); 
+        //movements(currentVState , currentHState); 
        updateFriction();
-        //updateDrive(currentVState);
+        updateDrive(currentVState);
         updateTurn(currentHState);
         System.out.println(box.getAngle());
         world.step(TIMESTEP, VELOCITYETIRATIONS, POSITIONITERATIONS);

@@ -125,6 +125,12 @@ public class MainMenuScreen extends Stage implements Screen {
             }
         });        
         
+        onePlayerButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                game.setScreen(new PlayScreen(game));
+            }
+        });  
     }
 
     @Override
