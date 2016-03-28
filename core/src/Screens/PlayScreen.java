@@ -166,7 +166,7 @@ private Vector2 movement = new Vector2(0,0);
         
         //box shape
         PolygonShape boxShape = new PolygonShape();
-        boxShape.setAsBox(.5f , 1);
+        boxShape.setAsBox(.5f , 1.25f);
         
         //Fixture definition
         fixtureDef.shape = boxShape;
@@ -281,12 +281,17 @@ private Vector2 movement = new Vector2(0,0);
         }
         
         Vector2 currentForwardNormal = box.getWorldVector(new Vector2(0,1));
+        
+        System.out.print(currentForwardNormal.x  + " " + currentForwardNormal.y);
+        
+        float x = currentForwardNormal.x;
+        float y = currentForwardNormal.y;
+        
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
         
-        System.out.print(currentForwardNormal);
+        
         
         float force = 0;
-        System.out.println(currentSpeed);
         
         if(desiredSpeed > currentSpeed){
             force = maxDriveForce;
@@ -298,9 +303,10 @@ private Vector2 movement = new Vector2(0,0);
             return;
         }
         
-        System.out.print(currentForwardNormal);
+
         
-        box.applyForce(currentForwardNormal.scl(force), box.getWorldCenter(), true);
+       // box.applyForce(currentForwardNormal.scl(force), box.getWorldCenter(), true);
+        box.applyForce(new Vector2(x * force, y * force), box.getWorldCenter(), true);
     }
     
     public void updateTurn(int currentHState){
