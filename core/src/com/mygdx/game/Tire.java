@@ -17,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class Tire {
     
-    private Body body;
+    public Body body;
     private BodyDef bdef;
     private PolygonShape shape;
     
@@ -54,7 +54,7 @@ public class Tire {
         body.getWorld().destroyBody(body);
     }
     
-    public void getCharacteristics(float maxForwardSpeed, float maxBackwardSpeed, float maxDriveForce, float maxLateralImpulse) {
+    public void setCharacteristics(float maxForwardSpeed, float maxBackwardSpeed, float maxDriveForce, float maxLateralImpulse) {
         this.maxForwardSpeed = maxForwardSpeed;
         this.maxBackwardSpeed = maxBackwardSpeed;
         this.maxDriveForce = maxDriveForce;
@@ -91,7 +91,6 @@ public class Tire {
     }
     
     public void updateDrive(int currentVState){
-        
         float desiredSpeed = 0;
         switch(currentVState){
             case UP: desiredSpeed = maxForwardSpeed; break;

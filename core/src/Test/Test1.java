@@ -6,51 +6,55 @@ package Test;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.RacingGame;
 
-public class Test1 extends ApplicationAdapter {
-	private Stage stage;
-	private Skin skin;
-    private Image image;
+public class Test1 implements Screen {
+    RacingGame game;
+    World world;
+    
+    public Test1(RacingGame game) {
+        this.game = game;
+    }
+    
+    @Override
+    public void show() {
+    }
 
-	@Override
-	public void create () {
-            stage = new Stage(new ScreenViewport());            
-            FileHandle carFileHandle = Gdx.files.internal("prius/prius_white.png");
-            
-            stage = new Stage(new ScreenViewport());
-            skin = new Skin(Gdx.files.internal("uiskin.json"));
-		
+    @Override
+    public void render(float f) {
+        Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);        
+    }
 
-            image = new Image(new Texture("prius/prius_white.png"));
-            image.setX(100);
-            image.setY(100);
+    @Override
+    public void resize(int i, int i1) {
+    }
 
-            final TextButton button = new TextButton("Click Me", skin, "default");
-            button.setWidth(200);
-            button.setHeight(50);
-            button.setX(100);
-            button.setY(100);
-            final Dialog dialog = new Dialog("Click Message", skin);
+    @Override
+    public void pause() {
+    }
 
-            stage.addActor(button);
-           stage.addActor(image);
-            Gdx.input.setInputProcessor(stage);
+    @Override
+    public void resume() {
+    }
 
-	}
+    @Override
+    public void hide() {
+    }
 
-	@Override
-	public void render () {
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            stage.act(Gdx.graphics.getDeltaTime());
-            stage.draw();
-	}
+    @Override
+    public void dispose() {
+    }
+
 }
