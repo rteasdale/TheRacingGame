@@ -21,10 +21,10 @@ public class CarTest implements ApplicationListener{
 
     @Override
     public void create() {
-        Car car = new Car();
+        Car2 car = new Car2();
         String[] porsche = car.getFordData();
         
-        Car porscheCar = new Car(porsche);
+        Car2 porscheCar = new Car2(porsche);
         
         System.out.println(porscheCar.getWEIGHT_STAT());
         System.out.println(porscheCar.getACCELERATION_STAT());

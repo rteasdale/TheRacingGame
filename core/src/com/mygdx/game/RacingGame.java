@@ -8,6 +8,9 @@ package com.mygdx.game;
 import Screens.PlayScreen;
 
 import Screens.MainMenuScreen;
+
+import Screens.PlayScreen;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,7 +35,7 @@ public class RacingGame extends Game {
         Gdx.app.log("RacingGame", "App created");
         startTime = TimeUtils.millis();
 
-        setScreen(new MainMenuScreen(this)); //** start SpashSreen, with Game parameter **//
+        setScreen(new PlayScreen(this)); //** start SpashSreen, with Game parameter **//
     
         //this.setScreen(new CarSelectionScreen(this));
     }

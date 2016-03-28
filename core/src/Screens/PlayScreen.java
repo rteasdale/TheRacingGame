@@ -54,7 +54,7 @@ private float maxDriveForce = 150;
 private int PosTorque = 30;
 private int NegTorque = -30;
 
-private Vector2 movement = new Vector2(0,0);
+private Vector2 movement;
 
    public PlayScreen(RacingGame game) {
         this.game = game;
@@ -150,6 +150,21 @@ private Vector2 movement = new Vector2(0,0);
         //Body Def
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 1);
+       
+        //BALL shape
+        CircleShape ballShape = new CircleShape();
+        ballShape.setPosition(new Vector2(0, 1));
+        ballShape.setRadius(0.25f);
+        
+        //Fixture Def
+        fixtureDef.shape = ballShape;
+        fixtureDef.density = 5f;
+        fixtureDef.friction = 0.25f; //Between 0 and 1;    1 = Max friction (100% friction);  0 = No friction (0% friction)
+        fixtureDef.restitution = 1f;
+        
+        world.createBody(bodyDef).createFixture(fixtureDef);
+        
+        ballShape.dispose();
         
         //BOX
         //Body definition
@@ -307,8 +322,6 @@ private Vector2 movement = new Vector2(0,0);
     }
     
     public void updateTurn(int currentHState){
-        
-       
            float desiredTorque = 0;
         switch(currentHState){
             case LEFT: desiredTorque = PosTorque; break;
@@ -377,6 +390,7 @@ private Vector2 movement = new Vector2(0,0);
        
         //Vector2 impulse = box.getMass().(-body.getLateralVelocity());
         box.setLinearDamping(0.50f);
+        
         //box.setAngularDamping(0.99f);
         
         
