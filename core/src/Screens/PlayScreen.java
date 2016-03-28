@@ -72,6 +72,10 @@ private Vector2 movement = new Vector2(0,0);
         
         camera = new OrthographicCamera(Gdx.graphics.getWidth() / PIXELS_TO_METERS, Gdx.graphics.getHeight() / PIXELS_TO_METERS);
         
+        
+        //CONTROLS
+        
+        
         Gdx.input.setInputProcessor(new InputController() {
             @Override
             public boolean keyDown(int keycode) {
@@ -104,11 +108,15 @@ private Vector2 movement = new Vector2(0,0);
                 return true;
             }
             
+            // CONTROLLING ZOOM OF CAMERA THROUGH SCROLL
+            
             @Override
             public boolean scrolled(int amount) {
                 camera.zoom += amount / 25f;
                 return true;
             }
+            
+            //CONTROLS WHEN YOU LIFT YOUR FINGER FROM THE KEY
             
             @Override
             public boolean keyUp(int keycode) {
@@ -134,29 +142,14 @@ private Vector2 movement = new Vector2(0,0);
             
         });
         
+        //MAKING BOX2D BOX
+        
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         
         //Body Def
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 1);
-       
-        //BALL shape
-        CircleShape ballShape = new CircleShape();
-        ballShape.setPosition(new Vector2(0, 1));
-        ballShape.setRadius(0.25f);
-        
-        //Fixture Def
-        fixtureDef.shape = ballShape;
-        fixtureDef.density = 5f;
-        fixtureDef.friction = 0.25f;         //Between 0 and 1;    1 = Max friction (100% friction);  0 = No friction (0% friction)
-        fixtureDef.restitution = 1f;
-        
-        world.createBody(bodyDef).createFixture(fixtureDef);
-        
-        ballShape.dispose();
-        
-       
         
         //BOX
         //Body definition
@@ -184,6 +177,8 @@ private Vector2 movement = new Vector2(0,0);
         
         boxShape.dispose();
         
+        
+        //MAKING BOX2D BORDER LINES
          
         //Ground
         //Body definition
@@ -236,6 +231,8 @@ private Vector2 movement = new Vector2(0,0);
         
     }
 
+    //TUTORIAL PART
+    
     private final float TIMESTEP = 1/60f;
     private final int VELOCITYETIRATIONS = 8, POSITIONITERATIONS = 3;
     private Body box;
