@@ -1,0 +1,33 @@
+settings_atlas.png
+size: 540, 30
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+checkbox
+  rotate: false
+  xy: 0, 0
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+checkbox2
+  rotate: false
+  xy: 30, 0
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 60, 0
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 90, 0
+  size: 450, 30
+  orig: 450, 30
+  offset: 0, 0
+  index: -1

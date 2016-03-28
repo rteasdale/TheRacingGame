@@ -1,0 +1,26 @@
+box_atlas.png
+size: 868, 122
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+select_box1
+  rotate: false
+  xy: 435, 1
+  size: 432, 48
+  orig: 432, 48
+  offset: 0, 0
+  index: -1
+select_box2
+  rotate: false
+  xy: 435, 51
+  size: 432, 48
+  orig: 432, 48
+  offset: 0, 0
+  index: -1
+text_box
+  rotate: false
+  xy: 1, 1
+  size: 432, 120
+  orig: 432, 120
+  offset: 0, 0
+  index: -1

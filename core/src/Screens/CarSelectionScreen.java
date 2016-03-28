@@ -7,128 +7,234 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.RacingGame;
-import javafx.scene.control.ComboBox;
 
 /**
  *
  * @author ROSY
  */
 public class CarSelectionScreen implements Screen{
-    private final RacingGame game;
+    private RacingGame game;
 
     private OrthographicCamera camera;
-    private Texture background;
-    private final Stage stage;
-
+    private Stage stage;
+    private BitmapFont font;
+    
     private Image title;
     private ImageButton selectNextCarButton;
     private ImageButton selectPreviousCarButton;
-    private TextArea carDescriptionBox;
-    private ComboBox selectCarColor;
+
     private ImageButton next_btn;
     private ImageButton back_btn;
     
-    private final TextureAtlas atlas;
-    private Skin skin;
+    private Image preview;
+    private Image logo_preview;
+    
+    private TextArea carDescription;
+    private TextField.TextFieldStyle txt_style;
+    private SelectBox<String> color_select; 
+    private SelectBox.SelectBoxStyle box_style;
+    
+    private TextureAtlas buttons_atlas;
+    private TextureAtlas box_atlas;
+    private Skin buttons_skin;
+    private Skin box_skin;
      
     private ImageButtonStyle next_style;
     private ImageButtonStyle back_style;
     private ImageButtonStyle nextcar_style;
     private ImageButtonStyle prevcar_style;
+    private Label.LabelStyle lbl_style;
     
-
+    private Image weight;
+    private Image acceleration;
+    private Image top_speed;
+    private Image handling;
+    private Image tank_capacity;
+    private Image consumption;
+    
+    private Label weight_lbl;
+    private Label accel_lbl;
+    private Label top_speed_lbl;
+    private Label handling_lbl;
+    private Label capacity_lbl;
+    private Label consumption_lbl;
+    
     public CarSelectionScreen(RacingGame game) {
         Gdx.app.log("CarSelection", "constructor called");
         this.game = game;
+        
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
-
-        atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
         
-        skin = new Skin(atlas);
+        /** BitmapFont */
+        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
 
-        /** Styles*/
-        next_style = new ImageButtonStyle(skin.getDrawable("next_button"), null, null, null, null, null);
-        back_style = new ImageButtonStyle(skin.getDrawable("back_button"), null, null, null, null, null);
-        nextcar_style = new ImageButtonStyle(skin.getDrawable("nextarrow_small"), null, null, null, null, null);
-        prevcar_style = new ImageButtonStyle(skin.getDrawable("backarrow_small"), null, null, null, null, null);
+        /** Atlas and skin */
+        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_skin= new Skin(buttons_atlas);
+
+        box_atlas = new TextureAtlas(Gdx.files.internal("menu/box_atlas.txt"));
+        box_skin = new Skin(box_atlas);
+
+        /** Styles */
+        next_style = new ImageButtonStyle(buttons_skin.getDrawable("next_button"), null, null, null, null, null);
+        back_style = new ImageButtonStyle(buttons_skin.getDrawable("back_button"), null, null, null, null, null);
+        nextcar_style = new ImageButtonStyle(buttons_skin.getDrawable("nextarrow_small"), null, null, null, null, null);
+        prevcar_style = new ImageButtonStyle(buttons_skin.getDrawable("backarrow_small"), null, null, null, null, null);
         
-       
+        box_style = new SelectBox.SelectBoxStyle();
+        box_style.background = box_skin.getDrawable("select_box1");
+        box_style.font = font;
+        box_style.fontColor = new Color(Color.YELLOW);
+        box_style.listStyle = new List.ListStyle(font, new Color(Color.GOLD), new Color(Color.WHITE), box_skin.getDrawable("select_box1"));
+        box_style.scrollStyle = new ScrollPane.ScrollPaneStyle();
+        box_style.scrollStyle.background = box_skin.getDrawable("select_box2");
+        box_style.scrollStyle.corner = box_skin.getDrawable("select_box1");
+        box_style.scrollStyle.vScroll = box_skin.getDrawable("select_box2");
+        box_style.scrollStyle.hScroll = box_skin.getDrawable("select_box2");
+        
+        txt_style = new TextField.TextFieldStyle();
+        txt_style.font = font;
+        txt_style.fontColor = new Color(Color.WHITE);
+        txt_style.background = box_skin.getDrawable("text_box");
+        
+        lbl_style = new Label.LabelStyle();
+        lbl_style.font = font;
+        lbl_style.fontColor = new Color(Color.WHITE);
+        
     }
 
     @Override
     public void show() {
         Gdx.app.log("CarSelection", "show called");
-        background = new Texture(Gdx.files.internal("menu/menu_bg.png"));
         
-        
-        selectCarColor = new ComboBox();
-        
+        /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
-        title.setX(160);
-        title.setY(640);
+        title.setPosition(280, 648);
         
+        /** SelectBox and TextArea*/
+        color_select = new SelectBox(box_style);
+        color_select.setItems("-- Select Car Color --", "Blue", "Dark Blue", "Green", "Orange", "Purple", "Red", "White", "Yellow");
+        color_select.setPosition(200, 300);
+        color_select.setSize(432, 40);
+
+        carDescription = new TextArea("Description", txt_style);
+        carDescription.setPosition(200,170);
+        carDescription.setSize(432, 120);
+        
+        /** Preview */
+        preview = new Image(new Texture(Gdx.files.internal("prius/prius_white.png")));
+        preview.setPosition(550, 450);
+        
+        //logo_preview = new Image(new Texture(Gdx.files.internal("")));
+
+        /** Buttons */
         next_btn = new ImageButton(next_style);
-        next_btn.setX(160);
-        next_btn.setY(32);
-        
+        next_btn.setPosition(1016, 24);
         back_btn = new ImageButton(back_style);
-        next_btn.setX(1120);
-        next_btn.setY(32);
-        
-        selectNextCarButton = new ImageButton(nextcar_style);
-        selectNextCarButton.setX(96);
-        selectNextCarButton.setY(640);
+        back_btn.setPosition(24, 24);
         
         selectPreviousCarButton = new ImageButton(prevcar_style);
+        selectPreviousCarButton.setX(24);
+        selectPreviousCarButton.setY(480);
+        selectNextCarButton = new ImageButton(nextcar_style);
+        selectNextCarButton.setX(750);
+        selectNextCarButton.setY(480);
+
+        /** Car stats */
+        weight = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        weight.setPosition(850, 550);
+        acceleration = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        acceleration.setPosition(850, 480);
+        top_speed = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        top_speed.setPosition(850, 410);
+        handling = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        handling.setPosition(850, 340);
+        tank_capacity = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        tank_capacity.setPosition(850, 270);
+        consumption = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        consumption.setPosition(850, 200);
+            
+        /**Labels */
+        weight_lbl = new Label("Weight", lbl_style);
+        weight_lbl.setPosition(855, 570);
+        accel_lbl = new Label("Acceleration", lbl_style);
+        accel_lbl.setPosition(855, 500);
+        top_speed_lbl = new Label("Top Speed", lbl_style);
+        top_speed_lbl.setPosition(855, 430);
+        handling_lbl = new Label("Handling", lbl_style);
+        handling_lbl.setPosition(855, 360);
+        capacity_lbl = new Label("Tank Capacity", lbl_style);
+        capacity_lbl.setPosition(855, 290);
+        consumption_lbl = new Label("Fuel Consumption", lbl_style);
+        consumption_lbl.setPosition(855, 220);
         
+
+        stage.addActor(weight);
+        stage.addActor(acceleration);
+        stage.addActor(handling);
+        stage.addActor(top_speed);
+        stage.addActor(tank_capacity);
+        stage.addActor(consumption);
+        
+        stage.addActor(weight_lbl);
+        stage.addActor(accel_lbl);
+        stage.addActor(top_speed_lbl);
+        stage.addActor(handling_lbl);
+        stage.addActor(capacity_lbl);
+        stage.addActor(consumption_lbl);
+        
+        stage.addActor(preview);
+        stage.addActor(carDescription);
+        stage.addActor(color_select);
+        
+        stage.addActor(selectNextCarButton);
+        stage.addActor(selectPreviousCarButton);
         stage.addActor(next_btn);
         stage.addActor(back_btn);
         stage.addActor(title);
         
         /** Listeners */
-//        next_btn.addListener(new ChangeListener() {
-//            @Override
-//            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-//                System.out.println("Clicked!");
-//            }
-//        });       
+        back_btn.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+//                if () {
+//                game.setScreen(null);
+//                }
+            }
+        });       
         
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,0);
+        Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        
-        stage.getBatch().begin();
         stage.act();
-        stage.getBatch().draw(background, 0, 0);
-        stage.getBatch().end();
         stage.draw();
-
-
     }
 
     @Override
@@ -153,10 +259,13 @@ public class CarSelectionScreen implements Screen{
 
     @Override
     public void dispose() {
-        Gdx.app.log("Car Selection", "show called");
+        Gdx.app.log("Car Selection", "dispose called");
+        game.dispose();
+        font.dispose();
         stage.dispose();
         stage.getBatch().dispose();
-        skin.dispose();
+        buttons_skin.dispose();
+        box_skin.dispose();
     }
     
 }
