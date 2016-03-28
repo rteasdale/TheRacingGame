@@ -37,7 +37,6 @@ private float speed = 200;
 private final float PIXELS_TO_METERS = 32;
 private Sprite boxSprite;
 
-private final int SPACE = -2;
 private final int LEFT = -1;
 private final int VSTOP = 0;
 private final int RIGHT = 1;
@@ -100,8 +99,6 @@ private Vector2 movement = new Vector2(0,0);
                     case Keys.RIGHT : //Something
                         currentHState = RIGHT;
                         
-                    case Keys.SPACE:
-                        currentVState = SPACE;
                     
                 }
                 return true;
@@ -121,7 +118,6 @@ private Vector2 movement = new Vector2(0,0);
                    case Keys.UP:
                    case Keys.S : 
                    case Keys.DOWN:
-                   case Keys.SPACE:
                        currentVState = VSTOP;
                    break;
 
@@ -370,7 +366,7 @@ private Vector2 movement = new Vector2(0,0);
    //    System.out.println("V State : " + currentVState);
      //   System.out.println("H State : " + currentHState);
         //movements(currentVState , currentHState); 
-       updateFriction();
+        updateFriction();
         updateDrive(currentVState);
         updateTurn(currentHState);
         System.out.println(box.getAngle());
