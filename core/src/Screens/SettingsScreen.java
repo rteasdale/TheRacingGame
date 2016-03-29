@@ -80,6 +80,7 @@ public class SettingsScreen implements Screen, InputProcessor {
         
         atlas = new TextureAtlas(Gdx.files.internal("menu/settings_atlas.txt"));
         check_skin = new Skin(atlas);       
+        Gdx.input.setInputProcessor(stage);
         
         buttonGroup = new ButtonGroup<CheckBox>();
         buttonGroup.setMaxCheckCount(1);
