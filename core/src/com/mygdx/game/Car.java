@@ -5,13 +5,10 @@
  */
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -34,15 +31,10 @@ public class Car {
     public PolygonShape shape;
     public FixtureDef fdef;
     
-        
     public Tire tire1;
     public Tire tire2;
     public Tire tire3;
     public Tire tire4;
-    
-    private final int LEFT = -1;
-    private final int RIGHT = 1;
-    private final int VSTOP = 0;
 
     private float PosTorque = 30;
     private float NegTorque = -30;    
@@ -54,6 +46,7 @@ public class Car {
     public Car(World world) {
         sprite = new Sprite(new Texture("lamborghini/lamborghini_white.png"));
         //create car body
+        
         bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
@@ -61,15 +54,10 @@ public class Car {
     
         shape = new PolygonShape();
         shape.setAsBox(.5f, .9f);
-        
-//        sprite.setSize(.5f, .9f);
-//        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-//        body.setUserData(sprite);
 
         fdef = new FixtureDef();
         fdef.shape = shape;
-        fdef.density = .5f;
-        fdef.friction = 3;
+        fdef.density = 1;
         
         //fixture = body.createFixture(shape, 1);
         
@@ -158,7 +146,7 @@ public class Car {
         angleToTurn = clamp(angleToTurn, -turnPerTimeStep, turnPerTimeStep);
         
         float newAngle = angleNow + angleToTurn;
-        flJoint.setLimits(newAngle, angleNow);
-        frJoint.setLimits(newAngle, angleNow);
+        flJoint.setLimits(newAngle, newAngle);
+        frJoint.setLimits(newAngle, newAngle);
     }
 }

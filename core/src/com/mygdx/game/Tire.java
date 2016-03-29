@@ -43,7 +43,7 @@ public class Tire {
         body = world.createBody(bdef);
         
         shape = new PolygonShape();
-        shape.setAsBox(.4f, .6f);
+        shape.setAsBox(.2f, .4f);
         body.createFixture(shape, .5f); //create fixture with shape and density
     }
     
