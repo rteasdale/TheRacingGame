@@ -36,7 +36,7 @@ public class RacingGame extends Game {
         Gdx.app.log("RacingGame", "App created");
         startTime = TimeUtils.millis();
 
-        setScreen(new Test1(this)); //** start SpashSreen, with Game parameter **//
+        setScreen(new PlayScreen(this)); //** start SpashSreen, with Game parameter **//
     
         //this.setScreen(new CarSelectionScreen(this));
     }
