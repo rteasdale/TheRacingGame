@@ -8,6 +8,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -39,15 +40,11 @@ public class Tire {
     public Tire(World world)  {
         bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
-        
         body = world.createBody(bdef);
         
         shape = new PolygonShape();
-        shape.setAsBox(2, 2);
-        body.createFixture(shape, 1); //create fixture with shape and density
-        body.setUserData(this);
-        
-        currentTraction = 1;
+        shape.setAsBox(.4f, .6f);
+        body.createFixture(shape, .5f); //create fixture with shape and density
     }
     
     public Tire() {
@@ -90,12 +87,12 @@ public class Tire {
         body.applyForce((currentForwardNormal.scl(dragForceMagnitude)), body.getWorldCenter(), true);
     }
     
-    public void updateDrive(int currentVState){
+    public void updateDrive(int controlState){
         float desiredSpeed = 0;
-        switch(currentVState){
+        switch(controlState & (UP | DOWN)){
             case UP: desiredSpeed = maxForwardSpeed; break;
             case DOWN : desiredSpeed = maxBackwardSpeed; break;
-            case VSTOP : return;
+            default: ; //do nothing
         }
         
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0,1));
@@ -120,12 +117,12 @@ public class Tire {
         body.applyForce(new Vector2(x * force, y * force), body.getWorldCenter(), true);
     }
     
-    public void updateTurn(int currentHState){
-           float desiredTorque = 0;
-        switch(currentHState){
-            case LEFT: desiredTorque = PosTorque; break;
-            case RIGHT: desiredTorque = NegTorque;break;
-            default : ;
+    public void updateTurn(int controlState){
+        float desiredTorque = 0;
+        switch(controlState & (LEFT | RIGHT)){
+            case LEFT: desiredTorque = 15; break;
+            case RIGHT: desiredTorque = -15;break;
+            default: ; //nothing
         }
         body.applyTorque(desiredTorque, true);
     }    

@@ -10,6 +10,7 @@ import Screens.PlayScreen;
 import Screens.MainMenuScreen;
 
 import Screens.PlayScreen;
+import Screens.SettingsScreen;
 import Test.Test1;
 
 import com.badlogic.gdx.Game;

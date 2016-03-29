@@ -7,8 +7,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -23,23 +26,24 @@ import java.util.ArrayList;
  * @author ROSY
  */
 public class Car {
-    private World world;
-    private Texture bg;
-    private OrthographicCamera camera;
-    private final float PIXELS_TO_METERS = 32;
+    private Sprite sprite;
 
-    private Body body;
-    private BodyDef bdef;
-    private Fixture fixture;
-    private PolygonShape boxShape;
-    private FixtureDef fixDef;
+    public Body body;
+    public BodyDef bdef;
+    public Fixture fixture;
+    public PolygonShape shape;
+    public FixtureDef fdef;
+    
+        
+    public Tire tire1;
+    public Tire tire2;
+    public Tire tire3;
+    public Tire tire4;
     
     private final int LEFT = -1;
-    private final int VSTOP = 0;
     private final int RIGHT = 1;
-    private final int DOWN = -1;
-    private final int HSTOP = 0;
-    private final int UP = 1;
+    private final int VSTOP = 0;
+
     private float PosTorque = 30;
     private float NegTorque = -30;    
     
@@ -48,14 +52,28 @@ public class Car {
     
 
     public Car(World world) {
-        this.world = world;
+        sprite = new Sprite(new Texture("lamborghini/lamborghini_white.png"));
+        //create car body
         bdef = new BodyDef();
+        bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
-        body.setAngularDamping(.99f);
-        boxShape.setAsBox(.5f , 1.25f);
+        body.setAngularDamping(3);
+    
+        shape = new PolygonShape();
+        shape.setAsBox(.5f, .9f);
         
-        fixture = body.createFixture(boxShape, 1);
+//        sprite.setSize(.5f, .9f);
+//        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+//        body.setUserData(sprite);
+
+        fdef = new FixtureDef();
+        fdef.shape = shape;
+        fdef.density = .5f;
+        fdef.friction = 3;
         
+        //fixture = body.createFixture(shape, 1);
+        
+        //common joint parameters
         RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.bodyA = body;
         jointDef.enableLimit = true;
@@ -71,34 +89,34 @@ public class Car {
         float frontTireMaxLateralImpulse = (float) 7.5;
         
         //back left tire
-        Tire tire1 = new Tire(world);
+        tire1 = new Tire(world);
         tire1.setCharacteristics(maxForwardSpeed, maxBackwardSpeed, backTireMaxDriveForce, backTireMaxLateralImpulse);
         jointDef.bodyB = tire1.body;
-        jointDef.localAnchorA.set(-3, 0.75f);
+        jointDef.localAnchorA.set(-1, -.75f);
         world.createJoint(jointDef);
         tires.add(tire1);
         
         //back right tire 
-        Tire tire2 = new Tire(world);
+        tire2 = new Tire(world);
         tire2.setCharacteristics(maxForwardSpeed, maxBackwardSpeed, backTireMaxDriveForce, backTireMaxLateralImpulse);
         jointDef.bodyB = tire2.body;
-        jointDef.localAnchorA.set(3, 0.75f);
+        jointDef.localAnchorA.set(1, -.75f);
         world.createJoint(jointDef);
         tires.add(tire2);
         
         //front left tire
-        Tire tire3 = new Tire(world);
+        tire3 = new Tire(world);
         tire3.setCharacteristics(maxForwardSpeed, maxBackwardSpeed, frontTireMaxDriveForce, frontTireMaxLateralImpulse);
         jointDef.bodyB = tire3.body;
-        jointDef.localAnchorA.set( -3, 8.5f );
+        jointDef.localAnchorA.set( -1, .75f );
         flJoint = (RevoluteJoint)world.createJoint(jointDef);
         tires.add(tire3);
         
         //front right tire
-        Tire tire4 = new Tire(world);
+        tire4 = new Tire(world);
         tire4.setCharacteristics(maxForwardSpeed, maxBackwardSpeed, backTireMaxDriveForce, backTireMaxLateralImpulse);
         jointDef.bodyB = tire4.body;
-        jointDef.localAnchorA.set(3, 8.5f);
+        jointDef.localAnchorA.set(1, .75f);
         frJoint = (RevoluteJoint)world.createJoint(jointDef);
         tires.add(tire4);
         
@@ -116,7 +134,7 @@ public class Car {
         return Math.max(min, Math.min(max, val));
     }
     
-    void update(int controlState) {
+    public void update(int controlState) {
         for(int i = 0; i < tires.size(); i++) {
             tires.get(i).updateFriction();
         }
@@ -130,10 +148,10 @@ public class Car {
         float turnPerTimeStep = turnSpeedPerSec / 60.0f;
         float desiredAngle = 0;
         
-        switch(controlState){
-            case LEFT: desiredAngle = PosTorque; break;
-            case RIGHT: desiredAngle = NegTorque;break;
-            default : ;
+        switch(controlState & (LEFT | RIGHT)){
+            case LEFT: desiredAngle = lockAngle; break;
+            case RIGHT: desiredAngle = -lockAngle;break;
+            default: ; //nothing
         }
         float angleNow = flJoint.getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
