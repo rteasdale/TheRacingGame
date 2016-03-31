@@ -125,12 +125,23 @@ public class MainMenuScreen extends Stage implements Screen {
             }
         });        
         
+        /** Boolean value determines if two players*/
+        
         onePlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new PlayerScreen(game, false));
+                
             }
         });  
+
+        twoPlayersButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                game.setScreen(new PlayerScreen(game, true)); //two players
+            }
+        });     
+        
     }
 
     @Override
@@ -153,7 +164,6 @@ public class MainMenuScreen extends Stage implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("MainMenuScreen", "dispose called");
-        game.dispose();
         background.dispose();
         stage.getBatch().dispose();
         stage.dispose();

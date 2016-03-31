@@ -7,6 +7,7 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,6 +28,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.RacingGame;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -39,12 +42,19 @@ public class CarSelectionScreen implements Screen{
     private Stage stage;
     private BitmapFont font;
     
+    private boolean twoPlayers;
+    private FileHandle file;
+    String[] car;
+    private int currentCar = 1;
+    
     private Image title;
     private ImageButton selectNextCarButton;
     private ImageButton selectPreviousCarButton;
 
     private ImageButton next_btn;
     private ImageButton back_btn;
+    private ImageButtonStyle next_style;
+    private ImageButtonStyle back_style;
     
     private Image preview;
     private Image logo_preview;
@@ -59,8 +69,8 @@ public class CarSelectionScreen implements Screen{
     private Skin buttons_skin;
     private Skin box_skin;
      
-    private ImageButtonStyle next_style;
-    private ImageButtonStyle back_style;
+    private int i = 0;
+
     private ImageButtonStyle nextcar_style;
     private ImageButtonStyle prevcar_style;
     private Label.LabelStyle lbl_style;
@@ -79,10 +89,14 @@ public class CarSelectionScreen implements Screen{
     private Label capacity_lbl;
     private Label consumption_lbl;
     
-    public CarSelectionScreen(RacingGame game) {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers) {
         Gdx.app.log("CarSelection", "constructor called");
         this.game = game;
+        this.twoPlayers = twoPlayers;
         
+        file = new FileHandle("data/car.txt");
+        car = file.readString().split(",");
+                
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         stage = new Stage();
@@ -220,11 +234,52 @@ public class CarSelectionScreen implements Screen{
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-//                if () {
-//                game.setScreen(null);
-//                }
+                if (twoPlayers == true) {
+                    
+                }
             }
-        });       
+        });
+        
+        next_btn.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                if (twoPlayers == true) {
+                    
+                }
+            }
+        });   
+        
+        /**Color*/
+        color_select.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                Gdx.app.log("color selected:", color_select.getSelected());
+                if (color_select.getSelected().equals("Blue")) {
+                    
+                }
+            }
+        });
+        
+        /** Car type*/
+        selectNextCarButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (i < 54) {
+                    Gdx.app.log("Next car", car[i]);
+                    Gdx.app.log("Current car", Integer.toString(currentCar));
+                    carDescription.setText(car[i]);
+                    i+=9;
+                    currentCar++;
+                }
+            }
+        });
+        
+        selectPreviousCarButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                
+            }
+        });        
         
     }
 
@@ -239,22 +294,18 @@ public class CarSelectionScreen implements Screen{
 
     @Override
     public void resize(int i, int i1) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package Scenes;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -18,6 +19,12 @@ public class Hud {
     
     private Integer timer;
     private float timeCount;
+    
+    public Hud(SpriteBatch batch) {
+        stage = new Stage();
+        
+    }
+    
     
     
 }

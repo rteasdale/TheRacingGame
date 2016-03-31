@@ -70,8 +70,6 @@ public class SettingsScreen implements Screen, InputProcessor {
     private Slider musicVolume;
     private Slider.SliderStyle slider_style;
     
-
-    
     public SettingsScreen(RacingGame game) {
         this.game = game;
         stage = new Stage();
