@@ -173,11 +173,30 @@ private Vector2 movement;
         
         
         //box shape
-        PolygonShape boxShape = new PolygonShape();
-        boxShape.setAsBox(.5f , 1.25f);
+        PolygonShape polyShape = new PolygonShape();
+        
+        Vector2[] vertices = new Vector2[16];
+        vertices[0].set(0.46f, 2);
+        vertices[1].set(0.81f, 1.92f);
+        vertices[2].set(0.90f, 1.83f);
+        vertices[3].set(0.90f, 1.5f);
+        vertices[4].set(1.00f, 1.46f);
+        vertices[5].set(0.90f, 1.33f);
+        vertices[6].set(0.90f, 0.30f);
+        vertices[7].set(0.80f, 0.06f);
+        vertices[8].set(0.50f,0.02f );
+        vertices[9].set(0.13f, 0.10f);
+        vertices[10].set(0.08f, 1.30f);
+        vertices[11].set(0,1.40f);
+        vertices[12].set(0.08f, 1.5f);
+        vertices[13].set(0.08f, 1.83f);
+        vertices[14].set(0.17f, 1.92f);
+        vertices[15].set(0.46f, 2);
+        
+        polyShape.set(vertices);
         
         //Fixture definition
-        fixtureDef.shape = boxShape;
+        fixtureDef.shape = polyShape;
         fixtureDef.friction = .75f;
         fixtureDef.restitution = .1f;
         fixtureDef.density = 5;
@@ -190,7 +209,7 @@ private Vector2 movement;
         boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
         box.setUserData(boxSprite);
         
-        boxShape.dispose();
+        polyShape.dispose();
         
         
         //MAKING BOX2D BORDER LINES

@@ -21,9 +21,8 @@ public class Tire {
     private BodyDef bdef;
     private PolygonShape shape;
     
-    private final int LEFT = -1;
-    private final int VSTOP = 0;
-    private final int RIGHT = 1;
+    private final int LEFT = -3;
+    private final int RIGHT = -2;
     private final int DOWN = -1;
     private final int HSTOP = 0;
     private final int UP = 1;
@@ -88,17 +87,17 @@ public class Tire {
     
     public void updateDrive(int controlState){
         float desiredSpeed = 0;
-        switch(controlState & (UP | DOWN)){
-            case UP: desiredSpeed = maxForwardSpeed; break;
-            case DOWN : desiredSpeed = maxBackwardSpeed; break;
-            default: ; //do nothing
+        if(controlState == UP){
+            desiredSpeed = maxForwardSpeed;
+        }
+        else if(controlState == DOWN){
+            desiredSpeed = maxBackwardSpeed;
+        }
+        else{
+            return;
         }
         
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0,1));
-        System.out.print(currentForwardNormal.x  + " " + currentForwardNormal.y);
-        
-        float x = currentForwardNormal.x;
-        float y = currentForwardNormal.y;
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
         float force = 0;
@@ -112,8 +111,8 @@ public class Tire {
         else{
             return;
         }
-       // box.applyForce(currentForwardNormal.scl(force), box.getWorldCenter(), true);
-        body.applyForce(new Vector2(x * force, y * force), body.getWorldCenter(), true);
+       body.applyForce(currentForwardNormal.scl(force), body.getWorldCenter(), true);
+        //body.applyForce(new Vector2(x * force, y * force), body.getWorldCenter(), true);
     }
     
     public void updateTurn(int controlState){
