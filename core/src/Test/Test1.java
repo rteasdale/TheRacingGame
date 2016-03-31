@@ -40,13 +40,13 @@ public class Test1 implements Screen {
     
     private int controlState;
     
-    private final int LEFT = -1;
-    private final int VSTOP = 0;
-    private final int RIGHT = 1;
+    private final int LEFT = 1;
+    private final int VSTOP = 2;
+    private final int RIGHT = 4;
+    private final int UP = 8;
 
     private final int DOWN = -1;
     private final int HSTOP = 0;
-    private final int UP = 1;
 
     private int currentVState = VSTOP;
     private int currentHState = HSTOP;
@@ -64,12 +64,8 @@ public class Test1 implements Screen {
     
     @Override
     public void show() {
-        
         debugRenderer = new Box2DDebugRenderer();
         car = new Car(world);
-        
-        body = world.createBody(car.bdef);
-        fixture = body.createFixture(car.fdef);
         
         car.bdef.position.set(0, 1);
         
@@ -121,6 +117,7 @@ public class Test1 implements Screen {
         
         car.tire4.updateFriction();
         car.tire4.updateDrive(controlState);
+        
         car.tire4.updateTurn(controlState);
         
         car.update(controlState);
