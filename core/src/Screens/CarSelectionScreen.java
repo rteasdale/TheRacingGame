@@ -108,7 +108,7 @@ public class CarSelectionScreen implements Screen{
         this.game = game;
         this.twoPlayers = twoPlayers;
         
-        hud = new Hud(game.batch);
+        //hud = new Hud(game.batch);
         
         file = new FileHandle("data/car.txt");
         group = file.readString().split("\n");
