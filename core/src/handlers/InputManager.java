@@ -20,63 +20,73 @@ public class InputManager  implements InputProcessor  {
                                             W, S, D, A
 	}
 
-	public HashSet<Key> pressedKeys = new HashSet<Key>();
+	public HashSet<Key> pressedKeysP1 = new HashSet<Key>();
+        public HashSet<Key> pressedKeysP2 = new HashSet<Key>();
 
 	public void update(){
-		mainClass.car.update(pressedKeys);
+		mainClass.car.update(pressedKeysP1);
+                mainClass.car2.update(pressedKeysP2);
 	}
 	
 	@Override
 	public boolean keyDown(int keycode) {
-                                            if (keycode == Input.Keys.ESCAPE) { 
-                                            Gdx.app.exit();
-                                     }
-                                            else if (keycode == Input.Keys.UP) {
-			if (!pressedKeys.contains(Key.Up)) {
-				pressedKeys.add(Key.Up);
-			}
-		} else if (keycode == Input.Keys.DOWN) {
-			if (!pressedKeys.contains(Key.Down)) {
-				pressedKeys.add(Key.Down);
-			}
-		} else if (keycode == Input.Keys.LEFT) {
-			if (!pressedKeys.contains(Key.Left)) {
-				pressedKeys.add(Key.Left);
-			}
-		} else if (keycode == Input.Keys.RIGHT) {
-			if (!pressedKeys.contains(Key.Right)) {
-				pressedKeys.add(Key.Right);
-			}
-		}else if (keycode== Input.Keys.SHIFT_RIGHT){
-                                                            if(!pressedKeys.contains(Key.Shift)){
-                                                                pressedKeys.add(Key.Shift);
-                                                            }
-                                            }
-		return false;
+                if (keycode == Input.Keys.ESCAPE) { 
+                Gdx.app.exit();
+                }
+            else if (keycode == (Input.Keys.UP | Input.Keys.W)) {
+                    if (!pressedKeysP1.contains(Key.Up) | !pressedKeysP2.contains(Key.W)) {
+                            pressedKeysP1.add(Key.Up);
+                            pressedKeysP2.add(Key.W);
+                    }
+            } else if (keycode == (Input.Keys.DOWN | Input.Keys.S)) {
+                    if (!pressedKeysP1.contains(Key.Down) | !pressedKeysP2.contains(Key.S)) {
+                            pressedKeysP1.add(Key.Down);
+                            pressedKeysP2.add(Key.S);
+                    }
+            } else if (keycode == (Input.Keys.LEFT | Input.Keys.A)) {
+                    if (!pressedKeysP1.contains(Key.Left) | !pressedKeysP2.contains(Key.A)) {
+                            pressedKeysP1.add(Key.Left);
+                            pressedKeysP2.add(Key.A);
+                    }
+            } else if (keycode == (Input.Keys.RIGHT | Input.Keys.D)) {
+                    if (!pressedKeysP1.contains(Key.Right) | !pressedKeysP2.contains(Key.D)) {
+                            pressedKeysP1.add(Key.Right);
+                            pressedKeysP2.add(Key.D);
+                    }
+            }else if (keycode== Input.Keys.SHIFT_RIGHT){
+                if(!pressedKeysP1.contains(Key.Shift) | !pressedKeysP2.contains(Key.Shift)){
+                pressedKeysP1.add(Key.Shift);
+                pressedKeysP2.add(Key.Shift);
+            }
+              }
+            return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Input.Keys.UP) {
-			if (pressedKeys.contains(Key.Up)) {
-				pressedKeys.remove(Key.Up);
+			if (pressedKeysP1.contains(Key.Up) | pressedKeysP2.contains(Key.Up)) {
+				pressedKeysP1.remove(Key.Up);
+                                pressedKeysP2.remove(Key.W);
 			}
 		} else if (keycode == Input.Keys.DOWN) {
-			if (pressedKeys.contains(Key.Down)) {
-				pressedKeys.remove(Key.Down);
+			if (pressedKeysP1.contains(Key.Down) | pressedKeysP2.contains(Key.S)) {
+				pressedKeysP1.remove(Key.Down);
+                                pressedKeysP2.remove(Key.S);
 			}
 		} else if (keycode == Input.Keys.LEFT) {
-			if (pressedKeys.contains(Key.Left)) {
-				pressedKeys.remove(Key.Left);
+			if (pressedKeysP1.contains(Key.Left) | pressedKeysP2.contains(Key.Up)) {
+				pressedKeysP1.remove(Key.Up);
+                                pressedKeysP2.remove(Key.W);
 			}
 		} else if (keycode == Input.Keys.RIGHT) {
 			if (pressedKeys.contains(Key.Right)) {
 				pressedKeys.remove(Key.Right);
 			}
 		}else if (keycode== Input.Keys.SHIFT_RIGHT){
-                                                            if(pressedKeys.contains(Key.Shift)){
-                                                                pressedKeys.remove(Key.Shift);
-                                                            }
+                if(pressedKeys.contains(Key.Shift)){
+                    pressedKeys.remove(Key.Shift);
+                }
                                             }
 
 		return false;

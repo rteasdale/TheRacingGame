@@ -19,7 +19,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.InputController;
 import com.mygdx.game.RacingGame;
 
 /**
@@ -81,73 +80,7 @@ private Vector2 movement;
         
         
         //CONTROLS
-        
-        
-        Gdx.input.setInputProcessor(new InputController() {
-            @Override
-            public boolean keyDown(int keycode) {
-               switch(keycode) {
-                   case Keys.ESCAPE: 
-                   Gdx.app.exit();
-                   break;
-                    
-                   case Keys.W : //Something 
-                   case Keys.UP : //Something
-                       currentVState = UP;                       
-                   break;
-                       
-                   case Keys.A : //Something
-                   case Keys.LEFT : //Something
-                      currentHState = LEFT;
-                   break;
-                   
-                   case Keys.DOWN : //Something
-                   case Keys.S : //Something
-                       currentVState = DOWN;
-                   break;
-                                    
-                    case Keys.D :   
-                    case Keys.RIGHT : //Something
-                        currentHState = RIGHT;
-                        
-                    
-                }
-                return true;
-            }
-            
-            // CONTROLLING ZOOM OF CAMERA THROUGH SCROLL
-            
-            @Override
-            public boolean scrolled(int amount) {
-                camera.zoom += amount / 25f;
-                return true;
-            }
-            
-            //CONTROLS WHEN YOU LIFT YOUR FINGER FROM THE KEY
-            
-            @Override
-            public boolean keyUp(int keycode) {
-                switch(keycode) {
-                    
-                   case Keys.W : 
-                   case Keys.UP:
-                   case Keys.S : 
-                   case Keys.DOWN:
-                       currentVState = VSTOP;
-                   break;
 
-                       
-                   case Keys.A : 
-                   case Keys.LEFT:
-                   case Keys.RIGHT:
-                   case Keys.D : 
-                       currentHState = HSTOP;
-                       
-                }
-                return true;
-            }
-            
-        });
         
         //MAKING BOX2D BOX
         
