@@ -44,6 +44,7 @@ private RacingGame game;
 	InputManager inputManager;
 	CarContactListener cl;
 	public Car car;
+        public Car car2;
         
                      int mapNum = 2;
         
@@ -54,12 +55,12 @@ private RacingGame game;
                     String mapAdress;
 
 	public  GameScreen (RacingGame game) {
-                                            this.game = game;
-                                            
-                                            choseMap(mapNum);
-                                            
-                                           batch = new SpriteBatch();
-                                           bg = new Texture(Gdx.files.internal(mapAdress));
+            this.game = game;
+
+            choseMap(mapNum);
+
+           batch = new SpriteBatch();
+           bg = new Texture(Gdx.files.internal(mapAdress));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH*2, V_HEIGHT*2);
 		camera.zoom = .5f;
@@ -78,6 +79,7 @@ private RacingGame game;
 		Gdx.input.setInputProcessor(inputManager);
 		
 	    this.car = new Car(world);
+            this.car2 = new Car(world);
 
 		createGrounds();
 	}
@@ -95,25 +97,23 @@ private RacingGame game;
 
 		world.step(1 / 60f, 6, 2);
                 
-                                            
+            camera.update();
+            batch.begin();
+            batch.setProjectionMatrix(camera.combined);
+            batch.draw(bg, 0, 0);
+            world.getBodies(tmpBodies);
+             for(Body body : tmpBodies)
+             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+            Sprite sprite = (Sprite) body.getUserData();
+           sprite.setPosition(body.getPosition().x - sprite.getWidth()/ 2, body.getPosition().y - sprite.getHeight()/2);
+           sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
+
+             sprite.draw(batch);
+             }
+            batch.end();
                                            
-                                           camera.update();
-                                           batch.begin();
-                                           batch.setProjectionMatrix(camera.combined);
-                                           batch.draw(bg, 0, 0);
-                                           world.getBodies(tmpBodies);
-                                            for(Body body : tmpBodies)
-                                            if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-                                           Sprite sprite = (Sprite) body.getUserData();
-                                          sprite.setPosition(body.getPosition().x - sprite.getWidth()/ 2, body.getPosition().y - sprite.getHeight()/2);
-                                          sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
-                                          
-                                            sprite.draw(batch);
-                                            }
-                                           batch.end();
-                                           
-                                           //Box2D Debug Renderer
-                                           if(debug){
+            //Box2D Debug Renderer
+            if(debug){
 		renderer.render(world, camera.combined);
                                            }
                                            
@@ -196,7 +196,8 @@ private RacingGame game;
 
     @Override
     public void dispose() {
-        
+        bg.dispose();
+        world.dispose();
     }
 }
 
