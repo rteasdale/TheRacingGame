@@ -5,6 +5,7 @@
  */
 package Screens;
 
+import Scenes.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -13,7 +14,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -41,15 +44,26 @@ public class CarSelectionScreen implements Screen{
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
+    private Hud hud;
     
     private boolean twoPlayers;
     private FileHandle file;
+    String[] group;
     String[] car;
+    String[] previews;
     private int currentCar = 1;
+    private int i = 0;
     
     private Image title;
     private ImageButton selectNextCarButton;
     private ImageButton selectPreviousCarButton;
+    
+    private Rectangle weight_lvl;
+    private Rectangle accel_lvl;
+    private Rectangle top_speed_lvl;
+    private Rectangle handling_lvl;
+    private Rectangle tank_lvl;
+    private Rectangle consumption_lvl;
 
     private ImageButton next_btn;
     private ImageButton back_btn;
@@ -69,7 +83,7 @@ public class CarSelectionScreen implements Screen{
     private Skin buttons_skin;
     private Skin box_skin;
      
-    private int i = 0;
+   
 
     private ImageButtonStyle nextcar_style;
     private ImageButtonStyle prevcar_style;
@@ -94,9 +108,16 @@ public class CarSelectionScreen implements Screen{
         this.game = game;
         this.twoPlayers = twoPlayers;
         
+        hud = new Hud(game.batch);
+        
         file = new FileHandle("data/car.txt");
-        car = file.readString().split(",");
+        group = file.readString().split("\n");
+        car = group[0].split(",");
+        previews = group[1].split(",");
                 
+//        System.out.println(Arrays.toString(car));
+//        System.out.println(group[1]);
+        
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         stage = new Stage();
@@ -143,7 +164,9 @@ public class CarSelectionScreen implements Screen{
     @Override
     public void show() {
         Gdx.app.log("CarSelection", "show called");
-        
+        Gdx.app.log("Current car", car[i]);
+        Gdx.app.log("Next car", car[i+=2]);
+        i = 0;
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
         title.setPosition(280, 648);
@@ -157,10 +180,13 @@ public class CarSelectionScreen implements Screen{
         carDescription = new TextArea("Description", txt_style);
         carDescription.setPosition(200,170);
         carDescription.setSize(432, 120);
+        carDescription.setText(car[i]);
         
         /** Preview */
-        preview = new Image(new Texture(Gdx.files.internal("prius/prius_white.png")));
-        preview.setPosition(550, 450);
+        preview = new Image(new Texture(Gdx.files.internal("golf/golf_white.png")));
+        preview.setPosition(530, 450);
+        preview.sizeBy(52, 100);
+        preview.rotateBy(90);
         
         //logo_preview = new Image(new Texture(Gdx.files.internal("")));
 
@@ -264,12 +290,17 @@ public class CarSelectionScreen implements Screen{
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (i < 54) {
-                    Gdx.app.log("Next car", car[i]);
-                    Gdx.app.log("Current car", Integer.toString(currentCar));
-                    carDescription.setText(car[i]);
-                    i+=9;
+                if (i < 6) {
+                    Gdx.app.log("Current car", car[i]);
+                    i++;
                     currentCar++;
+                    carDescription.setText(car[i]);
+                    preview.remove();
+                    preview = new Image(new Texture(Gdx.files.internal(previews[i])));
+                    preview.setPosition(530, 450);
+                    preview.sizeBy(52, 100);
+                    preview.rotateBy(90);
+                    stage.addActor(preview);
                 }
             }
         });
@@ -277,7 +308,12 @@ public class CarSelectionScreen implements Screen{
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                
+                if (i > 0) {
+                    currentCar--;
+                    i--;
+                    Gdx.app.log("Previous car", car[i+1]);
+                    Gdx.app.log("Current car", Integer.toString(currentCar));                    
+                }
             }
         });        
         
@@ -287,6 +323,11 @@ public class CarSelectionScreen implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+      
+//        game.batch.begin();
+//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        game.batch.end();
+//        hud.stage.draw();
         
         stage.act();
         stage.draw();

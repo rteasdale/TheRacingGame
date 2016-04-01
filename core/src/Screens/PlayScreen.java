@@ -5,6 +5,7 @@
  */
 package Screens;
 
+import Scenes.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.InputController;
 import com.mygdx.game.RacingGame;
 
@@ -31,11 +33,14 @@ public class PlayScreen implements Screen {
   
 private World world;
 private Box2DDebugRenderer debugRenderer;
-private SpriteBatch batch;
+private final SpriteBatch batch;
 private OrthographicCamera camera;
 private float speed = 200;
 private final float PIXELS_TO_METERS = 32;
 private Sprite boxSprite;
+private Viewport port;
+
+private Hud hud;
 
 private final int LEFT = -1;
 private final int VSTOP = 0;
@@ -58,6 +63,10 @@ private Vector2 movement;
 
    public PlayScreen(RacingGame game) {
         this.game = game;
+        batch = new SpriteBatch();
+        hud = new Hud(batch);
+        camera = new OrthographicCamera();
+        
     }
     
    
@@ -67,9 +76,7 @@ private Vector2 movement;
         
         world = new World(new Vector2(0,0) , true);
         debugRenderer = new Box2DDebugRenderer();
-        batch = new SpriteBatch();
-        
-        
+
         camera = new OrthographicCamera(Gdx.graphics.getWidth() / PIXELS_TO_METERS, Gdx.graphics.getHeight() / PIXELS_TO_METERS);
         
         
@@ -416,8 +423,7 @@ private Vector2 movement;
         
         camera.position.set(box.getPosition().x,box.getPosition().y , 0);
         camera.update();
-        
-        
+       
         
         //To create Sprites for cars with SpriteBatch
         batch.setProjectionMatrix(camera.combined);
@@ -432,7 +438,7 @@ private Vector2 movement;
                 
                 sprite.draw(batch);
             }
-        
+       
         
         batch.end();
         

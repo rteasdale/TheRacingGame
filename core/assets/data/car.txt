@@ -1,6 +1,8 @@
-Volkswagen Golf 2015, golf/golf_lightblue.png, golf/golf_darkblue.png, golf golf_yellow.png, golf/golf_green.png, golf/golf_white.png, golf/golf_red.png, golf/golf_purple.png, golf/golf_orange.png,
-Lamborghini Gallardo, lamborghini/lamborghini_lightblue.png,lamborghini/lamborghini_darkblue.png, lamborghini/lamborghini_yellow.png,lamborghini/lamborghini_green.png, lamborghini/lamborghini_white.png, lamborghini/lamborghini_red.png, lamborghini/lamborghini_purple.png, lamborghini/lamborghini_orange.png,
-Toyota Prius, prius/prius_lightblue.png, prius/prius_darkblue.png, prius/prius_yellow.png, prius/prius_green.png, prius/prius_white.png, prius/prius_red.png, prius/prius_purple.png, prius/prius_orange.png,
-Porsche 911 GT3 RS, porsche/porsche_lightblue.png, porsche/porsche_lightblue.png, porsche/porsche_darkblue.png, porsche/porsche_yellow.png, porsche/porsche_green.png, porsche/porsche_white.png, porsche/porsche_purple.png, porsche/porsche_orange.png,
-Ford F-150 Raptor, truck/truck_lightblue.png, truck/truck_darkblue.png, truck/truck_yellow.png, truck/truck_green.png, truck/truck_white.png, truck/truck_red.png, truck/truck_purple.png, truck/truck_orange.png,
-Pagani Zonda F, zondaf/zondaf_lightblue.png, zondaf/zondaf_darkblue.png, zondaf/zondaf_yellow.png, zondaf/zondaf_green.png, zondaf/zondaf_white.png, zondaf/zondaf_red.png, zondaf/zondaf_purple.png, zondaf/zondaf_orange.png
+Volkswagen Golf 2015, Lamborghini Gallardo, Toyota Prius, Porsche 911 GT3 RS, Ford F-150 Raptor, Pagani Zonda F
+golf/golf_white.png,lamborghini/lamborghini_lightblue.png,prius/prius_darkblue.png,porsche/porsche_yellow.png,truck/truck_red.png,zondaf/zondaf_green.png
+golf/golf_lightblue.png, golf/golf_darkblue.png,golf golf_yellow.png, golf/golf_green.png, golf/golf_white.png, golf/golf_red.png, golf/golf_purple.png, golf/golf_orange.png
+lamborghini/lamborghini_lightblue.png,lamborghini/lamborghini_darkblue.png, lamborghini/lamborghini_yellow.png,lamborghini/lamborghini_green.png, lamborghini/lamborghini_white.png, lamborghini/lamborghini_red.png, lamborghini/lamborghini_purple.png, lamborghini/lamborghini_orange.png
+prius/prius_lightblue.png, prius/prius_darkblue.png, prius/prius_yellow.png, prius/prius_green.png, prius/prius_white.png, prius/prius_red.png, prius/prius_purple.png, prius/prius_orange.png
+porsche/porsche_lightblue.png, porsche/porsche_lightblue.png, porsche/porsche_darkblue.png, porsche/porsche_yellow.png, porsche/porsche_green.png, porsche/porsche_white.png, porsche/porsche_purple.png, porsche/porsche_orange.png,
+truck/truck_lightblue.png, truck/truck_darkblue.png, truck/truck_yellow.png, truck/truck_green.png, truck/truck_white.png, truck/truck_red.png, truck/truck_purple.png, truck/truck_orange.png
+zondaf/zondaf_lightblue.png, zondaf/zondaf_darkblue.png, zondaf/zondaf_yellow.png, zondaf/zondaf_green.png, zondaf/zondaf_white.png, zondaf/zondaf_red.png, zondaf/zondaf_purple.png, zondaf/zondaf_orange.png
