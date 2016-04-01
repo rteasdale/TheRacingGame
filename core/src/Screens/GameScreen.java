@@ -28,8 +28,8 @@ import handlers.InputManager;
 
 public class GameScreen implements Screen {
 private RacingGame game;
-	public static final int V_WIDTH = 320;
-	public static final int V_HEIGHT = 240;
+	public static final int V_WIDTH = 1280;
+	public static final int V_HEIGHT = 720;
         
                     public boolean debug = true; //Boolean if I want B2D Debug on or off
                     
