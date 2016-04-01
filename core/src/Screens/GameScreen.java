@@ -28,8 +28,8 @@ import handlers.InputManager;
 
 public class GameScreen implements Screen {
 private RacingGame game;
-	public static final int V_WIDTH = 320;
-	public static final int V_HEIGHT = 240;
+	public static final int V_WIDTH = 1280;
+	public static final int V_HEIGHT = 720;
         
                     public boolean debug = true; //Boolean if I want B2D Debug on or off
                     
@@ -45,7 +45,7 @@ private RacingGame game;
 	CarContactListener cl;
 	public Car car;
         
-                     int mapNum = 2;
+                     int mapNum = 1;
         
                     float red;
                     float green;
@@ -61,7 +61,7 @@ private RacingGame game;
                                            batch = new SpriteBatch();
                                            bg = new Texture(Gdx.files.internal(mapAdress));
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, V_WIDTH*2, V_HEIGHT*2);
+		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		camera.zoom = .5f;
 		camera.position.x = 0;
 		camera.position.y = 0;
@@ -88,7 +88,7 @@ private RacingGame game;
                 }
 	@Override
 	public void render (float f) {
-                        Gdx.gl.glClearColor(71/255f,122/255f,25/255f,1);
+                        Gdx.gl.glClearColor(red,green,blue,alpha);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		inputManager.update();
@@ -154,29 +154,22 @@ private RacingGame game;
             }
             
             if(mapNum == 2){
-                red = 71/255f;
-                green = 122/255f;
-                blue = 25/255f;
+                red = 254/255f;
+                green = 254/255f;
+                blue = 255/255f;
                 alpha = 1;
                 mapAdress = "maps/map2.png";
                 
             }
             if(mapNum == 3){
-                red = 71/255f;
-                green = 122/255f;
-                blue = 25/255f;
+                red = 13/255f;
+                green = 8/255f;
+                blue = 36/255f;
                 alpha = 1;
                 mapAdress = "maps/map3.png";
                 
             }
-            if(mapNum == 4){
-                red = 71/255f;
-                green = 122/255f;
-                blue = 25/255f;
-                alpha = 1;
-                mapAdress = "maps/map4.png";
-                
-            }
+
         }
     @Override
     public void resize(int width, int height) {
