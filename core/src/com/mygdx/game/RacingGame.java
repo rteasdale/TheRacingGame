@@ -12,6 +12,7 @@ import Screens.PlayScreen;
 import Screens.MainMenuScreen;
 
 import Screens.PlayScreen;
+import Screens.PlayerScreen;
 import Screens.SettingsScreen;
 import Screens.SplashScreen;
 
@@ -39,7 +40,7 @@ public class RacingGame extends Game {
         Gdx.app.log("RacingGame", "App created");
         startTime = TimeUtils.millis();
 
-        setScreen(new GameScreen(this)); //** start SpashSreen, with Game parameter **//
+        setScreen(new CarSelectionScreen(this)); //** start SpashSreen, with Game parameter **//
     
         //this.setScreen(new CarSelectionScreen(this));
     }

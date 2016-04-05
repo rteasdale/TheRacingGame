@@ -137,7 +137,6 @@ private RacingGame game;
            sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
            sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
 
-           System.out.println(sprite.getWidth() + "<--Width    Height-->" +  sprite.getHeight());
            
              sprite.draw(batch);
              }
