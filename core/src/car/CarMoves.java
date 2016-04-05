@@ -1,9 +1,10 @@
 package car;
 
 public enum CarMoves {
-	Forward,
-	Backward,
-	Left,
-	Right,
+	Forward, W,
+	Backward, S,
+	Left, A,
+	Right, D,
+        
 	None
 }

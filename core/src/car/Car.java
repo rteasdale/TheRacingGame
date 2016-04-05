@@ -33,11 +33,11 @@ public class Car {
                         float frontTireMLateralImpulse;
                         
                         Sprite carSprite;
-                        public String carLink = "prius/prius_red.png";
+                        public String carLink = "prius/prius_darkblue.png";
 
-	public Car(World world) {
+	public Car(World world, int i) {
 		
-                                           whichCar(car);
+                whichCar(car);
                                             
 		tires = new Array<Tire>();
 
@@ -92,11 +92,10 @@ public class Car {
                                             
 		body.createFixture(fixtureDef);
 
-                
-                                            carSprite = new Sprite(new Texture(carLink));
-                                            carSprite.setSize(0.5f * 10, 1  * 10);
-                                            carSprite.setOrigin(carSprite.getWidth() / 2, carSprite.getHeight()/2);
-                                            body.setUserData(carSprite);
+                carSprite = new Sprite(new Texture(carLink));
+                carSprite.setSize(0.5f * 10, 1  * 10);
+                carSprite.setOrigin(carSprite.getWidth() / 2, carSprite.getHeight()/2);
+                body.setUserData(carSprite);
                                             
 		RevoluteJointDef jointDef = new RevoluteJointDef();
 		jointDef.bodyA = body;

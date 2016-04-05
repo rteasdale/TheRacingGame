@@ -31,7 +31,7 @@ private RacingGame game;
 	public static final int V_WIDTH = 1280;
 	public static final int V_HEIGHT = 720;
         
-                    public boolean debug = true; //Boolean if I want B2D Debug on or off
+                    public boolean debug = false; //Boolean if I want B2D Debug on or off
                     
                      private Array<Body> tmpBodies = new Array<Body>();
                     private Texture bg;
@@ -43,6 +43,7 @@ private RacingGame game;
 	public World world;
 	InputManager inputManager;
 	CarContactListener cl;
+        
 	public Car car;
         public Car car2;
         
@@ -78,8 +79,8 @@ private RacingGame game;
 		inputManager = new InputManager(this);
 		Gdx.input.setInputProcessor(inputManager);
 		
-	    this.car = new Car(world);
-            this.car2 = new Car(world);
+	    this.car = new Car(world, 1);
+            this.car2 = new Car(world, 2);
 
 		createGrounds();
 	}
@@ -90,7 +91,7 @@ private RacingGame game;
                 }
 	@Override
 	public void render (float f) {
-                        Gdx.gl.glClearColor(red,green,blue,alpha);
+                Gdx.gl.glClearColor(red,green,blue,alpha);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		inputManager.update();
@@ -103,6 +104,7 @@ private RacingGame game;
             batch.draw(bg, 0, 0);
             world.getBodies(tmpBodies);
              for(Body body : tmpBodies)
+                 
              if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
             Sprite sprite = (Sprite) body.getUserData();
            sprite.setPosition(body.getPosition().x - sprite.getWidth()/ 2, body.getPosition().y - sprite.getHeight()/2);

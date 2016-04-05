@@ -123,15 +123,29 @@ public class Tire {
 	void updateDrive(HashSet<Key> keys) {
 		float desiredSpeed = 0;
 
-		if(keys.contains(Key.Up)){
-			desiredSpeed = maxForwardSpeed;
-		} else if(keys.contains(Key.Down)){
-			desiredSpeed = maxBackwardSpeed;
-		}else if(keys.contains(Key.Shift)){
-			desiredSpeed = 0;
-		} else {
-			return;
-		}
+                //if (i == 1) {
+                    if(keys.contains(Key.Up)){
+                            desiredSpeed = maxForwardSpeed;
+                    } else if(keys.contains(Key.Down)){
+                            desiredSpeed = maxBackwardSpeed;
+                    }else if(keys.contains(Key.Shift)){
+                            desiredSpeed = 0;
+                    } else {
+                            return;
+                    }
+                //}
+                
+                //if (i == 2) {
+//                    if(keys.contains(Key.W)){
+//                            desiredSpeed = maxForwardSpeed;
+//                    } else if(keys.contains(Key.S)){
+//                            desiredSpeed = maxBackwardSpeed;
+//                    }else if(keys.contains(Key.Shift)){
+//                            desiredSpeed = 0;
+//                    } else {
+//                            return;
+//                    }                    
+                //}
 		
 		Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
 		float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
@@ -151,13 +165,23 @@ public class Tire {
 	}
 	
 	void updateTurn(CarMoves moves){
-		float desiredTorque = 0;
-
-		switch(moves){
-			case Left : desiredTorque = 15; break;
-			case Right: desiredTorque = -15; break;
-			default: return;
-		}
-		body.applyTorque(desiredTorque, true);
+            float desiredTorque = 0;
+            //if (i == 1) {
+                switch(moves){
+                    case Left : desiredTorque = 15; break;
+                    case Right: desiredTorque = -15; break;
+                    default: return;
+                //}
+            }
+            
+            //if (i == 2) {
+//                switch(moves){
+//                    case A : desiredTorque = 15; break;
+//                    case D: desiredTorque = -15; break;
+//                    default: return;
+//                }                
+           // }
+            
+            body.applyTorque(desiredTorque, true);
 	}
 }
