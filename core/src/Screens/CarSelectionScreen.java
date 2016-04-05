@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+*NOTE: DO NOT INITIALIZE EVERYTHING IN CREATE, CHECK IF REALLY NECESSARY
  */
 package Screens;
 
@@ -302,6 +300,8 @@ public class CarSelectionScreen implements Screen{
                     preview.rotateBy(90);
                     stage.addActor(preview);
                 }
+                else 
+                    i = 0;
             }
         });
         

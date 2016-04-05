@@ -46,7 +46,8 @@ public class PlayerScreen implements Screen {
     private Label racer1_title;
     private Label racer2_title;
     
-    private TextField txt_field;
+    private TextField txt_field1;
+    private TextField txt_field2;
     private TextField.TextFieldStyle txt_style;
     
     private Label.LabelStyle lbl_style;
@@ -106,9 +107,9 @@ public class PlayerScreen implements Screen {
         racer1_title = new Label("Racer 1", lbl_style);
         racer1_title.setPosition(550, 500);
         
-        txt_field = new TextField("Enter Name",txt_style);
-        txt_field.setSize(290, 40);
-        txt_field.setPosition(500, 455);
+        txt_field1 = new TextField("Enter Name",txt_style);
+        txt_field1.setSize(290, 40);
+        txt_field1.setPosition(500, 455);
 
         /** Buttons */
         next_btn = new ImageButton(next_style);
@@ -125,9 +126,14 @@ public class PlayerScreen implements Screen {
         
             racer2_title = new Label("Racer 2", lbl_style);
             racer2_title.setPosition(550, 300);
+
+            txt_field2 = new TextField("Enter Name",txt_style);
+            txt_field2.setSize(290, 40);
+            txt_field2.setPosition(500, 255);
         
             stage.addActor(racer2);
-            stage.addActor(racer2_title);            
+            stage.addActor(racer2_title);   
+            stage.addActor(txt_field2);
         }
         
         next_btn.addListener(new ChangeListener() {
@@ -146,7 +152,7 @@ public class PlayerScreen implements Screen {
         
         stage.addActor(racer1);
         stage.addActor(racer1_title);
-        stage.addActor(txt_field);
+        stage.addActor(txt_field1);
         stage.addActor(back_btn);
         stage.addActor(next_btn);
         stage.addActor(title);
