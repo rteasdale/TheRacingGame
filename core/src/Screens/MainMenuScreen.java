@@ -140,7 +140,14 @@ public class MainMenuScreen extends Stage implements Screen {
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 game.setScreen(new PlayerScreen(game, true)); //two players
             }
-        });     
+        });  
+        
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
         
     }
 

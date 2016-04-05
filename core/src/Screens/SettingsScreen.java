@@ -34,7 +34,7 @@ import com.mygdx.game.RacingGame;
  *
  * @author ROSY
  */
-public class SettingsScreen implements Screen, InputProcessor {
+public class SettingsScreen implements Screen {
     private final RacingGame game;
     private Stage stage;
     private BitmapFont font;
@@ -80,22 +80,17 @@ public class SettingsScreen implements Screen, InputProcessor {
         check_skin = new Skin(atlas);       
         Gdx.input.setInputProcessor(stage);
         
-        buttonGroup = new ButtonGroup<CheckBox>();
-        buttonGroup.setMaxCheckCount(1);
-        buttonGroup.setMinCheckCount(1);
-        buttonGroup.setUncheckLast(true);
-        
         /** Styles */
         lbl_style = new Label.LabelStyle(font, Color.WHITE);
         OK_style = new ImageButton.ImageButtonStyle(skin.getDrawable("OK_button"), null, null, null, null, null);
         //ASDW_style = new ImageButton.ImageButtonStyle(check_skin.getDrawable("ASDW_controls"), check_skin.getDrawable("ASDW_controls_chosen"), null, null, null, null);
         //arrows_style = new ImageButton.ImageButtonStyle(check_skin.getDrawable("arrowkeys_controls"), check_skin.getDrawable("arrowkeys_controls_chosen"), null, null, null, null);
 
-        check_style = new CheckBox.CheckBoxStyle();
-        check_style.font = font;
-        check_style.fontColor = new Color(Color.WHITE);
-        check_style.checkboxOff = check_skin.getDrawable("checkbox");
-        check_style.checkboxOn = check_skin.getDrawable("checkbox2");
+//        check_style = new CheckBox.CheckBoxStyle();
+//        check_style.font = font;
+//        check_style.fontColor = new Color(Color.WHITE);
+//        check_style.checkboxOff = check_skin.getDrawable("checkbox");
+//        check_style.checkboxOn = check_skin.getDrawable("checkbox2");
         
         slider_style = new Slider.SliderStyle(check_skin.getDrawable("slider"), check_skin.getDrawable("knob"));
     }
@@ -109,47 +104,64 @@ public class SettingsScreen implements Screen, InputProcessor {
         title.setPosition(376, 624);
         
         /** Labels */
-        controlsLbl = new Label("CONTROLS", lbl_style);
-        controlsLbl.setPosition(200, 550);
+//        controlsLbl = new Label("CONTROLS", lbl_style);
+//        controlsLbl.setPosition(200, 550);
         SFXLbl = new Label("SFX", lbl_style);
-        SFXLbl.setPosition(200, 250);
+        SFXLbl.setPosition(300, 450);
         musicLbl = new Label("MUSIC", lbl_style);
-        musicLbl.setPosition(200, 150);
+        musicLbl.setPosition(300, 350);
         
 //        ASDWBtn = new ImageButton(ASDW_style);
 //        ASDWBtn.setPosition(100, 100);
 //        arrowsBtn = new ImageButton(arrows_style);
 //        arrowsBtn.setPosition(200, 200);
         
-        /* Check box*/
-        controls1Check = new CheckBox("AWSD", check_style);
-        controls1Check.setPosition(210, 500);
-        controls2Check = new CheckBox("UP-DOWN-RIGHT-LEFT", check_style);
-        controls2Check.setPosition(410, 500);
+//        /* Check box*/
+//        controls1Check = new CheckBox("AWSD", check_style);
+//        controls1Check.setPosition(210, 500);
+//        controls2Check = new CheckBox("UP-DOWN-RIGHT-LEFT", check_style);
+//        controls2Check.setPosition(410, 500);
         
         /**Slider*/
         SFXVolume = new Slider(0, 10, 4, false, slider_style);
-        SFXVolume.setPosition(300, 100);
+        SFXVolume.setSize(300, 40);
+        SFXVolume.setPosition(300, 400);
         musicVolume = new Slider(0, 10, 4, false, slider_style);
-        musicVolume.setPosition(300, 50);
-
-        stage.addActor(SFXVolume);
-        stage.addActor(musicVolume);
-        stage.addActor(controls2Check);
-        stage.addActor(controls1Check);
-        stage.addActor(OKButton);
-        stage.addActor(musicLbl);
-        stage.addActor(SFXLbl);
-        stage.addActor(controlsLbl);
-        stage.addActor(title);
+        musicVolume.setSize(300, 40);
+        musicVolume.setPosition(300, 300);
         
-        controls1Check.addListener(new ChangeListener() {
+        SFXVolume.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-                
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //change value of sider
             }
         });
         
+        musicVolume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //change value of slider
+            }
+        });
+        
+        OKButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //save values of sliders
+                game.setScreen(new MainMenuScreen(game));
+            }
+        });
+
+        stage.addActor(SFXVolume);
+        stage.addActor(musicVolume);
+//        stage.addActor(controls2Check);
+//        stage.addActor(controls1Check);
+        stage.addActor(OKButton);
+        stage.addActor(musicLbl);
+        stage.addActor(SFXLbl);
+//        stage.addActor(controlsLbl);
+        stage.addActor(title);
+
     }
 
     @Override
@@ -162,7 +174,8 @@ public class SettingsScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void resize(int i, int i1) {
+    public void resize(int width, int height) {
+        
     }
 
     @Override
@@ -185,46 +198,6 @@ public class SettingsScreen implements Screen, InputProcessor {
         stage.dispose();
         font.dispose();
         
-    }
-
-    @Override
-    public boolean keyDown(int i) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int i) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char c) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int i, int i1, int i2) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int i, int i1) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int i) {
-        return false;
     }
     
 }
