@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+*NOTE: DO NOT INITIALIZE EVERYTHING IN CREATE, CHECK IF REALLY NECESSARY
  */
 package Screens;
 
@@ -38,7 +36,7 @@ import java.util.Arrays;
  *
  * @author ROSY
  */
-public class CarSelectionScreen implements Screen{
+public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private RacingGame game;
 
     private OrthographicCamera camera;
@@ -47,6 +45,9 @@ public class CarSelectionScreen implements Screen{
     private Hud hud;
     
     private boolean twoPlayers;
+    private String playerNameP1;
+    private String playerNameP2;
+    
     private FileHandle file;
     String[] group;
     String[] car;
@@ -82,8 +83,6 @@ public class CarSelectionScreen implements Screen{
     private TextureAtlas box_atlas;
     private Skin buttons_skin;
     private Skin box_skin;
-     
-   
 
     private ImageButtonStyle nextcar_style;
     private ImageButtonStyle prevcar_style;
@@ -103,11 +102,19 @@ public class CarSelectionScreen implements Screen{
     private Label capacity_lbl;
     private Label consumption_lbl;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers) {
+    public CarSelectionScreen(RacingGame game)
+    //public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerNameP1, String playerNameP2)
+    {
         Gdx.app.log("CarSelection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
+        this.playerNameP1 = playerNameP1;
+        this.playerNameP2 = playerNameP2;
         
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false);
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
         //hud = new Hud(game.batch);
         
         file = new FileHandle("data/car.txt");
@@ -117,11 +124,6 @@ public class CarSelectionScreen implements Screen{
                 
 //        System.out.println(Arrays.toString(car));
 //        System.out.println(group[1]);
-        
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
@@ -164,9 +166,9 @@ public class CarSelectionScreen implements Screen{
     @Override
     public void show() {
         Gdx.app.log("CarSelection", "show called");
-        Gdx.app.log("Current car", car[i]);
-        Gdx.app.log("Next car", car[i+=2]);
-        i = 0;
+        
+        System.out.println(playerNameP1);
+        
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
         title.setPosition(280, 648);
@@ -180,7 +182,7 @@ public class CarSelectionScreen implements Screen{
         carDescription = new TextArea("Description", txt_style);
         carDescription.setPosition(200,170);
         carDescription.setSize(432, 120);
-        carDescription.setText(car[i]);
+        carDescription.setText(car[0]);
         
         /** Preview */
         preview = new Image(new Texture(Gdx.files.internal("golf/golf_white.png")));
@@ -292,28 +294,25 @@ public class CarSelectionScreen implements Screen{
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (i < 6) {
                     Gdx.app.log("Current car", car[i]);
+                    carDescription.setText("\n" + car[i]);
                     i++;
-                    currentCar++;
-                    carDescription.setText(car[i]);
                     preview.remove();
                     preview = new Image(new Texture(Gdx.files.internal(previews[i])));
                     preview.setPosition(530, 450);
                     preview.sizeBy(52, 100);
                     preview.rotateBy(90);
                     stage.addActor(preview);
+
                 }
+                else 
+                    i = 0;
             }
         });
         
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (i > 0) {
-                    currentCar--;
-                    i--;
-                    Gdx.app.log("Previous car", car[i+1]);
-                    Gdx.app.log("Current car", Integer.toString(currentCar));                    
-                }
+
             }
         });        
         
