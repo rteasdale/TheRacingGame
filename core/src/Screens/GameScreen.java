@@ -76,7 +76,7 @@ private RacingGame game;
          //  bg = new Texture(Gdx.files.internal(mapAdress));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		camera.zoom = 1;
+		camera.zoom = 0.16f;
 		camera.position.x = 0;
 		camera.position.y = 0;
 		
@@ -100,8 +100,8 @@ private RacingGame game;
                 
                 //Load Tiled Map
                 
-                tileMap = new TmxMapLoader().load("maps/map1.tmx");
-                tmr = new OrthogonalTiledMapRenderer(tileMap, 1/3f);
+                tileMap = new TmxMapLoader().load("maps/map2.tmx");
+                tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 	}
 
                 @Override
@@ -120,7 +120,7 @@ private RacingGame game;
             world.step(1 / 60f, 6, 2);
                 
             camera.update();
-            
+            System.out.println(camera.zoom);
             //draw tile map
             tmr.setView(camera);
             tmr.render();
@@ -136,8 +136,6 @@ private RacingGame game;
             Sprite sprite = (Sprite) body.getUserData();
            sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
            sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
-
-           System.out.println(sprite.getWidth() + "<--Width    Height-->" +  sprite.getHeight());
            
              sprite.draw(batch);
              }

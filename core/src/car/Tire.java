@@ -36,7 +36,7 @@ public class Tire {
 		body = world.createBody(bodyDef);
 
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(0.5f, 1.25f);
+		polygonShape.setAsBox(0.25f, 0.625f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = 1;
@@ -105,7 +105,7 @@ public class Tire {
 		Vector2 impulse = CarMath.multiply(body.getMass(),
 				CarMath.minus(getLateralVelocity()));
 
-		if (impulse.len() > maxLateralImpulse) {
+		if (impulse.len() > maxLateralImpulse-20) {
 			impulse = CarMath.multiply(impulse, maxLateralImpulse / impulse.len());
 		}
 		body.applyLinearImpulse(CarMath.multiply(currentTraction, impulse),

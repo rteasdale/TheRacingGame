@@ -23,7 +23,7 @@ public class Car {
 	Array<Tire> tires;
 	RevoluteJoint leftJoint, rightJoint;
                     
-                        int car = 2;
+                        int car = 0;
                         
                         float maxFSpeed;
                         float maxBSpeed;
@@ -52,15 +52,27 @@ public class Car {
 		
 		Vector2[] vertices = new Vector2[8];
 
-		vertices[0] = new Vector2(1, -5);
-		vertices[1] = new Vector2(3, -3);
-		vertices[2] = new Vector2(3,  3);
-		vertices[3] = new Vector2(1, 5);
-		vertices[4] = new Vector2(-1, 5);
-		vertices[5] = new Vector2(-3, 3);
-		vertices[6] = new Vector2(-3, -3);
-		vertices[7] = new Vector2(-1, -5);
                 
+                                           vertices[0] = new Vector2(0.75f, -2.5f);
+		vertices[1] = new Vector2(1.5f, -2f);
+		vertices[2] = new Vector2(1.5f,  2f);
+		vertices[3] = new Vector2(0.75f, 2.5f);
+		vertices[4] = new Vector2(-0.75f, 2.5f);
+		vertices[5] = new Vector2(-1.5f, 2f);
+		vertices[6] = new Vector2(-1.5f, -2f);
+		vertices[7] = new Vector2(-0.75f, -2.5f);
+                
+                //6X10 CAR VERTICES
+//		vertices[0] = new Vector2(1, -5);
+//		vertices[1] = new Vector2(3, -3);
+//		vertices[2] = new Vector2(3,  3);
+//		vertices[3] = new Vector2(1, 5);
+//		vertices[4] = new Vector2(-1, 5);
+//		vertices[5] = new Vector2(-3, 3);
+//		vertices[6] = new Vector2(-3, -3);
+//		vertices[7] = new Vector2(-1, -5);
+                
+                //OG CAR VERTICES
 //                                      vertices[0] = new Vector2(1.5f, 0);
 //		vertices[1] = new Vector2(3, 2.5f);
 //		vertices[2] = new Vector2(2.8f, 5.5f);
@@ -93,7 +105,7 @@ public class Car {
 		body.createFixture(fixtureDef);
 
                 carSprite = new Sprite(new Texture(carLink));
-                carSprite.setSize(0.5f * 10, 1  * 10);
+                carSprite.setSize(3,6);
                 carSprite.setOrigin(carSprite.getWidth() / 2, carSprite.getHeight()/2);
                 body.setUserData(carSprite);
                                             
@@ -117,7 +129,7 @@ public class Car {
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
 				backTireMaxDriveForce, backTireMaxLateralImpulse);
 		jointDef.bodyB = tire.body;
-		jointDef.localAnchorA.set(-2.5f, -4);
+		jointDef.localAnchorA.set(-1.125f, -1.5f);
 		world.createJoint(jointDef);
 		tires.add(tire);
 
@@ -126,7 +138,7 @@ public class Car {
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
 				backTireMaxDriveForce, backTireMaxLateralImpulse);
 		jointDef.bodyB = tire.body;
-		jointDef.localAnchorA.set(2.5f, -4);
+		jointDef.localAnchorA.set(1.125f, -1.5f);
 		world.createJoint(jointDef);
 		tires.add(tire);
 
@@ -135,7 +147,7 @@ public class Car {
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
 				frontTireMaxDriveForce, frontTireMaxLateralImpulse);
 		jointDef.bodyB = tire.body;
-		jointDef.localAnchorA.set(-2.5f, 2.5f);
+		jointDef.localAnchorA.set(-1.125f, 1.5f);
 		leftJoint = (RevoluteJoint)world.createJoint(jointDef);
 		tires.add(tire);
                                             
@@ -144,7 +156,7 @@ public class Car {
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
 				frontTireMaxDriveForce, frontTireMaxLateralImpulse);
 		jointDef.bodyB = tire.body;
-		jointDef.localAnchorA.set(2.5f, 2.5f);
+		jointDef.localAnchorA.set(1.125f, 1.5f);
 		rightJoint = (RevoluteJoint)world.createJoint(jointDef);
 		tires.add(tire);
 	}
@@ -197,12 +209,12 @@ public class Car {
                                     }
                                     
                                     else{
-                                        maxFSpeed = 250;
-		maxBSpeed = -40;
-		 backTireMDriveForce = 300;
-		 frontTireMDriveForce = 500;
-		 backTireMLateralImpulse = 8.5f;
-		 frontTireMLateralImpulse = 7.5f;
+                                        maxFSpeed = 125;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
                                     }
                               
                                 }
