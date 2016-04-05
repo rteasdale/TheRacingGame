@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="46">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="53">
  <tileset firstgid="1" name="grass_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="grass_texture.png" width="200" height="200"/>
  </tileset>
@@ -390,7 +390,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Tire Object Layer" offsetx="-5" offsety="3">
+ <objectgroup name="Tire ObjectLayer" offsetx="-5" offsety="3">
   <object id="14" x="1035.47" y="259.729" width="50.9186" height="50.9186">
    <ellipse/>
   </object>
@@ -416,29 +416,24 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Fuel Pad Object Layer">
+ <objectgroup name="Fuel ObjectLayer">
   <object id="24" x="1726.96" y="431.562" width="49.1383" height="96.8523"/>
   <object id="25" x="1583.6" y="527.703" width="49.1383" height="96.8523"/>
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
   <object id="27" x="1583.04" y="767.697" width="49.1383" height="96.8523"/>
  </objectgroup>
- <objectgroup name="Finish Line Object Layer">
+ <objectgroup name="Finish Line ObjectLayer">
   <object id="28" x="118.929" y="551.916" width="239.994" height="23.5009"/>
  </objectgroup>
- <objectgroup name="Oil Object Layer">
+ <objectgroup name="Oil ObjectLayer">
   <object id="29" x="443.669" y="1034.75" width="103.974" height="62.6691"/>
  </objectgroup>
- <objectgroup name="Road Object Layer">
-  <object id="36" x="201.867" y="123.687">
-   <polyline points="0,0 1501.75,-2.33372 1526.25,5.83431 1548.42,21.0035 1565.93,45.5076 1571.76,58.3431 1574.1,1053.68 1562.43,1082.85 1541.42,1107.35 1521.59,1117.85 1505.25,1123.69 757.293,1123.69 -8.16803,1123.69 -21.0035,1122.52 -50.175,1107.35 -66.5111,1088.68 -79.3466,1066.51 -81.6803,1053.68 -80.5134,70.0117 -77.0128,50.175 -65.3442,32.6721 -51.3419,16.3361 -38.5064,7.00117 -17.5029,-2.33372 1.16686,-2.33372 1.16686,1.16686"/>
-  </object>
- </objectgroup>
- <objectgroup name="Inside Grass Object Layer">
-  <object id="38" x="387.398" y="373.396">
-   <polyline points="0,0 824.971,-2.33372 841.307,2.33372 849.475,12.8355 848.308,602.1 845.974,611.435 836.639,621.937 7.00117,621.937 -5.83431,617.27 -15.1692,609.102 -14.0023,15.1692 -10.5018,7.00117 -3.50058,1.16686 14.0023,1.16686"/>
-  </object>
-  <object id="45" x="1583.43" y="359.393">
-   <polyline points="0,0 -78.1797,0 -91.0152,7.00117 -95.6826,19.8366 -95.6826,600.933 -95.6826,611.435 -87.5146,620.77 -81.6803,625.438 -66.5111,625.438 0.569428,624.607 0.569428,0.606768"/>
-  </object>
+ <objectgroup name="Road ObjectLayer">
+  <object id="47" x="361.671" y="120.557" width="1290.79" height="249.428"/>
+  <object id="48" x="1238.83" y="363.75" width="259.821" height="636.042"/>
+  <object id="49" x="106.007" y="106.007" width="266.057" height="1151.53"/>
+  <object id="50" x="1226.36" y="981.085" width="355.435" height="280.607"/>
+  <object id="51" x="1585.95" y="108.086" width="201.621" height="1153.61"/>
+  <object id="52" x="372.064" y="995.635" width="854.292" height="261.9"/>
  </objectgroup>
 </map>

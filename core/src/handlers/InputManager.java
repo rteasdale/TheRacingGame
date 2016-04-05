@@ -80,12 +80,12 @@ public class InputManager  implements InputProcessor  {
                                 pressedKeysP2.remove(Key.W);
 			}
 		} else if (keycode == Input.Keys.RIGHT) {
-			if (pressedKeys.contains(Key.Right)) {
-				pressedKeys.remove(Key.Right);
+			if (pressedKeysP1.contains(Key.Right)) {
+				pressedKeysP1.remove(Key.Right);
 			}
 		}else if (keycode== Input.Keys.SHIFT_RIGHT){
-                if(pressedKeys.contains(Key.Shift)){
-                    pressedKeys.remove(Key.Shift);
+                if(pressedKeysP1.contains(Key.Shift)){
+                    pressedKeysP1.remove(Key.Shift);
                 }
                                             }
 

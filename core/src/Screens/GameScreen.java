@@ -22,12 +22,21 @@ import car.Car;
 import car.Constants;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
 
 public class GameScreen implements Screen {
+    
+    private TiledMap tileMap;
+    private OrthogonalTiledMapRenderer tmr;
+    
 private RacingGame game;
+
+
 	public static final int V_WIDTH = 1280;
 	public static final int V_HEIGHT = 720;
         
@@ -56,11 +65,13 @@ private RacingGame game;
 
 	public  GameScreen (RacingGame game) {
             this.game = game;
+            
+           
 
-            choseMap(mapNum);
+            //choseMap(mapNum);
 
            batch = new SpriteBatch();
-           bg = new Texture(Gdx.files.internal(mapAdress));
+           //bg = new Texture(Gdx.files.internal(mapAdress));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
 		camera.zoom = .5f;
@@ -82,6 +93,13 @@ private RacingGame game;
             this.car2 = new Car(world);
 
 		createGrounds();
+                
+                ////////////////////////////////////////////////////
+                
+                //Load Tiled Map
+                
+                tileMap = new TmxMapLoader().load("maps/map1.tmx");
+                tmr = new OrthogonalTiledMapRenderer(tileMap);
 	}
 
                 @Override
@@ -98,9 +116,14 @@ private RacingGame game;
 		world.step(1 / 60f, 6, 2);
                 
             camera.update();
+            
+            //draw tile map
+            tmr.setView(camera);
+            tmr.render();
+            
             batch.begin();
             batch.setProjectionMatrix(camera.combined);
-            batch.draw(bg, 0, 0);
+           // batch.draw(bg, 0, 0);
             world.getBodies(tmpBodies);
              for(Body body : tmpBodies)
              if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
