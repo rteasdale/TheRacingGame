@@ -39,7 +39,7 @@ public class Tire {
         bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
-        
+       
         shape = new PolygonShape();
         shape.setAsBox(.2f, .4f);
         body.createFixture(shape, .5f); //create fixture with shape and density

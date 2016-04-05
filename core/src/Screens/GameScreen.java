@@ -39,8 +39,9 @@ private RacingGame game;
 
 	public static final int V_WIDTH = 1280;
 	public static final int V_HEIGHT = 720;
+                    public final int PPM = 1/2;
         
-                    public boolean debug = false; //Boolean if I want B2D Debug on or off
+                    public boolean debug = true; //Boolean if I want B2D Debug on or off
                     
                      private Array<Body> tmpBodies = new Array<Body>();
                     private Texture bg;
@@ -69,18 +70,18 @@ private RacingGame game;
             
            
 
-            //choseMap(mapNum);
+            choseMap(mapNum);
 
            batch = new SpriteBatch();
-           //bg = new Texture(Gdx.files.internal(mapAdress));
+         //  bg = new Texture(Gdx.files.internal(mapAdress));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		camera.zoom = .5f;
+		camera.zoom = 1;
 		camera.position.x = 0;
 		camera.position.y = 0;
 		
 		world = new World(new Vector2(0, 0f), true);
-
+                                           
 		cl = new CarContactListener();
 		world.setContactListener(cl);
 		
@@ -100,7 +101,7 @@ private RacingGame game;
                 //Load Tiled Map
                 
                 tileMap = new TmxMapLoader().load("maps/map1.tmx");
-                tmr = new OrthogonalTiledMapRenderer(tileMap);
+                tmr = new OrthogonalTiledMapRenderer(tileMap, 1/3f);
 	}
 
                 @Override
@@ -109,12 +110,14 @@ private RacingGame game;
                 }
 	@Override
 	public void render (float f) {
-                Gdx.gl.glClearColor(red,green,blue,alpha);
-		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                
+           Gdx.gl.glClearColor(red,green,blue,alpha);
+            
+           Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		inputManager.update();
+           inputManager.update();
 
-		world.step(1 / 60f, 6, 2);
+            world.step(1 / 60f, 6, 2);
                 
             camera.update();
             
@@ -122,17 +125,20 @@ private RacingGame game;
             tmr.setView(camera);
             tmr.render();
             
+            //draw Object sprites
             batch.begin();
             batch.setProjectionMatrix(camera.combined);
-           // batch.draw(bg, 0, 0);
+           //batch.draw(bg, -750, 0);
             world.getBodies(tmpBodies);
              for(Body body : tmpBodies)
                  
              if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
             Sprite sprite = (Sprite) body.getUserData();
-           sprite.setPosition(body.getPosition().x - sprite.getWidth()/ 2, body.getPosition().y - sprite.getHeight()/2);
+           sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
            sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
 
+           System.out.println(sprite.getWidth() + "<--Width    Height-->" +  sprite.getHeight());
+           
              sprite.draw(batch);
              }
             batch.end();
