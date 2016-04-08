@@ -37,10 +37,6 @@ public class GameScreen implements Screen {
 private RacingGame game;
 
 
-	public static final int V_WIDTH = 1280;
-	public static final int V_HEIGHT = 720;
-                    public final int PPM = 1/2;
-        
                     public boolean debug = true; //Boolean if I want B2D Debug on or off
                     
                      private Array<Body> tmpBodies = new Array<Body>();
@@ -54,8 +50,8 @@ private RacingGame game;
 	InputManager inputManager;
 	CarContactListener cl;
         
-	public Car car;
-        public Car car2;
+                    public Car car;
+                    public Car car2;
         
                      int mapNum = 1;
         
@@ -67,16 +63,13 @@ private RacingGame game;
 
 	public  GameScreen (RacingGame game) {
             this.game = game;
-            
-           
 
             choseMap(mapNum);
 
-           batch = new SpriteBatch();
-         //  bg = new Texture(Gdx.files.internal(mapAdress));
+                                            batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
-		camera.zoom = 1;
+		camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
+		camera.zoom = 0.16f;
 		camera.position.x = 0;
 		camera.position.y = 0;
 		
@@ -92,16 +85,18 @@ private RacingGame game;
 		Gdx.input.setInputProcessor(inputManager);
 		
 	    this.car = new Car(world, 1);
-            this.car2 = new Car(world, 2);
+                        this.car2 = new Car(world, 2);
 
 		createGrounds();
                 
                 ////////////////////////////////////////////////////
                 
                 //Load Tiled Map
+                choseMap(mapNum);
                 
-                tileMap = new TmxMapLoader().load("maps/map1.tmx");
-                tmr = new OrthogonalTiledMapRenderer(tileMap, 1/3f);
+                tileMap = new TmxMapLoader().load(mapAdress);
+                tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
+                
 	}
 
                 @Override
@@ -120,27 +115,12 @@ private RacingGame game;
             world.step(1 / 60f, 6, 2);
                 
             camera.update();
-            
+            System.out.println(camera.zoom);
             //draw tile map
             tmr.setView(camera);
             tmr.render();
             
-            //draw Object sprites
-            batch.begin();
-            batch.setProjectionMatrix(camera.combined);
-           //batch.draw(bg, -750, 0);
-            world.getBodies(tmpBodies);
-             for(Body body : tmpBodies)
-                 
-             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
-            Sprite sprite = (Sprite) body.getUserData();
-           sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
-           sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
-
-           
-             sprite.draw(batch);
-             }
-            batch.end();
+          renderSprites();
                                            
             //Box2D Debug Renderer
             if(debug){
@@ -180,7 +160,7 @@ private RacingGame game;
                 green = 122/255f;
                 blue = 25/255f;
                 alpha = 1;
-                mapAdress = "maps/map1.png";
+                mapAdress = "maps/map1.tmx";
             }
             
             if(mapNum == 2){
@@ -188,7 +168,7 @@ private RacingGame game;
                 green = 254/255f;
                 blue = 255/255f;
                 alpha = 1;
-                mapAdress = "maps/map2.png";
+                mapAdress = "maps/map2.tmx";
                 
             }
             if(mapNum == 3){
@@ -196,7 +176,7 @@ private RacingGame game;
                 green = 8/255f;
                 blue = 36/255f;
                 alpha = 1;
-                mapAdress = "maps/map3.png";
+                mapAdress = "maps/map3.tmx";
                 
             }
 
@@ -222,5 +202,25 @@ private RacingGame game;
         bg.dispose();
         world.dispose();
     }
+    
+    public void renderSprites(){
+          //draw Object sprites
+            batch.begin();
+            batch.setProjectionMatrix(camera.combined);
+           //batch.draw(bg, -750, 0);
+            world.getBodies(tmpBodies);
+             for(Body body : tmpBodies)
+                 
+             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+            Sprite sprite = (Sprite) body.getUserData();
+           sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
+           sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
+
+           
+             sprite.draw(batch);
+             }
+            batch.end();
+    }
+    
 }
 

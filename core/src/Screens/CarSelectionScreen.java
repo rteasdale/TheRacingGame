@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -29,7 +28,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.mygdx.game.RacingGame;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -52,8 +50,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     String[] group;
     String[] car;
     String[] previews;
-    private int currentCar = 1;
-    private int i = 0;
+    private int currentCar = 0;
     
     private Image title;
     private ImageButton selectNextCarButton;
@@ -184,13 +181,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         carDescription.setSize(432, 120);
         carDescription.setText(car[0]);
         
-        /** Preview */
-        preview = new Image(new Texture(Gdx.files.internal("golf/golf_white.png")));
-        preview.setPosition(530, 450);
-        preview.sizeBy(52, 100);
-        preview.rotateBy(90);
-        
-        //logo_preview = new Image(new Texture(Gdx.files.internal("")));
+        /*Level bars*/
+        weight_lvl = new Rectangle(100, 100, 100, 20);
+
 
         /** Buttons */
         next_btn = new ImageButton(next_style);
@@ -233,7 +226,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         consumption_lbl = new Label("Fuel Consumption", lbl_style);
         consumption_lbl.setPosition(855, 220);
         
-
         stage.addActor(weight);
         stage.addActor(acceleration);
         stage.addActor(handling);
@@ -248,7 +240,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stage.addActor(capacity_lbl);
         stage.addActor(consumption_lbl);
         
-        stage.addActor(preview);
         stage.addActor(carDescription);
         stage.addActor(color_select);
         
@@ -288,31 +279,76 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             }
         });
         
+        System.out.println(Arrays.toString(previews));
+        Gdx.app.log("Current car", car[0]);
+        carDescription.setText("\n" + car[0]);
+        
+        /** Preview */
+        preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+        preview.setPosition(530, 450);
+        preview.sizeBy(52, 100);
+        preview.rotateBy(90);
+        stage.addActor(preview);
+        
         /** Car type*/
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (i < 6) {
-                    Gdx.app.log("Current car", car[i]);
-                    carDescription.setText("\n" + car[i]);
-                    i++;
-                    preview.remove();
-                    preview = new Image(new Texture(Gdx.files.internal(previews[i])));
-                    preview.setPosition(530, 450);
-                    preview.sizeBy(52, 100);
-                    preview.rotateBy(90);
-                    stage.addActor(preview);
-
+                /*Car description*/
+                if (currentCar < 5) {
+                currentCar++;
+                Gdx.app.log("Current car", car[currentCar]);
+                carDescription.setText("\n" + car[currentCar]);
+                preview.remove();
+                preview = new Image(new Texture(Gdx.files.internal(previews[currentCar])));
+                preview.setPosition(530, 450);
+                preview.sizeBy(52, 100);
+                preview.rotateBy(90);
+                stage.addActor(preview);
                 }
-                else 
-                    i = 0;
+                else {
+                currentCar = 0;
+                Gdx.app.log("Current car", car[0]);
+                carDescription.setText("\n" + car[0]); 
+                /** Preview */
+                preview.remove();
+                preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+                preview.setPosition(530, 450);
+                preview.sizeBy(52, 100);
+                preview.rotateBy(90);
+                stage.addActor(preview);                    
+                }
+                
+                
             }
         });
         
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-
+                if (currentCar > 0) {
+                currentCar--;
+                Gdx.app.log("Current car", car[currentCar]);
+                carDescription.setText("\n" + car[currentCar]);
+                preview.remove();
+                preview = new Image(new Texture(Gdx.files.internal(previews[currentCar])));
+                preview.setPosition(530, 450);
+                preview.sizeBy(52, 100);
+                preview.rotateBy(90);
+                stage.addActor(preview);                    
+                }
+                else {
+                currentCar = 6;
+                Gdx.app.log("Current car", car[0]);
+                carDescription.setText("\n" + car[0]); 
+                /** Preview */
+                preview.remove();
+                preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+                preview.setPosition(530, 450);
+                preview.sizeBy(52, 100);
+                preview.rotateBy(90);
+                stage.addActor(preview);                    
+                }                
             }
         });        
         
@@ -328,6 +364,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
 //        game.batch.end();
 //        hud.stage.draw();
         
+        
+                
         stage.act();
         stage.draw();
     }

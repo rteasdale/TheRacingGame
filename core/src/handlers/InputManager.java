@@ -16,7 +16,7 @@ public class InputManager  implements InputProcessor  {
 	}
 	
 	public enum Key {
-		Up, Down, Right, Left,Shift,
+		Up, Down, Right, Left,Shift,Escape,
                 W, S, D, A
 	}
 
@@ -45,6 +45,9 @@ public class InputManager  implements InputProcessor  {
 				pressedKeys.add(Key.Right);
 			}
 		}
+                                                else if(keycode == Input.Keys.ESCAPE){
+                                                    Gdx.app.exit();
+                                                }
 		return false;
 	}
 

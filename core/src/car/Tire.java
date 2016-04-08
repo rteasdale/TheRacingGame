@@ -36,7 +36,7 @@ public class Tire {
 		body = world.createBody(bodyDef);
 
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(0.5f, 1.25f);
+		polygonShape.setAsBox(0.25f, 0.625f);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = 1;
@@ -155,7 +155,7 @@ public class Tire {
 		if (desiredSpeed > currentSpeed) {
 			force = maxDriveForce;
 		} else if (desiredSpeed < currentSpeed) {
-			force = (-maxDriveForce);
+			force = (-maxDriveForce)*0.3f;
 		} else {
 			return;
 		}
