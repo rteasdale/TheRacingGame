@@ -31,6 +31,7 @@ public class Car {
                         float frontTireMDriveForce;
                         float backTireMLateralImpulse;
                         float frontTireMLateralImpulse;
+                        float breakingFPourcentage;
                         
                         Sprite carSprite;
                         public String carLink = "prius/prius_darkblue.png";
@@ -122,12 +123,13 @@ public class Car {
 		float frontTireMaxDriveForce = frontTireMDriveForce;
 		float backTireMaxLateralImpulse = backTireMLateralImpulse;
 		float frontTireMaxLateralImpulse = frontTireMLateralImpulse;
+                                           float breakingForcePourcentage = breakingFPourcentage;
                                             
                 
                                             //Lower Left
 		Tire tire = new Tire(world);
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
-				backTireMaxDriveForce, backTireMaxLateralImpulse);
+				backTireMaxDriveForce, backTireMaxLateralImpulse, breakingForcePourcentage);
 		jointDef.bodyB = tire.body;
 		jointDef.localAnchorA.set(-1.125f, -1.5f);
 		world.createJoint(jointDef);
@@ -136,7 +138,7 @@ public class Car {
                                             //Lower Right
 		tire = new Tire(world);
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
-				backTireMaxDriveForce, backTireMaxLateralImpulse);
+				backTireMaxDriveForce, backTireMaxLateralImpulse, breakingForcePourcentage);
 		jointDef.bodyB = tire.body;
 		jointDef.localAnchorA.set(1.125f, -1.5f);
 		world.createJoint(jointDef);
@@ -145,7 +147,7 @@ public class Car {
                                             //Upper Left
 		tire = new Tire(world);
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
-				frontTireMaxDriveForce, frontTireMaxLateralImpulse);
+				frontTireMaxDriveForce, frontTireMaxLateralImpulse,breakingForcePourcentage);
 		jointDef.bodyB = tire.body;
 		jointDef.localAnchorA.set(-1.125f, 1.5f);
 		leftJoint = (RevoluteJoint)world.createJoint(jointDef);
@@ -154,7 +156,7 @@ public class Car {
                                             //Upper Right
 		tire = new Tire(world);
 		tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
-				frontTireMaxDriveForce, frontTireMaxLateralImpulse);
+				frontTireMaxDriveForce, frontTireMaxLateralImpulse,breakingForcePourcentage);
 		jointDef.bodyB = tire.body;
 		jointDef.localAnchorA.set(1.125f, 1.5f);
 		rightJoint = (RevoluteJoint)world.createJoint(jointDef);
@@ -197,6 +199,7 @@ public class Car {
 		 frontTireMDriveForce = 400;
 		 backTireMLateralImpulse = 8.5f;
 		 frontTireMLateralImpulse = 7.5f;
+                                                breakingFPourcentage = 0.3f;
                                     }
                                     
                                     else if(car ==2){
@@ -206,6 +209,7 @@ public class Car {
 		 frontTireMDriveForce = 3500;
 		 backTireMLateralImpulse = 8.5f;
 		 frontTireMLateralImpulse = 7.5f;
+                                            breakingFPourcentage = 0.3f;
                                     }
                                     
                                     else{
@@ -215,6 +219,7 @@ public class Car {
 		 frontTireMDriveForce = 250;
 		 backTireMLateralImpulse = 4.25f;
 		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
                                     }
                               
                                 }

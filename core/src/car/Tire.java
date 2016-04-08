@@ -22,6 +22,7 @@ public class Tire {
 	float maxBackwardSpeed;
 	float maxDriveForce;
 	float maxLateralImpulse;
+                     float breakingForcePourcentage;
 
 	Array<GroundAreaType> groundAreas;
 
@@ -63,11 +64,12 @@ public class Tire {
 	}
 
 	void setCharacteristics(float maxForwardSpeed, float maxBackwardSpeed,
-			float maxDriveForce, float maxLateralImpulse) {
+			float maxDriveForce, float maxLateralImpulse, float breakingForcePourcentage) {
 		this.maxForwardSpeed = maxForwardSpeed;
 		this.maxBackwardSpeed = maxBackwardSpeed;
 		this.maxDriveForce = maxDriveForce;
 		this.maxLateralImpulse = maxLateralImpulse;
+                                          this.breakingForcePourcentage = breakingForcePourcentage;
 	}
 
 	void updateTraction() {
@@ -155,7 +157,7 @@ public class Tire {
 		if (desiredSpeed > currentSpeed) {
 			force = maxDriveForce;
 		} else if (desiredSpeed < currentSpeed) {
-			force = (-maxDriveForce)*0.3f;
+			force = (-maxDriveForce)*breakingForcePourcentage;
 		} else {
 			return;
 		}
