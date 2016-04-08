@@ -105,7 +105,7 @@ public class Tire {
 		Vector2 impulse = CarMath.multiply(body.getMass(),
 				CarMath.minus(getLateralVelocity()));
 
-		if (impulse.len() > maxLateralImpulse-20) {
+		if (impulse.len() > maxLateralImpulse) {
 			impulse = CarMath.multiply(impulse, maxLateralImpulse / impulse.len());
 		}
 		body.applyLinearImpulse(CarMath.multiply(currentTraction, impulse),
@@ -155,7 +155,7 @@ public class Tire {
 		if (desiredSpeed > currentSpeed) {
 			force = maxDriveForce;
 		} else if (desiredSpeed < currentSpeed) {
-			force = (-maxDriveForce);
+			force = (-maxDriveForce)*0.3f;
 		} else {
 			return;
 		}

@@ -5,17 +5,25 @@
  */
 package com.mygdx.game;
 
+import car.CarTireType;
+import car.Constants;
+import car.GroundAreaType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
  * @author ROSY
  */
 public class Tire {
+    
+
     
     public Body body;
     private BodyDef bdef;
@@ -35,14 +43,29 @@ public class Tire {
     float maxLateralImpulse;
     float currentTraction;
     
+    Array<GroundAreaType> groundAreas;
+    
     public Tire(World world)  {
+        
+         groundAreas = new Array<GroundAreaType>();
+        
         bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
-       
-        shape = new PolygonShape();
         shape.setAsBox(.2f, .4f);
-        body.createFixture(shape, .5f); //create fixture with shape and density
+        
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = 0.5f;
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+        fixtureDef.filter.categoryBits = Constants.TIRE;
+        fixtureDef.filter.maskBits  = Constants.GROUND;
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(new CarTireType());
+        
+        body.setUserData(this);
+        
+       currentTraction = 1;
     }
     
     public Tire() {
@@ -56,8 +79,15 @@ public class Tire {
         this.maxLateralImpulse = maxLateralImpulse;        
     }
     
-    /*void addGroundArea(GroundAreaFUD* ga) { m_groundAreas.insert(ga); updateTraction(); }
-    void removeGroundArea(GroundAreaFUD* ga) { m_groundAreas.erase(ga); updateTraction(); }*/
+    public void addGroundArea(GroundAreaType item) {
+		groundAreas.add(item);
+		updateTraction();
+	}
+    
+    public void removeGroundArea(GroundAreaType item) {
+		groundAreas.removeValue(item, false);
+		updateTraction();
+	}
     
     public Vector2 getLateralVelocity() {
         Vector2 currentRightNormal = body.getWorldVector(new Vector2(1,0));
@@ -68,6 +98,21 @@ public class Tire {
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0,1));
         return currentForwardNormal.scl(currentForwardNormal.dot(body.getLinearVelocity()));
     }
+    
+    	void updateTraction() {
+		if (groundAreas.size == 0) {
+			currentTraction = 1;
+			return;
+		}
+
+		currentTraction = 0;
+
+		for (GroundAreaType groundType : groundAreas) {
+			if (groundType.frictionModifier > currentTraction) {
+				currentTraction = groundType.frictionModifier;
+			}
+		}
+	}
     
     public void updateFriction() {
         Vector2 impulse = getLateralVelocity().scl(-body.getMass());
