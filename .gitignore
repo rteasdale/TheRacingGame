@@ -2,3 +2,11 @@
 core/build/classes/main/com/mygdx/game/RacingGame.class
 
 desktop/build/classes/main/com/mygdx/game/desktop/DesktopLauncher.class
+
+*.lock
+
+*.bin
+
+*.class
+
+*.class

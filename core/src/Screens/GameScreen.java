@@ -37,14 +37,10 @@ public class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-<<<<<<< HEAD
     
     
     
 private RacingGame game;
-=======
-    private RacingGame game;
->>>>>>> origin/master
 
 
     public boolean debug = true; //Boolean if I want B2D Debug on or off
