@@ -1,0 +1,2 @@
+Such Classic,Much Snowy,Very Space
+maps/map1.png,maps/map2.png,maps/map3.png
