@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="106">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="114">
  <tileset firstgid="1" name="space_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="space_texture.png" width="200" height="200"/>
  </tileset>
@@ -446,7 +446,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Oil ObjectLayer" visible="0">
+ <objectgroup name="Oil ObjectLayer">
   <object id="19" x="923" y="483" width="105" height="63"/>
   <object id="20" x="491" y="363" width="103" height="61"/>
  </objectgroup>
@@ -461,6 +461,10 @@
  </objectgroup>
  <objectgroup name="FinishLine ObjectLayer" visible="0">
   <object id="26" x="1512" y="431" width="216" height="24"/>
+  <object id="106" x="1223.4" y="359.451" width="25.2247" height="212.833"/>
+  <object id="107" x="479.268" y="477.692" width="215.986" height="25.2247"/>
+  <object id="108" x="1418.89" y="886.016" width="305.849" height="25.2247"/>
+  <object id="109" x="47.2962" y="646.382" width="241.211" height="25.2247"/>
  </objectgroup>
  <objectgroup name="Road ObjectLayer">
   <object id="27" x="1509.09" y="50.4493" width="221.212" height="1247.04"/>
@@ -470,7 +474,7 @@
   <object id="31" x="51.5152" y="48.8728" width="186.543" height="1245.47"/>
   <object id="32" x="575.758" y="669.697" width="790.909" height="191.094"/>
   <object id="33" x="506.07" y="1151.52" width="860.597" height="142.424"/>
-  <object id="36" x="478.788" y="50.4493" width="212.121" height="811.919"/>
+  <object id="36" x="478.788" y="424.667" width="212.121" height="437.701"/>
   <object id="65" x="454.044" y="215.986" width="25.2247" height="168.69"/>
   <object id="66" x="286.93" y="215.986" width="23.6481" height="171.843"/>
   <object id="67" x="312.943" y="218.351" width="23.6481" height="68.5797"/>
@@ -482,7 +486,7 @@
   <object id="76" x="1371.01" y="217.292" width="69.3678" height="31.8012"/>
   <object id="77" x="1190.29" y="548.636" width="274.318" height="26.8012"/>
   <object id="78" x="1034.21" y="359.451" width="427.243" height="190.761"/>
-  <object id="79" x="793" y="214.41" width="239.634" height="337.38"/>
+  <object id="79" x="793" y="214.41" width="239.634" height="267.59"/>
   <object id="80" x="1032.63" y="334.227" width="115.087" height="23.6481"/>
   <object id="81" x="1032.63" y="215.986" width="116.664" height="22.0716"/>
   <object id="82" x="1032.63" y="238.058" width="22.3777" height="96.169"/>
@@ -504,10 +508,12 @@
   <object id="98" x="478.48" y="886.016" width="20.495" height="45.3255"/>
   <object id="99" x="502.128" y="911.241" width="20.495" height="19.5097"/>
   <object id="100" x="239.634" y="1176.1" width="264.859" height="118.241"/>
-  <object id="101" x="240.94" y="1149.3" width="185.185" height="25.7296"/>
-  <object id="102" x="238.481" y="1125.4" width="147.771" height="25.7296"/>
-  <object id="103" x="237.805" y="1128.59" width="147.771" height="25.7296" rotation="-90"/>
-  <object id="104" x="265.071" y="1097.02" width="51.8139" height="25.7296"/>
-  <object id="105" x="291.913" y="1044.56" width="51.8139" height="25.7296" rotation="-270"/>
+  <object id="101" x="387.829" y="1149.3" width="38.2962" height="25.7296"/>
+  <object id="102" x="238.481" y="1108.31" width="147.771" height="67.7913"/>
+  <object id="104" x="239.846" y="982.185" width="51.8139" height="140.565"/>
+  <object id="110" x="792.667" y="482" width="130" height="64.6667"/>
+  <object id="111" x="479.333" y="46.6667" width="216.06" height="314.851"/>
+  <object id="112" x="478.667" y="362.667" width="12.6667" height="62"/>
+  <object id="113" x="594.667" y="362" width="100.667" height="62"/>
  </objectgroup>
 </map>

@@ -1,5 +1,6 @@
 package car;
 
+import Screens.CarSelectionScreen;
 import Screens.GameScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -24,9 +25,7 @@ public class Car {
 	public Body body;
 	Array<Tire> tires;
 	RevoluteJoint leftJoint, rightJoint;
-        
-                    public static Assets assets;
-                    
+
                         int car = 0;
                         
                         int lapCount = 0;
@@ -43,13 +42,9 @@ public class Car {
                         Sprite carSprite;
                         public String carLink = "prius/prius_darkblue.png";
 
-	public Car(World world, int i) {
-		
-                                            assets = new Assets();
-                                            
-                                            assets.loadTexture(carLink, "");
+	public Car(World world, int CarNum, int Color) {
             
-                                            whichCar(car);
+                                            whichCar(CarNum, Color);
                                             
 		tires = new Array<Tire>();
 
@@ -203,19 +198,9 @@ public class Car {
                 
 	}
         
-                                public void whichCar(int car){
-                                    if(car == 1){
-                                           maxFSpeed = 75;
-		maxBSpeed = -20;
-		 backTireMDriveForce = 150;
-		 frontTireMDriveForce = 250;
-		 backTireMLateralImpulse = 4.25f;
-		 frontTireMLateralImpulse = 3.75f;
-                                            breakingFPourcentage = 0.3f;
-                                            InitialPosition = Position();
-                                    }
-                                    
-                                    else if(car ==2){
+                                public void whichCar(int car, int Color){
+                                    if(car ==0){
+                                        //Golf
                                           maxFSpeed = 75;
 		maxBSpeed = -20;
 		 backTireMDriveForce = 150;
@@ -224,9 +209,72 @@ public class Car {
 		 frontTireMLateralImpulse = 3.75f;
                                             breakingFPourcentage = 0.3f;
                                             InitialPosition = Position();
+                                            carLink = CarSelectionScreen.golf_colors[Color];
+                                    }
+                                    else if(car == 1){
+                                        //Lamborghini
+                                           maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 75;
+		 frontTireMDriveForce = 125;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                            carLink = CarSelectionScreen.lambo_colors[Color];
+                                    }
+                                    
+                                    else if(car ==2){
+                                        //Porsche
+                                          maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                            carLink = CarSelectionScreen.porsche_colors[Color];
+                                    }
+                                    else if(car ==3){
+                                        //Prius
+                                          maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                            carLink = CarSelectionScreen.prius_colors[Color] ;
+                                    }
+                                    else if(car == 4){
+                                        //Truck
+                                          maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                            carLink = CarSelectionScreen.truck_colors[Color];;
+                                    }
+                                    else if(car == 5){
+                                        //Zonda
+                                          maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                            carLink = CarSelectionScreen.zondaf_colors[Color];
                                     }
                                     
                                     else{
+                                        
                                         maxFSpeed = 75;
 		maxBSpeed = -20;
 		 backTireMDriveForce = 150;
@@ -235,6 +283,7 @@ public class Car {
 		 frontTireMLateralImpulse = 3.75f;
                                             breakingFPourcentage = 0.3f;
                                             InitialPosition  = Position();
+                                            carLink = CarSelectionScreen.golf_colors[Color];
                                     }
                               
                                 }
