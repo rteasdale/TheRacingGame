@@ -25,6 +25,7 @@ public class CarContactListener implements ContactListener {
 	}
 
 	void contact(Contact contact, boolean began) {
+            
 		Fixture a = contact.getFixtureA();
 		Fixture b = contact.getFixtureB();
 

@@ -390,7 +390,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Tire ObjectLayer" offsetx="-5" offsety="3">
+ <objectgroup name="Tire ObjectLayer" visible="0" offsetx="-5" offsety="3">
   <object id="14" x="1035.47" y="259.729" width="50.9186" height="50.9186">
    <ellipse/>
   </object>
@@ -416,16 +416,16 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Fuel ObjectLayer">
+ <objectgroup name="Fuel ObjectLayer" visible="0">
   <object id="24" x="1726.96" y="431.562" width="49.1383" height="96.8523"/>
   <object id="25" x="1583.6" y="527.703" width="49.1383" height="96.8523"/>
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
   <object id="27" x="1583.04" y="767.697" width="49.1383" height="96.8523"/>
  </objectgroup>
- <objectgroup name="Finish Line ObjectLayer">
+ <objectgroup name="Finish Line ObjectLayer" visible="0">
   <object id="28" x="118.929" y="551.916" width="239.994" height="23.5009"/>
  </objectgroup>
- <objectgroup name="Oil ObjectLayer">
+ <objectgroup name="Oil ObjectLayer" visible="0">
   <object id="29" x="443.669" y="1034.75" width="103.974" height="62.6691"/>
  </objectgroup>
  <objectgroup name="Road ObjectLayer">

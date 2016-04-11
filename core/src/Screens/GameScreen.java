@@ -22,9 +22,13 @@ import car.Car;
 import car.Constants;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
@@ -33,6 +37,8 @@ public class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
+    
+    
     
 private RacingGame game;
 
@@ -53,7 +59,7 @@ private RacingGame game;
                     public Car car;
                     public Car car2;
         
-                     int mapNum = 1;
+                     public static int mapNum = 2;
         
                     float red;
                     float green;
@@ -87,7 +93,7 @@ private RacingGame game;
 	    this.car = new Car(world, 1);
                         this.car2 = new Car(world, 2);
 
-		createGrounds();
+		
                 
                 ////////////////////////////////////////////////////
                 
@@ -97,6 +103,7 @@ private RacingGame game;
                 tileMap = new TmxMapLoader().load(mapAdress);
                 tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
                 
+                createGrounds();
 	}
 
                 @Override
@@ -115,42 +122,86 @@ private RacingGame game;
             world.step(1 / 60f, 6, 2);
                 
             camera.update();
-            System.out.println(camera.zoom);
+            
             //draw tile map
-            tmr.setView(camera);
+            //tmr.setView(camera);
+            
+            MapProperties prop = tileMap.getProperties();
+            
+            int mapWidth = prop.get("width", Integer.class);
+            int mapHeight = prop.get("height", Integer.class);
+            
+            tmr.setView(camera.combined, -400, -400, mapWidth, mapHeight);
             tmr.render();
             
           renderSprites();
                                            
             //Box2D Debug Renderer
             if(debug){
-		renderer.render(world, camera.combined);
-                                           }
-                                           
-		camera.position.set(new Vector3(car.body.getPosition().x, car.body
-				.getPosition().y, camera.position.z));
+	renderer.render(world, camera.combined);
+                                  }
+            
+               camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
 
 	
         }
 	private void createGrounds(){
 		 
-		BodyDef bodyDef = new BodyDef();
-		Body ground = world.createBody(bodyDef);
-		
-		PolygonShape shape = new PolygonShape();
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.isSensor = true;
-		fixtureDef.filter.categoryBits = Constants.GROUND;
-		fixtureDef.filter.maskBits = Constants.TIRE;
-		
-		shape.setAsBox(9, 7, new Vector2(-10,15), 20*Constants.DEGTORAD);
-		Fixture groundAreaFixture = ground.createFixture(fixtureDef);
-		groundAreaFixture.setUserData(new GroundAreaType(2, false));
-		
-		shape.setAsBox(9,  5, new Vector2(5, 20), -40 * Constants.DEGTORAD);
-		groundAreaFixture = ground.createFixture(fixtureDef);
-		groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+            //MY GROUND
+            
+            
+            MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
+            
+            BodyDef bdef = new BodyDef();
+            FixtureDef fdef = new FixtureDef();
+            
+            for(MapObject mo : Roadlayer.getObjects()){
+                
+                bdef.type = BodyType.StaticBody;
+                
+                float x = (float) mo.getProperties().get("x", Float.class) ;
+                float y = (float) mo.getProperties().get("y", Float.class) ;
+                
+                float width = (float) mo.getProperties().get("width", Float.class);
+                float height = (float) mo.getProperties().get("height", Float.class);
+                
+                Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+                
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+                
+                fdef.shape = shape;
+                fdef.isSensor = true;
+                fdef.filter.categoryBits = Constants.GROUND;
+                fdef.filter.maskBits = Constants.TIRE;
+                
+                Body body = world.createBody(bdef);
+                
+                Fixture groundAreaFixture = body.createFixture(fdef);
+                groundAreaFixture.setUserData(new GroundAreaType(1, false));
+            }
+            
+            ///////////////////////////////////////////////////////
+            
+//Tutorial Ground
+            
+//		BodyDef bodyDef = new BodyDef();
+//		Body ground = world.createBody(bodyDef);
+//		
+//		PolygonShape shape = new PolygonShape();
+//		FixtureDef fixtureDef = new FixtureDef();
+//		fixtureDef.shape = shape;
+//		fixtureDef.isSensor = true;
+//		fixtureDef.filter.categoryBits = Constants.GROUND;
+//		fixtureDef.filter.maskBits = Constants.TIRE;
+//		
+//		shape.setAsBox(9, 7, new Vector2(-10,15), 20*Constants.DEGTORAD);
+//		Fixture groundAreaFixture = ground.createFixture(fixtureDef);
+//		groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+//		
+//		shape.setAsBox(100,  100, new Vector2(5, 20), -40 * Constants.DEGTORAD);
+//		groundAreaFixture = ground.createFixture(fixtureDef);
+//		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
 		
 	}
         

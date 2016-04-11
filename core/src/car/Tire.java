@@ -35,7 +35,7 @@ public class Tire {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		body = world.createBody(bodyDef);
-
+                                            
 		PolygonShape polygonShape = new PolygonShape();
 		polygonShape.setAsBox(0.25f, 0.625f);
 		
@@ -48,9 +48,10 @@ public class Tire {
 		Fixture fixture = body.createFixture(fixtureDef);
 		fixture.setUserData(new CarTireType());
 
+                                            
 		body.setUserData(this);
 		
-		currentTraction = 1;
+		currentTraction = 0.2f;
 	}
 
 	public void addGroundArea(GroundAreaType item) {
@@ -73,8 +74,10 @@ public class Tire {
 	}
 
 	void updateTraction() {
-		if (groundAreas.size == 0) {
-			currentTraction = 1;
+		System.out.println(currentTraction);
+                                            if (groundAreas.size == 0) {
+			currentTraction = 0.2f;
+                                                                
 			return;
 		}
 

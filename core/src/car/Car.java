@@ -1,5 +1,6 @@
 package car;
 
+import Screens.GameScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
+import handlers.Assets;
 import handlers.InputManager.Key;
 
 
@@ -22,8 +24,12 @@ public class Car {
 	public Body body;
 	Array<Tire> tires;
 	RevoluteJoint leftJoint, rightJoint;
+        
+                    public static Assets assets;
                     
                         int car = 0;
+                        
+                        int lapCount = 0;
                         
                         float maxFSpeed;
                         float maxBSpeed;
@@ -32,13 +38,18 @@ public class Car {
                         float backTireMLateralImpulse;
                         float frontTireMLateralImpulse;
                         float breakingFPourcentage;
+                        Vector2 InitialPosition;
                         
                         Sprite carSprite;
                         public String carLink = "prius/prius_darkblue.png";
 
 	public Car(World world, int i) {
 		
-                whichCar(car);
+                                            assets = new Assets();
+                                            
+                                            assets.loadTexture(carLink, "");
+            
+                                            whichCar(car);
                                             
 		tires = new Array<Tire>();
 
@@ -46,7 +57,7 @@ public class Car {
 
 		bodyDef.type = BodyType.DynamicBody;
 
-		bodyDef.position.set(new Vector2(3, 3));
+		bodyDef.position.set(InitialPosition);
 		
 		body = world.createBody(bodyDef);
 		body.setAngularDamping(3);
@@ -85,7 +96,6 @@ public class Car {
 
 		PolygonShape polygonShape = new PolygonShape();
                                            polygonShape.set(vertices);
-                                            //polygonShape.setAsBox(5,9.15f);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
@@ -104,6 +114,7 @@ public class Car {
 		fixtureDef.filter.maskBits = Constants.GROUND;
                                             
 		body.createFixture(fixtureDef);
+                                   //       body.applyTorque(1000, true);
 
                 carSprite = new Sprite(new Texture(carLink));
                 carSprite.setSize(3,6);
@@ -189,38 +200,58 @@ public class Car {
 		
 		leftJoint.setLimits(newAngle, newAngle);
 		rightJoint.setLimits(newAngle, newAngle);
+                
 	}
         
                                 public void whichCar(int car){
                                     if(car == 1){
-                                        maxFSpeed = 175;
-		maxBSpeed = -40;
-		 backTireMDriveForce = 200;
-		 frontTireMDriveForce = 400;
-		 backTireMLateralImpulse = 8.5f;
-		 frontTireMLateralImpulse = 7.5f;
-                                                breakingFPourcentage = 0.3f;
-                                    }
-                                    
-                                    else if(car ==2){
-                                        maxFSpeed = 2000;
-		maxBSpeed = -40;
-		 backTireMDriveForce = 2000;
-		 frontTireMDriveForce = 3500;
-		 backTireMLateralImpulse = 8.5f;
-		 frontTireMLateralImpulse = 7.5f;
-                                            breakingFPourcentage = 0.3f;
-                                    }
-                                    
-                                    else{
-                                        maxFSpeed = 125;
+                                           maxFSpeed = 75;
 		maxBSpeed = -20;
 		 backTireMDriveForce = 150;
 		 frontTireMDriveForce = 250;
 		 backTireMLateralImpulse = 4.25f;
 		 frontTireMLateralImpulse = 3.75f;
                                             breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                    }
+                                    
+                                    else if(car ==2){
+                                          maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition = Position();
+                                    }
+                                    
+                                    else{
+                                        maxFSpeed = 75;
+		maxBSpeed = -20;
+		 backTireMDriveForce = 150;
+		 frontTireMDriveForce = 250;
+		 backTireMLateralImpulse = 4.25f;
+		 frontTireMLateralImpulse = 3.75f;
+                                            breakingFPourcentage = 0.3f;
+                                            InitialPosition  = Position();
                                     }
                               
+                                }
+                                
+                                public Vector2 Position(){
+                                    Vector2 position = new Vector2();
+                                    
+                                    if(GameScreen.mapNum == 1){
+                                        position = new Vector2(3,3);
+                                    }
+                                    else if(GameScreen.mapNum == 2){
+                                        position = new Vector2(3,3);
+                                    }
+                                    else if(GameScreen.mapNum == 3){
+                                        position = new Vector2(3,3);
+                                    }
+                                    
+                                    return position;
                                 }
 }
