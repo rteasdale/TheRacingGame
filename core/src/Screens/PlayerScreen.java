@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.RacingGame;
 
 /**
@@ -154,13 +153,13 @@ public class PlayerScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
-                        //game.setScreen(new CarSelectionScreen(game, true, playerName1, playerName2)); //two players
+                        game.setScreen(new CarSelectionScreen(game, true, playerName1, playerName2)); //two players
                     }
                 }
                 
                 if (twoPlayers == false) {
                     if (!txt_field1.getText().isEmpty()) {
-                        //game.setScreen(new CarSelectionScreen(game, false, playerName1, null)); //single player
+                        game.setScreen(new CarSelectionScreen(game, false, playerName1, null)); //single player
                     }
                 }
             }
@@ -169,9 +168,10 @@ public class PlayerScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new MainMenuScreen(game));
                 txt_field1.clear();
                 txt_field2.clear();
+                dispose();
+                game.setScreen(new MainMenuScreen(game));
             }
         });
         
@@ -210,13 +210,13 @@ public class PlayerScreen implements Screen {
 
     @Override
     public void dispose() {
-        buttons_skin.dispose();
+        game.dispose();
+        stage.dispose();
+        font.dispose();
         buttons_atlas.dispose();
+        buttons_skin.dispose();
         skin.dispose();
         atlas.dispose();
-        stage.dispose();
-        game.dispose();
-        
     }
     
 }

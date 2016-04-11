@@ -6,7 +6,6 @@
 package Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -79,7 +78,6 @@ public class MainMenuScreen extends Stage implements Screen {
     @Override
     public void show() {
         Gdx.app.log("MainMenuScreen", "show called");
-        
         title = new Image(new Texture(Gdx.files.internal("menu/menu_title.png")));
         title.setPosition(280, 550);
         
@@ -171,9 +169,10 @@ public class MainMenuScreen extends Stage implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("MainMenuScreen", "dispose called");
-        background.dispose();
-        stage.getBatch().dispose();
+        game.dispose();
         stage.dispose();
+        background.dispose();
+        buttons_atlas.dispose();
         buttons_skin.dispose();
     }
     

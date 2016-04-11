@@ -33,16 +33,15 @@ public class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-    
-private RacingGame game;
+    private RacingGame game;
 
 
-                    public boolean debug = true; //Boolean if I want B2D Debug on or off
-                    
-                     private Array<Body> tmpBodies = new Array<Body>();
-                    private Texture bg;
-                    private SpriteBatch batch;
-                    private Sprite carSprite;
+    public boolean debug = true; //Boolean if I want B2D Debug on or off
+
+    private Array<Body> tmpBodies = new Array<Body>();
+    private Texture bg;
+    private SpriteBatch batch;
+    private Sprite carSprite;
                     
 	public OrthographicCamera camera;
 	Box2DDebugRenderer renderer;
@@ -61,7 +60,7 @@ private RacingGame game;
                     float alpha;
                     String mapAdress;
 
-	public  GameScreen (RacingGame game) {
+	public  GameScreen (RacingGame game, int mapNum) {
             this.game = game;
 
             choseMap(mapNum);

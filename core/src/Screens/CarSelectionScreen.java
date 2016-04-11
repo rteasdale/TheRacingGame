@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -40,28 +41,32 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
-    private Hud hud;
+    
+    private ShapeRenderer renderer;
     
     private boolean twoPlayers;
     private String playerNameP1;
     private String playerNameP2;
+    private int carColor;
+    private int currentCar = 0;
     
     private FileHandle file;
     String[] group;
     String[] car;
-    String[] previews;
-    private int currentCar = 0;
+    String[] carPreview;
+    String[] stats;
+    
+    String[] golf_colors;
+    String[] lambo_colors;
+    String[] prius_colors;
+    String[] porsche_colors;
+    String[] truck_colors;
+    String[] zondaf_colors;
+    
     
     private Image title;
     private ImageButton selectNextCarButton;
     private ImageButton selectPreviousCarButton;
-    
-    private Rectangle weight_lvl;
-    private Rectangle accel_lvl;
-    private Rectangle top_speed_lvl;
-    private Rectangle handling_lvl;
-    private Rectangle tank_lvl;
-    private Rectangle consumption_lvl;
 
     private ImageButton next_btn;
     private ImageButton back_btn;
@@ -69,7 +74,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private ImageButtonStyle back_style;
     
     private Image preview;
-    private Image logo_preview;
     
     private TextArea carDescription;
     private TextField.TextFieldStyle txt_style;
@@ -99,28 +103,33 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private Label capacity_lbl;
     private Label consumption_lbl;
     
-    public CarSelectionScreen(RacingGame game)
-    //public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerNameP1, String playerNameP2)
-    {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerNameP1, String playerNameP2) {
         Gdx.app.log("CarSelection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
         this.playerNameP1 = playerNameP1;
         this.playerNameP2 = playerNameP2;
         
+        renderer = new ShapeRenderer();
+        
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
+        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
-        //hud = new Hud(game.batch);
         
         file = new FileHandle("data/car.txt");
         group = file.readString().split("\n");
         car = group[0].split(",");
-        previews = group[1].split(",");
-                
-//        System.out.println(Arrays.toString(car));
-//        System.out.println(group[1]);
+        carPreview = group[1].split(",");
+        stats = group[8].split(" ");
+        
+        golf_colors = group[2].split(",");
+        lambo_colors = group[3].split(",");
+        prius_colors = group[4].split(",");
+        porsche_colors = group[5].split(",");
+        truck_colors = group[6].split(",");
+        zondaf_colors = group[7].split(",");
         
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
@@ -163,8 +172,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     @Override
     public void show() {
         Gdx.app.log("CarSelection", "show called");
-        
-        System.out.println(playerNameP1);
+        Gdx.app.log("P1 name", playerNameP1);
         
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
@@ -172,18 +180,13 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         
         /** SelectBox and TextArea*/
         color_select = new SelectBox(box_style);
-        color_select.setItems("-- Select Car Color --", "Blue", "Dark Blue", "Green", "Orange", "Purple", "Red", "White", "Yellow");
+        color_select.setItems("-- Select Car Color --", "Light Blue", "Dark Blue", "Green", "Orange", "Purple", "Red", "White", "Yellow");
         color_select.setPosition(200, 300);
         color_select.setSize(432, 40);
 
         carDescription = new TextArea("Description", txt_style);
         carDescription.setPosition(200,170);
         carDescription.setSize(432, 120);
-        carDescription.setText(car[0]);
-        
-        /*Level bars*/
-        weight_lvl = new Rectangle(100, 100, 100, 20);
-
 
         /** Buttons */
         next_btn = new ImageButton(next_style);
@@ -250,61 +253,545 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stage.addActor(title);
         
         /** Listeners */
-        back_btn.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                if (twoPlayers == true) {
-                    
-                }
-            }
-        });
-        
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
+                    game.setScreen(new MapSelectionScreen(game));
+                    //pass car color
                     
                 }
+                if (twoPlayers == false) {
+                    game.setScreen(new MapSelectionScreen(game));
+                    //pass car color
+                }
             }
-        });   
+        });  
+        back_btn.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                dispose();
+                if (twoPlayers == true) {
+                    game.setScreen(new PlayerScreen(game, true));
+                }
+                if (twoPlayers == false) {
+                    game.setScreen(new PlayerScreen(game, false));
+                }
+            }
+        });
         
         /**Color*/
         color_select.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                Gdx.app.log("color selected:", color_select.getSelected());
-                if (color_select.getSelected().equals("Blue")) {
-                    
-                }
+            /** Default*/
+                if (color_select.getSelected().equals("-- Select Car Color --")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(carPreview[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                 }                
+            /** Light Blue*/
+                
+                if (color_select.getSelected().equals("Light Blue")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[0])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                 }
+            /** Dark Blue*/
+                
+                if (color_select.getSelected().equals("Dark Blue")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[1])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                } 
+            /** Yellow*/
+                
+                if (color_select.getSelected().equals("Yellow")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[2])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }                
+            /** Green*/
+                
+                if (color_select.getSelected().equals("Green")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[3])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }                
+            /** White*/
+                
+                if (color_select.getSelected().equals("White")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[4])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }          
+            /** Red*/
+                
+                if (color_select.getSelected().equals("Red")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[5])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }                
+            /** Purple*/
+                
+                if (color_select.getSelected().equals("Purple")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[6])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }    
+               /** Orange */ 
+                if (color_select.getSelected().equals("Orange")) {
+                    Gdx.app.log("color selected:", color_select.getSelected());
+                    if (currentCar == 0) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(golf_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                            
+                    }
+                    if (currentCar == 1) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(lambo_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 2) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(prius_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 3) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(porsche_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }
+                    if (currentCar == 4) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(truck_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }  
+                    if (currentCar == 5) {
+                        preview.remove();
+                        preview = new Image(new Texture(Gdx.files.internal(zondaf_colors[7])));
+                        preview.setPosition(530, 450);
+                        preview.sizeBy(52, 100);
+                        preview.rotateBy(90);
+                        stage.addActor(preview);                       
+                    }                    
+                }                
+                
             }
         });
         
-        System.out.println(Arrays.toString(previews));
+        System.out.println(Arrays.toString(carPreview));
         Gdx.app.log("Current car", car[0]);
         carDescription.setText("\n" + car[0]);
         
         /** Preview */
-        preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+        preview = new Image(new Texture(Gdx.files.internal(carPreview[0])));
         preview.setPosition(530, 450);
         preview.sizeBy(52, 100);
         preview.rotateBy(90);
         stage.addActor(preview);
         
+        System.out.println(currentCar);
         /** Car type*/
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
                 if (currentCar < 5) {
                 currentCar++;
+                System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();
-                preview = new Image(new Texture(Gdx.files.internal(previews[currentCar])));
+                preview = new Image(new Texture(Gdx.files.internal(carPreview[currentCar])));
                 preview.setPosition(530, 450);
                 preview.sizeBy(52, 100);
                 preview.rotateBy(90);
-                stage.addActor(preview);
+                stage.addActor(preview);    
                 }
                 else {
                 currentCar = 0;
@@ -312,7 +799,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 carDescription.setText("\n" + car[0]); 
                 /** Preview */
                 preview.remove();
-                preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+                preview = new Image(new Texture(Gdx.files.internal(carPreview[0])));
                 preview.setPosition(530, 450);
                 preview.sizeBy(52, 100);
                 preview.rotateBy(90);
@@ -326,48 +813,58 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {
                 currentCar--;
+                System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();
-                preview = new Image(new Texture(Gdx.files.internal(previews[currentCar])));
+                preview = new Image(new Texture(Gdx.files.internal(carPreview[currentCar])));
                 preview.setPosition(530, 450);
                 preview.sizeBy(52, 100);
                 preview.rotateBy(90);
                 stage.addActor(preview);                    
                 }
                 else {
-                currentCar = 6;
-                Gdx.app.log("Current car", car[0]);
-                carDescription.setText("\n" + car[0]); 
+                currentCar = 5;
+                Gdx.app.log("Current car", car[5]);
+                carDescription.setText("\n" + car[5]); 
                 /** Preview */
                 preview.remove();
-                preview = new Image(new Texture(Gdx.files.internal(previews[0])));
+                preview = new Image(new Texture(Gdx.files.internal(carPreview[5])));
                 preview.setPosition(530, 450);
                 preview.sizeBy(52, 100);
                 preview.rotateBy(90);
-                stage.addActor(preview);                    
+                stage.addActor(preview);    
                 }                
             }
-        });        
+        });
         
     }
+    
 
+    
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
       
-//        game.batch.begin();
-//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-//        game.batch.end();
-//        hud.stage.draw();
+        renderer.setProjectionMatrix(camera.combined);
+
+            String[] temp = stats[currentCar].split(",");
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            renderer.setColor(Color.BLUE);
+            renderer.rect(850, 550, Integer.parseInt(temp[0])*28.5f, 20);
+            renderer.rect(850, 480, Integer.parseInt(temp[1])*28.5f, 20);
+            renderer.rect(850, 410, Integer.parseInt(temp[2])*28.5f, 20);
+            renderer.rect(850, 340, Integer.parseInt(temp[3])*28.5f, 20);
+            renderer.rect(850, 270, Integer.parseInt(temp[4])*28.5f, 20);
+            renderer.rect(850, 200, Integer.parseInt(temp[5])*28.5f, 20);
+            renderer.end();  
         
-        
-                
-        stage.act();
-        stage.draw();
+            stage.act();
+            stage.draw();
     }
 
     @Override
@@ -389,10 +886,12 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     @Override
     public void dispose() {
         Gdx.app.log("Car Selection", "dispose called");
-        game.dispose();
-        font.dispose();
         stage.dispose();
         stage.getBatch().dispose();
+        renderer.dispose();
+        font.dispose();
+        buttons_atlas.dispose();
+        box_atlas.dispose();
         buttons_skin.dispose();
         box_skin.dispose();
     }
