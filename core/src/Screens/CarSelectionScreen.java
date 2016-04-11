@@ -56,12 +56,12 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     String[] carPreview;
     String[] stats;
     
-    String[] golf_colors;
-    String[] lambo_colors;
-    String[] prius_colors;
-    String[] porsche_colors;
-    String[] truck_colors;
-    String[] zondaf_colors;
+    public static String[] golf_colors;
+    public static String[] lambo_colors;
+    public static String[] prius_colors;
+    public static String[] porsche_colors;
+    public static String[] truck_colors;
+    public static String[] zondaf_colors;
     
     
     private Image title;

@@ -16,7 +16,7 @@ public class InputManager  implements InputProcessor  {
 	}
 	
 	public enum Key {
-		Up, Down, Right, Left,Shift,Escape,
+		Up, Down, Right, Left,Escape,
                 W, S, D, A
 	}
 
@@ -70,10 +70,6 @@ public class InputManager  implements InputProcessor  {
 				pressedKeys.remove(Key.Right);
 			}
 
-		}else if (keycode== Input.Keys.SHIFT_RIGHT){
-                if(pressedKeys.contains(Key.Shift)){
-                    pressedKeys.remove(Key.Shift);
-                }
                                             }
 
 		
@@ -113,8 +109,13 @@ public class InputManager  implements InputProcessor  {
 	}
         @Override
             public boolean scrolled(int amount) {
+                if(GameScreen.debug){
                 mainClass.camera.zoom += amount / 25f;
                 return true;
+                }
+            else
+                    return true;
+                }
             }
 
-}
+

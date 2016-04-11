@@ -74,7 +74,6 @@ public class Tire {
 	}
 
 	void updateTraction() {
-		System.out.println(currentTraction);
                                             if (groundAreas.size == 0) {
 			currentTraction = 0.2f;
                                                                 
@@ -133,9 +132,8 @@ public class Tire {
                             desiredSpeed = maxForwardSpeed;
                     } else if(keys.contains(Key.Down)){
                             desiredSpeed = maxBackwardSpeed;
-                    }else if(keys.contains(Key.Shift)){
-                            desiredSpeed = 0;
-                    } else {
+                    }
+                            else {
                             return;
                     }
                 //}

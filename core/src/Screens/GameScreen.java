@@ -29,6 +29,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
@@ -36,14 +37,19 @@ import handlers.InputManager;
 public class GameScreen implements Screen {
     
     private TiledMap tileMap;
+<<<<<<< HEAD
     private OrthogonalTiledMapRenderer tmr;
     
     
+=======
+    private OrthogonalTiledMapRenderer tmr;    
+>>>>>>> origin/master
     
 private RacingGame game;
 
 
-    public boolean debug = true; //Boolean if I want B2D Debug on or off
+
+    public static boolean debug = true; //Boolean if I want B2D Debug on or off
 
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
@@ -75,7 +81,7 @@ private RacingGame game;
                                             batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
-		camera.zoom = 0.16f;
+		camera.zoom = 0.2f;
 		camera.position.x = 0;
 		camera.position.y = 0;
 		
@@ -90,8 +96,8 @@ private RacingGame game;
 		inputManager = new InputManager(this);
 		Gdx.input.setInputProcessor(inputManager);
 		
-	    this.car = new Car(world, 1);
-                        this.car2 = new Car(world, 2);
+	    this.car = new Car(world, Constants.PRIUS,Constants.GREEN );
+                        this.car2 = new Car(world, Constants.LAMBORGHINI,Constants.DARKBLUE );
 
 		
                 
@@ -124,14 +130,7 @@ private RacingGame game;
             camera.update();
             
             //draw tile map
-            //tmr.setView(camera);
-            
-            MapProperties prop = tileMap.getProperties();
-            
-            int mapWidth = prop.get("width", Integer.class);
-            int mapHeight = prop.get("height", Integer.class);
-            
-            tmr.setView(camera.combined, -400, -400, mapWidth, mapHeight);
+            tmr.setView(camera);
             tmr.render();
             
           renderSprites();
@@ -147,7 +146,7 @@ private RacingGame game;
         }
 	private void createGrounds(){
 		 
-            //MY GROUND
+            //Road Layer
             
             
             MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
@@ -155,15 +154,15 @@ private RacingGame game;
             BodyDef bdef = new BodyDef();
             FixtureDef fdef = new FixtureDef();
             
-            for(MapObject mo : Roadlayer.getObjects()){
+            for(MapObject ro : Roadlayer.getObjects()){
                 
                 bdef.type = BodyType.StaticBody;
                 
-                float x = (float) mo.getProperties().get("x", Float.class) ;
-                float y = (float) mo.getProperties().get("y", Float.class) ;
+                float x = (float) ro.getProperties().get("x", Float.class) ;
+                float y = (float) ro.getProperties().get("y", Float.class) ;
                 
-                float width = (float) mo.getProperties().get("width", Float.class);
-                float height = (float) mo.getProperties().get("height", Float.class);
+                float width = (float) ro.getProperties().get("width", Float.class);
+                float height = (float) ro.getProperties().get("height", Float.class);
                 
                 Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
                 
@@ -179,6 +178,37 @@ private RacingGame game;
                 
                 Fixture groundAreaFixture = body.createFixture(fdef);
                 groundAreaFixture.setUserData(new GroundAreaType(1, false));
+            }
+                ////////////////////////////////////////////////////////
+                //Oil Layer
+                
+                MapLayer OilLayer = tileMap.getLayers().get("Oil ObjectLayer");
+                
+                for(MapObject oi : OilLayer.getObjects()){
+                
+                bdef.type = BodyType.StaticBody;
+                
+                float x = (float) oi.getProperties().get("x", Float.class) ;
+                float y = (float) oi.getProperties().get("y", Float.class) ;
+                
+                float width = (float) oi.getProperties().get("width", Float.class);
+                float height = (float) oi.getProperties().get("height", Float.class);
+                
+                Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+                
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+                
+                fdef.shape = shape;
+                fdef.isSensor = true;
+                fdef.filter.categoryBits = Constants.OILOBS;
+                fdef.filter.maskBits = Constants.TIRE;
+                
+                Body body = world.createBody(bdef);
+                
+                Fixture groundAreaFixture = body.createFixture(fdef);
+                groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+                
             }
             
             ///////////////////////////////////////////////////////
@@ -228,8 +258,12 @@ private RacingGame game;
                 blue = 36/255f;
                 alpha = 1;
                 mapAdress = "maps/map3.tmx";
-                
             }
+                else{
+                        mapAdress = "maps/map1.tmx";
+                        }
+                
+            
 
         }
     @Override

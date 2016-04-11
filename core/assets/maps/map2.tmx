@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="110">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="112">
  <tileset firstgid="1" name="snow_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="snow_texture.png" width="200" height="200"/>
  </tileset>
@@ -494,7 +494,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Oil ObjectLayer" visible="0">
+ <objectgroup name="Oil ObjectLayer">
   <object id="12" x="492.516" y="1058.93" width="103.01" height="61.3063"/>
  </objectgroup>
  <objectgroup name="Fuel ObjectLayer" visible="0">
@@ -512,7 +512,7 @@
   <object id="65" x="777.202" y="1056.01" width="782.137" height="143.104"/>
   <object id="75" x="47.5138" y="23.2044" width="240.884" height="239.779"/>
   <object id="76" x="47.5138" y="983.425" width="298.343" height="219.89"/>
-  <object id="77" x="346.961" y="1054.14" width="468.508" height="142.541"/>
+  <object id="77" x="346.961" y="1121.33" width="468.508" height="75.3477"/>
   <object id="78" x="1447.51" y="696.133" width="257.459" height="193.37"/>
   <object id="79" x="1447.51" y="1051.93" width="257.459" height="146.961"/>
   <object id="80" x="1464.09" y="890.608" width="257.459" height="161.326"/>
@@ -540,6 +540,8 @@
   <object id="104" x="1446.85" y="381.21" width="257.459" height="146.961"/>
   <object id="105" x="1463.43" y="219.888" width="257.459" height="161.326"/>
   <object id="109" x="456" y="360" width="338" height="552"/>
+  <object id="110" x="597.333" y="1055.33" width="180" height="66"/>
+  <object id="111" x="346" y="1056" width="146.667" height="66"/>
  </objectgroup>
  <objectgroup name="FinishLine ObjectLayer" visible="0">
   <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888"/>
