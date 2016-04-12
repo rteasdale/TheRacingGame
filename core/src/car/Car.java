@@ -22,29 +22,27 @@ import handlers.InputManager.Key;
 
 
 public class Car {
-	public Body body;
-	Array<Tire> tires;
-	RevoluteJoint leftJoint, rightJoint;
+    public Body body;
+    Array<Tire> tires;
+    RevoluteJoint leftJoint, rightJoint;
 
-                        int car = 0;
-                        
-                        int lapCount = 0;
-                        
-                        float maxFSpeed;
-                        float maxBSpeed;
-                        float backTireMDriveForce;
-                        float frontTireMDriveForce;
-                        float backTireMLateralImpulse;
-                        float frontTireMLateralImpulse;
-                        float breakingFPourcentage;
-                        Vector2 InitialPosition;
-                        
-                        Sprite carSprite;
-                        public String carLink = "prius/prius_darkblue.png";
+    int car = 0;
+    int lapCount = 0;
 
-	public Car(World world, int CarNum, int Color) {
-            
-                                            whichCar(CarNum, Color);
+    float maxFSpeed;
+    float maxBSpeed;
+    float backTireMDriveForce;
+    float frontTireMDriveForce;
+    float backTireMLateralImpulse;
+    float frontTireMLateralImpulse;
+    float breakingFPourcentage;
+    Vector2 InitialPosition;
+                        
+    Sprite carSprite;
+    public String carLink = "prius/prius_darkblue.png";
+
+        public Car(World world, int CarNum, int Color) {
+            whichCar(CarNum, Color);
                                             
 		tires = new Array<Tire>();
 

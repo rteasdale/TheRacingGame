@@ -173,7 +173,58 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     public void show() {
         //Gdx.app.log("CarSelection", "show called");
         Gdx.app.log("Player name", playerName);
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
         
+        /** File data */
+        file = new FileHandle("data/car.txt");
+        group = file.readString().split("\n");
+        car = group[0].split(",");
+        carPreview = group[1].split(",");
+        stats = group[8].split(" ");
+        
+        golf_colors = group[2].split(",");
+        lambo_colors = group[3].split(",");
+        prius_colors = group[4].split(",");
+        porsche_colors = group[5].split(",");
+        truck_colors = group[6].split(",");
+        zondaf_colors = group[7].split(",");
+        
+        /** BitmapFont */
+        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+
+        /** Atlas and skin */
+        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_skin= new Skin(buttons_atlas);
+
+        box_atlas = new TextureAtlas(Gdx.files.internal("menu/box_atlas.txt"));
+        box_skin = new Skin(box_atlas);
+
+        /** Styles */
+        next_style = new ImageButtonStyle(buttons_skin.getDrawable("next_button"), null, null, null, null, null);
+        back_style = new ImageButtonStyle(buttons_skin.getDrawable("back_button"), null, null, null, null, null);
+        nextcar_style = new ImageButtonStyle(buttons_skin.getDrawable("nextarrow_small"), null, null, null, null, null);
+        prevcar_style = new ImageButtonStyle(buttons_skin.getDrawable("backarrow_small"), null, null, null, null, null);
+        
+        box_style = new SelectBox.SelectBoxStyle();
+        box_style.background = box_skin.getDrawable("select_box1");
+        box_style.font = font;
+        box_style.fontColor = new Color(Color.YELLOW);
+        box_style.listStyle = new List.ListStyle(font, new Color(Color.GOLD), new Color(Color.WHITE), box_skin.getDrawable("select_box1"));
+        box_style.scrollStyle = new ScrollPane.ScrollPaneStyle();
+        box_style.scrollStyle.background = box_skin.getDrawable("select_box2");
+        box_style.scrollStyle.corner = box_skin.getDrawable("select_box1");
+        box_style.scrollStyle.vScroll = box_skin.getDrawable("select_box2");
+        box_style.scrollStyle.hScroll = box_skin.getDrawable("select_box2");
+        
+        txt_style = new TextField.TextFieldStyle();
+        txt_style.font = font;
+        txt_style.fontColor = new Color(Color.WHITE);
+        txt_style.background = box_skin.getDrawable("text_box");
+        
+        lbl_style = new Label.LabelStyle();
+        lbl_style.font = font;
+        lbl_style.fontColor = new Color(Color.WHITE);        
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
         title.setPosition(280, 648);

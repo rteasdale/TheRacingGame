@@ -58,6 +58,10 @@ public class SettingsScreen implements Screen {
     
     public SettingsScreen(RacingGame game) {
         this.game = game;
+    }
+        
+    @Override
+    public void show() {
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         skin = new Skin(new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt")));
@@ -69,12 +73,8 @@ public class SettingsScreen implements Screen {
         /** Styles */
         lbl_style = new Label.LabelStyle(font, Color.WHITE);
         OK_style = new ImageButton.ImageButtonStyle(skin.getDrawable("OK_button"), null, null, null, null, null);
+        slider_style = new Slider.SliderStyle(check_skin.getDrawable("slider"), check_skin.getDrawable("knob"));        
         
-        slider_style = new Slider.SliderStyle(check_skin.getDrawable("slider"), check_skin.getDrawable("knob"));
-    }
-        
-    @Override
-    public void show() {
         OKButton = new ImageButton(OK_style);
         OKButton.setPosition(1064, 24);
         
@@ -83,24 +83,25 @@ public class SettingsScreen implements Screen {
         
         /** Labels */
         SFXLbl = new Label("SFX", lbl_style);
-        SFXLbl.setPosition(300, 450);
+        SFXLbl.setPosition(400, 450);
         musicLbl = new Label("MUSIC", lbl_style);
-        musicLbl.setPosition(300, 350);
+        musicLbl.setPosition(400, 350);
         
         /**Slider*/
         SFXVolume = new Slider(0, 10, 4, false, slider_style);
-        SFXVolume.setSize(300, 40);
-        SFXVolume.setPosition(300, 400);
+        SFXVolume.setSize(500, 40);
+        SFXVolume.setPosition(400, 400);
         SFXVolume.setRange(0, 100);
         musicVolume = new Slider(0, 10, 4, false, slider_style);
-        musicVolume.setSize(300, 40);
-        musicVolume.setPosition(300, 300);
+        musicVolume.setSize(500, 40);
+        musicVolume.setPosition(400, 300);
         musicVolume.setRange(0, 100);
         
+        /** Listeners*/
         SFXVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //change value of sider
+                //change value of slider
             }
         });
         
