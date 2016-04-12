@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import handlers.InputManager.Key;
 
 public class Car {
+    private int playerNum;
+    
     public Body body;
     Array<Tire> tires;
     RevoluteJoint leftJoint, rightJoint;
@@ -36,9 +38,10 @@ public class Car {
     Vector2 InitialPosition;
                         
     Sprite carSprite;
-    public String carLink = "prius/prius_darkblue.png";
+    public String carLink;
     
-    public Car(World world, int CarNum, int Color) {
+    public Car(World world, int CarNum, int Color, int playerNum) {
+        this.playerNum = playerNum;
         whichCar(CarNum, Color);
         
         tires = new Array<Tire>();
@@ -125,7 +128,7 @@ public class Car {
         float breakingForcePourcentage = breakingFPourcentage;
 
         //Lower Left
-        Tire tire = new Tire(world);
+        Tire tire = new Tire(world, playerNum);
         tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
         backTireMaxDriveForce, backTireMaxLateralImpulse, breakingForcePourcentage);
         jointDef.bodyB = tire.body;
@@ -134,7 +137,7 @@ public class Car {
         tires.add(tire);
 
         //Lower Right
-        tire = new Tire(world);
+        tire = new Tire(world, playerNum);
         tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
         backTireMaxDriveForce, backTireMaxLateralImpulse, breakingForcePourcentage);
         jointDef.bodyB = tire.body;
@@ -143,7 +146,7 @@ public class Car {
         tires.add(tire);
 
         //Upper Left
-        tire = new Tire(world);
+        tire = new Tire(world, playerNum);
         tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
                         frontTireMaxDriveForce, frontTireMaxLateralImpulse,breakingForcePourcentage);
         jointDef.bodyB = tire.body;
@@ -152,7 +155,7 @@ public class Car {
         tires.add(tire);
                                             
         //Upper Right
-        tire = new Tire(world);
+        tire = new Tire(world, playerNum);
         tire.setCharacteristics(maxForwardSpeed, maxBackwardSpeed,
                         frontTireMaxDriveForce, frontTireMaxLateralImpulse,breakingForcePourcentage);
         jointDef.bodyB = tire.body;
@@ -174,12 +177,23 @@ public class Car {
         float turnPerTimeStep = turnSpeedPerSec / 60.0f;
         float desiredAngle = 0;
 
-        if(keys.contains(Key.Left)){
-            desiredAngle = lockAngle;
-        } else if(keys.contains(Key.Right)){
-            desiredAngle = -lockAngle;
+         /** if player 1 */
+        if (playerNum == 1) {
+            if(keys.contains(Key.Left)){
+                desiredAngle = lockAngle;
+            } else if(keys.contains(Key.Right)){
+                desiredAngle = -lockAngle;
+            }
         }
-
+         /** if player 2 */
+        if (playerNum == 2) {
+            if(keys.contains(Key.a)){
+                desiredAngle = lockAngle;
+            } else if(keys.contains(Key.d)){
+                desiredAngle = -lockAngle;
+            }
+        }
+        
         float angleNow = leftJoint.getJointAngle();
         float angleToTurn = desiredAngle - angleNow;
         angleToTurn = CarMath.clamp(angleToTurn, -turnPerTimeStep, turnPerTimeStep);
@@ -248,7 +262,7 @@ public class Car {
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
-            carLink = CarSelectionScreen.truck_colors[Color];;
+            carLink = CarSelectionScreen.truck_colors[Color];
         }
         else if(car == 5){
             //Zonda
@@ -291,4 +305,5 @@ public class Car {
 
         return position;
     }                           
+
 }

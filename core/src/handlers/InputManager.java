@@ -17,59 +17,103 @@ public class InputManager  implements InputProcessor  {
 
     public enum Key {
             Up, Down, Right, Left,Escape,
-            W, S, D, A
+            w, s, d, a
     }
 
     public HashSet<Key> pressedKeys = new HashSet<Key>();
+    public HashSet<Key> pressedKeys2 = new HashSet<Key>();
 
-    public void update(){
+    public void update(boolean twoPlayers){
         mainClass.car.update(pressedKeys);
+        if (twoPlayers == true) {
+            mainClass.car2.update(pressedKeys2);
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        /**Arrows*/
         if (keycode == Input.Keys.UP) {
-                if (!pressedKeys.contains(Key.Up)) {
-                        pressedKeys.add(Key.Up);
-                }
-        } else if (keycode == Input.Keys.DOWN) {
-                if (!pressedKeys.contains(Key.Down)) {
-                        pressedKeys.add(Key.Down);
-                }
+            if (!pressedKeys.contains(Key.Up)) {
+                pressedKeys.add(Key.Up);
+            }
+        }     
+        else if (keycode == Input.Keys.DOWN) {
+            if (!pressedKeys.contains(Key.Down)) {
+                pressedKeys.add(Key.Down);
+            }
         } else if (keycode == Input.Keys.LEFT) {
-                if (!pressedKeys.contains(Key.Left)) {
-                        pressedKeys.add(Key.Left);
-                }
+            if (!pressedKeys.contains(Key.Left)) {
+                pressedKeys.add(Key.Left);
+            }
         } else if (keycode == Input.Keys.RIGHT) {
-                if (!pressedKeys.contains(Key.Right)) {
-                        pressedKeys.add(Key.Right);
-                }
+            if (!pressedKeys.contains(Key.Right)) {
+                pressedKeys.add(Key.Right);
+            }
         }
-        else if(keycode == Input.Keys.ESCAPE){
+        /**ASDW*/
+        else if (keycode == Input.Keys.W) {
+            if (!pressedKeys2.contains(Key.w)) {
+                pressedKeys2.add(Key.w);
+            }
+        } else if (keycode == Input.Keys.S) {
+            if (!pressedKeys2.contains(Key.s)) {
+                pressedKeys2.add(Key.s);
+            }
+        } else if (keycode == Input.Keys.A) {
+            if (!pressedKeys2.contains(Key.a)) {
+                pressedKeys2.add(Key.a);
+            }
+        } else if (keycode == Input.Keys.D) {
+            if (!pressedKeys2.contains(Key.d)) {
+                pressedKeys2.add(Key.d);
+            }
+        } else if(keycode == Input.Keys.ESCAPE){
             Gdx.app.exit();
-        }
+        }  
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        /**Arrows*/
         if (keycode == Input.Keys.UP) {
-                if (pressedKeys.contains(Key.Up)) {
-                        pressedKeys.remove(Key.Up);
-                }
+            if (pressedKeys.contains(Key.Up)) {
+                pressedKeys.remove(Key.Up);
+            }
         } else if (keycode == Input.Keys.DOWN) {
-                if (pressedKeys.contains(Key.Down)) {
-                        pressedKeys.remove(Key.Down);
-                }
+            if (pressedKeys.contains(Key.Down)) {
+                pressedKeys.remove(Key.Down);
+            }
         } else if (keycode == Input.Keys.LEFT) {
-                if (pressedKeys.contains(Key.Left)) {
-                        pressedKeys.remove(Key.Left);
-                }
+            if (pressedKeys.contains(Key.Left)) {
+                pressedKeys.remove(Key.Left);
+            }
         } else if (keycode == Input.Keys.RIGHT) {
-                if (pressedKeys.contains(Key.Right)) {
-                        pressedKeys.remove(Key.Right);
-                }
+            if (pressedKeys.contains(Key.Right)) {
+                pressedKeys.remove(Key.Right);
+            }
         }
+        
+        /**ASDW*/
+        else if (keycode == Input.Keys.W) {
+            if (pressedKeys2.contains(Key.w)) {
+                pressedKeys2.remove(Key.w);
+            }
+        }
+        else if (keycode == Input.Keys.S) {
+            if (pressedKeys2.contains(Key.s)) {
+                pressedKeys2.remove(Key.s);
+            }
+        } else if (keycode == Input.Keys.A) {
+            if (pressedKeys2.contains(Key.a)) {
+                pressedKeys2.remove(Key.a);
+            }
+        } else if (keycode == Input.Keys.D) {
+            if (pressedKeys2.contains(Key.d)) {
+                pressedKeys2.remove(Key.d);
+            }
+        }        
         return false;
     }
 
@@ -106,8 +150,8 @@ public class InputManager  implements InputProcessor  {
     @Override
     public boolean scrolled(int amount) {
         if(GameScreen.debug){
-        mainClass.camera.zoom += amount / 25f;
-        return true;
+            mainClass.camera.zoom += amount / 25f;
+            return true;
         }
         else {
             return true;

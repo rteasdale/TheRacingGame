@@ -35,7 +35,7 @@ import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
 
-public class GameScreen implements Screen {
+public final class GameScreen implements Screen {
     private RacingGame game;
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
@@ -52,10 +52,12 @@ public class GameScreen implements Screen {
     InputManager inputManager;
     CarContactListener cl;
 
+    private boolean twoPlayers;
+            
     public Car car;
     public Car car2;
 
-    public static int mapNum = 2;
+    public static int mapNum = 0;
 
     float red;
     float green;
@@ -63,8 +65,9 @@ public class GameScreen implements Screen {
     float alpha;
     String mapAdress;
     
-    public GameScreen(RacingGame game, int mapNum) {
+    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
+        this.twoPlayers = twoPlayers;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -82,9 +85,14 @@ public class GameScreen implements Screen {
 
         inputManager = new InputManager(this);
         Gdx.input.setInputProcessor(inputManager);
-		
-	this.car = new Car(world, Constants.PRIUS, Constants.GREEN );
-        this.car2 = new Car(world, Constants.LAMBORGHINI, Constants.DARKBLUE );
+        
+	this.car = new Car(world, Constants.TRUCK, Constants.GREEN, 1);
+        
+        // If two players, construct another car
+        if (twoPlayers == true) {
+            this.car2 = new Car(world, Constants.LAMBORGHINI, Constants.DARKBLUE, 2);
+        }
+        
 
         ////////////////////////////////////////////////////
         //Load Tiled Map
@@ -106,7 +114,7 @@ public class GameScreen implements Screen {
     public void render (float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        inputManager.update();
+        inputManager.update(twoPlayers);
         world.step(1 / 60f, 6, 2);
         camera.update();
 

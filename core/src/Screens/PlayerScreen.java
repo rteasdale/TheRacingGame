@@ -27,14 +27,15 @@ import com.mygdx.game.RacingGame;
  * @author ROSY
  */
 public class PlayerScreen implements Screen {
+    private Screen parent;
     private RacingGame game;
-    private boolean twoPlayers;
 
     private Stage stage;
     private BitmapFont font;
     
     static public String playerNameP1;
     static public String playerNameP2;
+    private boolean twoPlayers;
 
     private Image title;
     private ImageButton next_btn;
@@ -62,6 +63,7 @@ public class PlayerScreen implements Screen {
 
     public PlayerScreen(RacingGame game, boolean twoPlayers) {
         //Gdx.app.log("PlayerName", "constructor called");
+        this.parent = parent;
         this.game = game;
         this.twoPlayers = twoPlayers;
         stage = new Stage();
