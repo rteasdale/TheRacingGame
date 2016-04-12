@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,8 +29,7 @@ import com.mygdx.game.RacingGame;
 public class PlayerScreen implements Screen {
     private RacingGame game;
     private boolean twoPlayers;
-    
-    private OrthographicCamera camera;
+
     private Stage stage;
     private BitmapFont font;
     
@@ -63,17 +61,15 @@ public class PlayerScreen implements Screen {
     
 
     public PlayerScreen(RacingGame game, boolean twoPlayers) {
-        Gdx.app.log("PlayerName", "constructor called");
+        //Gdx.app.log("PlayerName", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
         stage = new Stage();
-        camera = new OrthographicCamera();
         Gdx.input.setInputProcessor(stage);
         
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
-        
-        
+
         /** Atlas and skin */
         buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
         buttons_skin= new Skin(buttons_atlas);
@@ -98,10 +94,8 @@ public class PlayerScreen implements Screen {
     
     @Override
     public void show() {
-        Gdx.app.log("PlayerName", "show called");            
+        //Gdx.app.log("PlayerName", "show called");            
 
-        
-        
         /**Labels*/
         racer1_title = new Label("Racer 1", lbl_style);
         racer1_title.setPosition(550, 500);  
@@ -142,9 +136,6 @@ public class PlayerScreen implements Screen {
             stage.addActor(racer2);
             stage.addActor(racer2_title);   
             stage.addActor(txt_field2);
-            
-            playerName1 = txt_field1.getText();
-            playerName2 = txt_field2.getText();
 
         }
         
@@ -153,12 +144,15 @@ public class PlayerScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
+                        playerName1 = txt_field1.getText();
+                        playerName2 = txt_field2.getText();                        
                         game.setScreen(new CarSelectionScreen(game, true, playerName1, playerName2)); //two players
                     }
                 }
                 
                 if (twoPlayers == false) {
                     if (!txt_field1.getText().isEmpty()) {
+                        playerName1 = txt_field1.getText();                       
                         game.setScreen(new CarSelectionScreen(game, false, playerName1, null)); //single player
                     }
                 }

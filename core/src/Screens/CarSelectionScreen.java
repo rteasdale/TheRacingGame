@@ -3,7 +3,6 @@
  */
 package Screens;
 
-import Scenes.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -47,6 +45,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private boolean twoPlayers;
     private String playerNameP1;
     private String playerNameP2;
+    
+    private String currentPlayer;
+    
     private int carColor;
     private int currentCar = 0;
     
@@ -103,12 +104,16 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private Label capacity_lbl;
     private Label consumption_lbl;
     
+    private Label player;
+    
     public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerNameP1, String playerNameP2) {
-        Gdx.app.log("CarSelection", "constructor called");
+        //Gdx.app.log("Car Selection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
         this.playerNameP1 = playerNameP1;
         this.playerNameP2 = playerNameP2;
+        
+        currentPlayer = playerNameP1;
         
         renderer = new ShapeRenderer();
         
@@ -118,6 +123,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
         
+        /** File data */
         file = new FileHandle("data/car.txt");
         group = file.readString().split("\n");
         car = group[0].split(",");
@@ -171,8 +177,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
 
     @Override
     public void show() {
-        Gdx.app.log("CarSelection", "show called");
-        Gdx.app.log("P1 name", playerNameP1);
+        //Gdx.app.log("CarSelection", "show called");
+        Gdx.app.log("Player name", playerNameP1);
         
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
@@ -229,6 +235,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         consumption_lbl = new Label("Fuel Consumption", lbl_style);
         consumption_lbl.setPosition(855, 220);
         
+        player = new Label(currentPlayer, lbl_style);
+        player.setPosition(400, 600);
+        
+        stage.addActor(player);
+        
         stage.addActor(weight);
         stage.addActor(acceleration);
         stage.addActor(handling);
@@ -257,7 +268,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
-                    game.setScreen(new MapSelectionScreen(game));
+                    //pass to player 2
+                    currentPlayer = playerNameP2;
+                    game.setScreen(new CarSelectionScreen(game, true, playerNameP1, playerNameP2));
                     //pass car color
                     
                 }
@@ -272,6 +285,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 dispose();
                 if (twoPlayers == true) {
+                    //return to player 1
+                    currentPlayer = playerNameP1;
                     game.setScreen(new PlayerScreen(game, true));
                 }
                 if (twoPlayers == false) {
@@ -339,7 +354,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Light Blue*/
                 
                 if (color_select.getSelected().equals("Light Blue")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[0])));
@@ -392,7 +407,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Dark Blue*/
                 
                 if (color_select.getSelected().equals("Dark Blue")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[1])));
@@ -445,7 +460,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Yellow*/
                 
                 if (color_select.getSelected().equals("Yellow")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[2])));
@@ -498,7 +513,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Green*/
                 
                 if (color_select.getSelected().equals("Green")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[3])));
@@ -551,7 +566,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** White*/
                 
                 if (color_select.getSelected().equals("White")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[4])));
@@ -604,7 +619,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Red*/
                 
                 if (color_select.getSelected().equals("Red")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[5])));
@@ -657,7 +672,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Purple*/
                 
                 if (color_select.getSelected().equals("Purple")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[6])));
@@ -709,7 +724,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 }    
                /** Orange */ 
                 if (color_select.getSelected().equals("Orange")) {
-                    Gdx.app.log("color selected:", color_select.getSelected());
+                    Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
                         preview = new Image(new Texture(Gdx.files.internal(golf_colors[7])));
@@ -762,6 +777,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 
             }
         });
+        
         
         System.out.println(Arrays.toString(carPreview));
         Gdx.app.log("Current car", car[0]);

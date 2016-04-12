@@ -38,7 +38,8 @@ import handlers.InputManager;
 public class GameScreen implements Screen {
     
     private TiledMap tileMap;
-    private OrthogonalTiledMapRenderer tmr;    
+
+    private OrthogonalTiledMapRenderer tmr;
     
 private RacingGame game;
 
@@ -280,6 +281,9 @@ private RacingGame game;
 
     @Override
     public void dispose() {
+        batch.dispose();
+        renderer.dispose();
+        tmr.dispose();
         bg.dispose();
         world.dispose();
     }
