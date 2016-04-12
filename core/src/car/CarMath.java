@@ -47,8 +47,10 @@ public class CarMath {
                     public static Vector2 getCenterPoint(Vector2 positionCar1, Vector2 positionCar2){
                         Vector2 center = null;
                         
-                        center.x = (positionCar1.x + positionCar2.x)/2;
-                        center.y = (positionCar1.y + positionCar2.y)/2;
+                        float x = (float) (positionCar1.x + positionCar2.x)/2;
+                        float y = (float) (positionCar1.y + positionCar2.y)/2;
+                        
+                        center = new Vector2(x,y);
                         
                         return center;
                     }
@@ -56,8 +58,10 @@ public class CarMath {
                     public static Vector2 getCenterPoint(float Car1X, float Car1Y, float Car2X, float Car2Y){
                         Vector2 center = null;
                         
-                        center.x = (Car1X + Car2X)/2;
-                        center.y = (Car1Y + Car2Y)/2;
+                        float x = (Car1X + Car2X)/2;
+                        float y = (Car1Y + Car2Y)/2;
+                        
+                        center = new Vector2(x,y);
                         
                         return center;
                     }

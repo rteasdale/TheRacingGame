@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import car.Car;
+import car.CarMath;
 import car.Constants;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
@@ -137,11 +138,16 @@ public final class GameScreen implements Screen {
             renderer.render(world, camera.combined);
         }
 
-        
+        if(!twoPlayers){
         if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
         }
+        }
         
+        if(twoPlayers){
+            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
+            camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
+        }
 //        batch.setProjectionMatrix(hud.stage.getCamera().combined);
 //        hud.stage.draw();
 
