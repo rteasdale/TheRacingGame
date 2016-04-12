@@ -47,11 +47,39 @@ public class CarMath {
                     public static Vector2 getCenterPoint(Vector2 positionCar1, Vector2 positionCar2){
                         Vector2 center = null;
                         
+                        center.x = (positionCar1.x + positionCar2.x)/2;
+                        center.y = (positionCar1.y + positionCar2.y)/2;
+                        
+                        return center;
+                    }
+                    
+                    public static Vector2 getCenterPoint(float Car1X, float Car1Y, float Car2X, float Car2Y){
+                        Vector2 center = null;
+                        
+                        center.x = (Car1X + Car2X)/2;
+                        center.y = (Car1Y + Car2Y)/2;
+                        
                         return center;
                     }
                     
                     public static float Distance (Vector2 positionCar1, Vector2 positionCar2){
                         float distance = 0;
+                        
+                        float a = (float) Math.pow(positionCar2.x - positionCar1.x, 2);
+                        float b = (float) Math.pow(positionCar2.y - positionCar1.y, 2);
+                        
+                        distance = (float) Math.sqrt(a+b);
+                        
+                        return distance;
+                    }
+                    
+                    public static float Distance (float Car1X, float Car1Y, float Car2X, float Car2Y){
+                        float distance = 0;
+                        
+                        float a = (float) Math.pow(Car2X - Car1X, 2);
+                        float b = (float) Math.pow(Car2Y - Car1Y, 2);
+                        
+                        distance = (float) Math.sqrt(a+b);
                         
                         return distance;
                     }
