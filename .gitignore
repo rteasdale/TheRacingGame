@@ -10,3 +10,11 @@ desktop/build/classes/main/com/mygdx/game/desktop/DesktopLauncher.class
 *.class
 
 *.class
+
+*.lock
+
+*.bin
+
+*.class
+
+*.jar
