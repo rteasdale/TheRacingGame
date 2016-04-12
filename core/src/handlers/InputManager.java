@@ -48,6 +48,20 @@ public class InputManager  implements InputProcessor  {
         else if(keycode == Input.Keys.ESCAPE){
             Gdx.app.exit();
         }
+        
+        if(GameScreen.debug){
+         if(keycode == Input.Keys.P){
+            System.out.println("Position");
+            System.out.println("x : " + GameScreen.car.body.getPosition().x);
+            System.out.println("y : " + GameScreen.car.body.getPosition().y);
+        }
+        else if(keycode == Input.Keys.C){
+            System.out.println("Camera Position");
+            System.out.println("x : " + GameScreen.camera.position.x);
+            System.out.println("y : " + GameScreen.camera.position.y);
+        }
+         
+        }
         return false;
     }
 

@@ -1,6 +1,5 @@
 package Screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,13 +23,11 @@ import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
@@ -47,12 +44,12 @@ public class GameScreen implements Screen {
     private Sprite carSprite;
     
     public World world;
-    public OrthographicCamera camera;
+    public static OrthographicCamera camera;
     Box2DDebugRenderer renderer;
     InputManager inputManager;
     CarContactListener cl;
 
-    public Car car;
+    public static Car car;
     public Car car2;
 
     public static int mapNum = 2;
@@ -120,9 +117,12 @@ public class GameScreen implements Screen {
         if(debug){
             renderer.render(world, camera.combined);
         }
-        
-        camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
 
+        
+        if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
+        camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+        }
+        
     }
     
     private void createGrounds() {
