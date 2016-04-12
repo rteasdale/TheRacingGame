@@ -29,6 +29,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
@@ -104,6 +105,7 @@ private RacingGame game;
                 tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
                 
                 createGrounds();
+                CreateTires();
 	}
 
                 @Override
@@ -195,8 +197,8 @@ private RacingGame game;
                 
                 fdef.shape = shape;
                 fdef.isSensor = true;
-                fdef.filter.categoryBits = Constants.OILOBS;
-                fdef.filter.maskBits = Constants.TIRE;
+                fdef.filter.categoryBits = Constants.TIRE;
+                fdef.filter.maskBits = Constants.CAR;
                 
                 Body body = world.createBody(bdef);
                 
@@ -230,7 +232,7 @@ private RacingGame game;
 	}
         
         public void choseMap(int mapNum){
-            if(mapNum == 1){
+            if(mapNum == 0){
                 red = 71/255f;
                 green = 122/255f;
                 blue = 25/255f;
@@ -238,7 +240,7 @@ private RacingGame game;
                 mapAdress = "maps/map1.tmx";
             }
             
-            if(mapNum == 2){
+            else if(mapNum == 1){
                 red = 254/255f;
                 green = 254/255f;
                 blue = 255/255f;
@@ -246,14 +248,14 @@ private RacingGame game;
                 mapAdress = "maps/map2.tmx";
                 
             }
-            if(mapNum == 3){
+            else if(mapNum == 2){
                 red = 13/255f;
                 green = 8/255f;
                 blue = 36/255f;
                 alpha = 1;
                 mapAdress = "maps/map3.tmx";
             }
-                else{
+            else{
                         mapAdress = "maps/map1.tmx";
                         }
                 
@@ -300,6 +302,45 @@ private RacingGame game;
              }
             batch.end();
     }
+    
+    public void CreateTires(){
+        
+        MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
+                
+                for(MapObject ti : TireLayer.getObjects()){
+                
+                BodyDef bdef = new BodyDef();
+                bdef.type = BodyType.DynamicBody;
+                
+                float x = (float) ti.getProperties().get("x", Float.class) ;
+                float y = (float) ti.getProperties().get("y", Float.class) ;
+                
+                float width = (float) ti.getProperties().get("width", Float.class);
+                
+                CircleShape shape = new CircleShape();
+                shape.setRadius(width/8f);
+                shape.setPosition(new  Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+                
+                FixtureDef fdef = new FixtureDef();
+                
+                fdef.shape = shape;
+                fdef.isSensor = false;
+                fdef.density = 1000;
+                fdef.restitution = 0.5f;
+                fdef.filter.categoryBits = Constants.TIREOBS;
+                fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
+                
+                Body body = world.createBody(bdef);
+                body.createFixture(fdef);
+                Sprite tireSprite = new Sprite(new Texture("Tire.png"));
+                tireSprite.setSize(width/8,width/8);
+                tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
+                body.setUserData(tireSprite);
+                
+                
+            }
+        
+                                }
     
 }
 

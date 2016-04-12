@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="57">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="61">
  <tileset firstgid="1" name="grass_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="grass_texture.png" width="200" height="200"/>
  </tileset>
@@ -422,13 +422,17 @@
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
   <object id="27" x="1583.04" y="767.697" width="49.1383" height="96.8523"/>
  </objectgroup>
- <objectgroup name="Finish Line ObjectLayer" visible="0">
+ <objectgroup name="Finish Line ObjectLayer">
   <object id="28" x="118.929" y="551.916" width="239.994" height="23.5009"/>
+  <object id="57" x="409.365" y="995.404" width="21.5455" height="264.292"/>
+  <object id="58" x="409.365" y="104.855" width="20.1092" height="267.165"/>
+  <object id="59" x="1202.24" y="110.6" width="22.9819" height="261.419"/>
+  <object id="60" x="1176.39" y="995.404" width="25.8546" height="265.728"/>
  </objectgroup>
- <objectgroup name="Oil ObjectLayer">
+ <objectgroup name="Oil ObjectLayer" visible="0">
   <object id="29" x="443.669" y="1034.75" width="103.974" height="62.6691"/>
  </objectgroup>
- <objectgroup name="Road ObjectLayer">
+ <objectgroup name="Road ObjectLayer" visible="0">
   <object id="47" x="361.671" y="120.557" width="1290.79" height="249.428"/>
   <object id="48" x="1238.83" y="363.75" width="259.821" height="636.042"/>
   <object id="49" x="106.007" y="106.007" width="266.057" height="1151.53"/>

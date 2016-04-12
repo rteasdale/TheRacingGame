@@ -94,6 +94,7 @@ public class Car {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
+                                           fixtureDef.isSensor = false;
                                             
                                             if(car == 1){
 		fixtureDef.density = 0.025f;
@@ -106,7 +107,7 @@ public class Car {
                                             }
                                             
 		fixtureDef.filter.categoryBits = Constants.CAR;
-		fixtureDef.filter.maskBits = Constants.GROUND;
+		fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS;
                                             
 		body.createFixture(fixtureDef);
                                    //       body.applyTorque(1000, true);
@@ -238,12 +239,12 @@ public class Car {
                                     }
                                     else if(car ==3){
                                         //Prius
-                                          maxFSpeed = 75;
+                                          maxFSpeed = 125;
 		maxBSpeed = -20;
-		 backTireMDriveForce = 150;
-		 frontTireMDriveForce = 250;
-		 backTireMLateralImpulse = 4.25f;
-		 frontTireMLateralImpulse = 3.75f;
+		 backTireMDriveForce = 75;  //Affects Acceleration
+		 frontTireMDriveForce = 125; 
+		 backTireMLateralImpulse = 2.125f;   //Affects steering
+		 frontTireMLateralImpulse = 1.875f;
                                             breakingFPourcentage = 0.3f;
                                             InitialPosition = Position();
                                             carLink = CarSelectionScreen.prius_colors[Color] ;
@@ -303,4 +304,7 @@ public class Car {
                                     
                                     return position;
                                 }
+                                
+                                
+                                
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="112">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="116">
  <tileset firstgid="1" name="snow_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="snow_texture.png" width="200" height="200"/>
  </tileset>
@@ -465,23 +465,23 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Tires ObjectLayer" visible="0">
-  <object id="1" x="263" y="166" width="49" height="51">
+ <objectgroup name="Tire ObjectLayer" visible="0">
+  <object id="1" x="257" y="179" width="49" height="49">
    <ellipse/>
   </object>
-  <object id="2" x="190.5" y="262.5" width="49" height="51">
+  <object id="2" x="190.5" y="262.5" width="49" height="49">
    <ellipse/>
   </object>
-  <object id="3" x="214.5" y="214.5" width="49" height="51">
+  <object id="3" x="214.5" y="214.5" width="49" height="49">
    <ellipse/>
   </object>
-  <object id="4" x="216" y="671" width="48" height="49">
+  <object id="4" x="216" y="671" width="49" height="49">
    <ellipse/>
   </object>
-  <object id="5" x="766.5" y="670.5" width="49" height="51">
+  <object id="5" x="766.5" y="670.5" width="51" height="51">
    <ellipse/>
   </object>
-  <object id="6" x="1367" y="935" width="97" height="99">
+  <object id="6" x="1367" y="935" width="99" height="99">
    <ellipse/>
   </object>
   <object id="8" x="1151.52" y="22.3835" width="49" height="51">
@@ -490,11 +490,11 @@
   <object id="9" x="1102.68" y="22.3835" width="49" height="51">
    <ellipse/>
   </object>
-  <object id="11" x="1342.65" y="215.833" width="96.7248" height="97.3253">
+  <object id="11" x="1342.65" y="245.833" width="99" height="99">
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Oil ObjectLayer">
+ <objectgroup name="Oil ObjectLayer" visible="0">
   <object id="12" x="492.516" y="1058.93" width="103.01" height="61.3063"/>
  </objectgroup>
  <objectgroup name="Fuel ObjectLayer" visible="0">
@@ -502,13 +502,13 @@
   <object id="14" x="310.91" y="143.222" width="96.2773" height="47.4968"/>
   <object id="15" x="47.2728" y="214.676" width="48.1386" height="96.5624"/>
  </objectgroup>
- <objectgroup name="Road ObjectLayer">
+ <objectgroup name="Road ObjectLayer" visible="0">
   <object id="33" x="49.4026" y="189.983" width="166.59" height="888.831"/>
   <object id="34" x="286.208" y="22.2058" width="525.537" height="165.31"/>
   <object id="45" x="180.113" y="629.164" width="61.6827" height="419.442"/>
   <object id="54" x="811" y="19.7385" width="745.872" height="194.917"/>
   <object id="55" x="621.762" y="382.433" width="959.783" height="170.244"/>
-  <object id="63" x="621.762" y="695.781" width="959.783" height="187.515"/>
+  <object id="63" x="621.762" y="692.781" width="959.783" height="187.515"/>
   <object id="65" x="777.202" y="1056.01" width="782.137" height="143.104"/>
   <object id="75" x="47.5138" y="23.2044" width="240.884" height="239.779"/>
   <object id="76" x="47.5138" y="983.425" width="298.343" height="219.89"/>
@@ -543,8 +543,12 @@
   <object id="110" x="597.333" y="1055.33" width="180" height="66"/>
   <object id="111" x="346" y="1056" width="146.667" height="66"/>
  </objectgroup>
- <objectgroup name="FinishLine ObjectLayer" visible="0">
+ <objectgroup name="FinishLine ObjectLayer">
   <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888"/>
+  <object id="112" x="1129.7" y="696.089" width="20.5867" height="191.714"/>
+  <object id="113" x="1128.41" y="1055.07" width="24.4467" height="144.107"/>
+  <object id="114" x="47.6068" y="765.569" width="195.574" height="24.4467"/>
+  <object id="115" x="1151.57" y="23.1601" width="21.8734" height="190.427"/>
  </objectgroup>
  <objectgroup name="Ice ObjectLayer" visible="0">
   <object id="20" x="839.844" y="552.619" width="241.268" height="141.314"/>
