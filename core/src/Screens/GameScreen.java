@@ -1,5 +1,6 @@
 package Screens;
 
+import Scenes.Hud;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -37,6 +38,8 @@ import handlers.InputManager;
 
 public final class GameScreen implements Screen {
     private RacingGame game;
+    private Hud hud;
+    
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
     public static boolean debug = true; //Boolean if I want B2D Debug on or off
@@ -74,6 +77,8 @@ public final class GameScreen implements Screen {
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
+        
+        //hud = new Hud(batch);
 
         world = new World(new Vector2(0, 0f), true);
 
@@ -114,7 +119,9 @@ public final class GameScreen implements Screen {
     public void render (float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        inputManager.update(twoPlayers);
+   
+        inputManager.update(twoPlayers); //update for two players
+        
         world.step(1 / 60f, 6, 2);
         camera.update();
 
@@ -130,7 +137,9 @@ public final class GameScreen implements Screen {
         }
         
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
-
+        
+//        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        hud.stage.draw();
     }
     
     private void createGrounds() {

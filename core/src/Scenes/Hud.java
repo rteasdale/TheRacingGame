@@ -36,10 +36,14 @@ public class Hud {
     private Label positionLabel;
     
     
-    public Hud(SpriteBatch batch) {
+    public Hud(SpriteBatch batch, Integer x) {
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         timeCount = 0;
         
+        for (int i = 0; i < 60; i++) {
+            
+        }
+                
         viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         
@@ -47,11 +51,11 @@ public class Hud {
         table.top();
         table.setFillParent(true);
         
-        countdownLabel = new Label(String.format("%03d", timer), new Label.LabelStyle(font, Color.WHITE));
+        countdownLabel = new Label(String.format("%06d", timer), new Label.LabelStyle(font, Color.WHITE));
         lapLabel = new Label(String.format("%01d", timer), new Label.LabelStyle(font, Color.WHITE));
         
-        table.add(countdownLabel).expandX().padTop(10); //extend to end of screen
-        table.add(lapLabel).expandX().padTop(10);
+        table.add(countdownLabel).expandX().padTop(20); //extend to end of screen
+        table.add(lapLabel).expandX().padTop(20);
         table.row();
         
         stage.addActor(table);

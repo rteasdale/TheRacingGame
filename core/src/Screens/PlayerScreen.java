@@ -27,7 +27,6 @@ import com.mygdx.game.RacingGame;
  * @author ROSY
  */
 public class PlayerScreen implements Screen {
-    private Screen parent;
     private RacingGame game;
 
     private Stage stage;
@@ -63,7 +62,6 @@ public class PlayerScreen implements Screen {
 
     public PlayerScreen(RacingGame game, boolean twoPlayers) {
         //Gdx.app.log("PlayerName", "constructor called");
-        this.parent = parent;
         this.game = game;
         this.twoPlayers = twoPlayers;
         stage = new Stage();

@@ -5,6 +5,7 @@
  */
 package Screens;
 
+import Scenes.Hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -27,6 +29,8 @@ public class SplashScreen extends InputListener implements Screen {
     
     private final RacingGame game;
     private OrthographicCamera camera;
+    private Hud hud;
+    private int i;
     
     private Stage stage;
     private Texture splash_image;
@@ -47,6 +51,8 @@ public class SplashScreen extends InputListener implements Screen {
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         style_lbl = new Label.LabelStyle(font, Color.WHITE);
+        
+        hud = new Hud((SpriteBatch) stage.getBatch(), i);
     }
 
     @Override
@@ -70,7 +76,10 @@ public class SplashScreen extends InputListener implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
+        stage.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();        
+        
         stage.getBatch().begin();
         stage.getBatch().draw(splash_image, 0, 0);
         stage.getBatch().end();

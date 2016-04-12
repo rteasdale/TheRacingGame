@@ -36,6 +36,7 @@ import java.util.Arrays;
 public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private RacingGame game;
 
+    private Screen scr = this;
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
