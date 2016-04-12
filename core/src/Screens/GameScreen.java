@@ -1,10 +1,8 @@
 package Screens;
 
-<<<<<<< HEAD
-=======
+
 import Scenes.Hud;
-import com.badlogic.gdx.ApplicationAdapter;
->>>>>>> origin/master
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -56,13 +54,11 @@ public final class GameScreen implements Screen {
     InputManager inputManager;
     CarContactListener cl;
 
-<<<<<<< HEAD
+    
     public static Car car;
-=======
+
     private boolean twoPlayers;
             
-    public Car car;
->>>>>>> origin/master
     public Car car2;
 
     public static int mapNum = 0;
@@ -144,14 +140,11 @@ public final class GameScreen implements Screen {
         
         if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
-<<<<<<< HEAD
         }
-        
-=======
         
 //        batch.setProjectionMatrix(hud.stage.getCamera().combined);
 //        hud.stage.draw();
->>>>>>> origin/master
+
     }
     
     private void createGrounds() {
@@ -207,8 +200,8 @@ public final class GameScreen implements Screen {
 
             fdef.shape = shape;
             fdef.isSensor = true;
-            fdef.filter.categoryBits = Constants.TIRE;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.categoryBits = Constants.GROUND;
+            fdef.filter.maskBits = Constants.TIRE;
 
             Body body = world.createBody(bdef);
 

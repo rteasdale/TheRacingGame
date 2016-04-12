@@ -126,7 +126,7 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, CarSelectionScreen.twoPlayers, currentMap));
+                game.setScreen(new GameScreen(game, true, currentMap)); //Change two players value 
             }
         });
         

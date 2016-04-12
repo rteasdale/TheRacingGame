@@ -43,4 +43,17 @@ public class CarMath {
 
 		return length;
 	}
+        
+                    public static Vector2 getCenterPoint(Vector2 positionCar1, Vector2 positionCar2){
+                        Vector2 center = null;
+                        
+                        return center;
+                    }
+                    
+                    public static float Distance (Vector2 positionCar1, Vector2 positionCar2){
+                        float distance = 0;
+                        
+                        return distance;
+                    }
+                    
 }

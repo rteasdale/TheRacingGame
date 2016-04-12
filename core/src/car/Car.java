@@ -102,7 +102,7 @@ public class Car {
         }
                                             
         fixtureDef.filter.categoryBits = Constants.CAR;
-        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS;
+        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR;
                                             
 	body.createFixture(fixtureDef);
         //body.applyTorque(1000, true);

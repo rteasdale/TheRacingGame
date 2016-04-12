@@ -62,7 +62,7 @@ private Vector2 movement;
    public PlayScreen(RacingGame game) {
         this.game = game;
         batch = new SpriteBatch();
-        hud = new Hud(batch);
+        //hud = new Hud(batch);
         camera = new OrthographicCamera();
         
     }

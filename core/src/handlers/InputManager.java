@@ -84,6 +84,10 @@ public class InputManager  implements InputProcessor  {
             System.out.println("x : " + GameScreen.camera.position.x);
             System.out.println("y : " + GameScreen.camera.position.y);
         }
+         else if(keycode == Input.Keys.Z){
+            System.out.println("Camera zoom");
+            System.out.println("x : " + GameScreen.camera.zoom);
+        }
          
         }
 
@@ -166,7 +170,7 @@ public class InputManager  implements InputProcessor  {
     @Override
     public boolean scrolled(int amount) {
         if(GameScreen.debug){
-            mainClass.camera.zoom += amount / 25f;
+            mainClass.camera.zoom += amount / 100f;
             return true;
         }
         else {
