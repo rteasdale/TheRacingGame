@@ -15,6 +15,7 @@ import handlers.InputManager.Key;
 
 
 public class Tire {
+    private int playerNum;
     Body body;
     float maxForwardSpeed;
     float maxBackwardSpeed;
@@ -25,7 +26,8 @@ public class Tire {
     Array<GroundAreaType> groundAreas;
     float currentTraction;
 
-    public Tire(World world) {
+    public Tire(World world, int playerNum) {
+        this.playerNum = playerNum;
         groundAreas = new Array<GroundAreaType>();
 
         BodyDef bodyDef = new BodyDef();
@@ -120,15 +122,30 @@ public class Tire {
 
     void updateDrive(HashSet<Key> keys) {
         float desiredSpeed = 0;
-
-        if(keys.contains(Key.Up)){
-            desiredSpeed = maxForwardSpeed;
-        } else if(keys.contains(Key.Down)){
-            desiredSpeed = maxBackwardSpeed;
+        
+        /** if player 1 */
+        if (playerNum == 1) {
+            if(keys.contains(Key.Up)){
+                desiredSpeed = maxForwardSpeed;
+            } else if(keys.contains(Key.Down)){
+                desiredSpeed = maxBackwardSpeed;
+            }
+            else {
+                return;
+            }
         }
-        else {
-            return;
-        }
+        
+         /** if player 2 */
+        if (playerNum == 2) {
+            if(keys.contains(Key.w)){
+                desiredSpeed = maxForwardSpeed;
+            } else if(keys.contains(Key.s)){
+                desiredSpeed = maxBackwardSpeed;
+            }
+            else {
+                return;
+            }
+        }        
 
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
@@ -149,11 +166,22 @@ public class Tire {
 
     void updateTurn(CarMoves moves){
         float desiredTorque = 0;
-        switch(moves){
-            case Left : desiredTorque = 15; break;
-            case Right: desiredTorque = -15; break;
-            default: return;
+         /** if player 1 */
+        if (playerNum == 1) {
+            switch(moves){
+                case Left : desiredTorque = 15; break;
+                case Right: desiredTorque = -15; break;
+                default: return;
+            }
         }
+         /** if player 2 */
+        if (playerNum == 2) {
+            switch(moves){
+                case A: desiredTorque = 15; break;
+                case D: desiredTorque = -15; break;
+                default: return;
+            }
+        }        
 
         body.applyTorque(desiredTorque, true);
     }

@@ -27,6 +27,8 @@ import com.mygdx.game.RacingGame;
 public class MainMenuScreen extends Stage implements Screen {
     private RacingGame game;
 
+    private final Screen scr = this;
+    
     private OrthographicCamera camera;
     private Stage stage;
     private Texture background;
@@ -129,7 +131,6 @@ public class MainMenuScreen extends Stage implements Screen {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 game.setScreen(new PlayerScreen(game, false));
-                
             }
         });  
 

@@ -36,18 +36,19 @@ import java.util.Arrays;
 public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private RacingGame game;
 
+    private Screen scr = this;
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
     
     private ShapeRenderer renderer;
     
-    private boolean twoPlayers;
+    public static boolean twoPlayers;
     private String playerName;
     
     private String currentPlayer;
     
-    private int carColor;
+    private int currentColor;
     private int currentCar = 0;
     
     private FileHandle file;
@@ -308,6 +309,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stage.addActor(back_btn);
         stage.addActor(title);
         
+        listeners();
+  
+    }
+    
+    void listeners() {
         /** Listeners */
         next_btn.addListener(new ChangeListener() {
             @Override
@@ -396,6 +402,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Light Blue*/
                 
                 if (color_select.getSelected().equals("Light Blue")) {
+                    currentColor = 1;
                     Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
                         preview.remove();
@@ -446,8 +453,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         stage.addActor(preview);                       
                     }                    
                  }
-            /** Dark Blue*/
                 
+            /** Dark Blue*/
                 if (color_select.getSelected().equals("Dark Blue")) {
                     Gdx.app.log("Color selected", color_select.getSelected());
                     if (currentCar == 0) {
@@ -897,17 +904,15 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 stage.addActor(preview);    
                 }                
             }
-        });
-        
+        });        
     }
-    
 
-    
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
       
+        
         renderer.setProjectionMatrix(camera.combined);
 
             String[] temp = stats[currentCar].split(",");
@@ -945,7 +950,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     public void dispose() {
         Gdx.app.log("Car Selection", "dispose called");
         stage.dispose();
-        stage.getBatch().dispose();
         renderer.dispose();
         font.dispose();
         buttons_atlas.dispose();

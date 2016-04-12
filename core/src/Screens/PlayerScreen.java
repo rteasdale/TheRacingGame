@@ -28,13 +28,13 @@ import com.mygdx.game.RacingGame;
  */
 public class PlayerScreen implements Screen {
     private RacingGame game;
-    private boolean twoPlayers;
 
     private Stage stage;
     private BitmapFont font;
     
     static public String playerNameP1;
     static public String playerNameP2;
+    private boolean twoPlayers;
 
     private Image title;
     private ImageButton next_btn;

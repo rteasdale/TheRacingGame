@@ -1,5 +1,10 @@
 package Screens;
 
+<<<<<<< HEAD
+=======
+import Scenes.Hud;
+import com.badlogic.gdx.ApplicationAdapter;
+>>>>>>> origin/master
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,8 +37,10 @@ import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
 
-public class GameScreen implements Screen {
+public final class GameScreen implements Screen {
     private RacingGame game;
+    private Hud hud;
+    
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
     public static boolean debug = true; //Boolean if I want B2D Debug on or off
@@ -49,10 +56,16 @@ public class GameScreen implements Screen {
     InputManager inputManager;
     CarContactListener cl;
 
+<<<<<<< HEAD
     public static Car car;
+=======
+    private boolean twoPlayers;
+            
+    public Car car;
+>>>>>>> origin/master
     public Car car2;
 
-    public static int mapNum = 2;
+    public static int mapNum = 0;
 
     float red;
     float green;
@@ -60,14 +73,17 @@ public class GameScreen implements Screen {
     float alpha;
     String mapAdress;
     
-    public GameScreen(RacingGame game, int mapNum) {
+    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
+        this.twoPlayers = twoPlayers;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
+        
+        //hud = new Hud(batch);
 
         world = new World(new Vector2(0, 0f), true);
 
@@ -79,9 +95,14 @@ public class GameScreen implements Screen {
 
         inputManager = new InputManager(this);
         Gdx.input.setInputProcessor(inputManager);
-		
-	this.car = new Car(world, Constants.PRIUS, Constants.GREEN );
-        this.car2 = new Car(world, Constants.LAMBORGHINI, Constants.DARKBLUE );
+        
+	this.car = new Car(world, Constants.TRUCK, Constants.GREEN, 1);
+        
+        // If two players, construct another car
+        if (twoPlayers == true) {
+            this.car2 = new Car(world, Constants.LAMBORGHINI, Constants.DARKBLUE, 2);
+        }
+        
 
         ////////////////////////////////////////////////////
         //Load Tiled Map
@@ -103,7 +124,9 @@ public class GameScreen implements Screen {
     public void render (float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        inputManager.update();
+   
+        inputManager.update(twoPlayers); //update for two players
+        
         world.step(1 / 60f, 6, 2);
         camera.update();
 
@@ -121,8 +144,14 @@ public class GameScreen implements Screen {
         
         if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+<<<<<<< HEAD
         }
         
+=======
+        
+//        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        hud.stage.draw();
+>>>>>>> origin/master
     }
     
     private void createGrounds() {
