@@ -80,7 +80,7 @@ public class SplashScreen extends InputListener implements Screen {
         /** Listeners */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             //CHANGE BACK INTO MENU LATER!!
-            game.setScreen(new PlayScreen(game));
+            game.setScreen(new MainMenuScreen(game));
             System.out.println("SPACE");
         }
         

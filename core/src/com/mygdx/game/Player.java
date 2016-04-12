@@ -10,5 +10,15 @@ package com.mygdx.game;
  * @author ROSY
  */
 public class Player {
+    String playerName;
+    int time;
+    
+    public Player(String playerName) {
+        this.playerName = playerName;
+    }
+    
+    public void bestTime(int time) {
+        
+    }
     
 }

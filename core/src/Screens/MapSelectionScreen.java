@@ -143,7 +143,7 @@ public class MapSelectionScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (currentMap < 2) {
                 currentMap++;
-                Gdx.app.log("Current car", map[currentMap]);
+                Gdx.app.log("Current map", map[currentMap]);
                 map_title.setText(mapTitles[currentMap]);
                 preview.remove();
                 preview = new Image(new Texture(Gdx.files.internal(map[currentMap])));
@@ -153,7 +153,7 @@ public class MapSelectionScreen implements Screen {
                 }
                 else {
                 currentMap = 0;
-                Gdx.app.log("Current car", map[0]);
+                Gdx.app.log("Current map", map[0]);
                 /** Preview */
                 map_title.setText(mapTitles[0]);
                 preview.remove();
@@ -170,8 +170,8 @@ public class MapSelectionScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (currentMap > 0) {
                 currentMap--;
-                System.out.println(currentMap);
-                Gdx.app.log("Current car", map[currentMap]);
+                //System.out.println(currentMap);
+                Gdx.app.log("Current map", map[currentMap]);
                 map_title.setText(mapTitles[currentMap]);
                 preview.remove();
                 preview = new Image(new Texture(Gdx.files.internal(map[currentMap])));
@@ -181,7 +181,7 @@ public class MapSelectionScreen implements Screen {
                 }
                 else {
                 currentMap = 2;
-                Gdx.app.log("Current car", map[2]);
+                Gdx.app.log("Current map", map[2]);
                 /** Preview */
                 map_title.setText(mapTitles[2]);
                 preview.remove();

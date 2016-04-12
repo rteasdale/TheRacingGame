@@ -18,3 +18,9 @@ desktop/build/classes/main/com/mygdx/game/desktop/DesktopLauncher.class
 *.class
 
 *.jar
+
+*.class
+
+*.lock
+
+*.bin

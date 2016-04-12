@@ -48,17 +48,9 @@ public class SettingsScreen implements Screen {
     private Label musicLbl;
     
     private ImageButton OKButton;
-    private ImageButton ASDWBtn;
-    private ImageButton arrowsBtn;
     private ImageButton.ImageButtonStyle OK_style;    
     private Label.LabelStyle lbl_style;
-    private ImageButton.ImageButtonStyle ASDW_style;
-    private ImageButton.ImageButtonStyle arrows_style;
-   
-    private CheckBox controls1Check;
-    private CheckBox controls2Check;
-    private ButtonGroup<CheckBox> buttonGroup;
-    private CheckBox.CheckBoxStyle check_style;
+
 
     private Slider SFXVolume;
     private Slider musicVolume;
@@ -77,14 +69,6 @@ public class SettingsScreen implements Screen {
         /** Styles */
         lbl_style = new Label.LabelStyle(font, Color.WHITE);
         OK_style = new ImageButton.ImageButtonStyle(skin.getDrawable("OK_button"), null, null, null, null, null);
-        //ASDW_style = new ImageButton.ImageButtonStyle(check_skin.getDrawable("ASDW_controls"), check_skin.getDrawable("ASDW_controls_chosen"), null, null, null, null);
-        //arrows_style = new ImageButton.ImageButtonStyle(check_skin.getDrawable("arrowkeys_controls"), check_skin.getDrawable("arrowkeys_controls_chosen"), null, null, null, null);
-
-//        check_style = new CheckBox.CheckBoxStyle();
-//        check_style.font = font;
-//        check_style.fontColor = new Color(Color.WHITE);
-//        check_style.checkboxOff = check_skin.getDrawable("checkbox");
-//        check_style.checkboxOn = check_skin.getDrawable("checkbox2");
         
         slider_style = new Slider.SliderStyle(check_skin.getDrawable("slider"), check_skin.getDrawable("knob"));
     }
@@ -98,31 +82,20 @@ public class SettingsScreen implements Screen {
         title.setPosition(376, 624);
         
         /** Labels */
-//        controlsLbl = new Label("CONTROLS", lbl_style);
-//        controlsLbl.setPosition(200, 550);
         SFXLbl = new Label("SFX", lbl_style);
         SFXLbl.setPosition(300, 450);
         musicLbl = new Label("MUSIC", lbl_style);
         musicLbl.setPosition(300, 350);
         
-//        ASDWBtn = new ImageButton(ASDW_style);
-//        ASDWBtn.setPosition(100, 100);
-//        arrowsBtn = new ImageButton(arrows_style);
-//        arrowsBtn.setPosition(200, 200);
-        
-//        /* Check box*/
-//        controls1Check = new CheckBox("AWSD", check_style);
-//        controls1Check.setPosition(210, 500);
-//        controls2Check = new CheckBox("UP-DOWN-RIGHT-LEFT", check_style);
-//        controls2Check.setPosition(410, 500);
-        
         /**Slider*/
         SFXVolume = new Slider(0, 10, 4, false, slider_style);
         SFXVolume.setSize(300, 40);
         SFXVolume.setPosition(300, 400);
+        SFXVolume.setRange(0, 100);
         musicVolume = new Slider(0, 10, 4, false, slider_style);
         musicVolume.setSize(300, 40);
         musicVolume.setPosition(300, 300);
+        musicVolume.setRange(0, 100);
         
         SFXVolume.addListener(new ChangeListener() {
             @Override
@@ -148,12 +121,9 @@ public class SettingsScreen implements Screen {
 
         stage.addActor(SFXVolume);
         stage.addActor(musicVolume);
-//        stage.addActor(controls2Check);
-//        stage.addActor(controls1Check);
         stage.addActor(OKButton);
         stage.addActor(musicLbl);
         stage.addActor(SFXLbl);
-//        stage.addActor(controlsLbl);
         stage.addActor(title);
 
     }
@@ -163,7 +133,7 @@ public class SettingsScreen implements Screen {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,0); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        stage.act(f);
+        stage.act();
         stage.draw();             
     }
 

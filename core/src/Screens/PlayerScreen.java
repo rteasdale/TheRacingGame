@@ -33,8 +33,8 @@ public class PlayerScreen implements Screen {
     private Stage stage;
     private BitmapFont font;
     
-    private String playerName1;
-    private String playerName2;
+    static public String playerNameP1;
+    static public String playerNameP2;
 
     private Image title;
     private ImageButton next_btn;
@@ -144,16 +144,16 @@ public class PlayerScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
-                        playerName1 = txt_field1.getText();
-                        playerName2 = txt_field2.getText();                        
-                        game.setScreen(new CarSelectionScreen(game, true, playerName1, playerName2)); //two players
+                        playerNameP1 = txt_field1.getText();
+                        playerNameP2 = txt_field2.getText();                        
+                        game.setScreen(new CarSelectionScreen(game, true, playerNameP1)); //two players
                     }
                 }
                 
                 if (twoPlayers == false) {
                     if (!txt_field1.getText().isEmpty()) {
-                        playerName1 = txt_field1.getText();                       
-                        game.setScreen(new CarSelectionScreen(game, false, playerName1, null)); //single player
+                        playerNameP1 = txt_field1.getText();                       
+                        game.setScreen(new CarSelectionScreen(game, false, playerNameP1)); //single player
                     }
                 }
             }

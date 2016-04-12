@@ -43,8 +43,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private ShapeRenderer renderer;
     
     private boolean twoPlayers;
-    private String playerNameP1;
-    private String playerNameP2;
+    private String playerName;
     
     private String currentPlayer;
     
@@ -106,20 +105,15 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     
     private Label player;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerNameP1, String playerNameP2) {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerName) {
         //Gdx.app.log("Car Selection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
-        this.playerNameP1 = playerNameP1;
-        this.playerNameP2 = playerNameP2;
-        
-        currentPlayer = playerNameP1;
+        this.playerName = playerName;
         
         renderer = new ShapeRenderer();
-        
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
         
@@ -178,7 +172,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     @Override
     public void show() {
         //Gdx.app.log("CarSelection", "show called");
-        Gdx.app.log("Player name", playerNameP1);
+        Gdx.app.log("Player name", playerName);
         
         /** Title */
         title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
@@ -269,14 +263,12 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true) {
                     //pass to player 2
-                    currentPlayer = playerNameP2;
-                    game.setScreen(new CarSelectionScreen(game, true, playerNameP1, playerNameP2));
-                    //pass car color
-                    
+                    game.setScreen(new CarSelectionScreen(game, false, PlayerScreen.playerNameP2));
+                    //pass car color to car class
                 }
                 if (twoPlayers == false) {
                     game.setScreen(new MapSelectionScreen(game));
-                    //pass car color
+                    //pass car color to car class 
                 }
             }
         });  
@@ -286,7 +278,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 dispose();
                 if (twoPlayers == true) {
                     //return to player 1
-                    currentPlayer = playerNameP1;
                     game.setScreen(new PlayerScreen(game, true));
                 }
                 if (twoPlayers == false) {
@@ -799,7 +790,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 /*Car description*/
                 if (currentCar < 5) {
                 currentCar++;
-                System.out.println(currentCar);
+                //System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();
@@ -832,7 +823,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {
                 currentCar--;
-                System.out.println(currentCar);
+                //System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();
