@@ -293,15 +293,7 @@ public class Car {
     public Vector2 Position(){
         Vector2 position = new Vector2();
 
-        if(GameScreen.mapNum == 1){
-            position = new Vector2(3,3);
-        }
-        else if(GameScreen.mapNum == 2){
-            position = new Vector2(3,3);
-        }
-        else if(GameScreen.mapNum == 3){
-            position = new Vector2(3,3);
-        }
+    position = new Vector2(3,3);
 
         return position;
     }                           
