@@ -37,6 +37,8 @@ public class MapSelectionScreen implements Screen {
     private int currentMap = 0;
     private BitmapFont font;
     
+    private final boolean twoPlayers;
+    
     private Image preview;
     private Image title;
     private ImageButton ready_btn;
@@ -55,9 +57,10 @@ public class MapSelectionScreen implements Screen {
     private TextureAtlas buttons_atlas;
     private Skin buttons_skin;    
 
-    public MapSelectionScreen(RacingGame game) {
+    public MapSelectionScreen(RacingGame game, boolean twoPlayers) {
         Gdx.app.log("Map Selection", "constructor called");
         this.game = game;
+        this.twoPlayers = twoPlayers;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
@@ -126,7 +129,13 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //if two players, generate game screen with 2 cars
+                if (twoPlayers == false) {
                 game.setScreen(new GameScreen(game, true, currentMap)); //Change two players value 
+                }
+                if (twoPlayers == true) {
+                game.setScreen(new GameScreen(game, false, currentMap));
+                }
             }
         });
         

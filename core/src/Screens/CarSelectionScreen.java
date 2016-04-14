@@ -43,7 +43,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     
     private ShapeRenderer renderer;
     
-    public static boolean twoPlayers;
+    public boolean twoPlayers;
     private String playerName;
     
     private String currentPlayer;
@@ -324,7 +324,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                     //pass car color to car class
                 }
                 if (twoPlayers == false) {
-                    game.setScreen(new MapSelectionScreen(game));
+                    game.setScreen(new MapSelectionScreen(game, twoPlayers));
                     //pass car color to car class 
                 }
             }

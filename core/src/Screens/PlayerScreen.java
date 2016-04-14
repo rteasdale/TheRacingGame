@@ -142,6 +142,7 @@ public class PlayerScreen implements Screen {
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //for two players
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
                         playerNameP1 = txt_field1.getText();

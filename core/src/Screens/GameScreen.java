@@ -39,6 +39,7 @@ import handlers.InputManager;
 public final class GameScreen implements Screen {
     private RacingGame game;
     private Hud hud;
+    private boolean twoPlayers;
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
@@ -54,11 +55,8 @@ public final class GameScreen implements Screen {
     Box2DDebugRenderer renderer;
     InputManager inputManager;
     CarContactListener cl;
-
     
     public static Car car;
-
-    private boolean twoPlayers;
             
     public Car car2;
 
@@ -80,6 +78,7 @@ public final class GameScreen implements Screen {
         camera.position.x = 0;
         camera.position.y = 0;
         
+        System.out.println(twoPlayers);
         //hud = new Hud(batch);
 
         world = new World(new Vector2(0, 0f), true);
@@ -138,13 +137,11 @@ public final class GameScreen implements Screen {
             renderer.render(world, camera.combined);
         }
 
-        if(!twoPlayers){
         if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
         }
-        }
         
-        if(twoPlayers){
+        if(twoPlayers == true){
             Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
