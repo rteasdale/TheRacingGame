@@ -49,6 +49,8 @@ public final class GameScreen implements Screen {
     private static int carColorP1;
     private static int carColorP2;
     
+    private float totalTime = 0;
+    
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
     public static boolean debug = true; //Boolean if I want B2D Debug on or off
@@ -85,7 +87,7 @@ public final class GameScreen implements Screen {
         camera.position.y = 0;
         
         System.out.println(twoPlayers);
-        //hud = new Hud(batch);
+        hud = new Hud(batch);
 
         world = new World(new Vector2(0, 0f), true);
 
@@ -151,9 +153,13 @@ public final class GameScreen implements Screen {
             Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
-//        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-//        hud.stage.draw();
-
+        
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        
+        totalTime+=f;
+        hud.update(totalTime, f);
+        
     }
     
     private void createGrounds() {

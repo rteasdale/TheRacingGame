@@ -51,8 +51,7 @@ public class SplashScreen extends InputListener implements Screen {
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         style_lbl = new Label.LabelStyle(font, Color.WHITE);
-        
-        hud = new Hud((SpriteBatch) stage.getBatch(), i);
+
     }
 
     @Override
@@ -76,9 +75,6 @@ public class SplashScreen extends InputListener implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        stage.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();        
         
         stage.getBatch().begin();
         stage.getBatch().draw(splash_image, 0, 0);

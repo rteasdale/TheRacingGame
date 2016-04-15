@@ -932,19 +932,19 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         /** Stats levels*/ 
         renderer.setProjectionMatrix(camera.combined);
 
-            String[] temp = stats[currentCar].split(",");
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            renderer.setColor(Color.BLUE);
-            renderer.rect(850, 550, Integer.parseInt(temp[0])*28.5f, 20);
-            renderer.rect(850, 480, Integer.parseInt(temp[1])*28.5f, 20);
-            renderer.rect(850, 410, Integer.parseInt(temp[2])*28.5f, 20);
-            renderer.rect(850, 340, Integer.parseInt(temp[3])*28.5f, 20);
-            renderer.rect(850, 270, Integer.parseInt(temp[4])*28.5f, 20);
-            renderer.rect(850, 200, Integer.parseInt(temp[5])*28.5f, 20);
-            renderer.end();  
-        
-            stage.act();
-            stage.draw();
+        String[] temp = stats[currentCar].split(",");
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.BLUE);
+        renderer.rect(850, 550, Integer.parseInt(temp[0])*28.5f, 20);
+        renderer.rect(850, 480, Integer.parseInt(temp[1])*28.5f, 20);
+        renderer.rect(850, 410, Integer.parseInt(temp[2])*28.5f, 20);
+        renderer.rect(850, 340, Integer.parseInt(temp[3])*28.5f, 20);
+        renderer.rect(850, 270, Integer.parseInt(temp[4])*28.5f, 20);
+        renderer.rect(850, 200, Integer.parseInt(temp[5])*28.5f, 20);
+        renderer.end();  
+
+        stage.act();
+        stage.draw();
     }
 
     @Override

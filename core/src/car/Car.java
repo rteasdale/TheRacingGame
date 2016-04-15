@@ -162,7 +162,7 @@ public class Car {
         jointDef.localAnchorA.set(1.125f, 1.5f);
         rightJoint = (RevoluteJoint)world.createJoint(jointDef);
         tires.add(tire);
-    }
+    } //end of car
 
     public void update(HashSet<Key> keys) {
         for (Tire tire : tires) {
@@ -217,7 +217,7 @@ public class Car {
             carLink = CarSelectionScreen.golf_colors[Color];
         }
         else if(car == 1){
-        //Lamborghini
+            //Lamborghini
             maxFSpeed = 75;
             maxBSpeed = -20;
             backTireMDriveForce = 75;
