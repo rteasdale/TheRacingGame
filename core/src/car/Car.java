@@ -35,6 +35,14 @@ public class Car {
     float backTireMLateralImpulse;
     float frontTireMLateralImpulse;
     float breakingFPourcentage;
+    
+    float FuelTank;
+    float MaxFuelCapacity;
+    float FuelConsumption;
+    
+    boolean isAccelerating;
+    boolean onFuelPad;
+    
     Vector2 InitialPosition;
                         
     Sprite carSprite;
@@ -201,6 +209,8 @@ public class Car {
 
         leftJoint.setLimits(newAngle, newAngle);
         rightJoint.setLimits(newAngle, newAngle);
+        
+        UseFuel(isAccelerating, FuelConsumption);
     }
     
     public void whichCar(int car, int Color){
@@ -215,6 +225,10 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
+            
         }
         else if(car == 1){
         //Lamborghini
@@ -227,6 +241,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.lambo_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
         else if(car ==2){
             //prius
@@ -239,6 +256,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.prius_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
         else if(car ==3){
             //Porsche
@@ -251,6 +271,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.porsche_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
         else if(car == 4){
             //Truck
@@ -263,6 +286,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.truck_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
         else if(car == 5){
             //Zonda
@@ -275,6 +301,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.zondaf_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
         else{
             maxFSpeed = 75;
@@ -286,6 +315,9 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition  = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
+            MaxFuelCapacity = 100;
+            FuelTank = MaxFuelCapacity;
+            FuelConsumption = 1/12f;
         }
                               
     } //end of which car
@@ -298,4 +330,52 @@ public class Car {
         return position;
     }                           
 
+    private void UseFuel(boolean isAccelerating, float FuelConsumption) {
+        if(this.getFuelTank() > 0){
+        if(this.getOnFuelPad() == false){
+            if(isAccelerating)
+            setFuelTank(this.getFuelTank()-FuelConsumption);
+        
+        else
+            setFuelTank(this.getFuelTank()-(FuelConsumption*.1f));
+        }
+        }
+        
+
+            //When your car has no more fuel
+
+        
+        
+    }
+    
+        private void addFuel(boolean onFuelPad){
+            if(onFuelPad)
+                this.setFuelTank(FuelTank + FuelConsumption*8);
+                
+        }
+
+    public void setFuelTank(float fuelTank){
+        this.FuelTank = fuelTank;
+    }
+    
+    public float getFuelTank(){
+        return FuelTank;
+    }
+    
+    public boolean getIsAccelerating(){
+        return isAccelerating;
+    }
+    
+    public void setIsAccelerating(boolean isAccelerating){
+        this.isAccelerating = isAccelerating;
+    }
+    
+    public boolean getOnFuelPad(){
+        return onFuelPad;
+    }
+    
+    public void setOnFuelPad(boolean onFuelPad){
+        this.onFuelPad = onFuelPad;
+    }
+    
 }

@@ -416,13 +416,13 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Fuel ObjectLayer" visible="0">
+ <objectgroup name="Fuel ObjectLayer">
   <object id="24" x="1726.96" y="431.562" width="49.1383" height="96.8523"/>
   <object id="25" x="1583.6" y="527.703" width="49.1383" height="96.8523"/>
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
   <object id="27" x="1583.04" y="767.697" width="49.1383" height="96.8523"/>
  </objectgroup>
- <objectgroup name="Finish Line ObjectLayer">
+ <objectgroup name="Finish Line ObjectLayer" visible="0">
   <object id="28" x="118.929" y="551.916" width="239.994" height="23.5009"/>
   <object id="57" x="409.365" y="995.404" width="21.5455" height="264.292"/>
   <object id="58" x="409.365" y="104.855" width="20.1092" height="267.165"/>

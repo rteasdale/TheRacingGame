@@ -26,6 +26,8 @@ public class Constants {
     public static final short TIRE = 8;
     public static final short TIREOBS = 16;
     public static final short OILOBS = 32;
-    public static final short WALL = 64;
+    public static final short WALL = 64; 
+    public static final short FUEL = 128;
     //COMPLETE HERE
+   
 }

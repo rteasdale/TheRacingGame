@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import car.Car;
 import car.CarMath;
 import car.Constants;
+import car.FuelAreaType;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapLayer;
@@ -136,6 +137,8 @@ public final class GameScreen implements Screen {
         tmr.setView(camera);
         tmr.render();
 
+        System.out.println(car.getFuelTank());
+        
         renderSprites();
                                            
         //Box2D Debug Renderer
@@ -143,7 +146,7 @@ public final class GameScreen implements Screen {
             renderer.render(world, camera.combined);
         }
 
-        if(car.body.getPosition().x < 500 && car.body.getPosition().x > -18 && car.body.getPosition().y < 353 && car.body.getPosition().y > -30){    //Max Position where the camera follows the Car (XMax, XMin, YMax, YMin)
+        if(twoPlayers == false){
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
         }
         
@@ -209,13 +212,41 @@ public final class GameScreen implements Screen {
 
             fdef.shape = shape;
             fdef.isSensor = true;
-            fdef.filter.categoryBits = Constants.GROUND;
+            fdef.filter.categoryBits = Constants.OILOBS;
             fdef.filter.maskBits = Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+        }
+            ////////////////////////////////////////////////////////
+            //FUEL LAYER
+            MapLayer FuelLayer = tileMap.getLayers().get("Fuel ObjectLayer");
+        
+        for(MapObject fu : FuelLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fu.getProperties().get("x", Float.class) ;
+            float y = (float) fu.getProperties().get("y", Float.class) ;
+
+            float width = (float) fu.getProperties().get("width", Float.class);
+            float height = (float) fu.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FUEL;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FuelAreaType());
         }
             
         ///////////////////////////////////////////////////////   
@@ -238,11 +269,13 @@ public final class GameScreen implements Screen {
 //		groundAreaFixture = ground.createFixture(fixtureDef);
 //		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
     
-    }  //end of class createGrounds()
+    }//end of class createGrounds()
         
     /** Chose map*/
+
     public void choseMap(int mapNum){
         if(mapNum == 0){
+            System.out.println("Map 1 Selected");
             red = 71/255f;
             green = 122/255f;
             blue = 25/255f;
@@ -250,6 +283,7 @@ public final class GameScreen implements Screen {
             mapAdress = "maps/map1.tmx";
         }
         else if(mapNum == 1){
+            System.out.println("Map 2 Selected");
             red = 254/255f;
             green = 254/255f;
             blue = 255/255f;
@@ -257,6 +291,7 @@ public final class GameScreen implements Screen {
             mapAdress = "maps/map2.tmx";
         }
         else if(mapNum == 2){
+            System.out.println("Map 3 Selected");
             red = 13/255f;
             green = 8/255f;
             blue = 36/255f;
@@ -264,6 +299,7 @@ public final class GameScreen implements Screen {
             mapAdress = "maps/map3.tmx";
         }
         else{
+            System.out.println("Map DEFAULT Selected");
             mapAdress = "maps/map1.tmx";
         }
     }
@@ -339,7 +375,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
             body.createFixture(fdef);
             Sprite tireSprite = new Sprite(new Texture("Tire.png"));
-            tireSprite.setSize(width/8,width/8);
+            tireSprite.setSize(width/4,width/4);
             tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
             body.setUserData(tireSprite);  
         }   

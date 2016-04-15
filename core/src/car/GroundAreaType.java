@@ -2,14 +2,14 @@ package car;
 
 public class GroundAreaType extends FixtureUserData {
 
-	public float frictionModifier;
-	boolean outOfCourse;
+public float frictionModifier;
+boolean outOfCourse;
 	
-	public GroundAreaType(float frictionModifier, boolean outOfCourse) {
-		super(FixtureUserDataType.FUD_GROUND_AREA);
+    public GroundAreaType(float frictionModifier, boolean outOfCourse) {
+         super(FixtureUserDataType.FUD_GROUND_AREA);
 		
-		this.frictionModifier = frictionModifier;
-		this.outOfCourse = outOfCourse;
+        this.frictionModifier = frictionModifier;
+        this.outOfCourse = outOfCourse;
 	}
 
 }

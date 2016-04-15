@@ -1,5 +1,6 @@
 package handlers;
 
+import car.Car;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -39,12 +40,17 @@ public class CarContactListener implements ContactListener {
                     return;
             }
 
-            if (fudA.type == FixtureUserDataType.FUD_CAR_TIRE
-                            && fudB.type == FixtureUserDataType.FUD_GROUND_AREA) {
+            if (fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_GROUND_AREA) {
                     tireAndGround(a, b, began);
-            } else if (fudA.type == FixtureUserDataType.FUD_GROUND_AREA
-                            && fudB.type == FixtureUserDataType.FUD_CAR_TIRE) {
+                    
+            } else if (fudA.type == FixtureUserDataType.FUD_GROUND_AREA && fudB.type == FixtureUserDataType.FUD_CAR_TIRE) {
                     tireAndGround(b, a, began);
+            }
+            else if(fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_FUEL_LANE){
+                
+            }
+            else if(fudA.type == FixtureUserDataType.FUD_FUEL_LANE && fudB.type == FixtureUserDataType.FUD_CAR_TIRE){
+                
             }
         }
     }
@@ -57,6 +63,10 @@ public class CarContactListener implements ContactListener {
             } else {
                 tire.removeGroundArea(ground);
             }
+    }
+    
+    void addFuel(){
+        
     }
 
     @Override
