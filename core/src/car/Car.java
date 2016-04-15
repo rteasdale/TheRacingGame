@@ -211,6 +211,8 @@ public class Car {
         rightJoint.setLimits(newAngle, newAngle);
         
         UseFuel(isAccelerating, FuelConsumption);
+        
+        addFuel(onFuelPad);
     }
     
     public void whichCar(int car, int Color){
@@ -349,9 +351,11 @@ public class Car {
     }
     
         private void addFuel(boolean onFuelPad){
+            if(this.getFuelTank() <= this.getMaxFuelCapacity()){
             if(onFuelPad)
-                this.setFuelTank(FuelTank + FuelConsumption*8);
-                
+                this.setFuelTank(FuelTank + FuelConsumption*2);
+            }
+            
         }
 
     public void setFuelTank(float fuelTank){
@@ -376,6 +380,11 @@ public class Car {
     
     public void setOnFuelPad(boolean onFuelPad){
         this.onFuelPad = onFuelPad;
+    }
+    
+    public float getMaxFuelCapacity(){
+        
+        return MaxFuelCapacity;
     }
     
 }
