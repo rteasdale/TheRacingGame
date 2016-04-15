@@ -861,7 +861,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                System.out.print(currentCar);
+                //System.out.print(currentCar);
                 color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
                 if (currentCar < 5) {
