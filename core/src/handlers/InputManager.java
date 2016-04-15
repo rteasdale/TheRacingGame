@@ -36,12 +36,12 @@ public class InputManager  implements InputProcessor  {
         if (keycode == Input.Keys.UP) {
             if (!pressedKeys.contains(Key.Up)) {
                 
-                if(GameScreen.car.getFuelTank() != 0){
+                if(GameScreen.car.getFuelTank() >= 0){
                     pressedKeys.add(Key.Up);
                     GameScreen.car.setIsAccelerating(true);
                 }
                 
-                else if(GameScreen.car.getFuelTank() == 0){
+                else if(GameScreen.car.getFuelTank() <= 0){
                     //Do Something When The Tank is empty For P1
                 }
                 
@@ -50,12 +50,12 @@ public class InputManager  implements InputProcessor  {
         else if (keycode == Input.Keys.DOWN) {
             if (!pressedKeys.contains(Key.Down)) {
                 
-                if(GameScreen.car.getFuelTank() != 0){
+                if(GameScreen.car.getFuelTank() >= 0){
                     pressedKeys.add(Key.Down);
                     GameScreen.car.setIsAccelerating(true);
                 }
                 
-                else if(GameScreen.car.getFuelTank() == 0){
+                else if(GameScreen.car.getFuelTank() <= 0){
                     //Do Something When The Tank is empty For P1
                 }
                 
@@ -73,12 +73,12 @@ public class InputManager  implements InputProcessor  {
         else if (keycode == Input.Keys.W) {
             if (!pressedKeys2.contains(Key.w)) {
                 
-                if(GameScreen.car2.getFuelTank() != 0){
+                if(GameScreen.car2.getFuelTank() >= 0){
                     pressedKeys.add(Key.w);
                     GameScreen.car.setIsAccelerating(true);
                 }
                 
-                else if(GameScreen.car2.getFuelTank() == 0){
+                else if(GameScreen.car2.getFuelTank() <= 0){
                     //Do Something When The Tank is empty For P2
                 }
                 
@@ -86,12 +86,12 @@ public class InputManager  implements InputProcessor  {
         } else if (keycode == Input.Keys.S) {
             if (!pressedKeys2.contains(Key.s)) {
                 
-                if(GameScreen.car2.getFuelTank() != 0){
+                if(GameScreen.car2.getFuelTank() >= 0){
                     pressedKeys.add(Key.s);
                     GameScreen.car.setIsAccelerating(true);
                 }
                 
-                else if(GameScreen.car2.getFuelTank() == 0){
+                else if(GameScreen.car2.getFuelTank() <= 0){
                     //Do Something When The Tank is empty For P2
                 }
                 
