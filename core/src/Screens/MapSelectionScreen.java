@@ -56,8 +56,7 @@ public class MapSelectionScreen implements Screen {
     
     private TextureAtlas buttons_atlas;
     private Skin buttons_skin;    
-    
-    private boolean TwoPlayers = false;
+
 
     public MapSelectionScreen(RacingGame game, boolean twoPlayers) {
         Gdx.app.log("Map Selection", "constructor called");
@@ -131,17 +130,13 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-<<<<<<< Updated upstream
                 //if two players, generate game screen with 2 cars
-                if (twoPlayers == false) {
+                if (twoPlayers == true) {
                 game.setScreen(new GameScreen(game, true, currentMap)); //Change two players value 
                 }
-                if (twoPlayers == true) {
+                if (twoPlayers == false) {
                 game.setScreen(new GameScreen(game, false, currentMap));
                 }
-=======
-                game.setScreen(new GameScreen(game, TwoPlayers, currentMap)); //Change two players value 
->>>>>>> Stashed changes
             }
         });
         

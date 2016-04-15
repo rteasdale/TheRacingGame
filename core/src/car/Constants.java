@@ -6,8 +6,8 @@ public class Constants {
 
     public static final int GOLF = 0;
     public static final int LAMBORGHINI = 1;
-    public static final int PORSCHE = 2;
-    public static final int PRIUS = 3;
+    public static final int PRIUS = 2;
+    public static final int PORSCHE = 3;
     public static final int TRUCK = 4;
     public static final int ZONDAF = 5;
 

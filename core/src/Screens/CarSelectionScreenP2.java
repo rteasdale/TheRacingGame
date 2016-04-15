@@ -1,5 +1,7 @@
 /*
-*NOTE: DO NOT INITIALIZE EVERYTHING IN CREATE, CHECK IF REALLY NECESSARY
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Screens;
 
@@ -33,7 +35,7 @@ import java.util.Arrays;
  *
  * @author ROSY
  */
-public class CarSelectionScreen implements Screen { //extends PlayerScreen
+public class CarSelectionScreenP2 implements Screen { //extends PlayerScreen
     private RacingGame game;
 
     private Screen scr = this;
@@ -106,7 +108,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     
     private Label player;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers, String playerName) {
+    public CarSelectionScreenP2(RacingGame game, boolean twoPlayers, String playerName) {
         //Gdx.app.log("Car Selection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
@@ -283,7 +285,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         
         player = new Label(currentPlayer, lbl_style);
         player.setPosition(400, 600);
-
+        
+        stage.addActor(player);
+        
         stage.addActor(weight);
         stage.addActor(acceleration);
         stage.addActor(handling);
@@ -306,9 +310,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stage.addActor(next_btn);
         stage.addActor(back_btn);
         stage.addActor(title);
-        
-        stage.addActor(player);
-        
+ 
         listeners();
   
     }
@@ -318,27 +320,17 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                if (twoPlayers == true) {
-                    game.setScreen(new CarSelectionScreenP2(game, true, PlayerScreen.playerNameP2));
-                }
-                if (twoPlayers == false) {
-                    GameScreen.setCarNumP1(currentCar);
-                    GameScreen.setCarColorP1(currentColor);                    
-                    game.setScreen(new MapSelectionScreen(game, false));
-                }
+                GameScreen.setCarNumP2(currentCar);
+                GameScreen.setCarColorP2(currentColor);
+                game.setScreen(new MapSelectionScreen(game, true));
             }
         });  
+        
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 dispose();
-                if (twoPlayers == true) {
-                    //return to player 1
-                    game.setScreen(new PlayerScreen(game, true));
-                }
-                if (twoPlayers == false) {
-                    game.setScreen(new PlayerScreen(game, false));
-                }
+                game.setScreen(new CarSelectionScreen(game, twoPlayers, ""));
             }
         });
         
@@ -349,7 +341,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             /** Default*/
                 if (color_select.getSelected().equals("-- Select Car Color --")) {
                     Gdx.app.log("color selected:", color_select.getSelected());
-                    //golf
                     if (currentCar == 0) {
                         currentColor = 4;
                         preview.remove();
@@ -359,7 +350,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         preview.rotateBy(90);
                         stage.addActor(preview);                            
                     }
-                    //lambo
                     if (currentCar == 1) {
                         currentColor = 0;
                         preview.remove();
@@ -369,7 +359,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         preview.rotateBy(90);
                         stage.addActor(preview);                       
                     }
-                    //prius
                     if (currentCar == 2) {
                         currentColor = 1;
                         preview.remove();
@@ -379,7 +368,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         preview.rotateBy(90);
                         stage.addActor(preview);                       
                     }
-                    //porsche
                     if (currentCar == 3) {
                         currentColor = 2;
                         preview.remove();
@@ -389,7 +377,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         preview.rotateBy(90);
                         stage.addActor(preview);                       
                     }
-                    //truck
                     if (currentCar == 4) {
                         currentColor = 5;
                         preview.remove();
@@ -399,7 +386,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                         preview.rotateBy(90);
                         stage.addActor(preview);                       
                     }  
-                    //zondaf
                     if (currentCar == 5) {
                         currentColor = 3;
                         preview.remove();
@@ -846,8 +832,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         });
         
         
-        //System.out.println(Arrays.toString(carPreview));
-        //Gdx.app.log("Current car", car[0]);
+        System.out.println(Arrays.toString(carPreview));
+        Gdx.app.log("Current car", car[0]);
         carDescription.setText("\n" + car[0]);
         
         /** Preview */
@@ -857,15 +843,16 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         preview.rotateBy(90);
         stage.addActor(preview);
         
+        System.out.println(currentCar);
         /** Car type*/
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                System.out.print(currentCar);
                 color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
                 if (currentCar < 5) {
                 currentCar++;
+                //System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();
@@ -898,7 +885,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {
                 currentCar--;
-                System.out.println(currentCar);
+                //System.out.println(currentCar);
                 Gdx.app.log("Current car", car[currentCar]);
                 carDescription.setText("\n" + car[currentCar]);
                 preview.remove();

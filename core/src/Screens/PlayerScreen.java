@@ -146,7 +146,7 @@ public class PlayerScreen implements Screen {
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
                         playerNameP1 = txt_field1.getText();
-                        playerNameP2 = txt_field2.getText();                        
+                        playerNameP2 = txt_field2.getText();
                         game.setScreen(new CarSelectionScreen(game, true, playerNameP1)); //two players
                     }
                 }

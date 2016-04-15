@@ -37,9 +37,17 @@ import handlers.CarContactListener;
 import handlers.InputManager;
 
 public final class GameScreen implements Screen {
+
     private RacingGame game;
     private Hud hud;
+    
+    public static int mapNum = 0;
     private boolean twoPlayers;
+    
+    private static int carNumP1;
+    private static int carNumP2;
+    private static int carColorP1;
+    private static int carColorP2;
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
@@ -57,10 +65,7 @@ public final class GameScreen implements Screen {
     CarContactListener cl;
     
     public static Car car;
-            
-    public Car car2;
-
-    public static int mapNum = 0;
+    public static Car car2;
 
     float red;
     float green;
@@ -71,6 +76,7 @@ public final class GameScreen implements Screen {
     public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
         this.twoPlayers = twoPlayers;
+
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -92,14 +98,14 @@ public final class GameScreen implements Screen {
         inputManager = new InputManager(this);
         Gdx.input.setInputProcessor(inputManager);
         
-	this.car = new Car(world, Constants.TRUCK, Constants.GREEN, 1);
+        /**Create cars*/
+	car = new Car(world, carNumP1, carColorP1, 1);
         
         // If two players, construct another car
         if (twoPlayers == true) {
-            this.car2 = new Car(world, Constants.LAMBORGHINI, Constants.DARKBLUE, 2);
+            car2 = new Car(world, carNumP2, carColorP2, 2);
         }
         
-
         ////////////////////////////////////////////////////
         //Load Tiled Map
         choseMap(mapNum);
@@ -337,6 +343,39 @@ public final class GameScreen implements Screen {
             tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
             body.setUserData(tireSprite);  
         }   
-    }   
+    }
+
+    static void setCarColorP1(int currentColor) {
+        carColorP1 = currentColor;
+    }
+    
+    public int getCarColorP1() {
+        return carColorP1;
+    }
+    
+    static void setCarNumP1(int currentCar) {
+        carNumP1 = currentCar;
+    }    
+    
+    public int getCarNumP1() {
+        return carNumP1;
+    }
+    
+    static void setCarColorP2(int currentColor) {
+        carColorP2 = currentColor;
+    }
+    
+    public int getCarColorP2() {
+        return carColorP2;
+    }
+
+    static void setCarNumP2(int currentCar) {
+        carNumP2 = currentCar;
+    }
+    
+    public int getCarNumP2() {
+        return carNumP2;
+    }    
+    
 }
 

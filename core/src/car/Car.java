@@ -40,9 +40,9 @@ public class Car {
     Sprite carSprite;
     public String carLink;
     
-    public Car(World world, int CarNum, int Color, int playerNum) {
+    public Car(World world, int CarNum, int ColorNum, int playerNum) {
         this.playerNum = playerNum;
-        whichCar(CarNum, Color);
+        whichCar(CarNum, ColorNum);
         
         tires = new Array<Tire>();
         
@@ -229,7 +229,7 @@ public class Car {
             carLink = CarSelectionScreen.lambo_colors[Color];
         }
         else if(car ==2){
-            //Porsche
+            //prius
             maxFSpeed = 75;
             maxBSpeed = -20;
             backTireMDriveForce = 150;
@@ -238,10 +238,10 @@ public class Car {
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
-            carLink = CarSelectionScreen.porsche_colors[Color];
+            carLink = CarSelectionScreen.prius_colors[Color];
         }
         else if(car ==3){
-            //Prius
+            //Porsche
             maxFSpeed = 125;
             maxBSpeed = -20;
             backTireMDriveForce = 75; //Affects Acceleration
@@ -250,7 +250,7 @@ public class Car {
             frontTireMLateralImpulse = 1.875f;
             breakingFPourcentage = 0.3f;
             InitialPosition = Position();
-            carLink = CarSelectionScreen.prius_colors[Color];
+            carLink = CarSelectionScreen.porsche_colors[Color];
         }
         else if(car == 4){
             //Truck
