@@ -33,9 +33,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
+import java.util.concurrent.TimeUnit;
 
 public final class GameScreen implements Screen {
 
@@ -51,6 +53,7 @@ public final class GameScreen implements Screen {
     private static int carColorP2;
     
     private float totalTime = 0;
+    private long startTime = TimeUtils.millis();
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
@@ -160,9 +163,9 @@ public final class GameScreen implements Screen {
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         
-        totalTime+=f;
-        hud.update(totalTime, f);
-        
+        //if state == GO 
+        hud.updateTime(startTime);
+        //
     }
     
     private void createGrounds() {
