@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.TimeUtils;
+import static com.badlogic.gdx.utils.TimeUtils.millis;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
 import java.util.Calendar;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -29,22 +32,16 @@ public class Hud {
     public Stage stage;
     private Viewport viewport;
     private BitmapFont font;
-    private Calendar calendar;
-    
-    private Timer timer;
-    private float timeCount;
-    private Integer lap;
-    private int position;
-    private int startTime; 
-    private int endTime;
     
     private int minutes;
     private int seconds;
     private int milliseconds;
     
+    private int lapCount;
+    private int totalLaps;
+    
     private Label timerLabel;
     private Label lapLabel;
-    private Label positionLabel;
     
     
     public Hud(SpriteBatch batch) {
@@ -56,10 +53,23 @@ public class Hud {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-   
-        timerLabel = new Label((Integer.toString(minutes) + " : " + Integer.toString(seconds)) + " : " + Integer.toString(milliseconds), new Label.LabelStyle(font, Color.BLUE));
+        
+        String time;
+        time = String.format("%02d, %02d, %03d",
+                minutes, 
+                seconds, 
+                milliseconds
+        );
+        timerLabel = new Label(time, new Label.LabelStyle(font, Color.LIME));
+        
+        String lap;
+        lap = String.format("%02d / %02d",
+            lapCount,
+            totalLaps
+        );        
 
-        lapLabel = new Label(("a"), new Label.LabelStyle(font, Color.WHITE));
+        lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
+        
         
         table.add(timerLabel).expandX().padTop(20); //extend to end of screen
         table.add(lapLabel).expandX().padTop(20);
@@ -68,15 +78,23 @@ public class Hud {
         stage.addActor(table);
     }
     
-    public void update(float totalTime, float f) {
-        minutes = ((int)totalTime) / 60;
-        seconds = ((int)totalTime) % 60;
+    public void updateTime(long startTime) {
+        seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
+        minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime)) %1000;
         
-        totalTime+=f;
-        milliseconds = ((int)totalTime) %1000;
+        String time;
+        time = String.format("%02d : %02d.%03d",
+            minutes, 
+            seconds, 
+            milliseconds
+        );
 
-        timerLabel.setText(Integer.toString(minutes) + " : " + Integer.toString(seconds) + " : " + Integer.toString(milliseconds));
-
+        timerLabel.setText(time);
+    }    
+    
+    public void updateLap() {
+        lapLabel.setText(null);
     }
     
     public void dispose() {
