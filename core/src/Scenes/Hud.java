@@ -54,18 +54,17 @@ public class Hud {
         table.top();
         table.setFillParent(true);
         
+        //time format 
         String time;
         time = String.format("%02d, %02d, %03d",
-                minutes, 
-                seconds, 
-                milliseconds
+            minutes, seconds, milliseconds
         );
         timerLabel = new Label(time, new Label.LabelStyle(font, Color.LIME));
         
+        //lap format 
         String lap;
         lap = String.format("%02d / %02d",
-            lapCount,
-            totalLaps
+            lapCount, totalLaps
         );        
 
         lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
@@ -81,13 +80,11 @@ public class Hud {
     public void updateTime(long startTime) {
         seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime)) %1000;
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
         
         String time;
         time = String.format("%02d : %02d.%03d",
-            minutes, 
-            seconds, 
-            milliseconds
+            minutes, seconds, milliseconds
         );
 
         timerLabel.setText(time);
@@ -95,6 +92,14 @@ public class Hud {
     
     public void updateLap() {
         lapLabel.setText(null);
+    }
+    
+    public void updateSpeed() {
+        
+    }
+    
+    public void updateFuel() {
+        
     }
     
     public void dispose() {
