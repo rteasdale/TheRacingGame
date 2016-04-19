@@ -47,6 +47,8 @@ public final class GameScreen implements Screen {
     public static int mapNum = 0;
     private boolean twoPlayers;
     
+    Sprite tireSprite;
+    
     private static int carNumP1;
     private static int carNumP2;
     private static int carColorP1;
@@ -119,6 +121,14 @@ public final class GameScreen implements Screen {
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
         createGrounds();
+        
+        if(mapNum == 1){
+            createGroundsM2();
+        }
+        if(mapNum == 2){
+            createGroundsM3();
+        }
+        
         CreateTires();
 	
     }
@@ -257,16 +267,132 @@ public final class GameScreen implements Screen {
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new FuelAreaType());
         }
-        
-        if(mapNum == 2){
-        
+
             
+        ///////////////////////////////////////////////////////   
+//Tutorial Ground         
+//		BodyDef bodyDef = new BodyDef();
+//		Body ground = world.createBody(bodyDef);
+//		
+//		PolygonShape shape = new PolygonShape();
+//		FixtureDef fixtureDef = new FixtureDef();
+//		fixtureDef.shape = shape;
+//		fixtureDef.isSensor = true;
+//		fixtureDef.filter.categoryBits = Constants.GROUND;
+//		fixtureDef.filter.maskBits = Constants.TIRE;
+//		
+//		shape.setAsBox(9, 7, new Vector2(-10,15), 20*Constants.DEGTORAD);
+//		Fixture groundAreaFixture = ground.createFixture(fixtureDef);
+//		groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+//		
+//		shape.setAsBox(100,  100, new Vector2(5, 20), -40 * Constants.DEGTORAD);
+//		groundAreaFixture = ground.createFixture(fixtureDef);
+//		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
+    
+    } //end of class createGrounds()
+    
+    //Create grounds for map 2
+    public void createGroundsM2(){
+         
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+        
+        //ICE LAYER
+               MapLayer IceLayer = tileMap.getLayers().get("Ice ObjectLayer");
+        
+        for(MapObject ic : IceLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) ic.getProperties().get("x", Float.class) ;
+            float y = (float) ic.getProperties().get("y", Float.class) ;
+
+            float width = (float) ic.getProperties().get("width", Float.class);
+            float height = (float) ic.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.ICE;
+            fdef.filter.maskBits = Constants.TIRE;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.001f, false));
+        }
+            
+            
+                //Bridge Layer
+        MapLayer BridgeLayer = tileMap.getLayers().get("Bridge ObjectLayer");
+        
+        for(MapObject br : BridgeLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) br.getProperties().get("x", Float.class) ;
+            float y = (float) br.getProperties().get("y", Float.class) ;
+
+            float width = (float) br.getProperties().get("width", Float.class);
+            float height = (float) br.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.BRIDGE;
+            fdef.filter.maskBits = Constants.TIRE;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false));
+        }    
+            
+        MapLayer WallLayer = tileMap.getLayers().get("Wall ObjectLayer");
+                
+        for(MapObject wa : WallLayer.getObjects()) {
+            bdef = new BodyDef();
+            bdef.type = BodyType.DynamicBody;
+
+            float x = (float) wa.getProperties().get("x", Float.class) ;
+            float y = (float) wa.getProperties().get("y", Float.class) ;
+
+            float width = (float) wa.getProperties().get("width", Float.class);
+            float height = (float) wa.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+            
+            fdef = new FixtureDef();
+
+            fdef.shape = shape;
+            fdef.isSensor = false;
+            fdef.density = 1000;
+            fdef.restitution = 0.5f;
+            fdef.filter.categoryBits = Constants.WALL;
+            fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
+
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+           
             
         }
+    }
+    
+    public void createGroundsM3() {
         
-        if(mapNum == 3){
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
         
-            MapLayer MetalLayer = tileMap.getLayers().get("Metal ObjectLayer");
+        MapLayer MetalLayer = tileMap.getLayers().get("Metal ObjectLayer");
         
         for(MapObject me : MetalLayer.getObjects()){
             bdef.type = BodyType.StaticBody;
@@ -292,30 +418,8 @@ public final class GameScreen implements Screen {
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new GroundAreaType(0.90f, false));
         }
-                                                                                                                                                                                                                                                                                                                                          
-        }
-            
-        ///////////////////////////////////////////////////////   
-//Tutorial Ground         
-//		BodyDef bodyDef = new BodyDef();
-//		Body ground = world.createBody(bodyDef);
-//		
-//		PolygonShape shape = new PolygonShape();
-//		FixtureDef fixtureDef = new FixtureDef();
-//		fixtureDef.shape = shape;
-//		fixtureDef.isSensor = true;
-//		fixtureDef.filter.categoryBits = Constants.GROUND;
-//		fixtureDef.filter.maskBits = Constants.TIRE;
-//		
-//		shape.setAsBox(9, 7, new Vector2(-10,15), 20*Constants.DEGTORAD);
-//		Fixture groundAreaFixture = ground.createFixture(fixtureDef);
-//		groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
-//		
-//		shape.setAsBox(100,  100, new Vector2(5, 20), -40 * Constants.DEGTORAD);
-//		groundAreaFixture = ground.createFixture(fixtureDef);
-//		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
-    
-    } //end of class createGrounds()
+                           
+    }
     
     /** Chose map*/
 
@@ -381,7 +485,9 @@ public final class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         //batch.draw(bg, -750, 0);
         world.getBodies(tmpBodies);
+
         for(Body body : tmpBodies) {
+            
             if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
                 Sprite sprite = (Sprite) body.getUserData();
                 sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
@@ -404,10 +510,11 @@ public final class GameScreen implements Screen {
             float y = (float) ti.getProperties().get("y", Float.class) ;
 
             float width = (float) ti.getProperties().get("width", Float.class);
-
+            
+            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            
             CircleShape shape = new CircleShape();
             shape.setRadius(width/8f);
-            shape.setPosition(new  Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
 
             FixtureDef fdef = new FixtureDef();
 
@@ -420,7 +527,9 @@ public final class GameScreen implements Screen {
 
             Body body = world.createBody(bdef);
             body.createFixture(fdef);
-            Sprite tireSprite = new Sprite(new Texture("Tire.png"));
+            
+            
+            tireSprite = new Sprite(new Texture("Tire.png"));
             tireSprite.setSize(width/4,width/4);
             tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
             body.setUserData(tireSprite);  
@@ -458,6 +567,8 @@ public final class GameScreen implements Screen {
     public int getCarNumP2() {
         return carNumP2;
     }    
+
+    
     
 }
 

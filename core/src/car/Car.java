@@ -27,6 +27,7 @@ public class Car {
 
     int car = 0;
     int lapCount = 0;
+    boolean fuel = false;
 
     float maxFSpeed;
     float maxBSpeed;
@@ -98,19 +99,11 @@ public class Car {
 	FixtureDef fixtureDef = new FixtureDef();
 	fixtureDef.shape = polygonShape;
         fixtureDef.isSensor = false;
-                                            
-        if(car == 1){
-            fixtureDef.density = 0.025f;
-        }
-        else if(car == 2){
-            fixtureDef.density = 0.05f;
-        }
-        else {
             fixtureDef.density = .1f;
-        }
+        
                                             
         fixtureDef.filter.categoryBits = Constants.CAR;
-        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR;
+        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR | Constants.WALL;
                                             
 	body.createFixture(fixtureDef);
         //body.applyTorque(1000, true);
@@ -210,9 +203,11 @@ public class Car {
         leftJoint.setLimits(newAngle, newAngle);
         rightJoint.setLimits(newAngle, newAngle);
         
-        UseFuel(isAccelerating, FuelConsumption);
         
+        if(fuel){
+        UseFuel(isAccelerating, FuelConsumption);
         addFuel(onFuelPad);
+        }
     }
     
     public void whichCar(int car, int Color){

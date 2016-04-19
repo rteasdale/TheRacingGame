@@ -29,5 +29,7 @@ public class Constants {
     public static final short WALL = 64; 
     public static final short FUEL = 128;
     public static final short METAL = 256;
+    public static final short BRIDGE = 512;
+    public static final short ICE = 1024;
    
 }

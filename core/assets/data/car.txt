@@ -6,4 +6,4 @@ prius/prius_lightblue.png,prius/prius_darkblue.png,prius/prius_yellow.png,prius/
 porsche/porsche_lightblue.png,porsche/porsche_darkblue.png,porsche/porsche_yellow.png,porsche/porsche_green.png,porsche/porsche_white.png,porsche/porsche_red.png,porsche/porsche_purple.png,porsche/porsche_orange.png
 truck/truck_lightblue.png,truck/truck_darkblue.png,truck/truck_yellow.png,truck/truck_green.png,truck/truck_white.png,truck/truck_red.png,truck/truck_purple.png,truck/truck_orange.png
 zondaf/zondaf_lightblue.png,zondaf/zondaf_darkblue.png,zondaf/zondaf_yellow.png,zondaf/zondaf_green.png,zondaf/zondaf_white.png,zondaf/zondaf_red.png,zondaf/zondaf_purple.png,zondaf/zondaf_orange.png
-2,7,5,5,4,5 3,8,9,9,7,9 2,4,3,5,2,5 9,10,8,7,9,9 6,6,6,8,8,9 1,8,10,9,10,9
+2,7,5,5,4,3 3,8,9,9,7,9 2,4,3,5,2,5 9,10,8,7,9,9 6,6,6,8,8,9 1,8,10,9,10,9
