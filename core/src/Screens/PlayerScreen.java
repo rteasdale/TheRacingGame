@@ -61,7 +61,6 @@ public class PlayerScreen implements Screen {
     
 
     public PlayerScreen(RacingGame game, boolean twoPlayers) {
-        //Gdx.app.log("PlayerName", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
         stage = new Stage();
@@ -73,20 +72,17 @@ public class PlayerScreen implements Screen {
         /** Atlas and skin */
         buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
         buttons_skin= new Skin(buttons_atlas);
-        
         atlas = new TextureAtlas(Gdx.files.internal("menu/uiskin.txt"));
         skin = new Skin(atlas);
         
         /** Styles */
         next_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("next_button"), null, null, null, null, null);
         back_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("back_button"), null, null, null, null, null);
-        
         txt_style = new TextField.TextFieldStyle();
         txt_style.background = skin.getDrawable("textfield");
         txt_style.cursor = skin.getDrawable("cursor");
         txt_style.font = font;
         txt_style.fontColor = new Color(Color.WHITE);
-        
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
         lbl_style.fontColor = new Color(Color.WHITE);
@@ -94,33 +90,33 @@ public class PlayerScreen implements Screen {
     
     @Override
     public void show() {
-        //Gdx.app.log("PlayerName", "show called");            
-
-        /**Labels*/
-        racer1_title = new Label("Racer 1", lbl_style);
-        racer1_title.setPosition(550, 500);  
-        
+        Gdx.app.log("PlayerScreen", "show called");
+       
         /**Title*/
         title = new Image(new Texture("menu/playername_title.png"));
         title.setPosition(280, 648);
-
+        
+        /** Label Racer 1*/
+        racer1_title = new Label("Racer 1", lbl_style);
+        racer1_title.setPosition(550, 500);  
+        
+        /** Player name box */
         racer1 = new Image(new Texture(Gdx.files.internal("menu/player_name_box.png")));
         racer1.setPosition(500, 400);
         
+        /** Name field*/
         txt_field1 = new TextField("Enter Name",txt_style);
         txt_field1.setSize(290, 40);
         txt_field1.setPosition(500, 455);
         txt_field1.setMaxLength(16);
 
-        /** Buttons */
+        /** Next / Back buttons */
         next_btn = new ImageButton(next_style);
         next_btn.setPosition(1016, 24);
         back_btn = new ImageButton(back_style);
         back_btn.setPosition(24, 24);
         
-        //clear1 = new ImageButton(clear_style);
-        
-        /** Two players*/
+        /** Two players */
         if (twoPlayers == true) { 
             racer2 = new Image(new Texture(Gdx.files.internal("menu/player_name_box.png")));
             racer2.setPosition(500, 200);
@@ -136,25 +132,36 @@ public class PlayerScreen implements Screen {
             stage.addActor(racer2);
             stage.addActor(racer2_title);   
             stage.addActor(txt_field2);
-
         }
+
+        /** Add actors*/
+        stage.addActor(racer1);
+        stage.addActor(racer1_title);
+        stage.addActor(txt_field1);
+        stage.addActor(back_btn);
+        stage.addActor(next_btn);
+        stage.addActor(title);
+    }
+    
+    private void listeners() {
+        /** Next / Back Buttons */
         
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //for two players
+                // two players
                 if (twoPlayers == true) {
-                    if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) {
-                        playerNameP1 = txt_field1.getText();
+                    if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) { //both text fields are non-empty 
+                        playerNameP1 = txt_field1.getText(); //assign player names 
                         playerNameP2 = txt_field2.getText();
-                        game.setScreen(new CarSelectionScreen(game, true, playerNameP1)); //two players
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1)); //car selection screen
                     }
                 }
-                
+                //single player 
                 if (twoPlayers == false) {
-                    if (!txt_field1.getText().isEmpty()) {
-                        playerNameP1 = txt_field1.getText();                       
-                        game.setScreen(new CarSelectionScreen(game, false, playerNameP1)); //single player
+                    if (!txt_field1.getText().isEmpty()) { //if text field is non-empty
+                        playerNameP1 = txt_field1.getText(); //assign player name  
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1)); //car selection screen
                     }
                 }
             }
@@ -163,25 +170,21 @@ public class PlayerScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                txt_field1.clear();
+                txt_field1.clear(); //clear both textfields
                 txt_field2.clear();
-                dispose();
-                game.setScreen(new MainMenuScreen(game));
+                dispose(); //dispose screen
+                game.setScreen(new MainMenuScreen(game)); //return to main menu screen
+                
             }
-        });
-        
-        stage.addActor(racer1);
-        stage.addActor(racer1_title);
-        stage.addActor(txt_field1);
-        stage.addActor(back_btn);
-        stage.addActor(next_btn);
-        stage.addActor(title);
+        });        
     }
 
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);      
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     
+        
+        listeners();
         
         stage.act();
         stage.draw();

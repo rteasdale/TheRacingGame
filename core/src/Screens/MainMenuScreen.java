@@ -24,7 +24,7 @@ import com.mygdx.game.RacingGame;
  *
  * @author ROSY
  */
-public class MainMenuScreen extends Stage implements Screen {
+public class MainMenuScreen implements Screen {
     private RacingGame game;
 
     private final Screen scr = this;
@@ -52,11 +52,7 @@ public class MainMenuScreen extends Stage implements Screen {
     private ImageButtonStyle style_leader;
     
     public MainMenuScreen(RacingGame game) {
-        Gdx.app.log("MainMenuScreen", "constructor called");
         this.game = game;
-        
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
@@ -80,6 +76,8 @@ public class MainMenuScreen extends Stage implements Screen {
     @Override
     public void show() {
         Gdx.app.log("MainMenuScreen", "show called");
+        
+        /** Position actors */
         title = new Image(new Texture(Gdx.files.internal("menu/menu_title.png")));
         title.setPosition(280, 550);
         
@@ -97,6 +95,7 @@ public class MainMenuScreen extends Stage implements Screen {
         leaderboard = new ImageButton(style_leader);
         leaderboard.setPosition(60, 40);
         
+        /** Add actors to stage */
         stage.addActor(credits);
         stage.addActor(leaderboard);
         stage.addActor(exitButton);
@@ -106,18 +105,8 @@ public class MainMenuScreen extends Stage implements Screen {
         stage.addActor(title);
     }
 
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0);
-        stage.getBatch().end();
-        stage.act();
-        stage.draw();
-        
-        /** Listeners */
+    private void listeners() {
+        /** Settings */ 
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
@@ -125,8 +114,7 @@ public class MainMenuScreen extends Stage implements Screen {
             }
         });        
         
-        /** Boolean value determines if two players*/
-        
+        /** One player mode */
         onePlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
@@ -134,20 +122,35 @@ public class MainMenuScreen extends Stage implements Screen {
             }
         });  
 
+        /** Two Players mode */
         twoPlayersButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayerScreen(game, true)); //two players
+                game.setScreen(new PlayerScreen(game, true)); //true for two players
             }
         });  
         
+        /** Exit */
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
             }
-        });
+        });        
+    }
+    
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        listeners();
         
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0);
+        stage.getBatch().end();
+        stage.act();
+        stage.draw();
     }
 
     @Override

@@ -24,9 +24,9 @@ public class InputManager  implements InputProcessor  {
     public HashSet<Key> pressedKeys2 = new HashSet<Key>();
 
     public void update(boolean twoPlayers){
-        mainClass.car.update(pressedKeys);
+        GameScreen.car.update(pressedKeys);
         if (twoPlayers == true) {
-            mainClass.car2.update(pressedKeys2);
+            GameScreen.car2.update(pressedKeys2);
         }
     }
 
@@ -81,6 +81,7 @@ public class InputManager  implements InputProcessor  {
 
         }
         
+        /**Debug buttons*/ 
         if(GameScreen.debug){
          if(keycode == Input.Keys.P){
             System.out.println("Position");

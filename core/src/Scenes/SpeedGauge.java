@@ -17,10 +17,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class SpeedGauge extends Actor {
     private Image needle;
     private Image gauge;
+    private float speed;
     
-    public SpeedGauge() {
+    public SpeedGauge(float speed) {
+        this.speed = speed;
         needle = new Image(new Texture("HUD/speed_needle.png"));
         gauge = new Image(new Texture("HUD/speedgauge.png"));
     }
     
+    public void updateSpeed() {
+        needle.rotateBy(speed*(float) Math.sin(50));
+    }
+
 }

@@ -33,6 +33,8 @@ public class Hud {
     private Viewport viewport;
     private BitmapFont font;
     
+    private SpeedGauge speedgauge;
+    
     private int minutes;
     private int seconds;
     private int milliseconds;
@@ -56,7 +58,7 @@ public class Hud {
         
         //time format 
         String time;
-        time = String.format("%02d, %02d, %03d",
+        time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
         timerLabel = new Label(time, new Label.LabelStyle(font, Color.LIME));
@@ -69,9 +71,14 @@ public class Hud {
 
         lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
         
+        float speed = 3;
+        speedgauge = new SpeedGauge(speed);
+        
         
         table.add(timerLabel).expandX().padTop(20); //extend to end of screen
         table.add(lapLabel).expandX().padTop(20);
+        
+        //table.add(speedgauge).expandY().padBottom(20); //add speed gauge to bottom left
         table.row();
         
         stage.addActor(table);
@@ -83,7 +90,7 @@ public class Hud {
         milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
         
         String time;
-        time = String.format("%02d : %02d.%03d",
+        time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
 
