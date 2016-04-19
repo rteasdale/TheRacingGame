@@ -938,9 +938,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
 
     @Override
     public void hide() {
-        Gdx.app.log("Player num", Integer.toString(playerNum));
-        Gdx.app.log("Two Players?", Boolean.toString(twoPlayers));
-        
+//        Gdx.app.log("Player num", Integer.toString(playerNum));
+//        Gdx.app.log("Two Players?", Boolean.toString(twoPlayers));
+//        
     }
 
     @Override

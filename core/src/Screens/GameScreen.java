@@ -84,6 +84,7 @@ public final class GameScreen implements Screen {
     public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
         this.twoPlayers = twoPlayers;
+        Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -92,7 +93,6 @@ public final class GameScreen implements Screen {
         camera.position.x = 0;
         camera.position.y = 0;
         
-        System.out.println(twoPlayers);
         hud = new Hud(batch);
 
         world = new World(new Vector2(0, 0f), true);
@@ -143,7 +143,7 @@ public final class GameScreen implements Screen {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
    
-        inputManager.update(twoPlayers); //update for two players
+        inputManager.updateControls(twoPlayers); //update for two players
         
         world.step(1 / 60f, 6, 2);
         camera.update();

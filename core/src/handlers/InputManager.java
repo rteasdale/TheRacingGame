@@ -9,22 +9,23 @@ import Screens.GameScreen;
 
 public class InputManager  implements InputProcessor  {
 
-    GameScreen mainClass;
+    private GameScreen mainClass;
 
     public InputManager(GameScreen main){
-            this.mainClass = main;
+        this.mainClass = main;
     }
 
     public enum Key {
-            Up, Down, Right, Left,Escape,
-            w, s, d, a
+        Up, Down, Right, Left,Escape,
+        w, s, d, a
     }
 
     public HashSet<Key> pressedKeys = new HashSet<Key>();
     public HashSet<Key> pressedKeys2 = new HashSet<Key>();
 
-    public void update(boolean twoPlayers){
+    public void updateControls(boolean twoPlayers){
         GameScreen.car.update(pressedKeys);
+        
         if (twoPlayers == true) {
             GameScreen.car2.update(pressedKeys2);
         }
@@ -54,19 +55,17 @@ public class InputManager  implements InputProcessor  {
                 pressedKeys.add(Key.Right);
             }
         }
+        
         /**ASDW*/
         else if (keycode == Input.Keys.W) {
             if (!pressedKeys2.contains(Key.w)) {
-                    pressedKeys.add(Key.w);
-                    GameScreen.car.setIsAccelerating(true);
-
-                
+                pressedKeys2.add(Key.w);
+                GameScreen.car.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.S) {
             if (!pressedKeys2.contains(Key.s)) {
-                    pressedKeys.add(Key.s);
-                    GameScreen.car.setIsAccelerating(true);
-
+                pressedKeys2.add(Key.s);
+                GameScreen.car.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.A) {
             if (!pressedKeys2.contains(Key.a)) {
@@ -78,7 +77,6 @@ public class InputManager  implements InputProcessor  {
             }
         } else if(keycode == Input.Keys.ESCAPE){
             Gdx.app.exit();
-
         }
         
         /**Debug buttons*/ 
@@ -106,8 +104,7 @@ public class InputManager  implements InputProcessor  {
              System.out.println("onFuelPas : true");
              GameScreen.car.setOnFuelPad(true);
              }
-         }
-         
+            }
         }
 
         return false;
