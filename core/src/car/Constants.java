@@ -28,6 +28,6 @@ public class Constants {
     public static final short OILOBS = 32;
     public static final short WALL = 64; 
     public static final short FUEL = 128;
-    //COMPLETE HERE
+    public static final short METAL = 256;
    
 }

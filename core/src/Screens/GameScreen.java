@@ -257,6 +257,43 @@ public final class GameScreen implements Screen {
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new FuelAreaType());
         }
+        
+        if(mapNum == 2){
+        
+            
+            
+        }
+        
+        if(mapNum == 3){
+        
+            MapLayer MetalLayer = tileMap.getLayers().get("Metal ObjectLayer");
+        
+        for(MapObject me : MetalLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) me.getProperties().get("x", Float.class) ;
+            float y = (float) me.getProperties().get("y", Float.class) ;
+
+            float width = (float) me.getProperties().get("width", Float.class);
+            float height = (float) me.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.METAL;
+            fdef.filter.maskBits = Constants.TIRE;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false));
+        }
+                                                                                                                                                                                                                                                                                                                                          
+        }
             
         ///////////////////////////////////////////////////////   
 //Tutorial Ground         
@@ -278,8 +315,8 @@ public final class GameScreen implements Screen {
 //		groundAreaFixture = ground.createFixture(fixtureDef);
 //		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
     
-    }//end of class createGrounds()
-        
+    } //end of class createGrounds()
+    
     /** Chose map*/
 
     public void choseMap(int mapNum){

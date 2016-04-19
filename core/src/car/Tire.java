@@ -1,5 +1,6 @@
 package car;
 
+import Screens.GameScreen;
 import java.util.HashSet;
 
 import com.badlogic.gdx.math.Vector2;
@@ -151,13 +152,17 @@ public class Tire {
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
         float force = 0;
-
+        if(GameScreen.car.getFuelTank() > 0){
         if (desiredSpeed > currentSpeed) {
             force = maxDriveForce;
         } else if (desiredSpeed < currentSpeed) {
             force = (-maxDriveForce)*breakingForcePourcentage;
         } else {
             return;
+        }
+        }
+        else if(GameScreen.car.getFuelTank() < 0){
+            force = 0;
         }
         body.applyForce(
             CarMath.multiply(currentTraction * force, currentForwardNormal),
