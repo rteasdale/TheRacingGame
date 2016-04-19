@@ -142,7 +142,7 @@ public final class GameScreen implements Screen {
         tmr.setView(camera);
         tmr.render();
 
-        System.out.println(car.getFuelTank());
+        //System.out.println(car.getFuelTank());
         
         renderSprites();
                                            
@@ -198,7 +198,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
                 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(1, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
         }
         
         ////////////////////////////////////////////////////////
