@@ -26,6 +26,8 @@ import car.Constants;
 import car.FuelAreaType;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -37,6 +39,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public final class GameScreen implements Screen {
@@ -81,6 +84,14 @@ public final class GameScreen implements Screen {
     float alpha;
     String mapAdress;
     
+    Music song1 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track1.mp3"));
+    Music song2 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track2.mp3"));
+    Music song3 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track3.mp3"));
+    Music song4 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track4.mp3"));
+    Music song5 = Gdx.audio.newMusic(Gdx.files.internal("music/map2_track.mp3"));
+    Music song6 = Gdx.audio.newMusic(Gdx.files.internal("music/map3_track.mp3"));
+    
+    
     public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
         this.twoPlayers = twoPlayers;
@@ -92,6 +103,8 @@ public final class GameScreen implements Screen {
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
+        
+        
         
         hud = new Hud(batch);
 
@@ -108,6 +121,7 @@ public final class GameScreen implements Screen {
         
         /**Create cars*/
 	car = new Car(world, carNumP1, carColorP1, 1);
+                    
         
         // If two players, construct another car
         if (twoPlayers == true) {
@@ -117,6 +131,7 @@ public final class GameScreen implements Screen {
         ////////////////////////////////////////////////////
         //Load Tiled Map
         choseMap(mapNum);
+        playMusic(mapNum);
         tileMap = new TmxMapLoader().load(mapAdress);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
@@ -152,7 +167,7 @@ public final class GameScreen implements Screen {
         tmr.setView(camera);
         tmr.render();
 
-        //System.out.println(car.getFuelTank());
+        System.out.println(car.body.getLinearVelocity().len());
         
         renderSprites();
                                            
@@ -568,7 +583,54 @@ public final class GameScreen implements Screen {
         return carNumP2;
     }    
 
-    
+public static void setPosition(){
+     car.body.setTransform(new Vector2(200,500), 90);
+    //car.body.applyForceToCenter(new Vector2(100000, 0), debug);
+}    
+
+public void isOutside(){ //Could work with car[]
+        car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+    private void playMusic(int map) { //Method for playing music inside the game
+        if(map == 0){
+            Random rand = new Random();
+            
+            int r = rand.nextInt(3);
+            switch(r){
+                case 0: song1.play();
+                song1.setVolume(0.75f);
+                song1.setLooping(true);
+                System.out.println("Song playing : Song1"); break;
+                case 1: song2.play();
+                song2.setVolume(0.75f);
+                song2.setLooping(true);
+                System.out.println("Song playing : Song2"); break;
+                case 2: song3.play();
+                song3.setVolume(0.75f);
+                song3.setLooping(true);
+                System.out.println("Song playing : Song3"); break;
+                default:  song4.play();
+                song4.setVolume(0.75f);
+                song4.setLooping(true);
+                System.out.println("Song playing : Song4");
+            }
+        }
+        else if(map == 1){
+            song5.play();
+            song5.setVolume(0.75f);
+            song5.setLooping(true);
+            System.out.println("Song playing : Song4");
+        }
+        else if(map == 2){
+            song6.play();
+            song6.setVolume(0.75f);
+            song6.setLooping(true);
+            System.out.println("Song playing : Song4");
+        }
+    }
     
 }
 

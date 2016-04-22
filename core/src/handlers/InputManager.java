@@ -10,6 +10,7 @@ import Screens.GameScreen;
 public class InputManager  implements InputProcessor  {
 
     private GameScreen mainClass;
+    private boolean shiftMode = false;
 
     public InputManager(GameScreen main){
         this.mainClass = main;
@@ -81,21 +82,22 @@ public class InputManager  implements InputProcessor  {
         
         /**Debug buttons*/ 
         if(GameScreen.debug){
-         if(keycode == Input.Keys.P){
+         if(keycode == Input.Keys.V){
             System.out.println("Position");
             System.out.println("x : " + GameScreen.car.body.getPosition().x);
             System.out.println("y : " + GameScreen.car.body.getPosition().y);
         }
-        else if(keycode == Input.Keys.C){
+        else if(keycode == Input.Keys.B){
             System.out.println("Camera Position");
             System.out.println("x : " + GameScreen.camera.position.x);
             System.out.println("y : " + GameScreen.camera.position.y);
         }
-         else if(keycode == Input.Keys.Z){
+         else if(keycode == Input.Keys.N){
             System.out.println("Camera zoom");
             System.out.println("x : " + GameScreen.camera.zoom);
         }
-         else if(keycode == Input.Keys.F){
+         
+         else if(keycode == Input.Keys.M){
              if(GameScreen.car.getOnFuelPad()){
              System.out.println("onFuelPas : false");
              GameScreen.car.setOnFuelPad(false);
@@ -105,6 +107,7 @@ public class InputManager  implements InputProcessor  {
              GameScreen.car.setOnFuelPad(true);
              }
             }
+         
         }
 
         return false;
@@ -194,6 +197,14 @@ public class InputManager  implements InputProcessor  {
         else {
             return true;
         }
+    }
+    
+    public void setShiftMode(boolean state){
+        shiftMode = state;
+    }
+    
+    public boolean getShiftMode(){
+        return shiftMode;
     }
 }
 

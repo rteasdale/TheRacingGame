@@ -73,6 +73,7 @@ public class Tire {
     
     void updateTraction() {
         if (groundAreas.size == 0) {
+            GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
             currentTraction = 0.2f;
             return;
 	}
@@ -190,4 +191,9 @@ public class Tire {
 
         body.applyTorque(desiredTorque, true);
     }
+    
+    public void setAngle(float angle){
+        body.applyTorque(90, true);
+    }
+    
 }

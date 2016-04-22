@@ -39,7 +39,7 @@ public class Car {
     
     float FuelTank;
     float MaxFuelCapacity;
-    float FuelConsumption;
+    float fuelConsumption;
     
     boolean isAccelerating;
     boolean onFuelPad;
@@ -205,7 +205,7 @@ public class Car {
         
         
         if(fuel){
-        UseFuel(isAccelerating, FuelConsumption);
+        UseFuel(isAccelerating, fuelConsumption);
         addFuel(onFuelPad);
         }
     }
@@ -213,10 +213,10 @@ public class Car {
     public void whichCar(int car, int Color){
         if(car ==0){
             //Golf
-            maxFSpeed = 75;
-            maxBSpeed = -20;
-            backTireMDriveForce = 150;
-            frontTireMDriveForce = 250;
+            maxFSpeed = 220;
+            maxBSpeed = -30;
+            backTireMDriveForce = 75;
+            frontTireMDriveForce = 125;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.3f;
@@ -224,13 +224,13 @@ public class Car {
             carLink = CarSelectionScreen.golf_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
             
         }
         else if(car == 1){
             //Lamborghini
-            maxFSpeed = 75;
-            maxBSpeed = -20;
+            maxFSpeed = 320;
+            maxBSpeed = -40;
             backTireMDriveForce = 75;
             frontTireMDriveForce = 125;
             backTireMLateralImpulse = 4.25f;
@@ -240,11 +240,11 @@ public class Car {
             carLink = CarSelectionScreen.lambo_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
         else if(car ==2){
             //prius
-            maxFSpeed = 75;
+            maxFSpeed = 150;
             maxBSpeed = -20;
             backTireMDriveForce = 150;
             frontTireMDriveForce = 250;
@@ -255,12 +255,12 @@ public class Car {
             carLink = CarSelectionScreen.prius_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
         else if(car ==3){
             //Porsche
-            maxFSpeed = 125;
-            maxBSpeed = -20;
+            maxFSpeed = 260;
+            maxBSpeed = -30;
             backTireMDriveForce = 75; //Affects Acceleration
             frontTireMDriveForce = 125; 
             backTireMLateralImpulse = 2.125f;//Affects steering
@@ -270,12 +270,12 @@ public class Car {
             carLink = CarSelectionScreen.porsche_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
         else if(car == 4){
             //Truck
-            maxFSpeed = 75;
-            maxBSpeed = -20;
+            maxFSpeed = 220;
+            maxBSpeed = -30;
             backTireMDriveForce = 150;
             frontTireMDriveForce = 250;
             backTireMLateralImpulse = 4.25f;
@@ -285,14 +285,14 @@ public class Car {
             carLink = CarSelectionScreen.truck_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
         else if(car == 5){
             //Zonda
-            maxFSpeed = 75;
-            maxBSpeed = -20;
-            backTireMDriveForce = 150;
-            frontTireMDriveForce = 250;
+            maxFSpeed = 500;
+            maxBSpeed = -50;
+            backTireMDriveForce = 360;
+            frontTireMDriveForce = 600;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.3f;
@@ -300,7 +300,7 @@ public class Car {
             carLink = CarSelectionScreen.zondaf_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
         else{
             maxFSpeed = 75;
@@ -314,7 +314,7 @@ public class Car {
             carLink = CarSelectionScreen.golf_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            FuelConsumption = 1/12f;
+            fuelConsumption = 1/12f;
         }
                               
     } //end of which car
@@ -327,14 +327,14 @@ public class Car {
         return position;
     }                           
 
-    private void UseFuel(boolean isAccelerating, float FuelConsumption) {
+    private void UseFuel(boolean isAccelerating, float fuelConsumption) {
         if(this.getFuelTank() > 0){
         if(this.getOnFuelPad() == false){
             if(isAccelerating)
-            setFuelTank(this.getFuelTank()-FuelConsumption);
+            setFuelTank(this.getFuelTank()-fuelConsumption);
         
         else
-            setFuelTank(this.getFuelTank()-(FuelConsumption*.1f));
+            setFuelTank(this.getFuelTank()-(fuelConsumption*.1f));
         }
         }
         
@@ -348,7 +348,7 @@ public class Car {
         private void addFuel(boolean onFuelPad){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
             if(onFuelPad)
-                this.setFuelTank(FuelTank + FuelConsumption*2);
+                this.setFuelTank(FuelTank + fuelConsumption*2);
             }
             
         }
@@ -380,6 +380,46 @@ public class Car {
     public float getMaxFuelCapacity(){
         
         return MaxFuelCapacity;
+    }
+    
+    public void setTiresTo90(){
+       Tire[] tire = tires.items;
+
+        for(int i = 0; i > tires.size; i++){
+            tire[i].body.setTransform(body.getWorldCenter(), 90*Constants.DEGTORAD);
+        }
+    }
+    
+    public float getMaxFSpeed(){
+        return maxFSpeed;
+    }
+    
+    public float getMaxBSpeed(){
+        return maxBSpeed;
+    }
+    
+    public float getBackTireMDriveForce(){
+        return backTireMDriveForce;
+    }
+    
+    public float getFrontTireMDriveForce(){
+        return frontTireMDriveForce;
+    }
+    
+    public float getBackTireMLateralImpulse(){
+        return backTireMLateralImpulse;
+    }
+    
+    public float getFrontTireMLateralImpulse(){
+        return frontTireMLateralImpulse;
+    }
+    
+      public float getBreakingFPourcentage(){
+        return breakingFPourcentage;
+    }
+
+      public float getFuelConsumption(){
+        return fuelConsumption;
     }
     
 }
