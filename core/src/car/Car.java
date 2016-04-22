@@ -36,6 +36,7 @@ public class Car {
     float backTireMLateralImpulse;
     float frontTireMLateralImpulse;
     float breakingFPourcentage;
+    float density;
     
     float FuelTank;
     float MaxFuelCapacity;
@@ -99,7 +100,7 @@ public class Car {
 	FixtureDef fixtureDef = new FixtureDef();
 	fixtureDef.shape = polygonShape;
         fixtureDef.isSensor = false;
-            fixtureDef.density = .1f;
+        fixtureDef.density = density;
         
                                             
         fixtureDef.filter.categoryBits = Constants.CAR;
@@ -241,6 +242,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
         else if(car ==2){
             //prius
@@ -256,6 +258,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
         else if(car ==3){
             //Porsche
@@ -271,6 +274,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
         else if(car == 4){
             //Truck
@@ -286,13 +290,14 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
         else if(car == 5){
             //Zonda
-            maxFSpeed = 500;
+            maxFSpeed = 400;
             maxBSpeed = -50;
-            backTireMDriveForce = 360;
-            frontTireMDriveForce = 600;
+            backTireMDriveForce = 180;
+            frontTireMDriveForce = 300;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.3f;
@@ -301,6 +306,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
         else{
             maxFSpeed = 75;
@@ -315,6 +321,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
         }
                               
     } //end of which car
