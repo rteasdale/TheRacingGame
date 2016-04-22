@@ -9,6 +9,7 @@ import Screens.CarSelectionScreen;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -22,12 +23,13 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import handlers.InputManager;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  *
  * @author ROSY
  */
-public class AICar implements Telegraph {
+public class AICar implements Telegraph{
     
     MessageManager msgManager; 
     Vector2 travelPos;
@@ -156,6 +158,7 @@ public class AICar implements Telegraph {
         tires.add(tire);
     }
 
+    
     public void update(HashSet<InputManager.Key> keys) {
         for (Tire tire : tires) {
             tire.updateFriction();

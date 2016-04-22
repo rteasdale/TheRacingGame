@@ -287,13 +287,17 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                dispose();
-                if (twoPlayers == true) {
-                    //return to player 1
-                    game.setScreen(new PlayerScreen(game, true));
+                if (twoPlayers == true && playerNum == 2) {
+                    //return to car selection P1
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
                 }
+                if (twoPlayers == true && playerNum == 1) {
+                    //return to player screen
+                    game.setScreen(new PlayerScreen(game, twoPlayers));
+                }                
                 if (twoPlayers == false) {
-                    game.setScreen(new PlayerScreen(game, false));
+                    //return to player screen
+                    game.setScreen(new PlayerScreen(game, twoPlayers));
                 }
             }
         });

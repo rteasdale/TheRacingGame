@@ -179,7 +179,7 @@ public class Tire {
                 default: return;
             }
         }
-         /** if player 2 */
+        /** if player 2 */
         if (playerNum == 2) {
             switch(moves){
                 case A: desiredTorque = 15; break;

@@ -5,9 +5,14 @@
  */
 package com.mygdx.game;
 
+import car.Car;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.Graph;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
+import com.badlogic.gdx.utils.Array;
 import java.util.Arrays;
 
 /**
@@ -16,6 +21,9 @@ import java.util.Arrays;
  */
 
 public class CarTest implements ApplicationListener{
+    
+    Array nodes; 
+    
     public static void main(String[]args) {
     }
 
@@ -34,6 +42,18 @@ public class CarTest implements ApplicationListener{
         System.out.println(porscheCar.getFUEL_CONSUMPTION_STAT());
         
         System.out.println(porscheCar.toString());
+        
+        Node n1 = new Node(null);
+        
+        nodes.add(car);
+        
+        Graph g = new Graph() {
+
+            @Override
+            public Array getConnections(Object n) {
+                return nodes; 
+            }
+        };
     }
 
     @Override
@@ -60,4 +80,5 @@ public class CarTest implements ApplicationListener{
     public void dispose() {
        
     }
+
 }
