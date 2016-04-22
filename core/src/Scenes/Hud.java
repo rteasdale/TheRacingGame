@@ -13,23 +13,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateTo;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.TimeUtils;
-import static com.badlogic.gdx.utils.TimeUtils.millis;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
-import java.util.Calendar;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -40,7 +30,7 @@ public class Hud {
     private Viewport viewport;
     private BitmapFont font;
     
-    private Stack stack;
+    private Image fuelgauge;
     private Image speedgauge;
     public Image needle;
     
@@ -67,6 +57,8 @@ public class Hud {
         needle = new Image(new Texture("HUD/speed_needle.png"));
         needle.setPosition(31, 142);
         needle.setRotation(238);
+        
+        fuelgauge = new Image(new Texture("HUD/fuelgauge.png"));
 
         //time format 
         String time;
