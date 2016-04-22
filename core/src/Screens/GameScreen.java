@@ -133,7 +133,7 @@ public final class GameScreen implements Screen {
         ////////////////////////////////////////////////////
         //Load Tiled Map
         choseMap(mapNum);
-        playMusic(mapNum);
+        //playMusic(mapNum);
         tileMap = new TmxMapLoader().load(mapAdress);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
@@ -192,9 +192,12 @@ public final class GameScreen implements Screen {
         hud.updateTime(startTime);
         
         float carSpeed = car.body.getLinearVelocity().len();
-        
         //update speed gauge
         hud.updateSpeed(carSpeed, car);  
+        
+        float fuel = car.getFuelTank();
+        //update fuel tank
+        hud.updateFuel(fuel, car);
                 
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);

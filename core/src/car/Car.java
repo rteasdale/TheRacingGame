@@ -27,7 +27,7 @@ public class Car {
 
     int car = 0;
     int lapCount = 0;
-    boolean fuel = false;
+    boolean fuel = true;
 
     float maxFSpeed;
     float maxBSpeed;
