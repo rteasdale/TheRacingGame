@@ -5,14 +5,21 @@
  */
 package Scenes;
 
+import car.Car;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateTo;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.utils.TimeUtils;
 import static com.badlogic.gdx.utils.TimeUtils.millis;
 import com.badlogic.gdx.utils.Timer;
@@ -33,7 +40,9 @@ public class Hud {
     private Viewport viewport;
     private BitmapFont font;
     
-    private SpeedGauge speedgauge;
+    private Stack stack;
+    private Image speedgauge;
+    public Image needle;
     
     private int minutes;
     private int seconds;
@@ -42,26 +51,31 @@ public class Hud {
     private int lapCount;
     private int totalLaps;
     
-    private Label timerLabel;
-    private Label lapLabel;
+    private final Label timerLabel;
+    private final Label lapLabel;
     
     
     public Hud(SpriteBatch batch) {
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
-                
+        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);      
         viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
+        Gdx.input.setInputProcessor(stage);
         
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
-        
+        /**Widgets*/
+        speedgauge = new Image(new Texture("HUD/speedgauge.png"));
+        speedgauge.setPosition(20, 20);
+        needle = new Image(new Texture("HUD/speed_needle.png"));
+        needle.setPosition(31, 142);
+        needle.setRotation(238);
+
         //time format 
         String time;
         time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
+        
         timerLabel = new Label(time, new Label.LabelStyle(font, Color.LIME));
+        timerLabel.setPosition(150, 670);
         
         //lap format 
         String lap;
@@ -70,18 +84,13 @@ public class Hud {
         );        
 
         lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
-        
-        float speed = 3;
-        speedgauge = new SpeedGauge(speed);
-        
-        
-        table.add(timerLabel).expandX().padTop(20); //extend to end of screen
-        table.add(lapLabel).expandX().padTop(20);
-        
-        //table.add(speedgauge).expandY().padBottom(20); //add speed gauge to bottom left
-        table.row();
-        
-        stage.addActor(table);
+        lapLabel.setPosition(1000, 670);
+
+
+        stage.addActor(timerLabel);
+        stage.addActor(lapLabel);
+        stage.addActor(speedgauge);
+        stage.addActor(needle);
     }
     
     public void updateTime(long startTime) {
@@ -101,8 +110,21 @@ public class Hud {
         lapLabel.setText(null);
     }
     
-    public void updateSpeed() {
+    public void updateSpeed(float speed, Car car) {
+        Gdx.app.log("Hud called", "updateSpeed");
+        //Gdx.app.log("speed", Float.toString(speed));
+        needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
         
+        //if car is accelerating
+        if (car.getIsAccelerating()) {
+            //set angular limit to gauge
+            if (needle.getRotation() > -40) {
+                needle.setRotation(238-speed*3);
+            }
+        }
+        else {
+            needle.setRotation(238-speed*3);
+        }
     }
     
     public void updateFuel() {
@@ -112,7 +134,6 @@ public class Hud {
     public void dispose() {
         stage.dispose(); 
         font.dispose();
-        
     }
     
 }

@@ -13,14 +13,15 @@ import com.mygdx.game.RacingGame;
  * @author ROSY
  */
 public class LeaderboardScreen implements Screen {
-    
+    private RacingGame game;
     
     public LeaderboardScreen(RacingGame game) {
-        
+        this.game = game;
     }
     
     @Override
     public void show() {
+        
     }
 
     @Override

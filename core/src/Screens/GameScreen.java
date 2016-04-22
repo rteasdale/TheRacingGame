@@ -2,6 +2,7 @@ package Screens;
 
 
 import Scenes.Hud;
+import car.AICar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,6 +36,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
@@ -185,12 +187,20 @@ public final class GameScreen implements Screen {
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
         
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
         
         //if state == GO 
         hud.updateTime(startTime);
-        //
+        
+        float carSpeed = car.body.getLinearVelocity().len();
+        
+        //update speed gauge
+        hud.updateSpeed(carSpeed, car);  
+                
+        //load HUD 
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.act();
+        hud.stage.draw();
+       
     }
     
     private void createGrounds() {
@@ -313,7 +323,7 @@ public final class GameScreen implements Screen {
         FixtureDef fdef = new FixtureDef();
         
         //ICE LAYER
-               MapLayer IceLayer = tileMap.getLayers().get("Ice ObjectLayer");
+        MapLayer IceLayer = tileMap.getLayers().get("Ice ObjectLayer");
         
         for(MapObject ic : IceLayer.getObjects()){
             bdef.type = BodyType.StaticBody;
@@ -341,7 +351,7 @@ public final class GameScreen implements Screen {
         }
             
             
-                //Bridge Layer
+        //Bridge Layer
         MapLayer BridgeLayer = tileMap.getLayers().get("Bridge ObjectLayer");
         
         for(MapObject br : BridgeLayer.getObjects()){
