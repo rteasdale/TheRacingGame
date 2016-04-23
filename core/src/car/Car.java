@@ -226,6 +226,7 @@ public class Car {
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
             fuelConsumption = 1/12f;
+            density = 0.1f;
             
         }
         else if(car == 1){

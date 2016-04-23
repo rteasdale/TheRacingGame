@@ -133,7 +133,7 @@ public final class GameScreen implements Screen {
         ////////////////////////////////////////////////////
         //Load Tiled Map
         choseMap(mapNum);
-        playMusic(mapNum);
+        //playMusic(mapNum);
         tileMap = new TmxMapLoader().load(mapAdress);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
