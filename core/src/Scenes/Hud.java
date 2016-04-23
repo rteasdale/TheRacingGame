@@ -33,6 +33,7 @@ public class Hud {
     private Image fuelgauge;
     private Image speedgauge;
     public Image needle;
+    private Image needle2;
     
     private int minutes;
     private int seconds;
@@ -54,11 +55,17 @@ public class Hud {
         /**Widgets*/
         speedgauge = new Image(new Texture("HUD/speedgauge.png"));
         speedgauge.setPosition(20, 20);
+        
         needle = new Image(new Texture("HUD/speed_needle.png"));
         needle.setPosition(31, 142);
         needle.setRotation(238);
         
+        needle2 = new Image(new Texture("HUD/speed_needle2.png"));
+        needle2.setPosition(1056, 122);
+        needle2.setRotation(10);
+        
         fuelgauge = new Image(new Texture("HUD/fuelgauge.png"));
+        fuelgauge.setPosition(1050, 10);
 
         //time format 
         String time;
@@ -83,6 +90,8 @@ public class Hud {
         stage.addActor(lapLabel);
         stage.addActor(speedgauge);
         stage.addActor(needle);
+        stage.addActor(fuelgauge);
+        stage.addActor(needle2);
     }
     
     public void updateTime(long startTime) {
@@ -103,7 +112,7 @@ public class Hud {
     }
     
     public void updateSpeed(float speed, Car car) {
-        Gdx.app.log("Hud called", "updateSpeed");
+        //Gdx.app.log("Hud called", "updateSpeed");
         //Gdx.app.log("speed", Float.toString(speed));
         needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
         
@@ -111,16 +120,21 @@ public class Hud {
         if (car.getIsAccelerating()) {
             //set angular limit to gauge
             if (needle.getRotation() > -40) {
-                needle.setRotation(238-speed*3);
+                needle.setRotation(240-speed*2f);
             }
         }
         else {
-            needle.setRotation(238-speed*3);
+            needle.setRotation(240-speed*2f);
         }
     }
     
-    public void updateFuel() {
-        
+    public void updateFuel(float fuel, Car car) {
+        needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
+        if (car.getIsAccelerating()) {
+            if (needle2.getRotation() <= 170) {
+                needle2.setRotation((-fuel+110));
+            }
+        }
     }
     
     public void dispose() {
