@@ -64,7 +64,7 @@ public final class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-    public static boolean debug = true; //Boolean if I want B2D Debug on or off
+    public static boolean debug = false; //Boolean if I want B2D Debug on or off
 
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;

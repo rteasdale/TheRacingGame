@@ -27,7 +27,7 @@ public class Car {
 
     int car = 0;
     int lapCount = 0;
-    boolean fuel = true;
+    boolean fuel = false;
 
     float maxFSpeed;
     float maxBSpeed;
@@ -212,15 +212,18 @@ public class Car {
     }
     
     public void whichCar(int car, int Color){
+        
+        //120 = MaxSpeed! of Car
+        
         if(car ==0){
             //Golf
-            maxFSpeed = 220;
+            maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 75;
-            frontTireMDriveForce = 125;
+            backTireMDriveForce = 250; //was 130
+            frontTireMDriveForce = 250;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.3f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
             MaxFuelCapacity = 100;
@@ -231,13 +234,13 @@ public class Car {
         }
         else if(car == 1){
             //Lamborghini
-            maxFSpeed = 320;
+            maxFSpeed = 110;
             maxBSpeed = -40;
-            backTireMDriveForce = 75;
-            frontTireMDriveForce = 125;
+            backTireMDriveForce = 250; //was 130
+            frontTireMDriveForce = 250;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.3f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.lambo_colors[Color];
             MaxFuelCapacity = 100;
@@ -247,13 +250,13 @@ public class Car {
         }
         else if(car ==2){
             //prius
-            maxFSpeed = 150;
+            maxFSpeed = 70;
             maxBSpeed = -20;
-            backTireMDriveForce = 150;
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 150; //was 130
+            frontTireMDriveForce = 150;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.3f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.prius_colors[Color];
             MaxFuelCapacity = 100;
@@ -263,13 +266,13 @@ public class Car {
         }
         else if(car ==3){
             //Porsche
-            maxFSpeed = 260;
+            maxFSpeed = 100;
             maxBSpeed = -30;
-            backTireMDriveForce = 75; //Affects Acceleration
-            frontTireMDriveForce = 125; 
-            backTireMLateralImpulse = 2.125f;//Affects steering
-            frontTireMLateralImpulse = 1.875f;
-            breakingFPourcentage = 0.3f;
+            backTireMDriveForce = 250; //was 130
+            frontTireMDriveForce = 250;
+            backTireMLateralImpulse = 4.25f;
+            frontTireMLateralImpulse = 3.75f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.porsche_colors[Color];
             MaxFuelCapacity = 100;
@@ -279,13 +282,13 @@ public class Car {
         }
         else if(car == 4){
             //Truck
-            maxFSpeed = 220;
+            maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 150;
+            backTireMDriveForce = 250; //was 130
             frontTireMDriveForce = 250;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.3f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.truck_colors[Color];
             MaxFuelCapacity = 100;
@@ -295,13 +298,13 @@ public class Car {
         }
         else if(car == 5){
             //Zonda
-            maxFSpeed = 400;
+            maxFSpeed = 121;
             maxBSpeed = -50;
-            backTireMDriveForce = 180;
-            frontTireMDriveForce = 300;
+            backTireMDriveForce = 250; //was 130
+            frontTireMDriveForce = 250;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.3f;
+            breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.zondaf_colors[Color];
             MaxFuelCapacity = 100;
