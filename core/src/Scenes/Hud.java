@@ -62,7 +62,7 @@ public class Hud {
         
         needle2 = new Image(new Texture("HUD/speed_needle2.png"));
         needle2.setPosition(1056, 122);
-        needle2.setRotation(10);
+        needle2.setRotation(12);
         
         fuelgauge = new Image(new Texture("HUD/fuelgauge.png"));
         fuelgauge.setPosition(1050, 10);
@@ -111,30 +111,23 @@ public class Hud {
         lapLabel.setText(null);
     }
     
-    public void updateSpeed(float speed, Car car) {
-        //Gdx.app.log("Hud called", "updateSpeed");
-        //Gdx.app.log("speed", Float.toString(speed));
+    public void updateSpeed(float currentSpeed, Car car) {
         needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
-        
-        //if car is accelerating
-        if (car.getIsAccelerating()) {
-            //set angular limit to gauge
-            if (needle.getRotation() > -40) {
-                needle.setRotation(240-speed*2f);
-            }
-        }
-        else {
-            needle.setRotation(240-speed*2f);
+        //set angular limit to gauge
+        if (needle.getRotation() > -40) {
+            needle.setRotation(240-currentSpeed*1.5f);
         }
     }
     
     public void updateFuel(float fuel, Car car) {
         needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
-        if (car.getIsAccelerating()) {
-            if (needle2.getRotation() <= 170) {
-                needle2.setRotation((-fuel+110));
-            }
+        if (fuel == 0) {
+            needle2.setRotation(15);
         }
+        else if (fuel == car.getMaxFuelCapacity()) {
+            needle2.setRotation(210);
+        }
+ 
     }
     
     public void dispose() {

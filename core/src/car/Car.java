@@ -27,7 +27,7 @@ public class Car {
 
     int car = 0;
     int lapCount = 0;
-    boolean fuel = false;
+    boolean fuel = true;
 
     float maxFSpeed;
     float maxBSpeed;
@@ -358,8 +358,9 @@ public class Car {
     
         private void addFuel(boolean onFuelPad){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
-            if(onFuelPad)
+            if(onFuelPad) {
                 this.setFuelTank(FuelTank + fuelConsumption*2);
+            }
             }
             
         }

@@ -81,6 +81,7 @@ public class PlayerScreen implements Screen {
         txt_style = new TextField.TextFieldStyle();
         txt_style.background = skin.getDrawable("textfield");
         txt_style.cursor = skin.getDrawable("cursor");
+        txt_style.selection = skin.getDrawable("selection");
         txt_style.font = font;
         txt_style.fontColor = new Color(Color.WHITE);
         lbl_style = new Label.LabelStyle();

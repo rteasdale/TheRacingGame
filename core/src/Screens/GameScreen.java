@@ -172,7 +172,8 @@ public final class GameScreen implements Screen {
         //tmr.setView(camera);
         //tmr.render();
 
-        System.out.println(car.body.getLinearVelocity().len());
+        //System.out.println(car.body.getLinearVelocity().len());
+        System.out.println(car.getFuelTank());
         
         renderSprites();
                                            
@@ -531,6 +532,7 @@ public final class GameScreen implements Screen {
             }
         }
         
+        
     batch.end();
     }
     
@@ -603,10 +605,10 @@ public final class GameScreen implements Screen {
         return carNumP2;
     }    
 
-public static void setPosition(){
+    public static void setPosition(){
      car.body.setTransform(new Vector2(200,500), 90);
     //car.body.applyForceToCenter(new Vector2(100000, 0), debug);
-}    
+    }    
 
 public void isOutside(){ //Could work with car[]
         car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));

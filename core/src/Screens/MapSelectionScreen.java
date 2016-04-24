@@ -126,6 +126,11 @@ public class MapSelectionScreen implements Screen {
         stage.addActor(back_btn);
         stage.addActor(title); 
  
+        listeners();
+
+    }
+    
+    private void listeners() {
         /**Listeners*/
         ready_btn.addListener(new ChangeListener() {
             @Override
@@ -143,9 +148,12 @@ public class MapSelectionScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //if two players, return to P2 car selection screen
-                //save values
-                //game.setScreen(new CarSelectionScreen(game, CarSelectionScreen.twoPlayers));
+                if(twoPlayers == false) {
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                }
+                else {
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                }
             }
         });
         
@@ -202,8 +210,7 @@ public class MapSelectionScreen implements Screen {
                 stage.addActor(preview);                    
                 }                
             }
-        });
-
+        });        
     }
 
     @Override

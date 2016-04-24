@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -39,6 +40,8 @@ public class SplashScreen extends InputListener implements Screen {
     private long startTime;
     private int rendCount;
     
+    private ScreenAssets assets;
+    
     private Label.LabelStyle style_lbl;
     private Label lbl;
     
@@ -47,6 +50,10 @@ public class SplashScreen extends InputListener implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
+        
+        assets = new ScreenAssets();
+        assets.loadSplashScreen();
+        assets.loadMainMenuScreen();
         
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
