@@ -99,6 +99,7 @@ public final class GameScreen implements Screen {
     public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
         this.game = game;
         this.twoPlayers = twoPlayers;
+        this.mapNum = mapNum;
         Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
 
         batch = new SpriteBatch();
@@ -150,8 +151,6 @@ public final class GameScreen implements Screen {
         if(mapNum == 2){
             createCollisionsM3();
         }
-        
-        CreateTires();
 	
     }
 
@@ -229,7 +228,7 @@ public final class GameScreen implements Screen {
             float width = (float) ro.getProperties().get("width", Float.class);
             float height = (float) ro.getProperties().get("height", Float.class);
                 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
                 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -258,7 +257,7 @@ public final class GameScreen implements Screen {
             float width = (float) oi.getProperties().get("width", Float.class);
             float height = (float) oi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -286,7 +285,7 @@ public final class GameScreen implements Screen {
             float width = (float) fu.getProperties().get("width", Float.class);
             float height = (float) fu.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -304,7 +303,7 @@ public final class GameScreen implements Screen {
         
         ////////////////////////////////////////////////////////
             //FINISH LINE LAYER
-            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+            MapLayer FinishLayer = tileMap.getLayers().get("FinishLine ObjectLayer");
         
         for(MapObject fi : FinishLayer.getObjects()){
             bdef.type = BodyType.StaticBody;
@@ -315,7 +314,7 @@ public final class GameScreen implements Screen {
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -343,7 +342,7 @@ public final class GameScreen implements Screen {
 
             float width = (float) ti.getProperties().get("width", Float.class);
             
-            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            bdef.position.set( new Vector2((x*1/4f + width*1/8f)+xPositionDraw(mapNum)+2, (y*1/4f + width*1/8f)+yPositionDraw(mapNum)+1));
             
             CircleShape shape = new CircleShape();
             shape.setRadius(width/8f);
@@ -369,97 +368,6 @@ public final class GameScreen implements Screen {
         
     }
     
-//    private void createGrounds() {
-//        //Road Layer
-//        MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
-//           
-//        //body
-//        BodyDef bdef = new BodyDef();
-//        FixtureDef fdef = new FixtureDef();
-//            
-//        for(MapObject ro : Roadlayer.getObjects()) {
-//            bdef.type = BodyType.StaticBody;
-//
-//            float x = (float) ro.getProperties().get("x", Float.class);
-//            float y = (float) ro.getProperties().get("y", Float.class);
-//
-//            float width = (float) ro.getProperties().get("width", Float.class);
-//            float height = (float) ro.getProperties().get("height", Float.class);
-//                
-//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
-//                
-//            PolygonShape shape = new PolygonShape();
-//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
-//                
-//            fdef.shape = shape;
-//            fdef.isSensor = true;
-//            fdef.filter.categoryBits = Constants.GROUND;
-//            fdef.filter.maskBits = Constants.TIRE;
-//                
-//            Body body = world.createBody(bdef);
-//                
-//            Fixture groundAreaFixture = body.createFixture(fdef);
-//            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
-//        }
-//        
-//        ////////////////////////////////////////////////////////
-//        //Oil Layer
-//        MapLayer OilLayer = tileMap.getLayers().get("Oil ObjectLayer");
-//        
-//        for(MapObject oi : OilLayer.getObjects()){
-//            bdef.type = BodyType.StaticBody;
-//
-//            float x = (float) oi.getProperties().get("x", Float.class) ;
-//            float y = (float) oi.getProperties().get("y", Float.class) ;
-//
-//            float width = (float) oi.getProperties().get("width", Float.class);
-//            float height = (float) oi.getProperties().get("height", Float.class);
-//
-//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
-//
-//            PolygonShape shape = new PolygonShape();
-//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
-//
-//            fdef.shape = shape;
-//            fdef.isSensor = true;
-//            fdef.filter.categoryBits = Constants.OILOBS;
-//            fdef.filter.maskBits = Constants.TIRE;
-//
-//            Body body = world.createBody(bdef);
-//
-//            Fixture groundAreaFixture = body.createFixture(fdef);
-//            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
-//        }
-//            ////////////////////////////////////////////////////////
-//            //FUEL LAYER
-//            MapLayer FuelLayer = tileMap.getLayers().get("Fuel ObjectLayer");
-//        
-//        for(MapObject fu : FuelLayer.getObjects()){
-//            bdef.type = BodyType.StaticBody;
-//
-//           float  x = (float) fu.getProperties().get("x", Float.class) ;
-//            float y = (float) fu.getProperties().get("y", Float.class) ;
-//
-//            float width = (float) fu.getProperties().get("width", Float.class);
-//            float height = (float) fu.getProperties().get("height", Float.class);
-//
-//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
-//
-//            PolygonShape shape = new PolygonShape();
-//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
-//
-//            fdef.shape = shape;
-//            fdef.isSensor = true;
-//            fdef.filter.categoryBits = Constants.FUEL;
-//            fdef.filter.maskBits = Constants.CAR;
-//
-//            Body body = world.createBody(bdef);
-//
-//            Fixture groundAreaFixture = body.createFixture(fdef);
-//            groundAreaFixture.setUserData(new FuelAreaType());
-//        }
-//
-//    } //end of class createGrounds()
     
     //Create collisions for map 2
     public void createCollisionsM2(){
@@ -479,7 +387,7 @@ public final class GameScreen implements Screen {
             float width = (float) ro.getProperties().get("width", Float.class);
             float height = (float) ro.getProperties().get("height", Float.class);
                 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
                 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -508,7 +416,7 @@ public final class GameScreen implements Screen {
             float width = (float) oi.getProperties().get("width", Float.class);
             float height = (float) oi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -536,7 +444,7 @@ public final class GameScreen implements Screen {
             float width = (float) fu.getProperties().get("width", Float.class);
             float height = (float) fu.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -554,7 +462,7 @@ public final class GameScreen implements Screen {
         
                 ////////////////////////////////////////////////////////
             //FINISH LINE LAYER
-            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+            MapLayer FinishLayer = tileMap.getLayers().get("FinishLine ObjectLayer");
         
         for(MapObject fi : FinishLayer.getObjects()){
             bdef.type = BodyType.StaticBody;
@@ -565,7 +473,7 @@ public final class GameScreen implements Screen {
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -592,7 +500,7 @@ public final class GameScreen implements Screen {
 
             float width = (float) ti.getProperties().get("width", Float.class);
             
-            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            bdef.position.set( new Vector2((x*1/4f + width*1/8f)+xPositionDraw(mapNum), (y*1/4f + width*1/8f)+yPositionDraw(mapNum)));
             
             CircleShape shape = new CircleShape();
             shape.setRadius(width/8f);
@@ -628,7 +536,7 @@ public final class GameScreen implements Screen {
             float width = (float) ic.getProperties().get("width", Float.class);
             float height = (float) ic.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)-47, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)-42);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -657,7 +565,7 @@ public final class GameScreen implements Screen {
             float width = (float) br.getProperties().get("width", Float.class);
             float height = (float) br.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)-47, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)-42);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -685,7 +593,7 @@ public final class GameScreen implements Screen {
             float width = (float) wa.getProperties().get("width", Float.class);
             float height = (float) wa.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -723,7 +631,7 @@ public final class GameScreen implements Screen {
             float width = (float) ro.getProperties().get("width", Float.class);
             float height = (float) ro.getProperties().get("height", Float.class);
                 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
                 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -752,7 +660,7 @@ public final class GameScreen implements Screen {
             float width = (float) oi.getProperties().get("width", Float.class);
             float height = (float) oi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -780,7 +688,7 @@ public final class GameScreen implements Screen {
             float width = (float) fu.getProperties().get("width", Float.class);
             float height = (float) fu.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -798,7 +706,7 @@ public final class GameScreen implements Screen {
         
                 ////////////////////////////////////////////////////////
             //FINISH LINE LAYER
-            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+            MapLayer FinishLayer = tileMap.getLayers().get("FinishLine ObjectLayer");
         
         for(MapObject fi : FinishLayer.getObjects()){
             bdef.type = BodyType.StaticBody;
@@ -809,7 +717,7 @@ public final class GameScreen implements Screen {
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -836,7 +744,7 @@ public final class GameScreen implements Screen {
 
             float width = (float) ti.getProperties().get("width", Float.class);
             
-            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            bdef.position.set( new Vector2((x*1/4f + width*1/8f)+xPositionDraw(mapNum), (y*1/4f + width*1/8f)+yPositionDraw(mapNum)));
             
             CircleShape shape = new CircleShape();
             shape.setRadius(width/8f);
@@ -871,7 +779,7 @@ public final class GameScreen implements Screen {
             float width = (float) me.getProperties().get("width", Float.class);
             float height = (float) me.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -955,7 +863,9 @@ public final class GameScreen implements Screen {
     //draw Object sprites
     batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        batch.draw(bg, -750, 0);
+        System.out.println(mapNum);
+        batch.draw(bg, xPositionDraw(mapNum), yPositionDraw(mapNum));
+        
         world.getBodies(tmpBodies);
 
         for(Body body : tmpBodies) {
@@ -972,42 +882,7 @@ public final class GameScreen implements Screen {
     batch.end();
     }
     
-    public void CreateTires(){
-        MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
-                
-        for(MapObject ti : TireLayer.getObjects()) {
-            BodyDef bdef = new BodyDef();
-            bdef.type = BodyType.DynamicBody;
-
-            float x = (float) ti.getProperties().get("x", Float.class) ;
-            float y = (float) ti.getProperties().get("y", Float.class) ;
-
-            float width = (float) ti.getProperties().get("width", Float.class);
-            
-            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
-            
-            CircleShape shape = new CircleShape();
-            shape.setRadius(width/8f);
-
-            FixtureDef fdef = new FixtureDef();
-
-            fdef.shape = shape;
-            fdef.isSensor = false;
-            fdef.density = 1000;
-            fdef.restitution = 0.5f;
-            fdef.filter.categoryBits = Constants.TIREOBS;
-            fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
-
-            Body body = world.createBody(bdef);
-            body.createFixture(fdef);
-            
-            
-            tireSprite = new Sprite(new Texture("Tire.png"));
-            tireSprite.setSize(width/4,width/4);
-            tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
-            body.setUserData(tireSprite);  
-        }   
-    }
+   
 
     static void setCarColorP1(int currentColor) {
         carColorP1 = currentColor;
@@ -1089,6 +964,29 @@ public void isOutside(){ //Could work with car[]
             System.out.println("Song playing : Song4");
         }
     }
+
+    private int xPositionDraw(int mapNum){
+        if(mapNum == 0){
+            return -60;
+        }
+        else if(mapNum == 1){
+            return -300;
+        }
+        else
+            return -750;
+    }
+    
+    private int yPositionDraw(int mapNum){
+        if(mapNum == 0){
+            return -175;
+        }
+        else if(mapNum == 1){
+            return -220;
+        }
+        else
+            return -0;
+    }
+
     
 }
 
