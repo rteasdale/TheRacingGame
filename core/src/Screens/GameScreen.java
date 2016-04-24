@@ -140,13 +140,14 @@ public final class GameScreen implements Screen {
         tileMap = new TmxMapLoader().load(mapAddressT);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
-        createGrounds();
-        
+        if(mapNum == 0){
+        createCollisionsM1();
+        }
         if(mapNum == 1){
-            createGroundsM2();
+            createCollisionsM2();
         }
         if(mapNum == 2){
-            createGroundsM3();
+            createCollisionsM3();
         }
         
         CreateTires();
@@ -210,8 +211,8 @@ public final class GameScreen implements Screen {
        
     }
     
-    private void createGrounds() {
-        //Road Layer
+    private void createCollisionsM1(){
+              //Road Layer
         MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
            
         //body
@@ -299,35 +300,261 @@ public final class GameScreen implements Screen {
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new FuelAreaType());
         }
+        
+        MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
+                
+        for(MapObject ti : TireLayer.getObjects()) {
+            bdef = new BodyDef();
+            bdef.type = BodyType.DynamicBody;
 
+            float x = (float) ti.getProperties().get("x", Float.class) ;
+            float y = (float) ti.getProperties().get("y", Float.class) ;
+
+            float width = (float) ti.getProperties().get("width", Float.class);
             
-        ///////////////////////////////////////////////////////   
-//Tutorial Ground         
-//		BodyDef bodyDef = new BodyDef();
-//		Body ground = world.createBody(bodyDef);
-//		
-//		PolygonShape shape = new PolygonShape();
-//		FixtureDef fixtureDef = new FixtureDef();
-//		fixtureDef.shape = shape;
-//		fixtureDef.isSensor = true;
-//		fixtureDef.filter.categoryBits = Constants.GROUND;
-//		fixtureDef.filter.maskBits = Constants.TIRE;
-//		
-//		shape.setAsBox(9, 7, new Vector2(-10,15), 20*Constants.DEGTORAD);
-//		Fixture groundAreaFixture = ground.createFixture(fixtureDef);
-//		groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
-//		
-//		shape.setAsBox(100,  100, new Vector2(5, 20), -40 * Constants.DEGTORAD);
-//		groundAreaFixture = ground.createFixture(fixtureDef);
-//		groundAreaFixture.setUserData(new GroundAreaType(1f, false));
+            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            
+            CircleShape shape = new CircleShape();
+            shape.setRadius(width/8f);
+
+            fdef = new FixtureDef();
+
+            fdef.shape = shape;
+            fdef.isSensor = false;
+            fdef.density = 1000;
+            fdef.restitution = 0.5f;
+            fdef.filter.categoryBits = Constants.TIREOBS;
+            fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
+
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+            
+            
+            tireSprite = new Sprite(new Texture("Tire.png"));
+            tireSprite.setSize(width/4,width/4);
+            tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
+            body.setUserData(tireSprite);  
+        }   
+        
+    }
     
-    } //end of class createGrounds()
+//    private void createGrounds() {
+//        //Road Layer
+//        MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
+//           
+//        //body
+//        BodyDef bdef = new BodyDef();
+//        FixtureDef fdef = new FixtureDef();
+//            
+//        for(MapObject ro : Roadlayer.getObjects()) {
+//            bdef.type = BodyType.StaticBody;
+//
+//            float x = (float) ro.getProperties().get("x", Float.class);
+//            float y = (float) ro.getProperties().get("y", Float.class);
+//
+//            float width = (float) ro.getProperties().get("width", Float.class);
+//            float height = (float) ro.getProperties().get("height", Float.class);
+//                
+//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+//                
+//            PolygonShape shape = new PolygonShape();
+//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+//                
+//            fdef.shape = shape;
+//            fdef.isSensor = true;
+//            fdef.filter.categoryBits = Constants.GROUND;
+//            fdef.filter.maskBits = Constants.TIRE;
+//                
+//            Body body = world.createBody(bdef);
+//                
+//            Fixture groundAreaFixture = body.createFixture(fdef);
+//            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+//        }
+//        
+//        ////////////////////////////////////////////////////////
+//        //Oil Layer
+//        MapLayer OilLayer = tileMap.getLayers().get("Oil ObjectLayer");
+//        
+//        for(MapObject oi : OilLayer.getObjects()){
+//            bdef.type = BodyType.StaticBody;
+//
+//            float x = (float) oi.getProperties().get("x", Float.class) ;
+//            float y = (float) oi.getProperties().get("y", Float.class) ;
+//
+//            float width = (float) oi.getProperties().get("width", Float.class);
+//            float height = (float) oi.getProperties().get("height", Float.class);
+//
+//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+//
+//            PolygonShape shape = new PolygonShape();
+//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+//
+//            fdef.shape = shape;
+//            fdef.isSensor = true;
+//            fdef.filter.categoryBits = Constants.OILOBS;
+//            fdef.filter.maskBits = Constants.TIRE;
+//
+//            Body body = world.createBody(bdef);
+//
+//            Fixture groundAreaFixture = body.createFixture(fdef);
+//            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+//        }
+//            ////////////////////////////////////////////////////////
+//            //FUEL LAYER
+//            MapLayer FuelLayer = tileMap.getLayers().get("Fuel ObjectLayer");
+//        
+//        for(MapObject fu : FuelLayer.getObjects()){
+//            bdef.type = BodyType.StaticBody;
+//
+//           float  x = (float) fu.getProperties().get("x", Float.class) ;
+//            float y = (float) fu.getProperties().get("y", Float.class) ;
+//
+//            float width = (float) fu.getProperties().get("width", Float.class);
+//            float height = (float) fu.getProperties().get("height", Float.class);
+//
+//            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+//
+//            PolygonShape shape = new PolygonShape();
+//            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+//
+//            fdef.shape = shape;
+//            fdef.isSensor = true;
+//            fdef.filter.categoryBits = Constants.FUEL;
+//            fdef.filter.maskBits = Constants.CAR;
+//
+//            Body body = world.createBody(bdef);
+//
+//            Fixture groundAreaFixture = body.createFixture(fdef);
+//            groundAreaFixture.setUserData(new FuelAreaType());
+//        }
+//
+//    } //end of class createGrounds()
     
-    //Create grounds for map 2
-    public void createGroundsM2(){
+    //Create collisions for map 2
+    public void createCollisionsM2(){
          
+                MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
+           
+        //body
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
+            
+        for(MapObject ro : Roadlayer.getObjects()) {
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) ro.getProperties().get("x", Float.class);
+            float y = (float) ro.getProperties().get("y", Float.class);
+
+            float width = (float) ro.getProperties().get("width", Float.class);
+            float height = (float) ro.getProperties().get("height", Float.class);
+                
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+                
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+                
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.GROUND;
+            fdef.filter.maskBits = Constants.TIRE;
+                
+            Body body = world.createBody(bdef);
+                
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+        }
+        
+        ////////////////////////////////////////////////////////
+        //Oil Layer
+        MapLayer OilLayer = tileMap.getLayers().get("Oil ObjectLayer");
+        
+        for(MapObject oi : OilLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) oi.getProperties().get("x", Float.class) ;
+            float y = (float) oi.getProperties().get("y", Float.class) ;
+
+            float width = (float) oi.getProperties().get("width", Float.class);
+            float height = (float) oi.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.OILOBS;
+            fdef.filter.maskBits = Constants.TIRE;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+        }
+            ////////////////////////////////////////////////////////
+            //FUEL LAYER
+            MapLayer FuelLayer = tileMap.getLayers().get("Fuel ObjectLayer");
+        
+        for(MapObject fu : FuelLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fu.getProperties().get("x", Float.class) ;
+            float y = (float) fu.getProperties().get("y", Float.class) ;
+
+            float width = (float) fu.getProperties().get("width", Float.class);
+            float height = (float) fu.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FUEL;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FuelAreaType());
+        }
+        
+        MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
+                
+        for(MapObject ti : TireLayer.getObjects()) {
+            bdef = new BodyDef();
+            bdef.type = BodyType.DynamicBody;
+
+            float x = (float) ti.getProperties().get("x", Float.class) ;
+            float y = (float) ti.getProperties().get("y", Float.class) ;
+
+            float width = (float) ti.getProperties().get("width", Float.class);
+            
+            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            
+            CircleShape shape = new CircleShape();
+            shape.setRadius(width/8f);
+
+            fdef = new FixtureDef();
+
+            fdef.shape = shape;
+            fdef.isSensor = false;
+            fdef.density = 1000;
+            fdef.restitution = 0.5f;
+            fdef.filter.categoryBits = Constants.TIREOBS;
+            fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
+
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+            
+            
+            tireSprite = new Sprite(new Texture("Tire.png"));
+            tireSprite.setSize(width/4,width/4);
+            tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
+            body.setUserData(tireSprite);  
+        }   
         
         //ICE LAYER
         MapLayer IceLayer = tileMap.getLayers().get("Ice ObjectLayer");
@@ -419,10 +646,130 @@ public final class GameScreen implements Screen {
         }
     }
     
-    public void createGroundsM3() {
+    public void createCollisionsM3() {
         
+                MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
+           
+        //body
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
+            
+        for(MapObject ro : Roadlayer.getObjects()) {
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) ro.getProperties().get("x", Float.class);
+            float y = (float) ro.getProperties().get("y", Float.class);
+
+            float width = (float) ro.getProperties().get("width", Float.class);
+            float height = (float) ro.getProperties().get("height", Float.class);
+                
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+                
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+                
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.GROUND;
+            fdef.filter.maskBits = Constants.TIRE;
+                
+            Body body = world.createBody(bdef);
+                
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+        }
+        
+        ////////////////////////////////////////////////////////
+        //Oil Layer
+        MapLayer OilLayer = tileMap.getLayers().get("Oil ObjectLayer");
+        
+        for(MapObject oi : OilLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+            float x = (float) oi.getProperties().get("x", Float.class) ;
+            float y = (float) oi.getProperties().get("y", Float.class) ;
+
+            float width = (float) oi.getProperties().get("width", Float.class);
+            float height = (float) oi.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.OILOBS;
+            fdef.filter.maskBits = Constants.TIRE;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+        }
+            ////////////////////////////////////////////////////////
+            //FUEL LAYER
+            MapLayer FuelLayer = tileMap.getLayers().get("Fuel ObjectLayer");
+        
+        for(MapObject fu : FuelLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fu.getProperties().get("x", Float.class) ;
+            float y = (float) fu.getProperties().get("y", Float.class) ;
+
+            float width = (float) fu.getProperties().get("width", Float.class);
+            float height = (float) fu.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FUEL;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FuelAreaType());
+        }
+        
+        MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
+                
+        for(MapObject ti : TireLayer.getObjects()) {
+            bdef = new BodyDef();
+            bdef.type = BodyType.DynamicBody;
+
+            float x = (float) ti.getProperties().get("x", Float.class) ;
+            float y = (float) ti.getProperties().get("y", Float.class) ;
+
+            float width = (float) ti.getProperties().get("width", Float.class);
+            
+            bdef.position.set( new Vector2(x*1/4f + width*1/8f, y*1/4f + width*1/8f));
+            
+            CircleShape shape = new CircleShape();
+            shape.setRadius(width/8f);
+
+            fdef = new FixtureDef();
+
+            fdef.shape = shape;
+            fdef.isSensor = false;
+            fdef.density = 1000;
+            fdef.restitution = 0.5f;
+            fdef.filter.categoryBits = Constants.TIREOBS;
+            fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
+
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+            
+            
+            tireSprite = new Sprite(new Texture("Tire.png"));
+            tireSprite.setSize(width/4,width/4);
+            tireSprite.setOrigin(tireSprite.getWidth() / 2, tireSprite.getHeight()/2);
+            body.setUserData(tireSprite);  
+        }   
         
         MapLayer MetalLayer = tileMap.getLayers().get("Metal ObjectLayer");
         
