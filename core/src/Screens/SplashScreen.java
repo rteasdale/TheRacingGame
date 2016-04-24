@@ -51,21 +51,27 @@ public class SplashScreen extends InputListener implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         
-        assets = new ScreenAssets();
-        assets.loadSplashScreen();
-        assets.loadMainMenuScreen();
+        loadAssets();
         
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         style_lbl = new Label.LabelStyle(font, Color.WHITE);
 
     }
-
+    
+    private void loadAssets() {
+        assets = new ScreenAssets();
+        assets.loadSplashScreen();
+        assets.loadMainMenuScreen();
+        
+        assets.manager.finishLoading();        
+    }
+    
     @Override
     public void show() {
 //startTime = TimeUtils.millis();
         Gdx.app.log("SplashScreen", "show called");
-        splash_image = new Texture(Gdx.files.internal("menu/splashscreen_image.jpeg"));     
+        splash_image = assets.manager.get(ScreenAssets.splash_image);     
         
         lbl = new Label("Press SPACE to start", style_lbl);
         lbl.setPosition(500, 100);
