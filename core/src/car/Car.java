@@ -333,7 +333,7 @@ public class Car {
     public Vector2 Position(){
         Vector2 position = new Vector2();
 
-    position = new Vector2(25,0);
+    position = new Vector2(0,0);
 
         return position;
     }                           

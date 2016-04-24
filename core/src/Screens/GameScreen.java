@@ -631,7 +631,7 @@ public final class GameScreen implements Screen {
             float width = (float) ro.getProperties().get("width", Float.class);
             float height = (float) ro.getProperties().get("height", Float.class);
                 
-            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
                 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -660,7 +660,7 @@ public final class GameScreen implements Screen {
             float width = (float) oi.getProperties().get("width", Float.class);
             float height = (float) oi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -688,7 +688,7 @@ public final class GameScreen implements Screen {
             float width = (float) fu.getProperties().get("width", Float.class);
             float height = (float) fu.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1); 
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -717,7 +717,7 @@ public final class GameScreen implements Screen {
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -744,7 +744,7 @@ public final class GameScreen implements Screen {
 
             float width = (float) ti.getProperties().get("width", Float.class);
             
-            bdef.position.set( new Vector2((x*1/4f + width*1/8f)+xPositionDraw(mapNum), (y*1/4f + width*1/8f)+yPositionDraw(mapNum)));
+            bdef.position.set( new Vector2((x*1/4f + width*1/8f)+xPositionDraw(mapNum)+2, (y*1/4f + width*1/8f)+yPositionDraw(mapNum)+1));
             
             CircleShape shape = new CircleShape();
             shape.setRadius(width/8f);
@@ -779,7 +779,7 @@ public final class GameScreen implements Screen {
             float width = (float) me.getProperties().get("width", Float.class);
             float height = (float) me.getProperties().get("height", Float.class);
 
-            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
+            Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)-13, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)-110);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
@@ -973,7 +973,7 @@ public void isOutside(){ //Could work with car[]
             return -300;
         }
         else
-            return -750;
+            return -408;
     }
     
     private int yPositionDraw(int mapNum){
@@ -984,7 +984,7 @@ public void isOutside(){ //Could work with car[]
             return -220;
         }
         else
-            return -0;
+            return -200;
     }
 
     
