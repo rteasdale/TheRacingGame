@@ -112,7 +112,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private Label consumption_lbl;
     
     private Label player;
-    private Label preview_lbl;
     
     public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName, ScreenAssets assets) {
         this.game = game;
@@ -145,7 +144,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         stat_box = assets.manager.get(ScreenAssets.stat_box);
         
         /** BitmapFont */
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+        font = assets.manager.get(ScreenAssets.font);
 
         /** Atlas and skin */
         buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
@@ -238,9 +237,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         consumption_lbl.setPosition(855, 220);
         
         /** Player label*/ 
-        player = new Label(playerName.toUpperCase(), lbl_style);
-        player.setPosition(400, 580);
-        player.setColor(Color.GOLD);
+        player = new Label("Player Selecting: " + playerName.toUpperCase(), lbl_style);
+        player.setPosition(200, 580);
+        player.setColor(Color.ORANGE);
 
         stage.addActor(player);
         
@@ -284,12 +283,12 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 if (twoPlayers == true && playerNum == 2) {
                     GameScreen.setCarNumP2(getCarNum());
                     GameScreen.setCarColorP2(getCarColor());
-                    game.setScreen(new MapSelectionScreen(game, twoPlayers));
+                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets));
                 }
                 if (twoPlayers == false) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                    
-                    game.setScreen(new MapSelectionScreen(game, twoPlayers));
+                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets));
                 }
             }
         });  

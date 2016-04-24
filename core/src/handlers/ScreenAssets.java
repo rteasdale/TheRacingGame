@@ -6,7 +6,9 @@ package handlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -43,13 +45,22 @@ public class ScreenAssets {
     
     //car selection screen title
     public static final AssetDescriptor<Texture> carTitle = 
-        new AssetDescriptor<Texture>(Gdx.files.internal("menu/carselection_title.png"), Texture.class);      
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/carselection_title.png"), Texture.class);     
+    
+    //map selection screen title
+    public static final AssetDescriptor<Texture> mapTitle = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/mapselection_title.png"), Texture.class);         
     
     //car selection screen assets
     public static final AssetDescriptor<Texture> stat_box = 
-        new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class);       
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class); 
     
     
+    
+    /**Bitmap font*/ 
+    public static final AssetDescriptor<BitmapFont> font = 
+            new AssetDescriptor<BitmapFont>(Gdx.files.internal("menu/button_font.fnt"), BitmapFont.class, 
+                    new BitmapFontLoader.BitmapFontParameter());    
     
     /** Atlas */ 
     public static final AssetDescriptor<TextureAtlas> buttons_atlas = 
@@ -60,32 +71,39 @@ public class ScreenAssets {
 
     public static final AssetDescriptor<TextureAtlas> box_atlas = 
             new AssetDescriptor<TextureAtlas>(Gdx.files.internal("menu/box_atlas.txt"), TextureAtlas.class); 
-    
-    
-    /** Skin */
-    public static final AssetDescriptor<Skin> buttons_skin =
-            new AssetDescriptor<Skin>(Gdx.files.internal("menu/menubtns_atlas.png"), Skin.class, 
-                    new SkinLoader.SkinParameter("menu/menubtns_atlas.txt"));
 
-    public static final AssetDescriptor<Skin> skin =
-            new AssetDescriptor<Skin>(Gdx.files.internal("menu/uiskin.png"), Skin.class, 
-                    new SkinLoader.SkinParameter("menu/uiskin.txt"));
     
+    /**Music*/ 
+    public static final AssetDescriptor<Music> menu_music = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/menu_track.mp3"), Music.class); 
+    public static final AssetDescriptor<Music> song1 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map1_track1.mp3"), Music.class);     
+    public static final AssetDescriptor<Music> song2 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map1_track2.mp3"), Music.class);     
+    public static final AssetDescriptor<Music> song3 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map1_track3.mp3"), Music.class);     
+    public static final AssetDescriptor<Music> song4 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map1_track4.mp3"), Music.class); 
+    public static final AssetDescriptor<Music> song5 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map2_track.mp3"), Music.class);     
+    public static final AssetDescriptor<Music> song6 = 
+            new AssetDescriptor<Music>(Gdx.files.internal("music/map3_track.mp3"), Music.class); 
     
     public void loadSplashScreen() {
         manager.load(splash_image);
+        manager.load(font);
     }
     
     public void loadMainMenuScreen() {
         manager.load(mainTitle);
         manager.load(background);
         manager.load(buttons_atlas);
-        //manager.load(buttons_skin);
     }
     
     public void loadPlayerScreen() {
         manager.load(playerTitle);
-        manager.load(buttons_atlas);
+        //manager.load(font);
+        //manager.load(buttons_atlas);
         manager.load(atlas);
         //manager.load(buttons_skin);
         //manager.load(skin);
@@ -93,20 +111,28 @@ public class ScreenAssets {
     
     public void loadCarSelectionScreen() {
         manager.load(carTitle);
+        //manager.load(font);
         manager.load(stat_box);
-        manager.load(buttons_atlas);
+        //manager.load(buttons_atlas);
         manager.load(box_atlas);
     }
     
     public void loadMapSelectionScreen() {
-        
+        manager.load(mapTitle);
+    }
+    
+    public void loadLoadingScreen() {
+        manager.load(font);
     }
     
     public void loadGameScreen() {
-        
+        manager.load(song1);
+        manager.load(song2);
+        manager.load(song3);
+        manager.load(song4);
+        manager.load(song5);
+        manager.load(song6);
     }
     
-    public void dispose() {
-        manager.dispose();
-    }
+    
 }

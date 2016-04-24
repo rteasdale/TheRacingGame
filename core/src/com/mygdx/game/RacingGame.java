@@ -8,6 +8,7 @@ package com.mygdx.game;
 import Screens.CarSelectionScreen;
 import Screens.GameScreen;
 import Screens.LeaderboardScreen;
+import Screens.LoadingScreen;
 import Screens.PlayScreen;
 
 import Screens.MainMenuScreen;
@@ -43,7 +44,6 @@ public class RacingGame extends Game {
         startTime = TimeUtils.millis();
 
         setScreen(new SplashScreen(this)); //** start SpashSreen, with Game parameter **// //(Screen, Boolean twoPlayers)
-    
         //this.setScreen(new CarSelectionScreen(this));
     }
 

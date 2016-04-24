@@ -2,7 +2,6 @@ package Screens;
 
 
 import Scenes.Hud;
-import car.AICar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -29,7 +28,6 @@ import car.FuelAreaType;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -37,18 +35,22 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.rotateBy;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
+import handlers.ScreenAssets;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public final class GameScreen implements Screen {
 
     private RacingGame game;
     private Hud hud;
+    private ScreenAssets assets;
+            
+    private boolean countdownState = true;
+    private boolean gamingState = false;
+    private boolean finishState;
     
     public static int mapNum = 0;
     private boolean twoPlayers;
@@ -88,20 +90,23 @@ public final class GameScreen implements Screen {
     String mapAddressT; //Map Adress for the TiledMap
     String mapAddressI; // Map Adress for the Image
     
-    Music song1 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track1.mp3"));
-    Music song2 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track2.mp3"));
-    Music song3 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track3.mp3"));
-    Music song4 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track4.mp3"));
-    Music song5 = Gdx.audio.newMusic(Gdx.files.internal("music/map2_track.mp3"));
-    Music song6 = Gdx.audio.newMusic(Gdx.files.internal("music/map3_track.mp3"));
+    Music song1;
+    Music song2;
+    Music song3;
+    Music song4;
+    Music song5;
+    Music song6;
     
     
-    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum) {
+    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets) {
         this.game = game;
+        this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
-        Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
-
+        //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
+        Gdx.input.setInputProcessor(inputManager);
+        inputManager = new InputManager(this);
+        
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -109,25 +114,24 @@ public final class GameScreen implements Screen {
         camera.position.x = 0;
         camera.position.y = 0;
         
-        
-        
         hud = new Hud(batch);
-
         world = new World(new Vector2(0, 0f), true);
-
-        cl = new CarContactListener();
         world.setContactListener(cl);
+        cl = new CarContactListener();
 
         renderer = new Box2DDebugRenderer();
-        renderer.setDrawJoints(false);
 
-        inputManager = new InputManager(this);
-        Gdx.input.setInputProcessor(inputManager);
+        /** Songs*/
+        song1 = assets.manager.get(ScreenAssets.song1);
+        song2 = assets.manager.get(ScreenAssets.song2);
+        song3 = assets.manager.get(ScreenAssets.song3);
+        song4 = assets.manager.get(ScreenAssets.song4);
+        song5 = assets.manager.get(ScreenAssets.song5);
+        song6 = assets.manager.get(ScreenAssets.song6);        
         
         /**Create cars*/
 	car = new Car(world, carNumP1, carColorP1, 1);
-                    
-        
+
         // If two players, construct another car
         if (twoPlayers == true) {
             car2 = new Car(world, carNumP2, carColorP2, 2);
@@ -135,6 +139,7 @@ public final class GameScreen implements Screen {
         
         ////////////////////////////////////////////////////
         //Load Tiled Map
+        
         choseMap(mapNum);
         bg = new Texture(mapAddressI);
         //playMusic(mapNum);
@@ -163,8 +168,7 @@ public final class GameScreen implements Screen {
     public void render (float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-   
-        inputManager.updateControls(twoPlayers); //update for two players
+        inputManager.updateControls(twoPlayers); //update controls for two players
         
         world.step(1 / 60f, 6, 2);
         camera.update();
@@ -174,7 +178,7 @@ public final class GameScreen implements Screen {
         //tmr.render();
 
         //System.out.println(car.body.getLinearVelocity().len());
-        System.out.println(car.getFuelTank());
+        //System.out.println(car.getFuelTank());
         
         renderSprites();
                                            
@@ -192,21 +196,28 @@ public final class GameScreen implements Screen {
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
         
+        /**CountdownState*/ 
+        if (countdownState == true) {
+            
+        }
         
-        //if state == GO 
-        hud.updateTime(startTime);
-        
-        float carSpeed = car.body.getLinearVelocity().len();
-        //update speed gauge
-        hud.updateSpeed(carSpeed, car);  
-        
-        float fuel = car.getFuelTank();
-        //update fuel tank
-        hud.updateFuel(fuel, car);
-                
+        /**Gaming state*/
+        //if (gamingState == true) {
+            hud.updateTime(startTime);
+
+            float carSpeed = car.body.getLinearVelocity().len();
+            //update speed gauge
+            hud.updateSpeed(carSpeed, car);  
+
+            float fuel = car.getFuelTank();
+            //update fuel tank
+            hud.updateFuel(fuel, car);
+
+            hud.stage.draw();
+
+        //} 
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.act();
         hud.stage.draw();
        
     }
@@ -801,7 +812,7 @@ public final class GameScreen implements Screen {
 
     public void choseMap(int mapNum){
         if(mapNum == 0){
-            System.out.println("Map 1 Selected");
+            //System.out.println("Map 1 Selected");
             red = 71/255f;
             green = 122/255f;
             blue = 25/255f;
@@ -810,7 +821,7 @@ public final class GameScreen implements Screen {
             mapAddressI = "maps/map1.png";
         }
         else if(mapNum == 1){
-            System.out.println("Map 2 Selected");
+            //System.out.println("Map 2 Selected");
             red = 254/255f;
             green = 254/255f;
             blue = 255/255f;
@@ -820,7 +831,7 @@ public final class GameScreen implements Screen {
             
         }
         else if(mapNum == 2){
-            System.out.println("Map 3 Selected");
+            //System.out.println("Map 3 Selected");
             red = 13/255f;
             green = 8/255f;
             blue = 36/255f;
@@ -829,7 +840,7 @@ public final class GameScreen implements Screen {
             mapAddressI = "maps/map3.png";
         }
         else{
-            System.out.println("Map DEFAULT Selected");
+            //System.out.println("Map DEFAULT Selected");
             mapAddressT = "maps/map1.tmx";
         }
     }

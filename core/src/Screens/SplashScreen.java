@@ -52,23 +52,25 @@ public class SplashScreen extends InputListener implements Screen {
         
         loadAssets();
         
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+        font = assets.manager.get(ScreenAssets.font);
         style_lbl = new Label.LabelStyle(font, Color.WHITE);
     }
     
     private void loadAssets() {
         assets = new ScreenAssets();
+        
         assets.loadSplashScreen();
         assets.loadMainMenuScreen();
         assets.loadPlayerScreen();
         assets.loadCarSelectionScreen();
+        assets.loadMapSelectionScreen();
         assets.manager.finishLoading();   
     }
     
     @Override
     public void show() {
-//startTime = TimeUtils.millis();
-        Gdx.app.log("SplashScreen", "show called");
+        //startTime = TimeUtils.millis();
+        //Gdx.app.log("SplashScreen", "show called");
         splash_image = assets.manager.get(ScreenAssets.splash_image);     
         
         lbl = new Label("Press SPACE to start", style_lbl);
@@ -119,8 +121,8 @@ public class SplashScreen extends InputListener implements Screen {
 
     @Override
     public void hide() {
-        Gdx.app.log("SplashScreen", "hide called");
-        Gdx.app.log("Splash Screen", "rendered " + rendCount + " times.");
+        //Gdx.app.log("SplashScreen", "hide called");
+        //Gdx.app.log("Splash Screen", "rendered " + rendCount + " times.");
     }
 
     @Override

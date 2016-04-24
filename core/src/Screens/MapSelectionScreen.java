@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -29,6 +30,8 @@ import com.mygdx.game.RacingGame;
 public class MapSelectionScreen implements Screen {
     private RacingGame game;
     private Stage stage;
+    private ScreenAssets assets;
+    private Texture title_texture;
     
     private String[] group;
     private String[] map;
@@ -58,12 +61,16 @@ public class MapSelectionScreen implements Screen {
     private Skin buttons_skin;    
 
 
-    public MapSelectionScreen(RacingGame game, boolean twoPlayers) {
-        Gdx.app.log("Map Selection", "constructor called");
+    public MapSelectionScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets) {
+        //Gdx.app.log("Map Selection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
+        this.assets = assets;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
+        
+        /**Texture*/
+        title_texture = assets.manager.get(ScreenAssets.mapTitle);
         
         file = new FileHandle("data/maps.txt");
         group = file.readString().split("\n");
@@ -71,10 +78,10 @@ public class MapSelectionScreen implements Screen {
         map = group[1].split(",");
 
         /** BitmapFont */
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+        font = assets.manager.get(ScreenAssets.font);
         
         /** Atlas and skin */
-        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin= new Skin(buttons_atlas);    
         
         /** Styles */
@@ -91,9 +98,9 @@ public class MapSelectionScreen implements Screen {
     
     @Override
     public void show() {
-        Gdx.app.log("Map Selection", "show called");
+        //Gdx.app.log("Map Selection", "show called");
         /** Title */
-        title = new Image(new Texture(Gdx.files.internal("menu/mapselection_title.png")));
+        title = new Image(title_texture);
         title.setPosition(280, 648);        
         
         /** Buttons */
@@ -137,10 +144,10 @@ public class MapSelectionScreen implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //if two players, generate game screen with 2 cars
                 if (twoPlayers == true) {
-                game.setScreen(new GameScreen(game, true, currentMap)); //Change two players value 
+                game.setScreen(new LoadingScreen(game, true, currentMap, assets)); //Change two players value 
                 }
                 if (twoPlayers == false) {
-                game.setScreen(new GameScreen(game, false, currentMap));
+                game.setScreen(new LoadingScreen(game, false, currentMap, assets));
                 }
             }
         });

@@ -73,7 +73,7 @@ public class PlayerScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         
         /** BitmapFont */
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+        font = assets.manager.get(ScreenAssets.font);
 
         /** textures*/
         title_texture = assets.manager.get(ScreenAssets.playerTitle);        

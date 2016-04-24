@@ -32,7 +32,7 @@ public class Hud {
     
     private Image fuelgauge;
     private Image speedgauge;
-    public Image needle;
+    private Image needle;
     private Image needle2;
     
     private int minutes;
@@ -84,7 +84,6 @@ public class Hud {
 
         lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
         lapLabel.setPosition(1000, 670);
-
 
         stage.addActor(timerLabel);
         stage.addActor(lapLabel);

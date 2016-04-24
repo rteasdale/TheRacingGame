@@ -8,7 +8,6 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -86,7 +85,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.app.log("MainMenuScreen", "show called");
+        //Gdx.app.log("MainMenuScreen", "show called");
         
         /** Position actors */
         title = new Image(title_texture);
@@ -178,7 +177,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-        Gdx.app.log("MainMenuScreen", "hide called");
+        //Gdx.app.log("MainMenuScreen", "hide called");
     }
 
     @Override
