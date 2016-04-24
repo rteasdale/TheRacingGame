@@ -41,17 +41,26 @@ public class CarContactListener implements ContactListener {
             }
 
             if (fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_GROUND_AREA) {
-                    tireAndGround(a, b, began);
+                //What happens when the car touches the car    
+                tireAndGround(a, b, began);
                     
             } else if (fudA.type == FixtureUserDataType.FUD_GROUND_AREA && fudB.type == FixtureUserDataType.FUD_CAR_TIRE) {
-                    tireAndGround(b, a, began);
+                //What happens when the ground touches the car    
+                tireAndGround(b, a, began);
             }
             else if(fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_FUEL_LANE){
-                
+                //What happens when car touches fuel
             }
             else if(fudA.type == FixtureUserDataType.FUD_FUEL_LANE && fudB.type == FixtureUserDataType.FUD_CAR_TIRE){
-                
+                //What happens when fuel touches car
             }
+            else if(fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_FINISH_LINE){
+                //What happens when car touches finish line
+            }
+            else if(fudA.type == FixtureUserDataType.FUD_FINISH_LINE && fudB.type == FixtureUserDataType.FUD_CAR_TIRE){
+                //What happens when finish line touches car
+            }
+            
         }
     }
 

@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Array;
 import car.Car;
 import car.CarMath;
 import car.Constants;
+import car.FinishLineType;
 import car.FuelAreaType;
 import car.GroundAreaType;
 import com.badlogic.gdx.Screen;
@@ -301,6 +302,36 @@ public final class GameScreen implements Screen {
             groundAreaFixture.setUserData(new FuelAreaType());
         }
         
+        ////////////////////////////////////////////////////////
+            //FINISH LINE LAYER
+            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+        
+        for(MapObject fi : FinishLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fi.getProperties().get("x", Float.class) ;
+            float y = (float) fi.getProperties().get("y", Float.class) ;
+
+            float width = (float) fi.getProperties().get("width", Float.class);
+            float height = (float) fi.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FINISH;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FinishLineType());
+        }
+        
+        
         MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
                 
         for(MapObject ti : TireLayer.getObjects()) {
@@ -521,6 +552,35 @@ public final class GameScreen implements Screen {
             groundAreaFixture.setUserData(new FuelAreaType());
         }
         
+                ////////////////////////////////////////////////////////
+            //FINISH LINE LAYER
+            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+        
+        for(MapObject fi : FinishLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fi.getProperties().get("x", Float.class) ;
+            float y = (float) fi.getProperties().get("y", Float.class) ;
+
+            float width = (float) fi.getProperties().get("width", Float.class);
+            float height = (float) fi.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FINISH;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FinishLineType());
+        }
+        
         MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
                 
         for(MapObject ti : TireLayer.getObjects()) {
@@ -734,6 +794,35 @@ public final class GameScreen implements Screen {
 
             Fixture groundAreaFixture = body.createFixture(fdef);
             groundAreaFixture.setUserData(new FuelAreaType());
+        }
+        
+                ////////////////////////////////////////////////////////
+            //FINISH LINE LAYER
+            MapLayer FinishLayer = tileMap.getLayers().get("Finish ObjectLayer");
+        
+        for(MapObject fi : FinishLayer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+
+           float  x = (float) fi.getProperties().get("x", Float.class) ;
+            float y = (float) fi.getProperties().get("y", Float.class) ;
+
+            float width = (float) fi.getProperties().get("width", Float.class);
+            float height = (float) fi.getProperties().get("height", Float.class);
+
+            Vector2 size = new Vector2((x+width*0.5f)*1/4f, (y+height*0.5f)*1/4f);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width*0.5f*1/4f, height*0.5f*1/4f, size, 0.0f);
+
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = Constants.FINISH;
+            fdef.filter.maskBits = Constants.CAR;
+
+            Body body = world.createBody(bdef);
+
+            Fixture groundAreaFixture = body.createFixture(fdef);
+            groundAreaFixture.setUserData(new FinishLineType());
         }
         
         MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");

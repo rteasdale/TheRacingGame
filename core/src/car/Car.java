@@ -394,13 +394,6 @@ public class Car {
         return MaxFuelCapacity;
     }
     
-    public void setTiresTo90(){
-       Tire[] tire = tires.items;
-
-        for(int i = 0; i > tires.size; i++){
-            tire[i].body.setTransform(body.getWorldCenter(), 90*Constants.DEGTORAD);
-        }
-    }
     
     public float getMaxFSpeed(){
         return maxFSpeed;
