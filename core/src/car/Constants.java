@@ -31,5 +31,5 @@ public class Constants {
     public static final short METAL = 256;
     public static final short BRIDGE = 512;
     public static final short ICE = 1024;
-   
+    public static final short FINISH = 2048;
 }

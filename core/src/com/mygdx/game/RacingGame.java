@@ -7,6 +7,7 @@ package com.mygdx.game;
 
 import Screens.CarSelectionScreen;
 import Screens.GameScreen;
+import Screens.LeaderboardScreen;
 import Screens.PlayScreen;
 
 import Screens.MainMenuScreen;

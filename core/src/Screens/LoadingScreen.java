@@ -6,6 +6,8 @@
 package Screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.RacingGame;
 
 /**
@@ -14,9 +16,12 @@ import com.mygdx.game.RacingGame;
  */
 public class LoadingScreen implements Screen {
     private RacingGame game; 
+    private BitmapFont font;
     
     public LoadingScreen(RacingGame game) {
         this.game = game;
+        
+        
     }
     
     @Override

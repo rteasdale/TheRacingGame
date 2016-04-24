@@ -149,10 +149,10 @@ public class MapSelectionScreen implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if(twoPlayers == false) {
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                    //game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
                 }
                 else {
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                    //game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
                 }
             }
         });

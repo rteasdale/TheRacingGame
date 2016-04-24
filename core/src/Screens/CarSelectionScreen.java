@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 import java.util.Arrays;
 
 /**
@@ -41,6 +42,10 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
+    
+    private final ScreenAssets assets;
+    private final Texture title_texture;
+    private final Texture stat_box;
     
     private ShapeRenderer renderer;
     
@@ -109,8 +114,9 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private Label player;
     private Label preview_lbl;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName) {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName, ScreenAssets assets) {
         this.game = game;
+        this.assets = assets;
         this.playerNum = playerNum;
         this.playerName = playerName;
         this.twoPlayers = twoPlayers;
@@ -118,8 +124,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         camera.setToOrtho(false);        
         renderer = new ShapeRenderer();
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage); //** stage is responsive **//        
-        
+        Gdx.input.setInputProcessor(stage); //** stage is responsive **// 
+
         /** File data */
         file = new FileHandle("data/car.txt");
         group = file.readString().split("\n");
@@ -134,13 +140,17 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         truck_colors = group[6].split(",");
         zondaf_colors = group[7].split(",");
         
+        /** Textures*/ 
+        title_texture = assets.manager.get(ScreenAssets.carTitle);
+        stat_box = assets.manager.get(ScreenAssets.stat_box);
+        
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
 
         /** Atlas and skin */
-        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin= new Skin(buttons_atlas);
-        box_atlas = new TextureAtlas(Gdx.files.internal("menu/box_atlas.txt"));
+        box_atlas = assets.manager.get(ScreenAssets.box_atlas);
         box_skin = new Skin(box_atlas);
 
         /** Styles */
@@ -173,7 +183,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         //Gdx.app.log("CarSelection", "show called");         
         
         /** Title */
-        title = new Image(new Texture(Gdx.files.internal("menu/carselection_title.png")));
+        title = new Image(title_texture);
         title.setPosition(280, 648);
         
         /** SelectBox and TextArea */
@@ -200,17 +210,17 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectNextCarButton.setY(480);
 
         /** Car stats */
-        weight = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        weight = new Image(stat_box);
         weight.setPosition(850, 550);
-        acceleration = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        acceleration = new Image(stat_box);
         acceleration.setPosition(850, 480);
-        top_speed = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        top_speed = new Image(stat_box);
         top_speed.setPosition(850, 410);
-        handling = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        handling = new Image(stat_box);
         handling.setPosition(850, 340);
-        tank_capacity = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        tank_capacity = new Image(stat_box);
         tank_capacity.setPosition(850, 270);
-        consumption = new Image(new Texture(Gdx.files.internal("menu/car_stat.png")));
+        consumption = new Image(stat_box);
         consumption.setPosition(850, 200);
             
         /**Stats labels */
@@ -269,7 +279,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
                 if (twoPlayers == true && playerNum == 1) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                          
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2));
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets));
                 }
                 if (twoPlayers == true && playerNum == 2) {
                     GameScreen.setCarNumP2(getCarNum());
@@ -289,15 +299,15 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 if (twoPlayers == true && playerNum == 2) {
                     //return to car selection P1
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets));
                 }
                 if (twoPlayers == true && playerNum == 1) {
                     //return to player screen
-                    game.setScreen(new PlayerScreen(game, twoPlayers));
+                    //game.setScreen(new PlayerScreen(game, twoPlayers));
                 }                
                 if (twoPlayers == false) {
                     //return to player screen
-                    game.setScreen(new PlayerScreen(game, twoPlayers));
+                    //game.setScreen(new PlayerScreen(game, twoPlayers));
                 }
             }
         });

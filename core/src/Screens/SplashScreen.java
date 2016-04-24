@@ -30,8 +30,6 @@ public class SplashScreen extends InputListener implements Screen {
     
     private final RacingGame game;
     private OrthographicCamera camera;
-    private Hud hud;
-    private int i;
     
     private Stage stage;
     private Texture splash_image;
@@ -50,21 +48,21 @@ public class SplashScreen extends InputListener implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
+        stage = new Stage();
         
         loadAssets();
         
-        stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
         style_lbl = new Label.LabelStyle(font, Color.WHITE);
-
     }
     
     private void loadAssets() {
         assets = new ScreenAssets();
         assets.loadSplashScreen();
         assets.loadMainMenuScreen();
-        
-        assets.manager.finishLoading();        
+        assets.loadPlayerScreen();
+        assets.loadCarSelectionScreen();
+        assets.manager.finishLoading();   
     }
     
     @Override
@@ -79,7 +77,7 @@ public class SplashScreen extends InputListener implements Screen {
         stage.addActor(lbl);
         
         /** Actions */
-        float fadeTime = .5f;
+        float fadeTime = .8f;
         lbl.addAction(Actions.alpha(0)); //make text transparent
         lbl.addAction(Actions.repeat(50, Actions.sequence(Actions.fadeIn(fadeTime), Actions.fadeOut(fadeTime))));
     }
@@ -98,8 +96,8 @@ public class SplashScreen extends InputListener implements Screen {
         /** Listeners */
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             //CHANGE BACK INTO MENU LATER!!
-            game.setScreen(new MainMenuScreen(game));
-            System.out.println("SPACE");
+            game.setScreen(new MainMenuScreen(game, assets));
+            //System.out.println("SPACE");
         }
         
         rendCount++;

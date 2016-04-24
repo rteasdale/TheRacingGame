@@ -27,12 +27,12 @@ import handlers.ScreenAssets;
  */
 public class MainMenuScreen implements Screen {
     private RacingGame game;
-
-    private final Screen scr = this;
     
-    private OrthographicCamera camera;
     private Stage stage;
     private Texture background;
+    
+    private ScreenAssets assets;
+    private Texture title_texture;
     
     private TextureAtlas buttons_atlas;
     private Skin buttons_skin;
@@ -52,18 +52,23 @@ public class MainMenuScreen implements Screen {
     private ImageButtonStyle style_credits;
     private ImageButtonStyle style_leader;
     
-    public MainMenuScreen(RacingGame game) {
+    public MainMenuScreen(RacingGame game, ScreenAssets assets) {
+        this.assets = assets;
         this.game = game;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
-        //ScreenAssets.manager.load(buttons_atlas);
+        /** Textures */
+        title_texture = assets.manager.get(ScreenAssets.mainTitle);
+        
         /** Background image*/
-        background = new Texture(Gdx.files.internal("menu/menu_image.jpg"));
-
+        background = assets.manager.get(ScreenAssets.background);
+        
         /** Atlas and skin */
-        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin = new Skin(buttons_atlas);
+        
+        loadAssets();
         
         /** Styles */
         style_1P = new ImageButtonStyle(buttons_skin.getDrawable("menu_singleP"), null, null, null, null, null);
@@ -74,13 +79,17 @@ public class MainMenuScreen implements Screen {
         style_leader = new ImageButtonStyle(buttons_skin.getDrawable("menu_leaderboard"), null, null, null, null, null);
         
     }
+    
+    private void loadAssets() {
+        
+    }
 
     @Override
     public void show() {
         Gdx.app.log("MainMenuScreen", "show called");
         
         /** Position actors */
-        title = new Image(new Texture(Gdx.files.internal("menu/menu_title.png")));
+        title = new Image(title_texture);
         title.setPosition(280, 550);
         
         onePlayerButton = new ImageButton(style_1P);
@@ -120,7 +129,7 @@ public class MainMenuScreen implements Screen {
         onePlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayerScreen(game, false));
+                game.setScreen(new PlayerScreen(game, false, assets));
             }
         });  
 
@@ -128,7 +137,7 @@ public class MainMenuScreen implements Screen {
         twoPlayersButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayerScreen(game, true)); //true for two players
+                game.setScreen(new PlayerScreen(game, true, assets)); //true for two players
             }
         });  
         

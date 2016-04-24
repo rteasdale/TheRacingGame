@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -35,6 +36,10 @@ public class PlayerScreen implements Screen {
     static public String playerNameP1;
     static public String playerNameP2;
     private boolean twoPlayers;
+    
+    private final ScreenAssets assets;
+    private Texture title_texture;
+    private Texture playerNameBox;
 
     private Image title;
     private ImageButton next_btn;
@@ -60,8 +65,9 @@ public class PlayerScreen implements Screen {
     private Skin buttons_skin;    
     
 
-    public PlayerScreen(RacingGame game, boolean twoPlayers) {
+    public PlayerScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets) {
         this.game = game;
+        this.assets = assets;
         this.twoPlayers = twoPlayers;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -69,11 +75,16 @@ public class PlayerScreen implements Screen {
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
 
+        /** textures*/
+        title_texture = assets.manager.get(ScreenAssets.playerTitle);        
+        
         /** Atlas and skin */
-        buttons_atlas = new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt"));
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin= new Skin(buttons_atlas);
-        atlas = new TextureAtlas(Gdx.files.internal("menu/uiskin.txt"));
+        atlas = assets.manager.get(ScreenAssets.atlas);
         skin = new Skin(atlas);
+        
+        loadAssets();
         
         /** Styles */
         next_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("next_button"), null, null, null, null, null);
@@ -89,12 +100,16 @@ public class PlayerScreen implements Screen {
         lbl_style.fontColor = new Color(Color.WHITE);
     }
     
+    private void loadAssets() {
+
+    }
+    
     @Override
     public void show() {
-        Gdx.app.log("PlayerScreen", "show called");
+        //Gdx.app.log("PlayerScreen", "show called");
        
         /**Title*/
-        title = new Image(new Texture("menu/playername_title.png"));
+        title = new Image(title_texture);
         title.setPosition(280, 648);
         
         /** Label Racer 1*/
@@ -155,14 +170,14 @@ public class PlayerScreen implements Screen {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) { //both text fields are non-empty 
                         playerNameP1 = txt_field1.getText(); //assign player names 
                         playerNameP2 = txt_field2.getText();
-                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1)); //car selection screen
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets)); //car selection screen
                     }
                 }
                 //single player 
                 if (twoPlayers == false) {
                     if (!txt_field1.getText().isEmpty()) { //if text field is non-empty
                         playerNameP1 = txt_field1.getText(); //assign player name  
-                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1)); //car selection screen
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets)); //car selection screen
                     }
                 }
             }
@@ -174,7 +189,7 @@ public class PlayerScreen implements Screen {
                 txt_field1.clear(); //clear both textfields
                 txt_field2.clear();
                 dispose(); //dispose screen
-                game.setScreen(new MainMenuScreen(game)); //return to main menu screen
+                game.setScreen(new MainMenuScreen(game, assets)); //return to main menu screen
                 
             }
         });        

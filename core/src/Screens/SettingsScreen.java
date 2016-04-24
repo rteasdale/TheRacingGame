@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -36,6 +37,7 @@ public class SettingsScreen implements Screen {
     private Skin check_skin;
     
     private TextureAtlas atlas;
+    private ScreenAssets assets;
   
     private int musicVol;
     private int SFXVol;
@@ -64,6 +66,8 @@ public class SettingsScreen implements Screen {
     public void show() {
         stage = new Stage();
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
+        
+        
         skin = new Skin(new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt")));
         
         atlas = new TextureAtlas(Gdx.files.internal("menu/settings_atlas.txt"));
@@ -116,7 +120,7 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //save values of sliders
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new MainMenuScreen(game, assets));
             }
         });
 
