@@ -550,7 +550,7 @@
   <object id="114" x="47.6068" y="765.569" width="195.574" height="24.4467"/>
   <object id="115" x="1151.57" y="23.1601" width="21.8734" height="190.427"/>
  </objectgroup>
- <objectgroup name="Ice ObjectLayer">
+ <objectgroup name="Ice ObjectLayer" visible="0">
   <object id="20" x="839.844" y="552.619" width="241.268" height="141.314"/>
   <object id="21" x="840.993" y="218.29" width="237.822" height="164.292"/>
   <object id="22" x="838.695" y="-0.702206" width="241.268" height="23.6801"/>

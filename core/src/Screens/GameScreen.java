@@ -64,7 +64,7 @@ public final class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-    public static boolean debug = false; //Boolean if I want B2D Debug on or off
+    public static boolean debug = true; //Boolean if I want B2D Debug on or off
 
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
@@ -84,7 +84,8 @@ public final class GameScreen implements Screen {
     float green;
     float blue;
     float alpha;
-    String mapAdress;
+    String mapAddressT; //Map Adress for the TiledMap
+    String mapAddressI; // Map Adress for the Image
     
     Music song1 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track1.mp3"));
     Music song2 = Gdx.audio.newMusic(Gdx.files.internal("music/map1_track2.mp3"));
@@ -133,8 +134,10 @@ public final class GameScreen implements Screen {
         ////////////////////////////////////////////////////
         //Load Tiled Map
         choseMap(mapNum);
+        bg = new Texture(mapAddressI);
         //playMusic(mapNum);
-        tileMap = new TmxMapLoader().load(mapAdress);
+       
+        tileMap = new TmxMapLoader().load(mapAddressT);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
 
         createGrounds();
@@ -166,8 +169,8 @@ public final class GameScreen implements Screen {
         camera.update();
 
         //draw tile map
-        tmr.setView(camera);
-        tmr.render();
+        //tmr.setView(camera);
+        //tmr.render();
 
         System.out.println(car.body.getLinearVelocity().len());
         
@@ -458,7 +461,8 @@ public final class GameScreen implements Screen {
             green = 122/255f;
             blue = 25/255f;
             alpha = 1;
-            mapAdress = "maps/map1.tmx";
+            mapAddressT = "maps/map1.tmx";
+            mapAddressI = "maps/map1.png";
         }
         else if(mapNum == 1){
             System.out.println("Map 2 Selected");
@@ -466,7 +470,9 @@ public final class GameScreen implements Screen {
             green = 254/255f;
             blue = 255/255f;
             alpha = 1;
-            mapAdress = "maps/map2.tmx";
+            mapAddressT = "maps/map2.tmx";
+            mapAddressI = "maps/map2.png";
+            
         }
         else if(mapNum == 2){
             System.out.println("Map 3 Selected");
@@ -474,11 +480,12 @@ public final class GameScreen implements Screen {
             green = 8/255f;
             blue = 36/255f;
             alpha = 1;
-            mapAdress = "maps/map3.tmx";
+            mapAddressT = "maps/map3.tmx";
+            mapAddressI = "maps/map3.png";
         }
         else{
             System.out.println("Map DEFAULT Selected");
-            mapAdress = "maps/map1.tmx";
+            mapAddressT = "maps/map1.tmx";
         }
     }
         
@@ -511,7 +518,7 @@ public final class GameScreen implements Screen {
     //draw Object sprites
     batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        //batch.draw(bg, -750, 0);
+        batch.draw(bg, -750, 0);
         world.getBodies(tmpBodies);
 
         for(Body body : tmpBodies) {

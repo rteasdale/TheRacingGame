@@ -416,7 +416,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Fuel ObjectLayer">
+ <objectgroup name="Fuel ObjectLayer" visible="0">
   <object id="24" x="1726.96" y="431.562" width="49.1383" height="96.8523"/>
   <object id="25" x="1583.6" y="527.703" width="49.1383" height="96.8523"/>
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
