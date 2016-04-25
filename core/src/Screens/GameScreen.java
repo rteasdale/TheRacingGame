@@ -48,7 +48,7 @@ public final class GameScreen implements Screen {
     private Hud hud;
     private ScreenAssets assets;
             
-    private boolean countdownState = true;
+    private boolean countdownState = false;
     private boolean gamingState = false;
     private boolean finishState;
     
@@ -104,8 +104,15 @@ public final class GameScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
+<<<<<<< HEAD
 
 
+=======
+        
+        inputManager = new InputManager(this);
+        Gdx.input.setInputProcessor(inputManager);
+        
+>>>>>>> origin/master
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -190,17 +197,17 @@ public final class GameScreen implements Screen {
             renderer.render(world, camera.combined);
         }
 
-        if(twoPlayers == false){
+        if(!twoPlayers){
         camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
         }
         
-        if(twoPlayers == true){
+        if(twoPlayers){
             Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
         
         /**CountdownState*/ 
-        if (countdownState == true) {
+        if (countdownState) {
             
         }
         

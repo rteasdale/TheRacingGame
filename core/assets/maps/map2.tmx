@@ -543,7 +543,7 @@
   <object id="110" x="597.333" y="1055.33" width="180" height="66"/>
   <object id="111" x="346" y="1056" width="146.667" height="66"/>
  </objectgroup>
- <objectgroup name="FinishLine ObjectLayer" visible="0">
+ <objectgroup name="FinishLine ObjectLayer">
   <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888"/>
   <object id="112" x="1129.7" y="696.089" width="20.5867" height="191.714"/>
   <object id="113" x="1128.41" y="1055.07" width="24.4467" height="144.107"/>
