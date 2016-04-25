@@ -5,6 +5,7 @@
  */
 package Scenes;
 
+import Screens.GameScreen;
 import car.Car;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,9 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
+import java.util.TimerTask;
 
 /**
  *
@@ -27,6 +31,7 @@ import com.mygdx.game.RacingGame;
  */
 public class Hud {
     public Stage stage;
+    private boolean twoPlayers;
     private Viewport viewport;
     private BitmapFont font;
     
@@ -39,18 +44,26 @@ public class Hud {
     private int seconds;
     private int milliseconds;
     
+    private int count;
+    private int i = 5;
+    private final String GO = "GO";
+    
     private int lapCount;
     private int totalLaps;
     
-    private final Label timerLabel;
-    private final Label lapLabel;
+    private Label.LabelStyle lbl_style;    
+    private Label timerLabel;
+    private Label lapLabel;
+    public Label countdownLbl;
     
     
-    public Hud(SpriteBatch batch) {
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);      
+    public Hud(SpriteBatch batch, boolean twoPlayers) {
+        this.twoPlayers = twoPlayers;
         viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
+        
+        font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
         
         /**Widgets*/
         speedgauge = new Image(new Texture("HUD/speedgauge.png"));
@@ -65,15 +78,18 @@ public class Hud {
         needle2.setRotation(12);
         
         fuelgauge = new Image(new Texture("HUD/fuelgauge.png"));
-        fuelgauge.setPosition(1050, 10);
-
+        fuelgauge.setPosition(1050, 10);        
+        
+        /**Label style*/
+        lbl_style = new Label.LabelStyle(font, Color.LIME);
+        
         //time format 
         String time;
         time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
         
-        timerLabel = new Label(time, new Label.LabelStyle(font, Color.LIME));
+        timerLabel = new Label(time, lbl_style);
         timerLabel.setPosition(150, 670);
         
         //lap format 
@@ -82,15 +98,22 @@ public class Hud {
             lapCount, totalLaps
         );        
 
-        lapLabel = new Label(lap, new Label.LabelStyle(font, Color.LIME));
+        lapLabel = new Label(lap, lbl_style);
         lapLabel.setPosition(1000, 670);
 
+        //countdown
+        countdownLbl = new Label("5", lbl_style);
+        countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+        
         stage.addActor(timerLabel);
         stage.addActor(lapLabel);
         stage.addActor(speedgauge);
         stage.addActor(needle);
         stage.addActor(fuelgauge);
         stage.addActor(needle2);
+        
+        stage.addActor(countdownLbl);
+
     }
     
     public void updateTime(long startTime) {
@@ -98,16 +121,35 @@ public class Hud {
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
         milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
         
+        //time format 
         String time;
         time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
-
+        
         timerLabel.setText(time);
+        
     }    
     
     public void updateLap() {
         lapLabel.setText(null);
+    }
+    
+    public void updateCountDown() {
+        
+        Timer timer = new Timer();
+        timer.scheduleTask(new Task() {
+            @Override
+            public void run() {
+                if (i > 0) {
+                countdownLbl.setText(Integer.toString(i));
+                }
+                else if (i == 0) {
+                countdownLbl.setText(GO);
+                }
+            }
+        }, 1000);
+
     }
     
     public void updateSpeed(float currentSpeed, Car car) {

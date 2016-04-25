@@ -133,6 +133,5 @@ public class ScreenAssets {
         manager.load(song5);
         manager.load(song6);
     }
-    
-    
+
 }

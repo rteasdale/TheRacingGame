@@ -79,14 +79,14 @@ public class LoadingScreen implements Screen {
         progress = MathUtils.lerp(progress, assets.manager.getProgress(),0.1f);
         progress_percentage.setText("Loading " + "(" + Integer.toString((int)(progress*100)) + " % )");
         
-        float delay = 4; // seconds
+        float delay = 2; // seconds
 
         Timer.schedule(new Task(){
             @Override
             public void run() {
             if (assets.manager.update() && progress >= assets.manager.getProgress() - 101f) {
-            game.setScreen(new GameScreen(game, twoPlayers, mapNum, assets));
-        }
+                game.setScreen(new GameScreen(game, twoPlayers, mapNum, assets));
+            }
             }
         }, delay);        
        
