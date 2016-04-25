@@ -113,6 +113,7 @@ public class LoadingScreen implements Screen {
     
     private void queueAssets() {
         assets.loadGameScreen();
+        assets.loadHUD();
         assets.manager.finishLoading();
     }
 

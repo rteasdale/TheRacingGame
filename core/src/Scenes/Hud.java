@@ -112,7 +112,7 @@ public class Hud {
         stage.addActor(fuelgauge);
         stage.addActor(needle2);
         
-        stage.addActor(countdownLbl);
+        //stage.addActor(countdownLbl);
 
     }
     
@@ -162,11 +162,9 @@ public class Hud {
     
     public void updateFuel(float fuel, Car car) {
         needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
-        if (fuel == 0) {
-            needle2.setRotation(15);
-        }
-        else if (fuel == car.getMaxFuelCapacity()) {
-            needle2.setRotation(210);
+        
+        if (fuel >= 0 && fuel <= car.getMaxFuelCapacity()) {
+            needle2.setRotation(-fuel);
         }
  
     }

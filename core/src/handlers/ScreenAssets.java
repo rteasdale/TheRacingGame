@@ -125,6 +125,10 @@ public class ScreenAssets {
         manager.load(font);
     }
     
+    public void loadHUD() {
+        
+    }
+    
     public void loadGameScreen() {
         manager.load(song1);
         manager.load(song2);

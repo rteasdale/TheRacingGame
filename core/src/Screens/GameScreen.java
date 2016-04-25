@@ -104,9 +104,8 @@ public final class GameScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
-        Gdx.input.setInputProcessor(inputManager);
-        inputManager = new InputManager(this);
-        
+
+
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -115,12 +114,16 @@ public final class GameScreen implements Screen {
         camera.position.y = 0;
         
         hud = new Hud(batch, twoPlayers);
-        world = new World(new Vector2(0, 0f), true);cl = new CarContactListener();
+        world = new World(new Vector2(0, 0f), true);
         world.setContactListener(cl);
         cl = new CarContactListener();
 
         renderer = new Box2DDebugRenderer();
-
+        renderer.setDrawJoints(false);
+        
+        inputManager = new InputManager(this);
+        Gdx.input.setInputProcessor(inputManager);
+        
         /** Songs*/
         song1 = assets.manager.get(ScreenAssets.song1);
         song2 = assets.manager.get(ScreenAssets.song2);
@@ -213,9 +216,8 @@ public final class GameScreen implements Screen {
             //update fuel tank
             hud.updateFuel(fuel, car);
 
-            hud.stage.draw();
-
         //} 
+            
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
