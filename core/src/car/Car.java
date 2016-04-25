@@ -427,4 +427,8 @@ public class Car {
         return fuelConsumption;
     }
     
+      public void finishLineUpdate(){
+          
+      }
+      
 }
