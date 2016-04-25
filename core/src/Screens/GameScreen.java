@@ -36,6 +36,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.RacingGame;
 import handlers.CarContactListener;
 import handlers.InputManager;
@@ -48,9 +50,10 @@ public final class GameScreen implements Screen {
     private Hud hud;
     private ScreenAssets assets;
             
-    private boolean countdownState = false;
+    private long startTime;
+    private boolean countdownState;
     private boolean gamingState = false;
-    private boolean finishState;
+    private boolean finishState = false;
     
     public static int mapNum = 0;
     private boolean twoPlayers;
@@ -61,9 +64,6 @@ public final class GameScreen implements Screen {
     private static int carNumP2;
     private static int carColorP1;
     private static int carColorP2;
-    
-    private float totalTime = 0;
-    private long startTime = TimeUtils.millis();
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
@@ -104,15 +104,8 @@ public final class GameScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
-<<<<<<< HEAD
 
-
-=======
         
-        inputManager = new InputManager(this);
-        Gdx.input.setInputProcessor(inputManager);
-        
->>>>>>> origin/master
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -120,16 +113,16 @@ public final class GameScreen implements Screen {
         camera.position.x = 0;
         camera.position.y = 0;
         
-        hud = new Hud(batch, twoPlayers);
+        hud = new Hud(batch, twoPlayers, gamingState, assets);
         world = new World(new Vector2(0, 0f), true);
-        world.setContactListener(cl);
         cl = new CarContactListener();
-
+        world.setContactListener(cl);
+        
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
         
         inputManager = new InputManager(this);
-        Gdx.input.setInputProcessor(inputManager);
+//        Gdx.input.setInputProcessor(inputManager);
         
         /** Songs*/
         song1 = assets.manager.get(ScreenAssets.song1);
@@ -171,6 +164,16 @@ public final class GameScreen implements Screen {
 
     @Override
     public void show() {
+        
+        float delay = 2; // seconds
+
+        Timer.schedule(new Task(){
+            @Override
+            public void run() {
+                countdownState = true;
+            }
+        }, delay);      
+        
 
     }
     
@@ -208,12 +211,15 @@ public final class GameScreen implements Screen {
         
         /**CountdownState*/ 
         if (countdownState) {
-            
+            hud.updateCountDown(f);   
+            gamingState = hud.getGamingState();
         }
         
         /**Gaming state*/
-        //if (gamingState == true) {
-            hud.updateTime(startTime);
+        if (gamingState) {
+            Gdx.input.setInputProcessor(inputManager); 
+            
+            hud.updateTime();
 
             float carSpeed = car.body.getLinearVelocity().len();
             //update speed gauge
@@ -223,8 +229,7 @@ public final class GameScreen implements Screen {
             //update fuel tank
             hud.updateFuel(fuel, car);
 
-        //} 
-            
+        }
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -232,7 +237,7 @@ public final class GameScreen implements Screen {
     }
     
     private void createCollisionsM1(){
-              //Road Layer
+        //Road Layer
         MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
            
         //body
@@ -883,7 +888,7 @@ public final class GameScreen implements Screen {
     //draw Object sprites
     batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        System.out.println(mapNum);
+        //System.out.println(mapNum);
         batch.draw(bg, xPositionDraw(mapNum), yPositionDraw(mapNum));
         
         world.getBodies(tmpBodies);

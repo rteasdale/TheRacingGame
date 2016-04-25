@@ -55,6 +55,18 @@ public class ScreenAssets {
     public static final AssetDescriptor<Texture> stat_box = 
         new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class); 
     
+    //HUD assets
+    public static final AssetDescriptor<Texture> speed_gauge = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("HUD/speedgauge.png"), Texture.class); 
+    
+    public static final AssetDescriptor<Texture> fuel_gauge = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("HUD/fuelgauge.png"), Texture.class);
+    
+    public static final AssetDescriptor<Texture> speed_needle = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("HUD/speedneedle.png"), Texture.class);  
+    
+    public static final AssetDescriptor<Texture> fuel_needle = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("HUD/fuelneedle.png"), Texture.class);       
     
     
     /**Bitmap font*/ 
@@ -126,7 +138,10 @@ public class ScreenAssets {
     }
     
     public void loadHUD() {
-        
+        manager.load(speed_gauge);
+        manager.load(fuel_gauge);
+        manager.load(speed_needle);
+        manager.load(fuel_needle);
     }
     
     public void loadGameScreen() {
