@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="63">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="74">
  <tileset firstgid="1" name="grass_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="grass_texture.png" width="200" height="200"/>
  </tileset>
@@ -416,39 +416,39 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="Fuel ObjectLayer" visible="0">
+ <objectgroup name="Fuel ObjectLayer">
   <object id="24" x="1726.96" y="431.562" width="49.1383" height="96.8523"/>
   <object id="25" x="1583.6" y="527.703" width="49.1383" height="96.8523"/>
   <object id="26" x="1727.32" y="647.344" width="49.1383" height="96.8523"/>
   <object id="27" x="1583.04" y="767.697" width="49.1383" height="96.8523"/>
  </objectgroup>
  <objectgroup name="FinishLine ObjectLayer">
-  <object id="28" x="107" y="551.916" width="265" height="23.5009">
+  <object id="28" x="107" y="574.066" width="265" height="1.35054">
    <properties>
     <property name="ID_Finish" value="5"/>
    </properties>
   </object>
-  <object id="58" x="779.062" y="104.855" width="20.1092" height="267.165">
+  <object id="58" x="779.062" y="104.855" width="1.59734" height="267.165">
    <properties>
     <property name="ID_Finish" value="1"/>
    </properties>
   </object>
-  <object id="59" x="1105.27" y="996.97" width="25.0327" height="266.667">
+  <object id="59" x="1106.68" y="993.558" width="1.64967" height="266.667">
    <properties>
     <property name="ID_Finish" value="3"/>
    </properties>
   </object>
-  <object id="60" x="462.117" y="990.374" width="25.8546" height="273.263">
+  <object id="60" x="552.545" y="995.493" width="2.18027" height="263.678">
    <properties>
     <property name="ID_Finish" value="4"/>
    </properties>
   </object>
-  <object id="61" x="1223" y="359" width="564.5" height="25">
+  <object id="61" x="1225.05" y="357.802" width="562.453" height="2.19756">
    <properties>
     <property name="ID_Finish" value="2"/>
    </properties>
   </object>
-  <object id="62" x="108.02" y="527.427" width="264.317" height="24.1386">
+  <object id="62" x="107.02" y="548.571" width="264.317" height="1.99387">
    <properties>
     <property name="ID_Finish" value="0"/>
    </properties>
@@ -457,15 +457,26 @@
  <objectgroup name="Oil ObjectLayer" visible="0">
   <object id="29" x="443.669" y="1034.75" width="103.974" height="62.6691"/>
  </objectgroup>
- <objectgroup name="Road ObjectLayer" visible="0">
-  <object id="47" x="361.671" y="108" width="1290.79" height="261.985"/>
-  <object id="48" x="1238.83" y="363.75" width="259.821" height="636.042"/>
-  <object id="49" x="106.007" y="106.007" width="266.057" height="1151.53"/>
-  <object id="50" x="1226.36" y="981.085" width="355.435" height="280.607"/>
-  <object id="51" x="1585.95" y="108.086" width="201.621" height="1153.61"/>
-  <object id="52" x="372.064" y="1100" width="854.292" height="157.535"/>
+ <objectgroup name="Road ObjectLayer">
+  <object id="47" x="781.538" y="108" width="440.097" height="261.985"/>
+  <object id="48" x="1223.74" y="361.319" width="287.951" height="638.473"/>
+  <object id="49" x="106.007" y="576.014" width="266.057" height="681.523"/>
+  <object id="50" x="1226.36" y="982.767" width="355.435" height="278.925"/>
+  <object id="51" x="1585.95" y="866.746" width="201.621" height="394.95"/>
+  <object id="52" x="372.064" y="1100" width="179.036" height="157.535"/>
   <object id="54" x="374.667" y="994.667" width="66.6667" height="105.333"/>
-  <object id="55" x="550.667" y="993.333" width="674.667" height="105.333"/>
+  <object id="55" x="556.484" y="993.333" width="549.13" height="265.838"/>
   <object id="56" x="444" y="996" width="105.333" height="37.3333"/>
+  <object id="63" x="106.261" y="103.061" width="266.057" height="444.631"/>
+  <object id="64" x="1109.45" y="994.875" width="115.593" height="265.838"/>
+  <object id="65" x="373.656" y="107.49" width="405.245" height="264.46"/>
+  <object id="66" x="1225.05" y="105.784" width="561.338" height="250.26"/>
+  <object id="67" x="1632.53" y="527.214" width="141.915" height="119.434"/>
+  <object id="68" x="1581.64" y="361.713" width="192.8" height="68.2477"/>
+  <object id="69" x="1633.41" y="745.607" width="142.741" height="119.434"/>
+  <object id="70" x="1583.35" y="431.667" width="141.614" height="95.5468"/>
+  <object id="71" x="1583.35" y="624.467" width="49.4796" height="143.32"/>
+  <object id="72" x="1634.53" y="646.647" width="92.1344" height="98.9592"/>
+  <object id="73" x="107.253" y="551.209" width="264.615" height="21.9778"/>
  </objectgroup>
 </map>

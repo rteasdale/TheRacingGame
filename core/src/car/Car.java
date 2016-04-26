@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,10 +25,11 @@ public class Car {
     public Body body;
     Array<Tire> tires;
     Array<Integer> currentCheckpoints;
+    Array<FuelAreaType> fuelAreas;
     RevoluteJoint leftJoint, rightJoint;
 
     int car = 0;
-    int lapCount = 0;
+    int lapCounter = 0;
     boolean fuel = true;
 
     float maxFSpeed;
@@ -55,6 +57,8 @@ public class Car {
         this.playerNum = playerNum;
         whichCar(CarNum, ColorNum);
         
+        fuelAreas = new Array<FuelAreaType>();
+        
         tires = new Array<Tire>();
         
         BodyDef bodyDef = new BodyDef();
@@ -75,25 +79,6 @@ public class Car {
         vertices[6] = new Vector2(-1.5f, -2f);
         vertices[7] = new Vector2(-0.75f, -2.5f);
                 
-    //6X10 CAR VERTICES
-//	vertices[0] = new Vector2(1, -5);
-//	vertices[1] = new Vector2(3, -3);
-//	vertices[2] = new Vector2(3,  3);
-//	vertices[3] = new Vector2(1, 5);
-//	vertices[4] = new Vector2(-1, 5);
-//	vertices[5] = new Vector2(-3, 3);
-//	vertices[6] = new Vector2(-3, -3);
-//	vertices[7] = new Vector2(-1, -5);
-
-    //OG CAR VERTICES
-//      vertices[0] = new Vector2(1.5f, 0);
-//	vertices[1] = new Vector2(3, 2.5f);
-//	vertices[2] = new Vector2(2.8f, 5.5f);
-//	vertices[3] = new Vector2(1, 10);
-//	vertices[4] = new Vector2(-1, 10);
-//	vertices[5] = new Vector2(-2.8f, 5.5f);
-//	vertices[6] = new Vector2(-3, 2.5f);
-//	vertices[7] = new Vector2(-1.5f, 0);
 
 	PolygonShape polygonShape = new PolygonShape();
         polygonShape.set(vertices);
@@ -105,16 +90,18 @@ public class Car {
         
                                             
         fixtureDef.filter.categoryBits = Constants.CAR;
-        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR | Constants.WALL;
+        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR | Constants.WALL | Constants.FUEL | Constants.FINISH;
                                             
-	body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(new CarType(carSprite, this));
         //body.applyTorque(1000, true);
 
         carSprite = new Sprite(new Texture(carLink));
         carSprite.setSize(3,6);
         carSprite.setOrigin(carSprite.getWidth() / 2, carSprite.getHeight()/2);
-        body.setUserData(carSprite);
+        body.setUserData(new CarType(carSprite, this));
 
+        
         RevoluteJointDef jointDef = new RevoluteJointDef();
         jointDef.bodyA = body;
         jointDef.enableLimit = true;
@@ -207,9 +194,18 @@ public class Car {
         
         
         if(fuel){
+            
         UseFuel(isAccelerating, fuelConsumption);
-        addFuel(onFuelPad);
+        
+        if(onFuelPad){
+            
+        addFuel();
+        
         }
+        }
+        
+       // System.out.println("LapCounter : " +  lapCounter);
+        
     }
     
     public void whichCar(int car, int Color){
@@ -357,11 +353,11 @@ public class Car {
         
     }
     
-        private void addFuel(boolean onFuelPad){
+        private void addFuel(){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
-            if(onFuelPad) {
+
                 this.setFuelTank(FuelTank + fuelConsumption*2);
-            }
+
             }
             
         }
@@ -427,26 +423,55 @@ public class Car {
       public float getFuelConsumption(){
         return fuelConsumption;
     }
-    
-      public void addCheckpoint(){
-          //If contact with checkpoint
-          
-          //add FinishID to list
-      }
-      
-     public void checkpointCheck(){
 
-         //If in contact with checkpoint that has FinishID of 5
-         
-         if(currentCheckpoints.contains(0, true) && currentCheckpoints.contains(1, true) &&
+      
+     public void checkpointCheck(int num){
+
+        if(num == 5){ //Checks if the car is on the last checkpoint
+            
+         if(currentCheckpoints.contains(0, true) && currentCheckpoints.contains(1, true) && 
               currentCheckpoints.contains(2, true) && currentCheckpoints.contains(3, true) &&
-              currentCheckpoints.contains(4, true)){
-             //Adds 1 to lap count
-         }
+              currentCheckpoints.contains(4, true)){  //Checks if car has gone on every checkpoint
+             
+              lapCounter++;  //If true, Add 1 to counter
+              
+              currentCheckpoints.clear(); //Clear the list of checkpoint
+             
+               }
+         
          else
              System.out.println("Missed one or more checkpoints");
-             //Player missed a checkpoint
+         
+        }
+        
+        
+      else{
+                if(!currentCheckpoints.contains(num, true)){ //Checks if the list already has the checkpoint
+                    currentCheckpoints.add(num); //If not, it adds it
+              }  
+        }
+         
      }
+     
+         public void addFuelArea(FuelAreaType item) {
+        fuelAreas.add(item);
+        updateFuel();
+    }
+
+    public void removeFuelArea(FuelAreaType item) {
+        fuelAreas.removeValue(item, false);
+        updateFuel();
+    }
+    
+    public void updateFuel(){
+        if(fuelAreas.size != 0){
+            onFuelPad = true;
+            System.out.println("onFuelPad : True");
+        }
+        else
+            onFuelPad = false;
+            System.out.println("onFuelPad : False");
+    }
       
       
 }

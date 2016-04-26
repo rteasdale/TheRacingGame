@@ -61,12 +61,12 @@ public class InputManager  implements InputProcessor  {
         else if (keycode == Input.Keys.W) {
             if (!pressedKeys2.contains(Key.w)) {
                 pressedKeys2.add(Key.w);
-                GameScreen.car.setIsAccelerating(true);
+                GameScreen.car2.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.S) {
             if (!pressedKeys2.contains(Key.s)) {
                 pressedKeys2.add(Key.s);
-                GameScreen.car.setIsAccelerating(true);
+                GameScreen.car2.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.A) {
             if (!pressedKeys2.contains(Key.a)) {

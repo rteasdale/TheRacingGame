@@ -22,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import car.Car;
 import car.CarMath;
+import car.CarType;
 import car.Constants;
 import car.FinishLineType;
 import car.FuelAreaType;
@@ -319,12 +320,12 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FUEL;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
-            Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new FuelAreaType());
+            Fixture fuelAreaFixture = body.createFixture(fdef);
+            fuelAreaFixture.setUserData(new FuelAreaType());
         }
         
         ////////////////////////////////////////////////////////
@@ -339,6 +340,8 @@ public final class GameScreen implements Screen {
 
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
+             String ID_Finish_String = (String) fi.getProperties().get("ID_Finish", String.class);
+             int ID_Finish = Integer.parseInt(ID_Finish_String);
 
             Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
@@ -348,12 +351,12 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FINISH;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
-            Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new FinishLineType());
+            Fixture finishAreaFixture = body.createFixture(fdef);
+           finishAreaFixture.setUserData(new FinishLineType(ID_Finish));
         }
         
         
@@ -478,12 +481,12 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FUEL;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
-            Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new FuelAreaType());
+            Fixture fuelAreaFixture = body.createFixture(fdef);
+            fuelAreaFixture.setUserData(new FuelAreaType());
         }
         
                 ////////////////////////////////////////////////////////
@@ -498,6 +501,9 @@ public final class GameScreen implements Screen {
 
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
+            
+             String ID_Finish_String = (String) fi.getProperties().get("ID_Finish", String.class);
+             int ID_Finish = Integer.parseInt(ID_Finish_String);
 
             Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum), ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum));
 
@@ -507,12 +513,12 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FINISH;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
-            Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new FinishLineType());
+            Fixture finishAreaFixture = body.createFixture(fdef);
+            finishAreaFixture.setUserData(new FinishLineType(ID_Finish));
         }
         
         MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
@@ -722,7 +728,7 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FUEL;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
@@ -742,6 +748,9 @@ public final class GameScreen implements Screen {
 
             float width = (float) fi.getProperties().get("width", Float.class);
             float height = (float) fi.getProperties().get("height", Float.class);
+            
+            String ID_Finish_String = (String) fi.getProperties().get("ID_Finish", String.class);
+             int ID_Finish = Integer.parseInt(ID_Finish_String);
 
             Vector2 size = new Vector2(((x+width*0.5f)*1/4f)+xPositionDraw(mapNum)+2, ((y+height*0.5f)*1/4f)+yPositionDraw(mapNum)+1);
 
@@ -751,12 +760,12 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.FINISH;
-            fdef.filter.maskBits = Constants.CAR;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new FinishLineType());
+            groundAreaFixture.setUserData(new FinishLineType(ID_Finish));
         }
         
         MapLayer TireLayer = tileMap.getLayers().get("Tire ObjectLayer");
@@ -813,7 +822,7 @@ public final class GameScreen implements Screen {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.filter.categoryBits = Constants.METAL;
-            fdef.filter.maskBits = Constants.TIRE;
+            fdef.filter.maskBits = Constants.CAR | Constants.TIRE;
 
             Body body = world.createBody(bdef);
 
@@ -896,12 +905,21 @@ public final class GameScreen implements Screen {
 
         for(Body body : tmpBodies) {
             
-            if(body.getUserData() != null && body.getUserData() instanceof Sprite) {
+            if(body.getUserData() != null && (body.getUserData() instanceof Sprite)) {
                 Sprite sprite = (Sprite) body.getUserData();
                 sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
                 sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
                 sprite.draw(batch);
             }
+            
+            else if(body.getUserData() != null && (body.getUserData() instanceof CarType)) {
+                CarType type = (CarType) body.getUserData();
+                Sprite sprite = (Sprite) type.sprite;
+                sprite.setPosition((body.getPosition().x - sprite.getWidth()/ 2), (body.getPosition().y - sprite.getHeight()/2));
+                sprite.setRotation(body.getAngle() * ( MathUtils.radiansToDegrees));
+                sprite.draw(batch);
+            }
+            
         }
         
         

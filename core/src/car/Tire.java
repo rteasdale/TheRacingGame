@@ -43,7 +43,7 @@ public class Tire {
         fixtureDef.shape = polygonShape;
         fixtureDef.isSensor = true;
         fixtureDef.filter.categoryBits = Constants.TIRE;
-        fixtureDef.filter.maskBits  = Constants.GROUND;
+        fixtureDef.filter.maskBits  = Constants.GROUND | Constants.FINISH | Constants.FUEL;
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(new CarTireType());
 
@@ -73,7 +73,7 @@ public class Tire {
     
     void updateTraction() {
         if (groundAreas.size == 0) {
-            GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
+            //GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
             currentTraction = 0.2f;
             return;
 	}
