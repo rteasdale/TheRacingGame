@@ -23,6 +23,7 @@ public class Car {
     
     public Body body;
     Array<Tire> tires;
+    Array<Integer> currentCheckpoints;
     RevoluteJoint leftJoint, rightJoint;
 
     int car = 0;
@@ -427,8 +428,25 @@ public class Car {
         return fuelConsumption;
     }
     
-      public void finishLineUpdate(){
+      public void addCheckpoint(){
+          //If contact with checkpoint
           
+          //add FinishID to list
       }
+      
+     public void checkpointCheck(){
+
+         //If in contact with checkpoint that has FinishID of 5
+         
+         if(currentCheckpoints.contains(0, true) && currentCheckpoints.contains(1, true) &&
+              currentCheckpoints.contains(2, true) && currentCheckpoints.contains(3, true) &&
+              currentCheckpoints.contains(4, true)){
+             //Adds 1 to lap count
+         }
+         else
+             System.out.println("Missed one or more checkpoints");
+             //Player missed a checkpoint
+     }
+      
       
 }

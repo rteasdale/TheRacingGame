@@ -105,13 +105,6 @@ public final class GameScreen implements Screen {
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
 
-<<<<<<< HEAD
-  
-        
-
-=======
-        
->>>>>>> origin/master
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -124,20 +117,13 @@ public final class GameScreen implements Screen {
         cl = new CarContactListener();
         world.setContactListener(cl);
         
-<<<<<<< HEAD
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
         
       inputManager = new InputManager(this);
         Gdx.input.setInputProcessor(inputManager);
-=======
-        renderer = new Box2DDebugRenderer();
-        renderer.setDrawJoints(false);
-        
-        inputManager = new InputManager(this);
-//        Gdx.input.setInputProcessor(inputManager);
->>>>>>> origin/master
+
         
         /** Songs*/
         song1 = assets.manager.get(ScreenAssets.song1);
