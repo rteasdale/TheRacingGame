@@ -117,24 +117,12 @@ public final class GameScreen implements Screen {
         world = new World(new Vector2(0, 0f), true);
         cl = new CarContactListener();
         world.setContactListener(cl);
-<<<<<<< HEAD
-        
-
-        renderer = new Box2DDebugRenderer();
-        renderer.setDrawJoints(false);
-        
-      inputManager = new InputManager(this);
-        Gdx.input.setInputProcessor(inputManager);
-=======
-
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
         
         inputManager = new InputManager(this);
->>>>>>> origin/master
 
-        
         /** Songs*/
         song1 = assets.manager.get(ScreenAssets.song1);
         song2 = assets.manager.get(ScreenAssets.song2);

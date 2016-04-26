@@ -58,6 +58,7 @@ public class Car {
         whichCar(CarNum, ColorNum);
         
         fuelAreas = new Array<FuelAreaType>();
+       currentCheckpoints = new Array<Integer>();
         
         tires = new Array<Tire>();
         
