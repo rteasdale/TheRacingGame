@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="116">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="117">
  <tileset firstgid="1" name="snow_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="snow_texture.png" width="200" height="200"/>
  </tileset>
@@ -544,11 +544,36 @@
   <object id="111" x="346" y="1056" width="146.667" height="66"/>
  </objectgroup>
  <objectgroup name="FinishLine ObjectLayer">
-  <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888"/>
-  <object id="112" x="1129.7" y="696.089" width="20.5867" height="191.714"/>
-  <object id="113" x="1128.41" y="1055.07" width="24.4467" height="144.107"/>
-  <object id="114" x="47.6068" y="765.569" width="195.574" height="24.4467"/>
-  <object id="115" x="1151.57" y="23.1601" width="21.8734" height="190.427"/>
+  <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888">
+   <properties>
+    <property name="ID_Finish" value="5"/>
+   </properties>
+  </object>
+  <object id="112" x="1129.7" y="696.089" width="20.5867" height="191.714">
+   <properties>
+    <property name="ID_Finish" value="1"/>
+   </properties>
+  </object>
+  <object id="113" x="1128.41" y="1055.07" width="24.4467" height="144.107">
+   <properties>
+    <property name="ID_Finish" value=""/>
+   </properties>
+  </object>
+  <object id="114" x="47.6068" y="765.569" width="195.574" height="24.4467">
+   <properties>
+    <property name="ID_Finish" value="3"/>
+   </properties>
+  </object>
+  <object id="115" x="1151.57" y="23.1601" width="21.8734" height="190.427">
+   <properties>
+    <property name="ID_Finish" value="4"/>
+   </properties>
+  </object>
+  <object id="116" x="1104.8" y="382.788" width="21.1193" height="167.635">
+   <properties>
+    <property name="ID_Finish" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Ice ObjectLayer" visible="0">
   <object id="20" x="839.844" y="552.619" width="241.268" height="141.314"/>
