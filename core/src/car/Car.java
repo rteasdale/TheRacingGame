@@ -424,7 +424,14 @@ public class Car {
       public float getFuelConsumption(){
         return fuelConsumption;
     }
+      
+      public int getLapNumber() {
+          return lapCounter;
+      }
 
+      public void setLapNumber(int lap) {
+          this.lapCounter = lap;
+      }
       
      public void checkpointCheck(int num){
 

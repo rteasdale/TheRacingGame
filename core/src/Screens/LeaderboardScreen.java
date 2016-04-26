@@ -64,7 +64,7 @@ public class LeaderboardScreen implements Screen {
             table.add(l);
             table.row();
         }
-        
+
 
         stage.addActor(table);
     }

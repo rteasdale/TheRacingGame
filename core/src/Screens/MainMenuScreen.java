@@ -7,6 +7,7 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -35,6 +36,8 @@ public class MainMenuScreen implements Screen {
     
     private TextureAtlas buttons_atlas;
     private Skin buttons_skin;
+    
+    private static Music menu_song;
 
     private Image title;
     private ImageButton onePlayerButton;
@@ -67,7 +70,9 @@ public class MainMenuScreen implements Screen {
         buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin = new Skin(buttons_atlas);
         
-        loadAssets();
+        
+        menu_song = assets.manager.get(ScreenAssets.menu_music);
+        menu_song.play();
         
         /** Styles */
         style_1P = new ImageButtonStyle(buttons_skin.getDrawable("menu_singleP"), null, null, null, null, null);
@@ -79,8 +84,8 @@ public class MainMenuScreen implements Screen {
         
     }
     
-    private void loadAssets() {
-        
+    public static void stopMenuMusic() {
+        menu_song.stop();
     }
 
     @Override

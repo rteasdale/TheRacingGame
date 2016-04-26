@@ -104,6 +104,7 @@ public class ScreenAssets {
     public void loadSplashScreen() {
         manager.load(splash_image);
         manager.load(font);
+        manager.load(menu_music);
     }
     
     public void loadMainMenuScreen() {

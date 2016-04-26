@@ -40,6 +40,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.RacingGame;
+import com.sun.prism.image.ViewPort;
 import handlers.CarContactListener;
 import handlers.InputManager;
 import handlers.ScreenAssets;
@@ -50,6 +51,8 @@ public final class GameScreen implements Screen {
     private RacingGame game;
     private Hud hud;
     private ScreenAssets assets;
+    
+    private ViewPort viewPort;
             
     private long startTime;
     private boolean countdownState;
@@ -77,6 +80,8 @@ public final class GameScreen implements Screen {
     
     public World world;
     public static OrthographicCamera camera;
+    
+    
     Box2DDebugRenderer renderer;
     InputManager inputManager;
     CarContactListener cl;
@@ -183,8 +188,8 @@ public final class GameScreen implements Screen {
         inputManager.updateControls(twoPlayers); //update controls for two players
         
         world.step(1 / 60f, 6, 2);
-        camera.update();
-
+        camera.update();    
+    
         //draw tile map
         //tmr.setView(camera);
         //tmr.render();
@@ -233,6 +238,8 @@ public final class GameScreen implements Screen {
             float fuel = car.getFuelTank();
             //update fuel tank
             hud.updateFuel(fuel, car);
+            
+            hud.updateLap(twoPlayers, car, car2);
 
         }
        

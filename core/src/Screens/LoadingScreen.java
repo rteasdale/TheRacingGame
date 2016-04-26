@@ -32,6 +32,8 @@ public class LoadingScreen implements Screen {
     private boolean twoPlayers;
     private int mapNum;
     
+    private MainMenuScreen mainMenuScreen;
+    
     private Stage stage;
     private Label progress_percentage;
     private Label.LabelStyle lbl_style;
@@ -48,6 +50,8 @@ public class LoadingScreen implements Screen {
         this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
+        
+        mainMenuScreen.stopMenuMusic();
         
         stage = new Stage();
         camera = new OrthographicCamera();

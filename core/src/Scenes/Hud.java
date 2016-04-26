@@ -40,6 +40,8 @@ public class Hud {
     private Texture fuelgauge_texture;
     private Texture speedneedle_texture;
     private Texture fuelneedle_texture;
+    
+    private int totalLap;
             
     private Image fuelgauge;
     private Image speedgauge;
@@ -68,10 +70,11 @@ public class Hud {
     public Label countdownLbl;
     
     
-    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, ScreenAssets assets) {
+    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, ScreenAssets assets, int totalLap) {
         this.twoPlayers = twoPlayers;
         this.assets = assets;
         this.gamingState = gamingState;
+        this.totalLap = totalLap;
         viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
@@ -117,12 +120,15 @@ public class Hud {
         
         timerLabel = new Label(time, lbl_style);
         timerLabel.setPosition(150, 670);
+
         
+        //total laps = maplap
         //lap format 
         String lap;
-        lap = String.format("%02d / %02d",
+        lap = String.format("%2d / %2d",
             lapCount, totalLaps
         );        
+
 
         lapLabel = new Label(lap, lbl_style);
         lapLabel.setPosition(1000, 670);
@@ -137,7 +143,7 @@ public class Hud {
             speedgaugeP2.setPosition(200, 20);
             
             needleP2 = new Image(speedneedle_texture);
-            
+            needleP2.setSize(totalTime, totalTime);
             
             stage.addActor(speedgaugeP2);         
         }
@@ -168,8 +174,24 @@ public class Hud {
         
     }    
     
-    public void updateLap() {
-        lapLabel.setText(null);
+    public void updateLap(boolean twoPlayers, Car car, Car car2) {
+
+        String lap; 
+        
+        if (!twoPlayers) {
+            //lap format  
+            lap = String.format("%2d / %2d",
+                car2.getLapNumber(), totalLaps
+            );          
+            //lapLabel.setText(null);  label for player 2
+        }
+        
+       //lap format  
+        lap = String.format("%2d / %2d",
+            car.getLapNumber(), totalLaps
+        );          
+        lapLabel.setText(lap);
+        
     }
     
     public void updateCountDown(float delta) {
