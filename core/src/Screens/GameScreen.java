@@ -60,6 +60,7 @@ public final class GameScreen implements Screen {
     private boolean finishState = false;
     
     public static int mapNum = 0;
+    public static int maxLap = 0;
     private boolean twoPlayers;
     
     Sprite tireSprite;
@@ -158,11 +159,18 @@ public final class GameScreen implements Screen {
         createCollisionsM1();
         }
         if(mapNum == 1){
+            car.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            if(twoPlayers){
+                car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            }
+                    
             createCollisionsM2();
         }
         if(mapNum == 2){
             createCollisionsM3();
         }
+        
+        
 	
     }
 
@@ -850,6 +858,7 @@ public final class GameScreen implements Screen {
             alpha = 1;
             mapAddressT = "maps/map1.tmx";
             mapAddressI = "maps/map1.png";
+            maxLap = 5;
         }
         else if(mapNum == 1){
             //System.out.println("Map 2 Selected");
@@ -859,6 +868,7 @@ public final class GameScreen implements Screen {
             alpha = 1;
             mapAddressT = "maps/map2.tmx";
             mapAddressI = "maps/map2.png";
+            maxLap = 3;
             
         }
         else if(mapNum == 2){
@@ -869,6 +879,7 @@ public final class GameScreen implements Screen {
             alpha = 1;
             mapAddressT = "maps/map3.tmx";
             mapAddressI = "maps/map3.png";
+            maxLap = 3;
         }
         else{
             //System.out.println("Map DEFAULT Selected");
