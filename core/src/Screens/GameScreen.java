@@ -105,13 +105,6 @@ public final class GameScreen implements Screen {
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
 
-<<<<<<< HEAD
-  
-        
-
-=======
-        
->>>>>>> origin/master
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
@@ -123,21 +116,13 @@ public final class GameScreen implements Screen {
         world = new World(new Vector2(0, 0f), true);
         cl = new CarContactListener();
         world.setContactListener(cl);
-        
-<<<<<<< HEAD
+
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
         
-      inputManager = new InputManager(this);
-        Gdx.input.setInputProcessor(inputManager);
-=======
-        renderer = new Box2DDebugRenderer();
-        renderer.setDrawJoints(false);
-        
         inputManager = new InputManager(this);
-//        Gdx.input.setInputProcessor(inputManager);
->>>>>>> origin/master
+
         
         /** Songs*/
         song1 = assets.manager.get(ScreenAssets.song1);
@@ -224,10 +209,16 @@ public final class GameScreen implements Screen {
             camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         }
         
+        //load HUD 
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        hud.stage.act();
+        
         /**CountdownState*/ 
         if (countdownState) {
             hud.updateCountDown(f);   
             gamingState = hud.getGamingState();
+            
         }
         
         /**Gaming state*/
@@ -235,7 +226,7 @@ public final class GameScreen implements Screen {
             Gdx.input.setInputProcessor(inputManager); 
             
             hud.updateTime();
-
+            
             float carSpeed = car.body.getLinearVelocity().len();
             //update speed gauge
             hud.updateSpeed(carSpeed, car);  
@@ -245,9 +236,6 @@ public final class GameScreen implements Screen {
             hud.updateFuel(fuel, car);
 
         }
-        //load HUD 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
        
     }
     

@@ -65,13 +65,8 @@ public class LeaderboardScreen implements Screen {
             table.row();
         }
         
-<<<<<<< HEAD
-//        table.add("time");
-        table.setPosition(100, 300);
-=======
         //table.row();
         table.setPosition(100, 400);
->>>>>>> origin/master
         stage.addActor(table);
     }
 

@@ -45,6 +45,10 @@ public class Hud {
     private Image speedgauge;
     private Image needle;
     private Image needle2;
+    private Image speedgaugeP2;
+    private Image fuelgaugeP2;
+    private Image needleP2;
+    private Image needle2P2;
     
     private int minutes;
     private int seconds;
@@ -87,10 +91,13 @@ public class Hud {
         needle = new Image(speedneedle_texture);
         needle.setPosition(31, 142);
         needle.setRotation(238);
+        needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
         
         needle2 = new Image(fuelneedle_texture);
         needle2.setPosition(1056, 122);
         needle2.setRotation(12);
+        needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
+        
         
         fuelgauge = new Image(fuelgauge_texture);
         fuelgauge.setPosition(1050, 10);        
@@ -103,6 +110,10 @@ public class Hud {
         time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
+        
+        seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
+        minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;        
         
         timerLabel = new Label(time, lbl_style);
         timerLabel.setPosition(150, 670);
@@ -119,6 +130,13 @@ public class Hud {
         //countdown
         countdownLbl = new Label("", lbl_style);
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+        
+        if (twoPlayers == true) {
+            speedgaugeP2 = new Image(speedgauge_texture);
+            speedgaugeP2.setSize(200, 200);
+            speedgaugeP2.setPosition(50, 20);
+            stage.addActor(speedgaugeP2);         
+        }
         
         stage.addActor(timerLabel);
         stage.addActor(lapLabel);
@@ -159,10 +177,10 @@ public class Hud {
             countdownLbl.setText(Integer.toString(sec));
         }
         else if (sec == 0) {
-            countdownLbl.setText(GO);
-            setGamingState(true);
             startTime = TimeUtils.millis();
-            
+            setGamingState(true);
+            countdownLbl.setText(GO);
+
         Timer.schedule(new Task() {
             @Override
             public void run() {
@@ -175,6 +193,10 @@ public class Hud {
 
     }
     
+    public void startTime() {
+        //startTime = TimeUtils.millis();
+    }
+    
     public boolean getGamingState() {
         return gamingState;
         
@@ -185,19 +207,15 @@ public class Hud {
     }
     
     public void updateSpeed(float currentSpeed, Car car) {
-        needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
+        
         //set angular limit to gauge
-        if (needle.getRotation() > -40) {
-            needle.setRotation(240-currentSpeed*1.5f);
+        if (needle.getRotation() >= -40) {
+            needle.setRotation(240-(currentSpeed*1.5f));
         }
     }
     
     public void updateFuel(float fuel, Car car) {
-        needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
-        
-        if (fuel >= 0 && fuel <= car.getMaxFuelCapacity()) {
-            needle2.setRotation(250-fuel);
-        }
+            needle2.setRotation(166-(fuel*1.55f));
  
     }
     
