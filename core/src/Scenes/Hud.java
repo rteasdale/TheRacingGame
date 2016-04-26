@@ -5,7 +5,6 @@
  */
 package Scenes;
 
-import Screens.GameScreen;
 import car.Car;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,14 +15,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
-import java.util.TimerTask;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -34,7 +32,15 @@ public class Hud {
     private boolean twoPlayers;
     private Viewport viewport;
     private BitmapFont font;
+    private boolean gamingState;
+    private long startTime;
     
+    private ScreenAssets assets;
+    private Texture speedgauge_texture;
+    private Texture fuelgauge_texture;
+    private Texture speedneedle_texture;
+    private Texture fuelneedle_texture;
+            
     private Image fuelgauge;
     private Image speedgauge;
     private Image needle;
@@ -43,10 +49,11 @@ public class Hud {
     private int minutes;
     private int seconds;
     private int milliseconds;
+    private float totalTime = 6;
     
     private int count;
     private int i = 5;
-    private final String GO = "GO";
+    private final String GO = "GO !";
     
     private int lapCount;
     private int totalLaps;
@@ -57,27 +64,35 @@ public class Hud {
     public Label countdownLbl;
     
     
-    public Hud(SpriteBatch batch, boolean twoPlayers) {
+    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, ScreenAssets assets) {
         this.twoPlayers = twoPlayers;
+        this.assets = assets;
+        this.gamingState = gamingState;
         viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(stage);
         
         font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
         
+        /**Textures*/
+        speedgauge_texture = assets.manager.get(ScreenAssets.speed_gauge);
+        fuelgauge_texture = assets.manager.get(ScreenAssets.fuel_gauge);
+        speedneedle_texture = assets.manager.get(ScreenAssets.speed_needle);
+        fuelneedle_texture = assets.manager.get(ScreenAssets.fuel_needle);
+        
         /**Widgets*/
-        speedgauge = new Image(new Texture("HUD/speedgauge.png"));
+        speedgauge = new Image(speedgauge_texture);
         speedgauge.setPosition(20, 20);
         
-        needle = new Image(new Texture("HUD/speed_needle.png"));
+        needle = new Image(speedneedle_texture);
         needle.setPosition(31, 142);
         needle.setRotation(238);
         
-        needle2 = new Image(new Texture("HUD/speed_needle2.png"));
+        needle2 = new Image(fuelneedle_texture);
         needle2.setPosition(1056, 122);
         needle2.setRotation(12);
         
-        fuelgauge = new Image(new Texture("HUD/fuelgauge.png"));
+        fuelgauge = new Image(fuelgauge_texture);
         fuelgauge.setPosition(1050, 10);        
         
         /**Label style*/
@@ -102,7 +117,7 @@ public class Hud {
         lapLabel.setPosition(1000, 670);
 
         //countdown
-        countdownLbl = new Label("5", lbl_style);
+        countdownLbl = new Label("", lbl_style);
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         
         stage.addActor(timerLabel);
@@ -112,11 +127,11 @@ public class Hud {
         stage.addActor(fuelgauge);
         stage.addActor(needle2);
         
-        //stage.addActor(countdownLbl);
+        stage.addActor(countdownLbl);
 
     }
     
-    public void updateTime(long startTime) {
+    public void updateTime() {
         seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
         milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
@@ -135,21 +150,38 @@ public class Hud {
         lapLabel.setText(null);
     }
     
-    public void updateCountDown() {
+    public void updateCountDown(float delta) {
+        totalTime -= delta;
         
-        Timer timer = new Timer();
-        timer.scheduleTask(new Task() {
+        int sec = ((int)totalTime)%60;
+        
+        if (sec > 0) {
+            countdownLbl.setText(Integer.toString(sec));
+        }
+        else if (sec == 0) {
+            countdownLbl.setText(GO);
+            setGamingState(true);
+            startTime = TimeUtils.millis();
+            
+        Timer.schedule(new Task() {
             @Override
             public void run() {
-                if (i > 0) {
-                countdownLbl.setText(Integer.toString(i));
-                }
-                else if (i == 0) {
-                countdownLbl.setText(GO);
-                }
+                countdownLbl.remove();
             }
-        }, 1000);
 
+        }, 3);
+        
+        }
+
+    }
+    
+    public boolean getGamingState() {
+        return gamingState;
+        
+    }
+    
+    public void setGamingState(boolean gamingState) {
+        this.gamingState = gamingState;
     }
     
     public void updateSpeed(float currentSpeed, Car car) {
@@ -164,7 +196,7 @@ public class Hud {
         needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
         
         if (fuel >= 0 && fuel <= car.getMaxFuelCapacity()) {
-            needle2.setRotation(-fuel);
+            needle2.setRotation(250-fuel);
         }
  
     }
