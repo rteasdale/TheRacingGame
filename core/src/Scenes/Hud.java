@@ -41,6 +41,7 @@ public class Hud {
     private Texture speedneedle_texture;
     private Texture fuelneedle_texture;
     
+    private int lapCount;
     private int totalLap;
             
     private Image fuelgauge;
@@ -61,8 +62,7 @@ public class Hud {
     private int i = 5;
     private final String GO = "GO !";
     
-    private int lapCount;
-    private int totalLaps;
+    
     
     private Label.LabelStyle lbl_style;    
     private Label timerLabel;
@@ -126,7 +126,7 @@ public class Hud {
         //lap format 
         String lap;
         lap = String.format("%2d / %2d",
-            lapCount, totalLaps
+            lapCount, totalLap
         );        
 
 
@@ -178,17 +178,17 @@ public class Hud {
 
         String lap; 
         
-        if (!twoPlayers) {
+        if (twoPlayers) {
             //lap format  
             lap = String.format("%2d / %2d",
-                car2.getLapNumber(), totalLaps
+                car2.getLapNumber(), totalLap
             );          
             //lapLabel.setText(null);  label for player 2
         }
         
        //lap format  
         lap = String.format("%2d / %2d",
-            car.getLapNumber(), totalLaps
+            car.getLapNumber(), totalLap
         );          
         lapLabel.setText(lap);
         

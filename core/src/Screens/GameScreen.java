@@ -119,7 +119,7 @@ public final class GameScreen implements Screen {
         camera.position.x = 0;
         camera.position.y = 0;
         
-        hud = new Hud(batch, twoPlayers, gamingState, assets);
+        hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
         world = new World(new Vector2(0, 0f), true);
         cl = new CarContactListener();
         world.setContactListener(cl);
