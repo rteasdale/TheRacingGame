@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="117">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="76" height="56" tilewidth="24" tileheight="24" nextobjectid="122">
  <tileset firstgid="1" name="snow_texture" tilewidth="24" tileheight="24" tilecount="64" columns="8">
   <image source="snow_texture.png" width="200" height="200"/>
  </tileset>
@@ -503,13 +503,13 @@
   <object id="15" x="47.2728" y="214.676" width="48.1386" height="96.5624"/>
  </objectgroup>
  <objectgroup name="Road ObjectLayer" visible="0">
-  <object id="33" x="49.4026" y="189.983" width="166.59" height="888.831"/>
+  <object id="33" x="49.4026" y="189.983" width="166.59" height="576.761"/>
   <object id="34" x="286.208" y="22.2058" width="525.537" height="165.31"/>
-  <object id="45" x="180.113" y="629.164" width="61.6827" height="419.442"/>
-  <object id="54" x="811" y="19.7385" width="745.872" height="194.917"/>
-  <object id="55" x="621.762" y="382.433" width="959.783" height="170.244"/>
-  <object id="63" x="621.762" y="692.781" width="959.783" height="187.515"/>
-  <object id="65" x="777.202" y="1056.01" width="782.137" height="143.104"/>
+  <object id="45" x="180.113" y="629.164" width="61.6827" height="137.58"/>
+  <object id="54" x="811" y="19.7385" width="361.557" height="194.917"/>
+  <object id="55" x="1152.68" y="382.433" width="428.862" height="170.244"/>
+  <object id="63" x="1153.32" y="692.781" width="428.223" height="192.644"/>
+  <object id="65" x="777.202" y="1056.01" width="350.988" height="143.104"/>
   <object id="75" x="47.5138" y="23.2044" width="240.884" height="239.779"/>
   <object id="76" x="47.5138" y="983.425" width="298.343" height="219.89"/>
   <object id="77" x="346.961" y="1121.33" width="468.508" height="75.3477"/>
@@ -536,40 +536,45 @@
   <object id="98" x="217.299" y="601.105" width="118.612" height="23.2044"/>
   <object id="99" x="216.195" y="624.309" width="94.3027" height="23.2044"/>
   <object id="100" x="215.09" y="647.514" width="73.3082" height="24.3094"/>
-  <object id="103" x="1446.85" y="25.4131" width="257.459" height="193.37"/>
+  <object id="103" x="1174.28" y="22.4131" width="530.024" height="193.37"/>
   <object id="104" x="1446.85" y="381.21" width="257.459" height="146.961"/>
   <object id="105" x="1463.43" y="219.888" width="257.459" height="161.326"/>
   <object id="109" x="456" y="360" width="338" height="552"/>
   <object id="110" x="597.333" y="1055.33" width="180" height="66"/>
   <object id="111" x="346" y="1056" width="146.667" height="66"/>
+  <object id="117" x="794.09" y="382.788" width="308.616" height="169.21"/>
+  <object id="118" x="1104.78" y="383.862" width="46.2975" height="167.892"/>
+  <object id="119" x="47.6054" y="769.143" width="196.157" height="213.364"/>
+  <object id="120" x="1131.06" y="1055.35" width="315.457" height="143.963"/>
+  <object id="121" x="794.063" y="695.601" width="356.618" height="192.025"/>
  </objectgroup>
  <objectgroup name="FinishLine ObjectLayer">
-  <object id="19" x="1125.92" y="383.732" width="26.4246" height="168.888">
+  <object id="19" x="1151.82" y="383.732" width="0.525711" height="168.888">
    <properties>
     <property name="ID_Finish" value="5"/>
    </properties>
   </object>
-  <object id="112" x="1129.7" y="696.089" width="20.5867" height="191.714">
+  <object id="112" x="1151.59" y="693.321" width="0.211812" height="197.25">
    <properties>
     <property name="ID_Finish" value="1"/>
    </properties>
   </object>
-  <object id="113" x="1128.41" y="1055.07" width="24.4467" height="144.107">
+  <object id="113" x="1129.51" y="1055.08" width="0.244435" height="144.088">
    <properties>
-    <property name="ID_Finish" value=""/>
+    <property name="ID_Finish" value="2"/>
    </properties>
   </object>
-  <object id="114" x="47.6068" y="765.569" width="195.574" height="24.4467">
+  <object id="114" x="47.6068" y="765.569" width="195.574" height="1.85285">
    <properties>
     <property name="ID_Finish" value="3"/>
    </properties>
   </object>
-  <object id="115" x="1151.57" y="23.1601" width="21.8734" height="190.427">
+  <object id="115" x="1173.42" y="23.1601" width="0.0225065" height="190.427">
    <properties>
     <property name="ID_Finish" value="4"/>
    </properties>
   </object>
-  <object id="116" x="1104.8" y="382.788" width="21.1193" height="167.635">
+  <object id="116" x="1103.8" y="382.788" width="0.358559" height="167.635">
    <properties>
     <property name="ID_Finish" value="0"/>
    </properties>

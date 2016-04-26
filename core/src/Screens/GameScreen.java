@@ -153,11 +153,18 @@ public final class GameScreen implements Screen {
         createCollisionsM1();
         }
         if(mapNum == 1){
+            car.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            if(twoPlayers){
+                car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            }
+                    
             createCollisionsM2();
         }
         if(mapNum == 2){
             createCollisionsM3();
         }
+        
+        
 	
     }
 

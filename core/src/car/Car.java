@@ -205,7 +205,7 @@ public class Car {
         }
         }
         
-       // System.out.println("LapCounter : " +  lapCounter);
+       System.out.println("LapCounter : " +  lapCounter);
         
     }
     
@@ -467,11 +467,9 @@ public class Car {
     public void updateFuel(){
         if(fuelAreas.size != 0){
             onFuelPad = true;
-            System.out.println("onFuelPad : True");
         }
         else
             onFuelPad = false;
-            System.out.println("onFuelPad : False");
     }
       
       

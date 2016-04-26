@@ -73,7 +73,7 @@ public class Tire {
     
     void updateTraction() {
         if (groundAreas.size == 0) {
-            //GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
+            GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
             currentTraction = 0.2f;
             return;
 	}
