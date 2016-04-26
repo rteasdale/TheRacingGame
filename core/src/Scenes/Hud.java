@@ -134,7 +134,11 @@ public class Hud {
         if (twoPlayers == true) {
             speedgaugeP2 = new Image(speedgauge_texture);
             speedgaugeP2.setSize(200, 200);
-            speedgaugeP2.setPosition(50, 20);
+            speedgaugeP2.setPosition(200, 20);
+            
+            needleP2 = new Image(speedneedle_texture);
+            
+            
             stage.addActor(speedgaugeP2);         
         }
         
