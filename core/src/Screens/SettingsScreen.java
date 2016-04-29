@@ -5,8 +5,10 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,16 +38,17 @@ public class SettingsScreen implements Screen {
     private Skin skin;
     private Skin check_skin;
     
+    private MusicPlayer musicPlayer;
+    private Sound click; 
+    
+    private Texture title_texture; 
+    
     private TextureAtlas atlas;
+    private TextureAtlas menubtns_atlas;
     private ScreenAssets assets;
-  
-    private int musicVol;
-    private int SFXVol;
     
     private Image title;
-    private Image image;
-    
-    private Label controlsLbl;
+
     private Label SFXLbl;
     private Label musicLbl;
     
@@ -58,21 +61,28 @@ public class SettingsScreen implements Screen {
     private Slider musicVolume;
     private Slider.SliderStyle slider_style;
     
-    public SettingsScreen(RacingGame game) {
+    public SettingsScreen(RacingGame game, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
+        this.assets = assets;
+        this.musicPlayer = musicPlayer;
+        
+        click = assets.manager.get(ScreenAssets.click_sound);
     }
         
     @Override
     public void show() {
         stage = new Stage();
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"),false);
-        
-        
-        skin = new Skin(new TextureAtlas(Gdx.files.internal("menu/menubtns_atlas.txt")));
-        
-        atlas = new TextureAtlas(Gdx.files.internal("menu/settings_atlas.txt"));
-        check_skin = new Skin(atlas);       
         Gdx.input.setInputProcessor(stage);
+        
+        font = assets.manager.get(ScreenAssets.font);
+        
+        atlas = assets.manager.get(ScreenAssets.settings_atlas);
+        check_skin = new Skin(atlas);   
+        
+        menubtns_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
+        skin = new Skin(menubtns_atlas);
+
+        title_texture = assets.manager.get(ScreenAssets.settingsTitle);
         
         /** Styles */
         lbl_style = new Label.LabelStyle(font, Color.WHITE);
@@ -82,7 +92,7 @@ public class SettingsScreen implements Screen {
         OKButton = new ImageButton(OK_style);
         OKButton.setPosition(1064, 24);
         
-        title = new Image(new Texture(Gdx.files.internal("menu/settings_title.png")));
+        title = new Image(title_texture);
         title.setPosition(376, 624);
         
         /** Labels */
@@ -96,29 +106,35 @@ public class SettingsScreen implements Screen {
         SFXVolume.setSize(500, 40);
         SFXVolume.setPosition(400, 400);
         SFXVolume.setRange(0, 100);
+        SFXVolume.setValue(40);
+        
         musicVolume = new Slider(0, 10, 4, false, slider_style);
         musicVolume.setSize(500, 40);
         musicVolume.setPosition(400, 300);
         musicVolume.setRange(0, 100);
+        musicVolume.setValue(30);
         
         /** Listeners*/
         SFXVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //change value of slider
+                
             }
         });
         
         musicVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //change value of slider
+                click.play();
+                musicPlayer.setVolumeValue(musicVolume.getValue()/100);
             }
         });
         
         OKButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 //save values of sliders
                 game.setScreen(new MainMenuScreen(game, assets));
             }
@@ -161,11 +177,10 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-        game.dispose();
-        skin.dispose();
-        check_skin.dispose();
-        stage.dispose();
-        font.dispose();
+//        skin.dispose();
+//        check_skin.dispose();
+//        stage.dispose();
+//        font.dispose();
         
     }
     

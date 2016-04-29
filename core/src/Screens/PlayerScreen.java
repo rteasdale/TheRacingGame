@@ -5,8 +5,10 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +32,8 @@ import handlers.ScreenAssets;
 public class PlayerScreen implements Screen {
     private RacingGame game;
 
+    private MusicPlayer musicPlayer;
+    private Sound click;
     private Stage stage;
     private BitmapFont font;
     
@@ -65,12 +69,15 @@ public class PlayerScreen implements Screen {
     private Skin buttons_skin;    
     
 
-    public PlayerScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets) {
+    public PlayerScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
         this.assets = assets;
         this.twoPlayers = twoPlayers;
+        this.musicPlayer = musicPlayer;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        
+        click = assets.manager.get(ScreenAssets.click_sound);
         
         /** BitmapFont */
         font = assets.manager.get(ScreenAssets.font);
@@ -83,9 +90,7 @@ public class PlayerScreen implements Screen {
         buttons_skin= new Skin(buttons_atlas);
         atlas = assets.manager.get(ScreenAssets.atlas);
         skin = new Skin(atlas);
-        
-        loadAssets();
-        
+
         /** Styles */
         next_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("next_button"), null, null, null, null, null);
         back_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("back_button"), null, null, null, null, null);
@@ -98,10 +103,6 @@ public class PlayerScreen implements Screen {
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
         lbl_style.fontColor = new Color(Color.WHITE);
-    }
-    
-    private void loadAssets() {
-
     }
     
     @Override
@@ -165,19 +166,20 @@ public class PlayerScreen implements Screen {
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 // two players
                 if (twoPlayers == true) {
                     if (!txt_field1.getText().isEmpty() && !txt_field2.getText().isEmpty()) { //both text fields are non-empty 
                         playerNameP1 = txt_field1.getText(); //assign player names 
                         playerNameP2 = txt_field2.getText();
-                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets)); //car selection screen
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets, musicPlayer)); //car selection screen
                     }
                 }
                 //single player 
                 if (twoPlayers == false) {
                     if (!txt_field1.getText().isEmpty()) { //if text field is non-empty
                         playerNameP1 = txt_field1.getText(); //assign player name  
-                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets)); //car selection screen
+                        game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, playerNameP1, assets, musicPlayer)); //car selection screen
                     }
                 }
             }
@@ -186,8 +188,12 @@ public class PlayerScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 txt_field1.clear(); //clear both textfields
-                txt_field2.clear();
+                if (twoPlayers == true) {
+                    txt_field2.clear();
+                }
+                
                 dispose(); //dispose screen
                 game.setScreen(new MainMenuScreen(game, assets)); //return to main menu screen
                 
@@ -224,13 +230,14 @@ public class PlayerScreen implements Screen {
 
     @Override
     public void dispose() {
-        game.dispose();
-        stage.dispose();
-        font.dispose();
-        buttons_atlas.dispose();
-        buttons_skin.dispose();
-        skin.dispose();
-        atlas.dispose();
+//        game.dispose();
+//        click.dispose();
+//        stage.dispose();
+//        font.dispose();
+//        buttons_atlas.dispose();
+//        buttons_skin.dispose();
+//        skin.dispose();
+//        atlas.dispose();
     }
     
 }

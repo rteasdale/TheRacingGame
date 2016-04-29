@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -49,11 +50,17 @@ public class ScreenAssets {
     
     //map selection screen title
     public static final AssetDescriptor<Texture> mapTitle = 
-        new AssetDescriptor<Texture>(Gdx.files.internal("menu/mapselection_title.png"), Texture.class);         
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/mapselection_title.png"), Texture.class);
+    
+    //settings screen title       
+    public static final AssetDescriptor<Texture> settingsTitle = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/settings_title.png"), Texture.class);    
     
     //car selection screen assets
     public static final AssetDescriptor<Texture> stat_box = 
         new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class); 
+    
+
     
     //HUD assets
     public static final AssetDescriptor<Texture> speed_gauge = 
@@ -83,6 +90,9 @@ public class ScreenAssets {
 
     public static final AssetDescriptor<TextureAtlas> box_atlas = 
             new AssetDescriptor<TextureAtlas>(Gdx.files.internal("menu/box_atlas.txt"), TextureAtlas.class); 
+    
+    public static final AssetDescriptor<TextureAtlas> settings_atlas = 
+            new AssetDescriptor<TextureAtlas>(Gdx.files.internal("menu/settings_atlas.txt"), TextureAtlas.class); 
 
     
     /**Music*/ 
@@ -100,6 +110,15 @@ public class ScreenAssets {
             new AssetDescriptor<Music>(Gdx.files.internal("music/map2_track.mp3"), Music.class);     
     public static final AssetDescriptor<Music> song6 = 
             new AssetDescriptor<Music>(Gdx.files.internal("music/map3_track.mp3"), Music.class); 
+    
+    /**Sounds*/ 
+    public static final AssetDescriptor<Sound> click_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/click_sound.mp3"), Sound.class);     
+    public static final AssetDescriptor<Sound> click_sound2 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/click_sound2.mp3"), Sound.class);      
+    public static final AssetDescriptor<Sound> countdown_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_sound.mp3"), Sound.class);        
+   
     
     public void loadSplashScreen() {
         manager.load(splash_image);
@@ -146,12 +165,23 @@ public class ScreenAssets {
     }
     
     public void loadGameScreen() {
+        manager.load(countdown_sound);
         manager.load(song1);
         manager.load(song2);
         manager.load(song3);
         manager.load(song4);
         manager.load(song5);
         manager.load(song6);
+    }
+    
+    public void loadSettingsScreen() {
+        manager.load(settingsTitle);
+        manager.load(settings_atlas);
+    }
+    
+    public void loadSounds() {
+        manager.load(click_sound);
+        manager.load(click_sound2);
     }
 
 }
