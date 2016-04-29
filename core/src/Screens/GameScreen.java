@@ -185,7 +185,15 @@ public final class GameScreen implements Screen {
                 countdownState = true;
             }
         }, delay);      
+       
+        Timer.schedule(new Task(){
+            @Override
+            public void run() {
+                startTime = TimeUtils.millis();
+            }
+        }, 7);   
         
+         
 
     }
     
@@ -237,7 +245,8 @@ public final class GameScreen implements Screen {
         if (gamingState) {
             Gdx.input.setInputProcessor(inputManager); 
             
-            hud.updateTime();
+            //problem with update time, it restarts at some point 
+            hud.updateTime(startTime);
             
             float carSpeed = car.body.getLinearVelocity().len();
             //update speed gauge

@@ -5,8 +5,10 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -32,6 +34,9 @@ public class MapSelectionScreen implements Screen {
     private Stage stage;
     private ScreenAssets assets;
     private Texture title_texture;
+    private MusicPlayer musicPlayer;
+    private Sound click;
+    private Sound click2;
     
     private String[] group;
     private String[] map;
@@ -61,13 +66,17 @@ public class MapSelectionScreen implements Screen {
     private Skin buttons_skin;    
 
 
-    public MapSelectionScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets) {
+    public MapSelectionScreen(RacingGame game, boolean twoPlayers, ScreenAssets assets, MusicPlayer musicPlayer) {
         //Gdx.app.log("Map Selection", "constructor called");
         this.game = game;
         this.twoPlayers = twoPlayers;
         this.assets = assets;
+        this.musicPlayer = musicPlayer;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
+        
+        click = assets.manager.get(ScreenAssets.click_sound);
+        click2 = assets.manager.get(ScreenAssets.click_sound2);
         
         /**Texture*/
         title_texture = assets.manager.get(ScreenAssets.mapTitle);
@@ -142,12 +151,13 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
                 //if two players, generate game screen with 2 cars
                 if (twoPlayers == true) {
-                game.setScreen(new LoadingScreen(game, true, currentMap, assets)); //Change two players value 
+                game.setScreen(new LoadingScreen(game, true, currentMap, assets, musicPlayer)); //Change two players value 
                 }
                 if (twoPlayers == false) {
-                game.setScreen(new LoadingScreen(game, false, currentMap, assets));
+                game.setScreen(new LoadingScreen(game, false, currentMap, assets, musicPlayer));
                 }
             }
         });
@@ -155,11 +165,12 @@ public class MapSelectionScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if(twoPlayers == false) {
-                    //game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                click.play();
+                if(twoPlayers == true) {
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets, musicPlayer));
                 }
-                else {
-                    //game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1));
+                else if (twoPlayers == false) {
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets, musicPlayer));
                 }
             }
         });
@@ -167,6 +178,7 @@ public class MapSelectionScreen implements Screen {
         selectNextMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
                 if (currentMap < 2) {
                 currentMap++;
                 Gdx.app.log("Current map", map[currentMap]);
@@ -194,6 +206,7 @@ public class MapSelectionScreen implements Screen {
         selectPreviousMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
                 if (currentMap > 0) {
                 currentMap--;
                 //System.out.println(currentMap);
@@ -248,10 +261,13 @@ public class MapSelectionScreen implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("Map Selection", "dispose called");
-        font.dispose();
-        stage.dispose();
-        buttons_atlas.dispose();
-        buttons_skin.dispose();
+//        game.dispose();
+//        click.dispose();
+//        click2.dispose();
+//        font.dispose();
+//        stage.dispose();
+//        buttons_atlas.dispose();
+//        buttons_skin.dispose();
     }
     
 }

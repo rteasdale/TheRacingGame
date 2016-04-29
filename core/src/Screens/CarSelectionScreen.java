@@ -3,8 +3,10 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -37,7 +39,10 @@ import java.util.Arrays;
  */
 public class CarSelectionScreen implements Screen { //extends PlayerScreen
     private RacingGame game;
-
+    private MusicPlayer musicPlayer;
+    private Sound click;
+    private Sound click2;
+    
     private Screen scr = this;
     private OrthographicCamera camera;
     private Stage stage;
@@ -113,18 +118,23 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     
     private Label player;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName, ScreenAssets assets) {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
         this.assets = assets;
         this.playerNum = playerNum;
         this.playerName = playerName;
         this.twoPlayers = twoPlayers;
+        this.musicPlayer = musicPlayer;
         camera = new OrthographicCamera();
         camera.setToOrtho(false);        
         renderer = new ShapeRenderer();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **// 
 
+        
+        click = assets.manager.get(ScreenAssets.click_sound);
+        click2 = assets.manager.get(ScreenAssets.click_sound2);
+        
         /** File data */
         file = new FileHandle("data/car.txt");
         group = file.readString().split("\n");
@@ -275,20 +285,21 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 if (twoPlayers == true && playerNum == 1) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                          
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets));
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets, musicPlayer));
                 }
                 if (twoPlayers == true && playerNum == 2) {
                     GameScreen.setCarNumP2(getCarNum());
                     GameScreen.setCarColorP2(getCarColor());
-                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets));
+                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets, musicPlayer));
                 }
                 if (twoPlayers == false) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                    
-                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets));
+                    game.setScreen(new MapSelectionScreen(game, twoPlayers, assets, musicPlayer));
                 }
             }
         });  
@@ -296,17 +307,18 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 if (twoPlayers == true && playerNum == 2) {
                     //return to car selection P1
-                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets));
+                    game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets, musicPlayer));
                 }
                 if (twoPlayers == true && playerNum == 1) {
                     //return to player screen
-                    //game.setScreen(new PlayerScreen(game, twoPlayers));
+                    game.setScreen(new PlayerScreen(game, twoPlayers, assets, musicPlayer));
                 }                
                 if (twoPlayers == false) {
                     //return to player screen
-                    //game.setScreen(new PlayerScreen(game, twoPlayers));
+                    game.setScreen(new PlayerScreen(game, twoPlayers, assets, musicPlayer));
                 }
             }
         });
@@ -315,6 +327,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         color_select.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
             /** Default*/
                 if (color_select.getSelected().equals("-- Select Car Color --")) {
                     Gdx.app.log("color selected:", color_select.getSelected());
@@ -836,6 +849,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
                 //System.out.print(currentCar);
                 color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
@@ -870,6 +884,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click2.play();
                 color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {
                 currentCar--;
@@ -959,13 +974,16 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     @Override
     public void dispose() {
         Gdx.app.log("Car Selection", "dispose called");
-        stage.dispose();
-        renderer.dispose();
-        font.dispose();
-        buttons_atlas.dispose();
-        box_atlas.dispose();
-        buttons_skin.dispose();
-        box_skin.dispose();
+//        game.dispose();
+//        click.dispose();
+//        click2.dispose();
+//        stage.dispose();
+//        renderer.dispose();
+//        font.dispose();
+//        buttons_atlas.dispose();
+//        box_atlas.dispose();
+//        buttons_skin.dispose();
+//        box_skin.dispose();
     }
     
 }

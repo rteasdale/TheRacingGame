@@ -64,6 +64,8 @@ public class SplashScreen extends InputListener implements Screen {
         assets.loadPlayerScreen();
         assets.loadCarSelectionScreen();
         assets.loadMapSelectionScreen();
+        assets.loadSettingsScreen();
+        assets.loadSounds();
         assets.manager.finishLoading();   
     }
     
@@ -128,11 +130,11 @@ public class SplashScreen extends InputListener implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("SplashScreen", "dispose called");
-        game.dispose();
-        splash_image.dispose();
-        stage.dispose();
-        stage.getBatch().dispose();
-        font.dispose();
+//        game.dispose();
+//        splash_image.dispose();
+//        stage.dispose();
+//        stage.getBatch().dispose();
+//        font.dispose();
     }
     
 }

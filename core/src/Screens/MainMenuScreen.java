@@ -5,9 +5,11 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,6 +29,9 @@ import handlers.ScreenAssets;
  */
 public class MainMenuScreen implements Screen {
     private RacingGame game;
+    
+    private MusicPlayer musicPlayer;
+    private Sound click;
     
     private Stage stage;
     private Texture background;
@@ -60,6 +65,8 @@ public class MainMenuScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
+        click = assets.manager.get(ScreenAssets.click_sound);
+        
         /** Textures */
         title_texture = assets.manager.get(ScreenAssets.mainTitle);
         
@@ -72,7 +79,8 @@ public class MainMenuScreen implements Screen {
         
         
         menu_song = assets.manager.get(ScreenAssets.menu_music);
-        menu_song.play();
+        musicPlayer = new MusicPlayer(menu_song);
+        musicPlayer.playMusic();
         
         /** Styles */
         style_1P = new ImageButtonStyle(buttons_skin.getDrawable("menu_singleP"), null, null, null, null, null);
@@ -82,10 +90,6 @@ public class MainMenuScreen implements Screen {
         style_credits = new ImageButtonStyle(buttons_skin.getDrawable("menu_credits"), null, null, null, null, null);
         style_leader = new ImageButtonStyle(buttons_skin.getDrawable("menu_leaderboard"), null, null, null, null, null);
         
-    }
-    
-    public static void stopMenuMusic() {
-        menu_song.stop();
     }
 
     @Override
@@ -125,7 +129,8 @@ public class MainMenuScreen implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game));
+                click.play();
+                game.setScreen(new SettingsScreen(game, assets, musicPlayer));
             }
         });        
         
@@ -133,7 +138,9 @@ public class MainMenuScreen implements Screen {
         onePlayerButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayerScreen(game, false, assets));
+                click.play();
+                game.setScreen(new PlayerScreen(game, false, assets, musicPlayer));
+                
             }
         });  
 
@@ -141,14 +148,17 @@ public class MainMenuScreen implements Screen {
         twoPlayersButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                game.setScreen(new PlayerScreen(game, true, assets)); //true for two players
+                click.play();
+                game.setScreen(new PlayerScreen(game, true, assets, musicPlayer)); //true for two players
             }
         });  
         
         /** Exit */
         exitButton.addListener(new ChangeListener() {
+            
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                click.play();
                 Gdx.app.exit();
             }
         });        
@@ -189,6 +199,7 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         Gdx.app.log("MainMenuScreen", "dispose called");
         game.dispose();
+        click.dispose();
         stage.dispose();
         background.dispose();
         buttons_atlas.dispose();

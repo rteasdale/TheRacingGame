@@ -5,6 +5,7 @@
  */
 package Screens;
 
+import Scenes.MusicPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -32,7 +33,7 @@ public class LoadingScreen implements Screen {
     private boolean twoPlayers;
     private int mapNum;
     
-    private MainMenuScreen mainMenuScreen;
+    private MusicPlayer musicPlayer;
     
     private Stage stage;
     private Label progress_percentage;
@@ -45,13 +46,15 @@ public class LoadingScreen implements Screen {
     
     private float progress;
     
-    public LoadingScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets) {
+    public LoadingScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
         this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
+        this.musicPlayer = musicPlayer;
         
-        mainMenuScreen.stopMenuMusic();
+        //stop music 
+        musicPlayer.stopMusic();
         
         stage = new Stage();
         camera = new OrthographicCamera();
@@ -139,9 +142,9 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void dispose() {
-        font.dispose();
-        stage.dispose();
-        //renderer.dispose();
+//        font.dispose();
+//        stage.dispose();
+//        renderer.dispose();
     }
     
 }

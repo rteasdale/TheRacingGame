@@ -7,6 +7,7 @@ package Scenes;
 
 import car.Car;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,6 +35,7 @@ public class Hud {
     private BitmapFont font;
     private boolean gamingState;
     private long startTime;
+    private Sound countdown1;
     
     private ScreenAssets assets;
     private Texture speedgauge_texture;
@@ -61,9 +63,7 @@ public class Hud {
     private int count;
     private int i = 5;
     private final String GO = "GO !";
-    
-    
-    
+
     private Label.LabelStyle lbl_style;    
     private Label timerLabel;
     private Label lapLabel;
@@ -80,6 +80,8 @@ public class Hud {
         Gdx.input.setInputProcessor(stage);
         
         font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
+        
+        countdown1 = assets.manager.get(ScreenAssets.countdown_sound);
         
         /**Textures*/
         speedgauge_texture = assets.manager.get(ScreenAssets.speed_gauge);
@@ -113,10 +115,6 @@ public class Hud {
         time = String.format("%02d : %02d : %03d",
             minutes, seconds, milliseconds
         );
-        
-        seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
-        minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;        
         
         timerLabel = new Label(time, lbl_style);
         timerLabel.setPosition(150, 670);
@@ -159,11 +157,10 @@ public class Hud {
 
     }
     
-    public void updateTime() {
+    public void updateTime(long startTime) {
         seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
-        
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;               
         //time format 
         String time;
         time = String.format("%02d : %02d : %03d",
@@ -200,10 +197,10 @@ public class Hud {
         int sec = ((int)totalTime)%60;
         
         if (sec > 0) {
+            //countdown1.play();
             countdownLbl.setText(Integer.toString(sec));
         }
         else if (sec == 0) {
-            startTime = TimeUtils.millis();
             setGamingState(true);
             countdownLbl.setText(GO);
 
@@ -218,11 +215,6 @@ public class Hud {
         }
 
     }
-    
-    public void startTime() {
-        //startTime = TimeUtils.millis();
-    }
-    
     public boolean getGamingState() {
         return gamingState;
         
@@ -246,8 +238,8 @@ public class Hud {
     }
     
     public void dispose() {
-        stage.dispose(); 
-        font.dispose();
+//        stage.dispose(); 
+//        font.dispose();
     }
     
 }
