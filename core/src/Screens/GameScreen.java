@@ -268,8 +268,12 @@ public final class GameScreen implements Screen {
 
         //Box2D Debug Renderer
         if(debug){
-            renderer.render(world, camera.combined);
-            renderer.render(world, camera2.combined);
+            if (twoPlayers) {
+                renderer.render(world, camera2.combined);
+            }
+            else if (!twoPlayers) {
+                renderer.render(world, camera.combined);
+            }
         }
 
         //load HUD 
