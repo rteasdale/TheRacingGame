@@ -38,6 +38,9 @@ public class MusicPlayer {
         return song.getVolume();
     }
     
+    public void setPitch(float pitch){
+
+    }
     
     public void getNextTrack() {
         

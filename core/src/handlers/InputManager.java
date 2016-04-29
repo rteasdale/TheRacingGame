@@ -55,6 +55,8 @@ public class InputManager  implements InputProcessor  {
             if (!pressedKeys.contains(Key.Right)) {
                 pressedKeys.add(Key.Right);
             }
+        }else if(keycode == Input.Keys.ESCAPE){
+            Gdx.app.exit();
         }
         
         /**ASDW*/
@@ -79,9 +81,7 @@ public class InputManager  implements InputProcessor  {
             }
            } 
         }
-                else if(keycode == Input.Keys.ESCAPE){
-            Gdx.app.exit();
-        }
+                
         
         /**Debug buttons*/ 
         if(GameScreen.debug){

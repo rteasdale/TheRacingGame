@@ -79,13 +79,10 @@ public class MainMenuScreen implements Screen {
         
         
         menu_song = assets.manager.get(ScreenAssets.menu_music);
-<<<<<<< HEAD
 
-        menu_song.play();
-=======
         musicPlayer = new MusicPlayer(menu_song);
         musicPlayer.playMusic();
->>>>>>> origin/master
+
         
         /** Styles */
         style_1P = new ImageButtonStyle(buttons_skin.getDrawable("menu_singleP"), null, null, null, null, null);
@@ -96,16 +93,6 @@ public class MainMenuScreen implements Screen {
         style_leader = new ImageButtonStyle(buttons_skin.getDrawable("menu_leaderboard"), null, null, null, null, null);
         
     }
-<<<<<<< HEAD
-    
-    public static void stopMenuMusic() {
-
-        menu_song.stop();
-        
-    }
-=======
->>>>>>> origin/master
-
     @Override
     public void show() {
         //Gdx.app.log("MainMenuScreen", "show called");

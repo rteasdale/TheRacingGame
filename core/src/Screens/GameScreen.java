@@ -62,6 +62,8 @@ public final class GameScreen implements Screen {
     public static int mapNum = 0;
     public static int maxLap = 0;
     public static boolean twoPlayers;
+    public boolean p1Wins;
+    public boolean p2Wins;
     
     Sprite tireSprite;
     
@@ -258,6 +260,33 @@ public final class GameScreen implements Screen {
             
             hud.updateLap(twoPlayers, car, car2);
 
+        }
+        
+        if(!twoPlayers){
+        if(GameScreen.car.getLapCounter() == maxLap){
+            finishState = true;
+        }
+        }
+        
+        if(twoPlayers){
+           if(GameScreen.car.getLapCounter() == maxLap){
+               p1Wins = true;
+               finishState = true;
+           }
+           
+           else if(GameScreen.car2.getLapCounter() == maxLap){
+               p2Wins = true;
+               finishState = true;
+           }
+           else{}
+        }
+        
+        if(finishState && twoPlayers){
+            //TWO PLAYERS END
+        }
+        
+        if(finishState && !twoPlayers){
+            //ONE PLAYER END
         }
        
     }

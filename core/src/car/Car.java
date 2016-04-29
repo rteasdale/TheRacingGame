@@ -91,7 +91,8 @@ public class Car {
         
                                             
         fixtureDef.filter.categoryBits = Constants.CAR;
-        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR | Constants.WALL | Constants.FUEL | Constants.FINISH;
+        fixtureDef.filter.maskBits = Constants.GROUND | Constants.TIREOBS | Constants.CAR | Constants.WALL | Constants.FUEL | Constants.FINISH
+                | Constants.BRIDGE | Constants.METAL | Constants.ICE;
                                             
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(new CarType(carSprite, this));
@@ -477,6 +478,10 @@ public class Car {
         }
         else
             onFuelPad = false;
+    }
+    
+    public int getLapCounter(){
+        return lapCounter;
     }
       
       

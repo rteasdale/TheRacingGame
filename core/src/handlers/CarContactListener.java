@@ -51,20 +51,74 @@ public class CarContactListener implements ContactListener {
                 //What happens when the ground touches the car   
                 tireAndGround(b, a, began);
             }
+            
+            
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_FUEL_LANE){
             carAndFuel(a, b, began);
             }
             else if(fudA.type == FixtureUserDataType.FUD_FUEL_LANE && fudB.type == FixtureUserDataType.FUD_CAR){
              carAndFuel(b, a, began);
             }
+            
+            
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_FINISH_LINE){
                carAndFinishLine(a,b);
             }
             else if(fudA.type == FixtureUserDataType.FUD_FINISH_LINE && fudB.type == FixtureUserDataType.FUD_CAR){
              carAndFinishLine(b,a);
             }
-            
-        }
+//            
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndCar(a);
+//            }
+//            
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_BRIDGE){
+//             carAndBridge(a,b, began);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_BRIDGE && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndBridge(b,a,began);
+//            }
+//            
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_METAL){
+//             carAndMetal(a,b, began);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_METAL && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndMetal(b,a, began);
+//            }
+//            
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_ICE){
+//             carAndIce(a,b, began);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_ICE && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndIce(b,a, began);
+//            }
+//            
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_OIL){
+//             carAndOil(a,b, began);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_OIL && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndOil(b,a, began);
+//            }
+//            
+//            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_WALL){
+//             carAndWall(a);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_WALL && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndWall(b);
+//            }
+//            
+//             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_TIREOBJ){
+//             carAndTire(a);
+//            }
+//            else if(fudA.type == FixtureUserDataType.FUD_TIREOBJ && fudB.type == FixtureUserDataType.FUD_CAR){
+//             carAndTire(b);
+//            }
+         }
     }
 
     void tireAndGround(Fixture tireFixture, Fixture groundFixture, boolean began) { //What happens when the car touches the ground
@@ -98,6 +152,46 @@ public class CarContactListener implements ContactListener {
         car.checkpointCheck(finish.ID_Finish);
         
     }
+    
+//    private void carAndCar(Fixture carFixture) {
+//        CarType type = (CarType) carFixture.getBody().getUserData();
+//        Car car =  (Car) type.car;
+//        car.playCarOnCarSound();
+//        
+//    }
+//
+//    private void carAndWall(Fixture carFixture) {
+//       CarType type = (CarType) carFixture.getBody().getUserData();
+//        Car car =  (Car) type.car;
+//        car.playCarOnWallSound();
+//    }
+//
+//    private void carAndTire(Fixture carFixture) {
+//        CarType type = (CarType) carFixture.getBody().getUserData();
+//        Car car =  (Car) type.car;
+//        car.playCarOnTireSound();
+//    }
+//
+//    private void carAndMetal(Fixture carFixture, Fixture b, boolean began) {
+//        CarType type = (CarType) carFixture.getBody().getUserData();
+//        Car car =  (Car) type.car;
+//        car.playCarOnTireSound();
+//        
+//        
+//    }
+//
+//    private void carAndBridge(Fixture carFixture, Fixture bridgeFixture, boolean began) {
+//         CarType type = (CarType) carFixture.getBody().getUserData();
+//        Car car = type.car;
+//        BridgeAreaType bridge = (BridgeAreaType) bridgeFixture.getUserData();
+//        if(began) {
+//            car.addFuelArea(fuel);
+//        } 
+//        else {
+//            car.removeFuelArea(fuel);
+//        }
+//   }
+
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
@@ -111,4 +205,5 @@ public class CarContactListener implements ContactListener {
 
     }
 
+    
 }
