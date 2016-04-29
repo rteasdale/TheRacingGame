@@ -116,8 +116,10 @@ public class ScreenAssets {
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/click_sound.mp3"), Sound.class);     
     public static final AssetDescriptor<Sound> click_sound2 = 
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/click_sound2.mp3"), Sound.class);      
-    public static final AssetDescriptor<Sound> countdown_sound = 
-            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_sound.mp3"), Sound.class);        
+    public static final AssetDescriptor<Sound> countdown_sound1 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_p1.mp3"), Sound.class);      
+    public static final AssetDescriptor<Sound> countdown_sound2 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_p2.mp3"), Sound.class);      
    
     
     public void loadSplashScreen() {
@@ -165,7 +167,8 @@ public class ScreenAssets {
     }
     
     public void loadGameScreen() {
-        manager.load(countdown_sound);
+        manager.load(countdown_sound1);
+        manager.load(countdown_sound2);
         manager.load(song1);
         manager.load(song2);
         manager.load(song3);

@@ -55,30 +55,33 @@ public class InputManager  implements InputProcessor  {
             if (!pressedKeys.contains(Key.Right)) {
                 pressedKeys.add(Key.Right);
             }
+        }else if(keycode == Input.Keys.ESCAPE){
+            Gdx.app.exit();
         }
         
         /**ASDW*/
-        else if (keycode == Input.Keys.W) {
-            if (!pressedKeys2.contains(Key.w)) {
+        if(GameScreen.twoPlayers){
+           if (keycode == Input.Keys.W) {
+              if (!pressedKeys2.contains(Key.w)) {
                 pressedKeys2.add(Key.w);
                 GameScreen.car2.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.S) {
-            if (!pressedKeys2.contains(Key.s)) {
+              if (!pressedKeys2.contains(Key.s)) {
                 pressedKeys2.add(Key.s);
                 GameScreen.car2.setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.A) {
-            if (!pressedKeys2.contains(Key.a)) {
+              if (!pressedKeys2.contains(Key.a)) {
                 pressedKeys2.add(Key.a);
             }
         } else if (keycode == Input.Keys.D) {
-            if (!pressedKeys2.contains(Key.d)) {
+              if (!pressedKeys2.contains(Key.d)) {
                 pressedKeys2.add(Key.d);
             }
-        } else if(keycode == Input.Keys.ESCAPE){
-            Gdx.app.exit();
+           } 
         }
+                
         
         /**Debug buttons*/ 
         if(GameScreen.debug){

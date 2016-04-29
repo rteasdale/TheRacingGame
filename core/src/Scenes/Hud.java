@@ -81,7 +81,7 @@ public class Hud {
         
         font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
         
-        countdown1 = assets.manager.get(ScreenAssets.countdown_sound);
+        countdown1 = assets.manager.get(ScreenAssets.countdown_sound1);
         
         /**Textures*/
         speedgauge_texture = assets.manager.get(ScreenAssets.speed_gauge);
