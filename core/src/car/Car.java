@@ -205,7 +205,7 @@ public class Car {
         }
         }
         
-       System.out.println("LapCounter : " +  lapCounter);
+       //System.out.println("LapCounter : " +  lapCounter);
         
     }
     

@@ -196,9 +196,16 @@ public class Hud {
         
         int sec = ((int)totalTime)%60;
         
+        Timer.schedule(new Task(){
+            @Override
+            public void run() {
+                startTime = TimeUtils.millis();
+            }
+        }, 7);         
+        
         if (sec > 0) {
-            //countdown1.play();
             countdownLbl.setText(Integer.toString(sec));
+            //countdown1.play();
         }
         else if (sec == 0) {
             setGamingState(true);

@@ -39,6 +39,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
 import com.sun.prism.image.ViewPort;
 import handlers.CarContactListener;
@@ -51,9 +53,10 @@ public final class GameScreen implements Screen {
     private RacingGame game;
     private Hud hud;
     private ScreenAssets assets;
+
+    private FitViewport viewport1;
+    private FitViewport viewport2;
     
-    private ViewPort viewPort;
-            
     private long startTime;
     private boolean countdownState;
     private boolean gamingState = false;
@@ -77,12 +80,13 @@ public final class GameScreen implements Screen {
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
     private SpriteBatch batch;
+    private SpriteBatch batch2;
     private Sprite carSprite;
     
     public World world;
     public static OrthographicCamera camera;
-    
-    
+    public static OrthographicCamera camera2;
+
     Box2DDebugRenderer renderer;
     InputManager inputManager;
     CarContactListener cl;
@@ -111,18 +115,47 @@ public final class GameScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
-
+        
         batch = new SpriteBatch();
-        camera = new OrthographicCamera();
+        
+        hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
+        world = new World(new Vector2(0, 0f), true);
+        cl = new CarContactListener();
+        world.setContactListener(cl);      
+        
+        /**Create cars*/
+	car = new Car(world, carNumP1, carColorP1, 1);
+
+        // If two players, construct another car
+        if (twoPlayers == true) {
+            car2 = new Car(world, carNumP2, carColorP2, 2);
+        }
+                
+        /**Cameras*/
+        if (!twoPlayers) {
+            camera = new OrthographicCamera();
+        }
+
+        if (twoPlayers) {
+            float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+            camera = new OrthographicCamera();
+            viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            viewport1.apply();
+
+            camera2 = new OrthographicCamera();
+            viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            viewport2.apply();
+            
+            camera2.zoom = 0.2f;
+            camera2.position.x = 0;
+            camera2.position.y = 0;
+        }
+        
         camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
         
-        hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
-        world = new World(new Vector2(0, 0f), true);
-        cl = new CarContactListener();
-        world.setContactListener(cl);
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
@@ -136,14 +169,6 @@ public final class GameScreen implements Screen {
         song4 = assets.manager.get(ScreenAssets.song4);
         song5 = assets.manager.get(ScreenAssets.song5);
         song6 = assets.manager.get(ScreenAssets.song6);        
-        
-        /**Create cars*/
-	car = new Car(world, carNumP1, carColorP1, 1);
-
-        // If two players, construct another car
-        if (twoPlayers == true) {
-            car2 = new Car(world, carNumP2, carColorP2, 2);
-        }
         
         ////////////////////////////////////////////////////
         //Load Tiled Map
@@ -193,8 +218,6 @@ public final class GameScreen implements Screen {
             }
         }, 7);   
         
-         
-
     }
     
     @Override
@@ -204,31 +227,49 @@ public final class GameScreen implements Screen {
         inputManager.updateControls(twoPlayers); //update controls for two players
         
         world.step(1 / 60f, 6, 2);
-        camera.update();    
-    
+
         //draw tile map
         //tmr.setView(camera);
         //tmr.render();
 
         //System.out.println(car.body.getLinearVelocity().len());
         //System.out.println(car.getFuelTank());
+
+        if(!twoPlayers){
+            camera.update();
+            renderSprites(batch, camera);
+            camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+        }
         
-        renderSprites();
-                                           
+//            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
+//            camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
+        
+        if (twoPlayers) {
+            /*Left Half*/
+            Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
+            camera.viewportHeight = Gdx.graphics.getHeight();
+            camera.viewportWidth = Gdx.graphics.getWidth()/2;
+            camera.update();
+            renderSprites(batch, camera);
+            camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+
+
+            /*Right Half*/
+            Gdx.gl.glViewport(Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
+            camera2.viewportHeight = Gdx.graphics.getHeight();
+            camera2.viewportWidth = Gdx.graphics.getWidth()/2;
+            camera2.update(); 
+            renderSprites(batch, camera2);
+            camera2.position.set(new Vector3(car2.body.getPosition().x, car2.body.getPosition().y, camera2.position.z));
+        
+        }  
+
         //Box2D Debug Renderer
         if(debug){
             renderer.render(world, camera.combined);
+            renderer.render(world, camera2.combined);
         }
 
-        if(!twoPlayers){
-        camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
-        }
-        
-        if(twoPlayers){
-            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
-            camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
-        }
-        
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -238,14 +279,12 @@ public final class GameScreen implements Screen {
         if (countdownState) {
             hud.updateCountDown(f);   
             gamingState = hud.getGamingState();
-            
         }
         
         /**Gaming state*/
         if (gamingState) {
             Gdx.input.setInputProcessor(inputManager); 
             
-            //problem with update time, it restarts at some point 
             hud.updateTime(startTime);
             
             float carSpeed = car.body.getLinearVelocity().len();
@@ -257,7 +296,6 @@ public final class GameScreen implements Screen {
             hud.updateFuel(fuel, car);
             
             hud.updateLap(twoPlayers, car, car2);
-
         }
        
     }
@@ -672,7 +710,7 @@ public final class GameScreen implements Screen {
     
     public void createCollisionsM3() {
         
-                MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
+    MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
            
         //body
         BodyDef bdef = new BodyDef();
@@ -898,6 +936,7 @@ public final class GameScreen implements Screen {
         
     @Override
     public void resize(int width, int height) {
+
     }
 
     @Override
@@ -921,10 +960,11 @@ public final class GameScreen implements Screen {
         world.dispose();
     }
     
-    public void renderSprites(){
+    public void renderSprites(SpriteBatch batch, OrthographicCamera camera){
     //draw Object sprites
     batch.begin();
-        batch.setProjectionMatrix(camera.combined);
+    batch.setProjectionMatrix(camera.combined);
+
         //System.out.println(mapNum);
         batch.draw(bg, xPositionDraw(mapNum), yPositionDraw(mapNum));
         
@@ -948,8 +988,6 @@ public final class GameScreen implements Screen {
             }
             
         }
-        
-        
     batch.end();
     }
     
