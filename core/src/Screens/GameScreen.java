@@ -61,7 +61,7 @@ public final class GameScreen implements Screen {
     
     public static int mapNum = 0;
     public static int maxLap = 0;
-    private boolean twoPlayers;
+    public static boolean twoPlayers;
     
     Sprite tireSprite;
     

@@ -72,6 +72,7 @@ public class MainMenuScreen implements Screen {
         
         
         menu_song = assets.manager.get(ScreenAssets.menu_music);
+
         menu_song.play();
         
         /** Styles */
@@ -85,7 +86,9 @@ public class MainMenuScreen implements Screen {
     }
     
     public static void stopMenuMusic() {
+
         menu_song.stop();
+        
     }
 
     @Override
