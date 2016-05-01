@@ -2,6 +2,7 @@ package car;
 
 import Screens.CarSelectionScreen;
 import Screens.GameScreen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.HashSet;
@@ -220,8 +221,8 @@ public class Car {
             maxBSpeed = -30;
             backTireMDriveForce = 172; //was 130
             frontTireMDriveForce = 172;
-            backTireMLateralImpulse = 4.25f;
-            frontTireMLateralImpulse = 3.75f;
+            backTireMLateralImpulse = 3.1875f;
+            frontTireMLateralImpulse = 2.8125f;
             breakingFPourcentage = 0.095f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
@@ -237,8 +238,8 @@ public class Car {
             maxBSpeed = -40;
             backTireMDriveForce = 278; //was 130
             frontTireMDriveForce = 278;
-            backTireMLateralImpulse = 4.25f;
-            frontTireMLateralImpulse = 3.75f;
+            backTireMLateralImpulse = 4f;
+            frontTireMLateralImpulse = 3.5f;
             breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.lambo_colors[Color];
@@ -269,7 +270,7 @@ public class Car {
             maxBSpeed = -30;
             backTireMDriveForce = 350; //was 130
             frontTireMDriveForce = 350;
-            backTireMLateralImpulse = 4.25f;
+            backTireMLateralImpulse = 4f;
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.15f;
             InitialPosition = Position();
@@ -285,8 +286,8 @@ public class Car {
             maxBSpeed = -30;
             backTireMDriveForce = 170; 
             frontTireMDriveForce = 170;
-            backTireMLateralImpulse = 4.25f;
-            frontTireMLateralImpulse = 3.75f;
+            backTireMLateralImpulse = 2.125f;
+            frontTireMLateralImpulse =1.875f;
             breakingFPourcentage = 0.125f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.truck_colors[Color];
@@ -301,8 +302,8 @@ public class Car {
             maxBSpeed = -50;
             backTireMDriveForce = 301; //was 130
             frontTireMDriveForce = 301;
-            backTireMLateralImpulse = 4.25f;
-            frontTireMLateralImpulse = 3.75f;
+            backTireMLateralImpulse = 4f;
+            frontTireMLateralImpulse = 3.5f;
             breakingFPourcentage = 0.09f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.zondaf_colors[Color];
@@ -482,6 +483,11 @@ public class Car {
     
     public int getLapCounter(){
         return lapCounter;
+    }
+    
+    public void doCarSounds(){
+        
+        
     }
       
       
