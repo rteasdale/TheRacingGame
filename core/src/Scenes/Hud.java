@@ -5,6 +5,7 @@
  */
 package Scenes;
 
+import Screens.GameScreen;
 import car.Car;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -75,9 +76,11 @@ public class Hud {
         this.assets = assets;
         this.gamingState = gamingState;
         this.totalLap = totalLap;
-        viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
+        float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+        
+        viewport = new FitViewport(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
         
         font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
         
@@ -103,9 +106,9 @@ public class Hud {
         needle2.setRotation(12);
         needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
         
-        
         fuelgauge = new Image(fuelgauge_texture);
         fuelgauge.setPosition(1050, 10);        
+        
         
         /**Label style*/
         lbl_style = new Label.LabelStyle(font, Color.LIME);
@@ -135,16 +138,20 @@ public class Hud {
         countdownLbl = new Label("", lbl_style);
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         
-        if (twoPlayers == true) {
-            speedgaugeP2 = new Image(speedgauge_texture);
-            speedgaugeP2.setSize(200, 200);
-            speedgaugeP2.setPosition(200, 20);
+        
+        if (twoPlayers) {
+            speedgauge.setScale(0.8f);
+            needle.setScale(0.8f);
+            needle.setPosition(8, 119);
+            fuelgauge.setScale(0.8f);
+            fuelgauge.setPosition(450, 20);
+            needle2.setScale(0.8f);
+            needle2.setPosition(434, 110);
+            timerLabel.setScale(0.8f);
+            lapLabel.setScale(0.8f);
+            countdownLbl.setScale(0.8f);
             
-            needleP2 = new Image(speedneedle_texture);
-            needleP2.setSize(totalTime, totalTime);
-            
-            stage.addActor(speedgaugeP2);         
-        }
+        }        
         
         stage.addActor(timerLabel);
         stage.addActor(lapLabel);
@@ -171,17 +178,9 @@ public class Hud {
         
     }    
     
-    public void updateLap(boolean twoPlayers, Car car, Car car2) {
+    public void updateLap(Car car) {
 
         String lap; 
-        
-        if (twoPlayers) {
-            //lap format  
-            lap = String.format("%2d / %2d",
-                car2.getLapNumber(), totalLap
-            );          
-            //lapLabel.setText(null);  label for player 2
-        }
         
        //lap format  
         lap = String.format("%2d / %2d",
