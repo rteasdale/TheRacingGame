@@ -78,7 +78,13 @@ public class Hud {
         this.totalLap = totalLap;
         float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
         
-        viewport = new FitViewport(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT, new OrthographicCamera());
+        if (!twoPlayers) {
+            viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
+        }
+        
+        if (twoPlayers) {
+            viewport = new FitViewport(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT, new OrthographicCamera());
+        }
         stage = new Stage(viewport, batch);
         //Gdx.input.setInputProcessor(stage);
         
