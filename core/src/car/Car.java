@@ -218,16 +218,16 @@ public class Car {
             //Golf
             maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 250; //was 130
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 172; //was 130
+            frontTireMDriveForce = 172;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.1f;
+            breakingFPourcentage = 0.095f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            fuelConsumption = 1/12f;
+            fuelConsumption = 8/255f;
             density = 0.1f;
             
         }
@@ -235,8 +235,8 @@ public class Car {
             //Lamborghini
             maxFSpeed = 110;
             maxBSpeed = -40;
-            backTireMDriveForce = 250; //was 130
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 278; //was 130
+            frontTireMDriveForce = 278;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
             breakingFPourcentage = 0.1f;
@@ -244,7 +244,7 @@ public class Car {
             carLink = CarSelectionScreen.lambo_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            fuelConsumption = 1/12f;
+            fuelConsumption = 13/204f;
             density = 0.1f;
         }
         else if(car ==2){
@@ -260,50 +260,50 @@ public class Car {
             carLink = CarSelectionScreen.prius_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            fuelConsumption = 1/12f;
+            fuelConsumption = 5/204f;
             density = 0.1f;
         }
         else if(car ==3){
             //Porsche
             maxFSpeed = 100;
             maxBSpeed = -30;
-            backTireMDriveForce = 250; //was 130
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 350; //was 130
+            frontTireMDriveForce = 350;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.1f;
+            breakingFPourcentage = 0.15f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.porsche_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            fuelConsumption = 1/12f;
+            fuelConsumption = 5/68f;
             density = 0.1f;
         }
         else if(car == 4){
             //Truck
             maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 250; //was 130
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 170; 
+            frontTireMDriveForce = 170;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.1f;
+            breakingFPourcentage = 0.125f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.truck_colors[Color];
             MaxFuelCapacity = 100;
             FuelTank = MaxFuelCapacity;
-            fuelConsumption = 1/12f;
+            fuelConsumption = 7/102f;
             density = 0.1f;
         }
         else if(car == 5){
             //Zonda
             maxFSpeed = 121;
             maxBSpeed = -50;
-            backTireMDriveForce = 250; //was 130
-            frontTireMDriveForce = 250;
+            backTireMDriveForce = 301; //was 130
+            frontTireMDriveForce = 301;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
-            breakingFPourcentage = 0.1f;
+            breakingFPourcentage = 0.09f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.zondaf_colors[Color];
             MaxFuelCapacity = 100;
@@ -358,7 +358,7 @@ public class Car {
         private void addFuel(){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
 
-                this.setFuelTank(FuelTank + fuelConsumption*2);
+                this.setFuelTank(FuelTank + 1/6f);
 
             }
             
