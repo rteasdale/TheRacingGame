@@ -27,6 +27,7 @@ import car.Constants;
 import car.FinishLineType;
 import car.FuelAreaType;
 import car.GroundAreaType;
+import car.TireObsType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapLayer;
@@ -507,7 +508,8 @@ public final class GameScreen implements Screen {
             fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
 
             Body body = world.createBody(bdef);
-            body.createFixture(fdef);
+            Fixture fixture = body.createFixture(fdef);
+            fixture.setUserData(new TireObsType());
             
             
             tireSprite = new Sprite(new Texture("Tire.png"));
@@ -668,7 +670,8 @@ public final class GameScreen implements Screen {
             fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
 
             Body body = world.createBody(bdef);
-            body.createFixture(fdef);
+            Fixture fixture = body.createFixture(fdef);
+            fixture.setUserData(new TireObsType());
             
             
             tireSprite = new Sprite(new Texture("Tire.png"));
@@ -915,7 +918,8 @@ public final class GameScreen implements Screen {
             fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
 
             Body body = world.createBody(bdef);
-            body.createFixture(fdef);
+            Fixture fixture = body.createFixture(fdef);
+            fixture.setUserData(new TireObsType());
             
             
             tireSprite = new Sprite(new Texture("Tire.png"));

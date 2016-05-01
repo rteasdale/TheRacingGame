@@ -21,7 +21,9 @@ public class SoundPlayer {
     }
 
     public void setPitch(){
-//        sound.setPitch(soundId, pitch);
+//        sound.setPitch(soundId, pitch); 
+ //soundID ("HOW TO GET IT ----->  long soundID = nameOfSong.play())
+  // pitch ("HOW IT WORKS" ------> Value between 0.5 and 2.0 // pitch < 1 = low pitch ; pitch > 1 high pitch ; pitch == 1 : normal value)
     }
     
     public void getNextTrack() {
