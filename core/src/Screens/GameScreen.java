@@ -52,6 +52,7 @@ public final class GameScreen implements Screen {
 
     private RacingGame game;
     private Hud hud;
+    private Hud hud2;
     private ScreenAssets assets;
 
     private FitViewport viewport1;
@@ -82,7 +83,6 @@ public final class GameScreen implements Screen {
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
     private SpriteBatch batch;
-    private SpriteBatch batch2;
     private Sprite carSprite;
     
     public World world;
@@ -119,41 +119,41 @@ public final class GameScreen implements Screen {
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
         
         batch = new SpriteBatch();
-        
-        hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
+
         world = new World(new Vector2(0, 0f), true);
         cl = new CarContactListener();
         world.setContactListener(cl);      
         
         /**Create cars*/
 	car = new Car(world, carNumP1, carColorP1, 1);
-
-        // If two players, construct another car
-        if (twoPlayers == true) {
-            car2 = new Car(world, carNumP2, carColorP2, 2);
-        }
-                
+     
         /**Cameras*/
         if (!twoPlayers) {
             camera = new OrthographicCamera();
+            hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
         }
 
         if (twoPlayers) {
+            // If two players, construct another car
+            car2 = new Car(world, carNumP2, carColorP2, 2);
+            
             float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+            
             camera = new OrthographicCamera();
             viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            hud = new Hud(batch, twoPlayers,gamingState, assets, maxLap);
             viewport1.apply();
 
             camera2 = new OrthographicCamera();
             viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            hud2 = new Hud(batch, twoPlayers, gamingState, assets, maxLap); 
             viewport2.apply();
-            
+
             camera2.zoom = 0.2f;
             camera2.position.x = 0;
             camera2.position.y = 0;
         }
         
-        camera.setToOrtho(false, RacingGame.V_WIDTH, RacingGame.V_HEIGHT);
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
@@ -196,8 +196,7 @@ public final class GameScreen implements Screen {
         if(mapNum == 2){
             createCollisionsM3();
         }
-        
-        
+       
 	
     }
 
@@ -223,7 +222,7 @@ public final class GameScreen implements Screen {
     }
     
     @Override
-    public void render (float f) {
+    public void render(float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         inputManager.updateControls(twoPlayers); //update controls for two players
@@ -234,36 +233,45 @@ public final class GameScreen implements Screen {
         //tmr.setView(camera);
         //tmr.render();
 
-        //System.out.println(car.body.getLinearVelocity().len());
-        //System.out.println(car.getFuelTank());
-
         if(!twoPlayers){
-            camera.update();
-            renderSprites(batch, camera);
-            camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+        camera.viewportHeight = Gdx.graphics.getHeight();
+        camera.viewportWidth = Gdx.graphics.getWidth();
+        camera.update();
+        camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+
+        renderSprites(batch, camera);  
+        
+        //load HUD 
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();      
         }
         
 //            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
 //            camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         
-        if (twoPlayers) {
-            /*Left Half*/
-            Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
+        if (twoPlayers)  {
+            /**NOTE: ORDER IN WHICH YOU RENDER IT MATTERS!*/
+            /*Right Half*/
+            Gdx.gl.glViewport(Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
             camera.viewportHeight = Gdx.graphics.getHeight();
             camera.viewportWidth = Gdx.graphics.getWidth()/2;
             camera.update();
-            renderSprites(batch, camera);
             camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+            renderSprites(batch, camera);
+            batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            hud.stage.draw();
 
 
-            /*Right Half*/
-            Gdx.gl.glViewport(Gdx.graphics.getWidth()/2,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
+            /*Left Half*/
+            Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
             camera2.viewportHeight = Gdx.graphics.getHeight();
             camera2.viewportWidth = Gdx.graphics.getWidth()/2;
-            camera2.update(); 
-            renderSprites(batch, camera2);
+            camera2.update();
             camera2.position.set(new Vector3(car2.body.getPosition().x, car2.body.getPosition().y, camera2.position.z));
-        
+            renderSprites(batch, camera2);
+            batch.setProjectionMatrix(hud2.stage.getCamera().combined);
+            hud2.stage.draw();
+
         }  
 
         //Box2D Debug Renderer
@@ -275,15 +283,13 @@ public final class GameScreen implements Screen {
                 renderer.render(world, camera.combined);
             }
         }
-
-        //load HUD 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
-        hud.stage.act();
         
         /**CountdownState*/ 
         if (countdownState) {
-            hud.updateCountDown(f);   
+            hud.updateCountDown(f);
+            if (twoPlayers) {
+                hud2.updateCountDown(f);
+            }
             gamingState = hud.getGamingState();
         }
         
@@ -293,15 +299,33 @@ public final class GameScreen implements Screen {
             
             hud.updateTime(startTime);
             
+            if (twoPlayers) {
+                hud2.updateTime(startTime);
+            }
+            
             float carSpeed = car.body.getLinearVelocity().len();
+            
             //update speed gauge
-            hud.updateSpeed(carSpeed, car);  
+            hud.updateSpeed(carSpeed, car);
+            
+            if (twoPlayers) {
+                float carSpeed2 = car2.body.getLinearVelocity().len();
+                hud2.updateSpeed(carSpeed2, car2);
+            }
 
             float fuel = car.getFuelTank();
+            
             //update fuel tank
             hud.updateFuel(fuel, car);
+            if (twoPlayers) {
+                float fuel2 = car2.getFuelTank();
+                hud2.updateFuel(fuel2, car2);
+            }
             
-            hud.updateLap(twoPlayers, car, car2);
+            hud.updateLap(car);
+            if (twoPlayers) {
+                hud2.updateLap(car2);
+            }
         }
         
         if(!twoPlayers){
@@ -332,6 +356,8 @@ public final class GameScreen implements Screen {
         }
        
     }
+    
+    
     
     private void createCollisionsM1(){
         //Road Layer
