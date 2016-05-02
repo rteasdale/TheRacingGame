@@ -131,7 +131,7 @@ public final class GameScreen implements Screen {
         /**Cameras*/
         if (!twoPlayers) {
             camera = new OrthographicCamera();
-            hud = new Hud(batch, twoPlayers, gamingState, finishState, assets, maxLap);
+            hud = new Hud(batch, twoPlayers, gamingState, finishState, 1, assets, maxLap);
         }
 
         if (twoPlayers) {
@@ -142,12 +142,12 @@ public final class GameScreen implements Screen {
             
             camera = new OrthographicCamera();
             viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud = new Hud(batch, twoPlayers,gamingState, finishState, assets, maxLap);
+            hud = new Hud(batch, twoPlayers,gamingState, finishState, 1, assets, maxLap);
             viewport1.apply();
 
             camera2 = new OrthographicCamera();
             viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud2 = new Hud(batch, twoPlayers, gamingState, finishState, assets, maxLap); 
+            hud2 = new Hud(batch, twoPlayers, gamingState, finishState, 2, assets, maxLap); 
             viewport2.apply();
 
             camera2.zoom = 0.2f;
@@ -225,8 +225,7 @@ public final class GameScreen implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        inputManager.updateControls(twoPlayers); //update controls for two players
-        
+
         world.step(1 / 60f, 6, 2);
 
         //draw tile map
@@ -263,7 +262,6 @@ public final class GameScreen implements Screen {
             hud.stage.draw();
             hud.stage.act();
 
-
             /*Left Half*/
             Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
             camera2.viewportHeight = Gdx.graphics.getHeight();
@@ -298,7 +296,8 @@ public final class GameScreen implements Screen {
         
         /**Gaming state*/
         if (gamingState) {
-            Gdx.input.setInputProcessor(inputManager); 
+            Gdx.input.setInputProcessor(inputManager);
+            inputManager.updateControls(twoPlayers); //update controls for two players
             
             hud.updateTime(startTime);
             
@@ -332,24 +331,42 @@ public final class GameScreen implements Screen {
         }
         
         /** Finish state*/
-        if(!twoPlayers){
-        if(GameScreen.car.getLapCounter() == maxLap){
-            finishState = true;
-            hud.updateFinish(finishState);
+        //for single player, game ends if current lap number = max lap number
+        if (!twoPlayers) {
+            if (GameScreen.car.getLapCounter() == maxLap) {
+                finishState = true;
+                gamingState = false;
+                inputManager.disposeAll();
+                hud.updateFinish(finishState, twoPlayers);
+                
+                Timer.schedule(new Task(){
+                    @Override
+                    public void run() {
+                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car, null));
+                    }
+                }, 3);  
+            }
         }
-        }
+
+        if (twoPlayers) {
+            if (GameScreen.car.getLapCounter() == maxLap) {
+                inputManager.disposeP1();
+                hud.updateFinish(finishState, twoPlayers);                
+            }
+            
+            if (GameScreen.car2.getLapCounter() == maxLap) {
+                inputManager.disposeP2();
+                hud2.updateFinish(finishState, twoPlayers);                
+            }
+        }            
+
         
         if(twoPlayers){
            if(GameScreen.car.getLapCounter() == maxLap){
                p1Wins = true;
                finishState = true;
-               
-//            Timer.schedule(new Task(){
-//                @Override
-//                public void run() {
-//                    
-//                }
-//            }, 2);                
+
+              
            }
            
            else if(GameScreen.car2.getLapCounter() == maxLap){

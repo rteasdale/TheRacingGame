@@ -24,6 +24,7 @@ public class InputManager  implements InputProcessor  {
     public HashSet<Key> pressedKeys = new HashSet<Key>();
     public HashSet<Key> pressedKeys2 = new HashSet<Key>();
 
+
     public void updateControls(boolean twoPlayers){
         GameScreen.car.update(pressedKeys);
         
@@ -31,6 +32,7 @@ public class InputManager  implements InputProcessor  {
             GameScreen.car2.update(pressedKeys2);
         }
     }
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -194,7 +196,8 @@ public class InputManager  implements InputProcessor  {
     @Override
     public boolean scrolled(int amount) {
         if(GameScreen.debug){
-            mainClass.camera.zoom += amount / 100f;
+            GameScreen.camera.zoom += amount / 100f;
+            
             return true;
         }
         else {
@@ -209,6 +212,24 @@ public class InputManager  implements InputProcessor  {
     public boolean getShiftMode(){
         return shiftMode;
     }
+    
+    public void disposeAll() {
+        pressedKeys.clear();
+        pressedKeys2.clear();
+        GameScreen.car.setIsAccelerating(false);
+        GameScreen.car2.setIsAccelerating(false);
+    }
+    
+    public void disposeP1() {
+        pressedKeys.clear();
+        GameScreen.car.setIsAccelerating(false);        
+    }
+    
+    public void disposeP2() {
+        pressedKeys2.clear();
+        GameScreen.car2.setIsAccelerating(false);        
+    }
+
 }
 
 
