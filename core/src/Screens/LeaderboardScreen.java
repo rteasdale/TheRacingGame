@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.RacingGame;
+import handlers.ScreenAssets;
 
 /**
  *
@@ -33,7 +34,7 @@ public class LeaderboardScreen implements Screen {
     private Label label;
     private final Label.LabelStyle lbl_style;
     
-    public LeaderboardScreen(RacingGame game) {
+    public LeaderboardScreen(RacingGame game, ScreenAssets assets) {
         this.game = game;
         table = new Table();
         stage = new Stage();

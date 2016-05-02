@@ -131,7 +131,7 @@ public final class GameScreen implements Screen {
         /**Cameras*/
         if (!twoPlayers) {
             camera = new OrthographicCamera();
-            hud = new Hud(batch, twoPlayers, gamingState, assets, maxLap);
+            hud = new Hud(batch, twoPlayers, gamingState, finishState, assets, maxLap);
         }
 
         if (twoPlayers) {
@@ -142,12 +142,12 @@ public final class GameScreen implements Screen {
             
             camera = new OrthographicCamera();
             viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud = new Hud(batch, twoPlayers,gamingState, assets, maxLap);
+            hud = new Hud(batch, twoPlayers,gamingState, finishState, assets, maxLap);
             viewport1.apply();
 
             camera2 = new OrthographicCamera();
             viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud2 = new Hud(batch, twoPlayers, gamingState, assets, maxLap); 
+            hud2 = new Hud(batch, twoPlayers, gamingState, finishState, assets, maxLap); 
             viewport2.apply();
 
             camera2.zoom = 0.2f;
@@ -189,9 +189,8 @@ public final class GameScreen implements Screen {
         if(mapNum == 1){
             car.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
             if(twoPlayers){
-                car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
             }
-                    
             createCollisionsM2();
         }
         if(mapNum == 2){
@@ -244,7 +243,8 @@ public final class GameScreen implements Screen {
         
         //load HUD 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();      
+        hud.stage.draw();   
+        hud.stage.act();
         }
         
 //            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
@@ -261,6 +261,7 @@ public final class GameScreen implements Screen {
             renderSprites(batch, camera);
             batch.setProjectionMatrix(hud.stage.getCamera().combined);
             hud.stage.draw();
+            hud.stage.act();
 
 
             /*Left Half*/
@@ -272,6 +273,7 @@ public final class GameScreen implements Screen {
             renderSprites(batch, camera2);
             batch.setProjectionMatrix(hud2.stage.getCamera().combined);
             hud2.stage.draw();
+            hud2.stage.act();
 
         }  
 
@@ -329,9 +331,11 @@ public final class GameScreen implements Screen {
             }
         }
         
+        /** Finish state*/
         if(!twoPlayers){
         if(GameScreen.car.getLapCounter() == maxLap){
             finishState = true;
+            hud.updateFinish(finishState);
         }
         }
         
@@ -339,6 +343,13 @@ public final class GameScreen implements Screen {
            if(GameScreen.car.getLapCounter() == maxLap){
                p1Wins = true;
                finishState = true;
+               
+//            Timer.schedule(new Task(){
+//                @Override
+//                public void run() {
+//                    
+//                }
+//            }, 2);                
            }
            
            else if(GameScreen.car2.getLapCounter() == maxLap){
@@ -1021,6 +1032,13 @@ public final class GameScreen implements Screen {
         tmr.dispose();
         bg.dispose();
         world.dispose();
+        song1.dispose();
+        song2.dispose();
+        song3.dispose();
+        song4.dispose();
+        song5.dispose();
+        song6.dispose();
+        
     }
     
     public void renderSprites(SpriteBatch batch, OrthographicCamera camera){

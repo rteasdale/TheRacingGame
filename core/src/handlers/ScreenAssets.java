@@ -80,6 +80,9 @@ public class ScreenAssets {
     public static final AssetDescriptor<BitmapFont> font = 
             new AssetDescriptor<BitmapFont>(Gdx.files.internal("menu/button_font.fnt"), BitmapFont.class, 
                     new BitmapFontLoader.BitmapFontParameter());    
+    public static final AssetDescriptor<BitmapFont> hud_font = 
+            new AssetDescriptor<BitmapFont>(Gdx.files.internal("HUD/countdown.fnt"), BitmapFont.class, 
+                    new BitmapFontLoader.BitmapFontParameter());        
     
     /** Atlas */ 
     public static final AssetDescriptor<TextureAtlas> buttons_atlas = 
@@ -164,6 +167,7 @@ public class ScreenAssets {
         manager.load(fuel_gauge);
         manager.load(speed_needle);
         manager.load(fuel_needle);
+        manager.load(hud_font);
     }
     
     public void loadGameScreen() {

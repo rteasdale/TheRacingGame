@@ -68,15 +68,17 @@ public class Hud {
     private Label.LabelStyle lbl_style;    
     private Label timerLabel;
     private Label lapLabel;
-    public Label countdownLbl;
+    private Label countdownLbl;
+    private Label finishLbl;
+    private Label playerOne;
+    private Label playerTwo;
     
     
-    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, ScreenAssets assets, int totalLap) {
+    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, ScreenAssets assets, int totalLap) {
         this.twoPlayers = twoPlayers;
         this.assets = assets;
         this.gamingState = gamingState;
         this.totalLap = totalLap;
-        float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
         
         if (!twoPlayers) {
             viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
@@ -88,9 +90,9 @@ public class Hud {
         stage = new Stage(viewport, batch);
         //Gdx.input.setInputProcessor(stage);
         
-        font = new BitmapFont(Gdx.files.internal("menu/countdown.fnt"), Gdx.files.internal("menu/countdown.png"),false);  
-        
-        countdown1 = assets.manager.get(ScreenAssets.countdown_sound1);
+        font = assets.manager.get(ScreenAssets.hud_font);
+
+        //countdown1 = assets.manager.get(ScreenAssets.countdown_sound1);
         
         /**Textures*/
         speedgauge_texture = assets.manager.get(ScreenAssets.speed_gauge);
@@ -100,24 +102,19 @@ public class Hud {
         
         /**Widgets*/
         speedgauge = new Image(speedgauge_texture);
-        speedgauge.setPosition(20, 20);
         
         needle = new Image(speedneedle_texture);
-        needle.setPosition(31, 142);
         needle.setRotation(238);
         needle.setOrigin(needle.getWidth()/2, needle.getHeight()/2);
         
         needle2 = new Image(fuelneedle_texture);
-        needle2.setPosition(1056, 122);
         needle2.setRotation(12);
         needle2.setOrigin(needle2.getWidth()/2, needle2.getHeight()/2);
         
-        fuelgauge = new Image(fuelgauge_texture);
-        fuelgauge.setPosition(1050, 10);        
-        
+        fuelgauge = new Image(fuelgauge_texture);      
         
         /**Label style*/
-        lbl_style = new Label.LabelStyle(font, Color.LIME);
+        lbl_style = new Label.LabelStyle(font, Color.WHITE);
         
         //time format 
         String time;
@@ -126,9 +123,7 @@ public class Hud {
         );
         
         timerLabel = new Label(time, lbl_style);
-        timerLabel.setPosition(150, 670);
-
-        
+ 
         //total laps = maplap
         //lap format 
         String lap;
@@ -136,16 +131,32 @@ public class Hud {
             lapCount, totalLap
         );        
 
-
         lapLabel = new Label(lap, lbl_style);
-        lapLabel.setPosition(1000, 670);
 
         //countdown
         countdownLbl = new Label("", lbl_style);
+
+        //finish
+        finishLbl = new Label(" FINISH! ", lbl_style);
+        
+        //player label
+        playerOne = new Label(" PLAYER 1 ", lbl_style);
+        playerOne.setRotation(180);
+
+        
+        if (twoPlayers == false) {
+        speedgauge.setPosition(20, 20);
+        needle.setPosition(31, 142);
+        needle2.setPosition(1056, 122);        
+        fuelgauge.setPosition(1050, 10);  
+        lapLabel.setPosition(1000, 670);
+        timerLabel.setPosition(150, 670);
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+        finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+        playerOne.setPosition(0, (RacingGame.V_HEIGHT/2)-40);
+        }        
         
-        
-        if (twoPlayers) {
+        if (twoPlayers == true) {
             speedgauge.setScale(0.8f);
             needle.setScale(0.8f);
             needle.setPosition(8, 119);
@@ -157,6 +168,14 @@ public class Hud {
             lapLabel.setScale(0.8f);
             countdownLbl.setScale(0.8f);
             
+            timerLabel.setPosition(10, 670);
+            lapLabel.setPosition(470, 670);
+            countdownLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);
+            finishLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);    
+            
+            playerTwo = new Label(" PLAYER 2 ", lbl_style); 
+            playerOne.setPosition(0, viewport.getScreenHeight()/2);
+            playerTwo.setPosition(0, viewport.getScreenHeight()/2);
         }        
         
         stage.addActor(timerLabel);
@@ -165,8 +184,9 @@ public class Hud {
         stage.addActor(needle);
         stage.addActor(fuelgauge);
         stage.addActor(needle2);
-        
         stage.addActor(countdownLbl);
+        stage.addActor(playerOne);
+        stage.addActor(playerTwo);
 
     }
     
@@ -183,6 +203,7 @@ public class Hud {
         timerLabel.setText(time);
         
     }    
+
     
     public void updateLap(Car car) {
 
@@ -245,8 +266,14 @@ public class Hud {
     }
     
     public void updateFuel(float fuel, Car car) {
-            needle2.setRotation(166-(fuel*1.55f));
+        needle2.setRotation(166-(fuel*1.55f));
  
+    }
+    
+    public void updateFinish(boolean finishState) {
+        if (finishState == true) {
+            
+        }
     }
     
     public void dispose() {
