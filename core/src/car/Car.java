@@ -22,6 +22,7 @@ import handlers.InputManager.Key;
 
 public class Car {
     private int playerNum;
+    int carNum;
     
     public Body body;
     Array<Tire> tires;
@@ -29,10 +30,10 @@ public class Car {
     Array<FuelAreaType> fuelAreas;
     RevoluteJoint leftJoint, rightJoint;
 
+    
     int car = 0;
     int lapCounter = 0;
     boolean fuel = true;
-
     float maxFSpeed;
     float maxBSpeed;
     float backTireMDriveForce;
@@ -56,6 +57,7 @@ public class Car {
     
     public Car(World world, int CarNum, int ColorNum, int playerNum) {
         this.playerNum = playerNum;
+        this.carNum = CarNum;
         whichCar(CarNum, ColorNum);
         
         fuelAreas = new Array<FuelAreaType>();
@@ -365,6 +367,22 @@ public class Car {
             
         }
 
+    public void setCarNum(int carNum) {
+        this.carNum = carNum;
+    }
+    
+    public int getCarNum() {
+        return carNum;
+    }
+    
+    public void setPlayerNum(int playerNum) {
+        this.playerNum = playerNum;
+    }
+    
+    public int getPlayerNum() {
+        return playerNum;
+    }
+        
     public void setFuelTank(float fuelTank){
         this.FuelTank = fuelTank;
     }

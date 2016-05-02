@@ -61,6 +61,8 @@ public class Hud {
     private int milliseconds;
     private float totalTime = 6;
     
+    private int playerNum;
+    
     private int count;
     private int i = 5;
     private final String GO = "GO !";
@@ -74,11 +76,12 @@ public class Hud {
     private Label playerTwo;
     
     
-    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, ScreenAssets assets, int totalLap) {
+    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, int playerNum, ScreenAssets assets, int totalLap) {
         this.twoPlayers = twoPlayers;
         this.assets = assets;
         this.gamingState = gamingState;
         this.totalLap = totalLap;
+        this.playerNum = playerNum;
         
         if (!twoPlayers) {
             viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());
@@ -140,7 +143,7 @@ public class Hud {
         finishLbl = new Label(" FINISH! ", lbl_style);
         
         //player label
-        playerOne = new Label(" PLAYER 1 ", lbl_style);
+        playerOne = new Label(" PLAYER " + playerNum, lbl_style);
         playerOne.setRotation(180);
 
         
@@ -153,11 +156,12 @@ public class Hud {
         timerLabel.setPosition(150, 670);
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
-        playerOne.setPosition(0, (RacingGame.V_HEIGHT/2)-40);
+        playerOne.setPosition(0, 620);
         }        
         
         if (twoPlayers == true) {
             speedgauge.setScale(0.8f);
+            speedgauge.setPosition(20, 20);
             needle.setScale(0.8f);
             needle.setPosition(8, 119);
             fuelgauge.setScale(0.8f);
@@ -173,9 +177,10 @@ public class Hud {
             countdownLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);
             finishLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);    
             
-            playerTwo = new Label(" PLAYER 2 ", lbl_style); 
-            playerOne.setPosition(0, viewport.getScreenHeight()/2);
-            playerTwo.setPosition(0, viewport.getScreenHeight()/2);
+            playerTwo = new Label(" PLAYER " + playerNum, lbl_style); 
+            playerOne.setPosition(0, 620);
+            playerTwo.setPosition(0, 620);
+            stage.addActor(playerTwo);
         }        
         
         stage.addActor(timerLabel);
@@ -186,15 +191,21 @@ public class Hud {
         stage.addActor(needle2);
         stage.addActor(countdownLbl);
         stage.addActor(playerOne);
+<<<<<<< HEAD
         if(twoPlayers){
         stage.addActor(playerTwo);
         }
+=======
+        
+
+>>>>>>> origin/master
     }
     
     public void updateTime(long startTime) {
         seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;               
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;       
+        
         //time format 
         String time;
         time = String.format("%02d : %02d : %03d",
@@ -205,6 +216,17 @@ public class Hud {
         
     }    
 
+    public int getSeconds() {
+        return seconds;
+    }
+    
+    public int getMinute() {
+        return minutes;
+    }
+    
+    public int getMilliseconds() {
+        return milliseconds;
+    }
     
     public void updateLap(Car car) {
 
@@ -271,8 +293,10 @@ public class Hud {
  
     }
     
-    public void updateFinish(boolean finishState) {
-        if (finishState == true) {
+    public void updateFinish(boolean finishState, boolean twoPlayers) {
+        if (twoPlayers == false) {
+            finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+            stage.addActor(finishLbl);
             
         }
     }
