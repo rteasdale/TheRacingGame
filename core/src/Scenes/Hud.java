@@ -186,8 +186,9 @@ public class Hud {
         stage.addActor(needle2);
         stage.addActor(countdownLbl);
         stage.addActor(playerOne);
+        if(twoPlayers){
         stage.addActor(playerTwo);
-
+        }
     }
     
     public void updateTime(long startTime) {
