@@ -6,6 +6,7 @@ import java.util.HashSet;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import Screens.GameScreen;
+import car.Car;
 
 public class InputManager  implements InputProcessor  {
 
@@ -213,21 +214,21 @@ public class InputManager  implements InputProcessor  {
         return shiftMode;
     }
     
-    public void disposeAll() {
+    public void disposeAll(Car car) {
         pressedKeys.clear();
         pressedKeys2.clear();
-        GameScreen.car.setIsAccelerating(false);
+        car.setIsAccelerating(false);
         //GameScreen.car2.setIsAccelerating(false);
     }
     
-    public void disposeP1() {
+    public void disposeP1(Car car) {
         pressedKeys.clear();
-        GameScreen.car.setIsAccelerating(false);        
+        car.setIsAccelerating(false);        
     }
     
-    public void disposeP2() {
+    public void disposeP2(Car car) {
         pressedKeys2.clear();
-        GameScreen.car2.setIsAccelerating(false);        
+        car.setIsAccelerating(false);        
     }
 
 }
