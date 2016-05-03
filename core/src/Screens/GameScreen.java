@@ -396,6 +396,14 @@ public final class GameScreen implements Screen {
             Timer.schedule(new Task(){
                 @Override
                 public void run() {
+                    if (twoPlayers == true) {
+                        
+                    }
+                    
+                    else if (twoPlayers == false) {
+                        
+                    }
+                    
                     //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
                     System.out.println("set leaderboard screen");
                 }

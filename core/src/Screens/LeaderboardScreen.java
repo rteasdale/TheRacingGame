@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.RacingGame;
 import handlers.ScreenAssets;
+import java.util.Arrays;
 
 /**
  *
@@ -79,6 +80,7 @@ public class LeaderboardScreen implements Screen {
         //this.assets = assets;
         //this.car = car;
         //this.car2 = car2;
+        //this.hud = hud;
 
         table = new Table();
         stage = new Stage();
@@ -130,7 +132,9 @@ public class LeaderboardScreen implements Screen {
         numberOfStopsForFuel = new Label("", lbl_style);
     }
     
-    private void sortTime() {
+    private void sortTime(int[] list) {
+        //sort from lowest to highest
+        Arrays.sort(list);
         
     }
     
@@ -144,16 +148,16 @@ public class LeaderboardScreen implements Screen {
         playerNameLbl = new Label(" PLAYER\nNAME ", lbl_style);
         timeLbl = new Label(" TIME ", lbl_style);
         mapNameLbl = new Label(" MAP ", lbl_style);
-        totalFuelConsumptionLbl = new Label(" TOTAL FUEL\nCONSUMPTION ", lbl_style);
-        numberOfStopsForFuelLbl = new Label(" TOTAL NUMBER OF\nSTOPS FOR FUEL ", lbl_style);
+        //totalFuelConsumptionLbl = new Label(" TOTAL FUEL\nCONSUMPTION ", lbl_style);
+        //numberOfStopsForFuelLbl = new Label(" TOTAL NUMBER OF\nSTOPS FOR FUEL ", lbl_style);
         
         /**Labels*/ 
         playerName = new Label("", lbl_style);
         carName = new Label("", lbl_style);
         time = new Label("", lbl_style);
         map = new Label("", lbl_style);
-        totalFuelConsumption = new Label("", lbl_style);
-        numberOfStopsForFuel = new Label("", lbl_style);
+        //totalFuelConsumption = new Label("", lbl_style);
+        //numberOfStopsForFuel = new Label("", lbl_style);
         
         /** Position numbers*/
         positionNum1 = new Label(Integer.toString(1), lbl_style);
@@ -174,9 +178,14 @@ public class LeaderboardScreen implements Screen {
         table.add(carNameLbl).pad(10);
         table.add(timeLbl).pad(10);
         table.add(mapNameLbl).pad(10);
-        table.add(totalFuelConsumptionLbl).pad(10);
-        table.add(numberOfStopsForFuelLbl).pad(10);
+        //table.add(totalFuelConsumptionLbl).pad(10);
+        //table.add(numberOfStopsForFuelLbl).pad(10);
         table.row();
+        
+        for (int row = 0; row < 8; row++) {
+            
+        }
+        
         /**Row 2*/
         table.add(positionNum1).pad(10);
         table.add(playerName).pad(10);

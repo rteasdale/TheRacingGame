@@ -220,7 +220,11 @@ public class Hud {
         
         timerLabel.setText(time);
         
-    }    
+    }
+    
+    public int getTotalTime() {
+        return milliseconds+seconds+minutes;
+    }
 
     public int getSeconds() {
         return seconds;
