@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -74,6 +76,9 @@ public class Hud {
     private Label finishLbl;
     private Label playerOne;
     private Label playerTwo;
+    
+    private Label gameOver;
+    private Label fuelAlert;
     
     
     public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, int playerNum, ScreenAssets assets, int totalLap) {
@@ -145,7 +150,10 @@ public class Hud {
         //player label
         playerOne = new Label(" PLAYER " + playerNum, lbl_style);
         playerOne.setRotation(180);
-
+        
+        //fuel alert 
+        fuelAlert = new Label(" LOW FUEL ", lbl_style);
+        fuelAlert.setPosition(200, 50);
         
         if (twoPlayers == false) {
         speedgauge.setPosition(20, 20);
@@ -157,6 +165,9 @@ public class Hud {
         countdownLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         playerOne.setPosition(0, 620);
+        
+        fuelAlert.setPosition(820, 30); 
+        
         }        
         
         if (twoPlayers == true) {
@@ -181,6 +192,8 @@ public class Hud {
             playerOne.setPosition(0, 620);
             playerTwo.setPosition(0, 620);
             stage.addActor(playerTwo);
+            
+            fuelAlert.setPosition(300, 30);
         }        
         
         stage.addActor(timerLabel);
@@ -222,7 +235,6 @@ public class Hud {
     }
     
     public void updateLap(Car car) {
-
         String lap; 
         
        //lap format  
@@ -283,7 +295,19 @@ public class Hud {
     
     public void updateFuel(float fuel, Car car) {
         needle2.setRotation(166-(fuel*1.55f));
- 
+
+        if (fuel <= 30) {
+        //fuelAlert.addAction(Actions.alpha(2));
+        fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
+                Actions.fadeOut(2))));
+                //add sound?
+            stage.addActor(fuelAlert);
+        }
+        
+        else if (fuel > 30) {
+            fuelAlert.remove();
+        }
+        
     }
     
     public void updateFinish(boolean twoPlayers) {
@@ -296,6 +320,11 @@ public class Hud {
             finishLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);
             stage.addActor(finishLbl);
         }
+    }
+    
+    public void updateGameOver() {
+        gameOver = new Label(" GAME OVER ", lbl_style);
+        stage.addActor(gameOver);
     }
     
     public void dispose() {
