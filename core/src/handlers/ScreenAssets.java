@@ -122,7 +122,35 @@ public class ScreenAssets {
     public static final AssetDescriptor<Sound> countdown_sound1 = 
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_p1.mp3"), Sound.class);      
     public static final AssetDescriptor<Sound> countdown_sound2 = 
-            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_p2.mp3"), Sound.class);      
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/countdown_p2.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> car_car_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_car_contact.mp3"), Sound.class);   
+    public static final AssetDescriptor<Sound> car_tire_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_tireobs_contact.mp3"), Sound.class);   
+    public static final AssetDescriptor<Sound> car_wall_sound1 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_wall_sound1.mp3"), Sound.class);  
+    public static final AssetDescriptor<Sound> car_wall_sound2 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_wall_sound2.mp3"), Sound.class);  
+     public static final AssetDescriptor<Sound> car_wall_sound3 = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_wall_sound3.mp3"), Sound.class);  
+    public static final AssetDescriptor<Sound> ready_botton_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/ready_button.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> out_of_fuel_alarm = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/out_of_fuel_alarm.mp3"), Sound.class);   
+    public static final AssetDescriptor<Sound> car_bridge_initial = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_bridge_initial.mp3"), Sound.class);   
+    public static final AssetDescriptor<Sound> car_bridge_loop = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_bridge_loop.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> lap_complete_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/lap_complete_sound.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> getting_on_fuel_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/getting_on_fuel_sound.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> refueling_loop = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/refueling_loop.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> car_metal_loop_sound = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_metal_loop_sound.mp3"), Sound.class);
+
+    
    
     
     public void loadSplashScreen() {

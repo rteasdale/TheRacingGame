@@ -191,7 +191,6 @@ public class Hud {
         stage.addActor(needle2);
         stage.addActor(countdownLbl);
         stage.addActor(playerOne);
-        
 
     }
     

@@ -74,6 +74,9 @@ public class Tire {
     void updateTraction() {
         if (groundAreas.size == 0) {
             GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
+            if(GameScreen.twoPlayers){
+            GameScreen.car2.body.setLinearVelocity(GameScreen.car2.body.getLinearVelocity().scl(0.3f));
+            }
             currentTraction = 0.2f;
             return;
 	}
@@ -87,14 +90,14 @@ public class Tire {
 	}
     }
 
-    Vector2 getLateralVelocity() {
+    public Vector2 getLateralVelocity() {
             Vector2 currentRightNormal = body.getWorldVector(new Vector2(1, 0));
             return CarMath.multiply(
                             currentRightNormal.dot(body.getLinearVelocity()),
                             currentRightNormal);
     }
 
-    Vector2 getForwardVelocity() {
+    public Vector2 getForwardVelocity() {
         Vector2 currentForwardNormal = body.getWorldVector(new Vector2(0, 1));
         return CarMath.multiply(
             currentForwardNormal.dot(body.getLinearVelocity()),
