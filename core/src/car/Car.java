@@ -36,10 +36,17 @@ public class Car {
     RevoluteJoint leftJoint, rightJoint;
     
     
+<<<<<<< HEAD
     int car = 0;
     int lapCounter = 5;
     int i = 0;
     float pitch = 0.5f;
+=======
+    private int car = 0;
+    private int lapCounter = 0;
+    private int i = 0;
+    private float pitch = 0.5f;
+>>>>>>> origin/master
     boolean fuel = true;
     float maxFSpeed;
     float maxBSpeed;
@@ -375,11 +382,11 @@ public class Car {
     private void UseFuel(boolean isAccelerating, float fuelConsumption) {
         if(this.getFuelTank() > 0){
         if(this.getOnFuelPad() == false){
-            if(isAccelerating)
-            setFuelTank(this.getFuelTank()-fuelConsumption);
-        
-        else
-            setFuelTank(this.getFuelTank()-(fuelConsumption*.1f));
+            if(isAccelerating) {
+                setFuelTank(this.getFuelTank()-fuelConsumption);
+            } else {
+                setFuelTank(this.getFuelTank()-(fuelConsumption*.1f));
+            }
         }
         }
         
@@ -444,7 +451,6 @@ public class Car {
     }
     
     public float getMaxFuelCapacity(){
-        
         return MaxFuelCapacity;
     }
     
@@ -503,21 +509,22 @@ public class Car {
              
                }
          
-         else
+         else {
              System.out.println("Missed one or more checkpoints");
+         }
          
         }
         
         
       else{
-                if(!currentCheckpoints.contains(num, true)){ //Checks if the list already has the checkpoint
-                    currentCheckpoints.add(num); //If not, it adds it
+        if(!currentCheckpoints.contains(num, true)){ //Checks if the list already has the checkpoint
+            currentCheckpoints.add(num); //If not, it adds it
               }  
         }
          
      }
-     
-         public void addFuelArea(FuelAreaType item) {
+    
+     public void addFuelArea(FuelAreaType item) {
         fuelAreas.add(item);
         car_going_on_fuel.play();
         loopedCar_fueling = false;
@@ -535,15 +542,12 @@ public class Car {
             onFuelPad = true;
             
         }
-        else
+        else {
             onFuelPad = false;
+        }
             
     }
-    
-    public int getLapCounter(){
-        return lapCounter;
-    }
-    
+
     public void doCarSounds(){
         //Car sounds
         Sound carSound = null; //Sound we want for the motor

@@ -164,7 +164,6 @@ public final class GameScreen implements Screen {
         camera.zoom = 0.2f;
         camera.position.x = 0;
         camera.position.y = 0;
-        
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
@@ -311,11 +310,11 @@ public final class GameScreen implements Screen {
         if (gamingState) {
             Gdx.input.setInputProcessor(inputManager);
             inputManager.updateControls(twoPlayers); //update controls for two players
-            
-            hud.updateTime(startTime);
+
+            hud.updateTime(startTime, finishState);
             
             if (twoPlayers) {
-                hud2.updateTime(startTime);
+                hud2.updateTime(startTime, finishState);
             }
             
             float carSpeed = car.body.getLinearVelocity().len();
@@ -348,63 +347,78 @@ public final class GameScreen implements Screen {
         /** Finish state*/
         //for single player, game ends if current lap number = max lap number
         if (!twoPlayers) {
-            if (GameScreen.car.getLapCounter() == maxLap) {
+            if (car.getLapNumber()== maxLap) {
                 finishState = true;
+<<<<<<< HEAD
 //                hud.stopTime();
+=======
+                hud.updateTime(startTime, finishState);
+>>>>>>> origin/master
                 gamingState = false;
-                inputManager.disposeAll();
+                inputManager.disposeAll(car);
                 hud.updateFinish(twoPlayers);
-                
             }
         }
 
         if (twoPlayers) {
-            if (car.getLapCounter() == maxLap) {
-                inputManager.disposeP1();
+            if (car.getLapNumber()== maxLap) {
+                inputManager.disposeP1(car);
                 hud.updateFinish(twoPlayers);   
+<<<<<<< HEAD
  //               hud.stopTime();
+=======
+                hud.updateTime(startTime, finishState);
+>>>>>>> origin/master
                 P1Finished = true;
                 //if car1 and car2 have the same num of laps, game is over
-                if (car2.getLapCounter() == car.getLapCounter()) {
+                if (car2.getLapNumber()== car.getLapNumber()) {
                     finishState = true;
                 }
             }
             
-            if (car2.getLapCounter() == maxLap) {
-                inputManager.disposeP2();
+            if (car2.getLapNumber()== maxLap) {
+                inputManager.disposeP2(car2);
                 hud2.updateFinish(twoPlayers);  
+<<<<<<< HEAD
  //               hud2.stopTime();
+=======
+                hud2.updateTime(startTime, finishState);
+>>>>>>> origin/master
                 P2Finished = true;
-                if (car2.getLapCounter() == car.getLapCounter()) {
+                if (car2.getLapNumber()== car.getLapNumber()) {
                     finishState = true;
                 }
             }
         }
             
         /** Game over state*/
-        //two players mode
+        //if in two players mode
+            //if tank is zero, then -1 lap penalty
         if (twoPlayers == true) {
-            //if tank is zero, then -1 lap penalty 
-            if (car.getFuelTank() == 0) {
-                car.setFuelTank(60);
-                car.setLapNumber(car.getLapNumber()-1);
-                hud.updateLap(car);
-            }
-            
-            if (car2.getFuelTank() == 0) {
-                car2.setLapNumber(car2.getLapNumber()-1);
-                hud2.updateLap(car2);
-            }
+        if (car.getFuelTank() < 0.5) {
+            car.setFuelTank(60);
+            car.setLapNumber(car.getLapNumber()-1);
+            hud.updateLap(car);
         }
+
         
+        if (car2.getFuelTank() < 0.5) {
+            car2.setFuelTank(60);
+            car2.setLapNumber(car2.getLapNumber()-1);
+            hud2.updateLap(car2);
+        }
+        }
+
         //single player mode
-        if (twoPlayers == false) {
-            //if tank has zero, game over
-            if (car.getFuelTank() == 0) {
-                hud.updateGameOver();
-                inputManager.disposeAll();
-                finishState = true;
-            }
+            //if tank has zero, game over 
+        if (!twoPlayers) {
+        if (car.getFuelTank() < 0.5) {
+            finishState = true;
+            hud.updateTime(startTime, finishState);
+            gamingState = false;
+            inputManager.disposeAll(car);
+            hud.updateGameOver();
+        }
         }
         
         if (finishState == true) {

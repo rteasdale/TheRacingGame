@@ -38,7 +38,9 @@ public class Hud {
     private long startTime;
     private Sound countdown1;
     private Sound countdown2;
-        private Sound fuelAlertSound;
+    private Sound fuelAlertSound;
+    
+    private boolean hasCollectedTime = false;
     
     private ScreenAssets assets;
     private Texture speedgauge_texture;
@@ -157,11 +159,12 @@ public class Hud {
         
         //player label
         playerOne = new Label(" PLAYER " + playerNum, lbl_style);
-        playerOne.setRotation(180);
         
         //fuel alert 
         fuelAlert = new Label(" LOW FUEL ", lbl_style);
-        fuelAlert.setPosition(200, 50);
+        
+        //game over 
+        gameOver = new Label(" GAME OVER ", lbl_style);
         
         if (twoPlayers == false) {
         speedgauge.setPosition(20, 20);
@@ -174,7 +177,7 @@ public class Hud {
         finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         playerOne.setPosition(0, 620);
         
-        fuelAlert.setPosition(820, 30); 
+        fuelAlert.setPosition(820, 30);
         
         }        
         
@@ -215,34 +218,41 @@ public class Hud {
 
     }
     
-    public void updateTime(long startTime) {
-        seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
-        minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
+    public void updateTime(long startTime, boolean finishState) {
+        if (finishState == false) {
+            seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
+            minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
+            milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
+
+            //time format 
+            String time;
+            time = String.format("%02d : %02d : %03d",
+                minutes, seconds, milliseconds
+            );
+
+            timerLabel.setText(time);
+        }
         
-        //time format 
-        String time;
-        time = String.format("%02d : %02d : %03d",
-            minutes, seconds, milliseconds
-        );
+        if(finishState == true) {
+            if (hasCollectedTime == false) {
+                int s = seconds;
+                int m = minutes;
+                int millis = milliseconds;
+                hasCollectedTime = true;
+
+            //time format 
+            String fixedTime;
+                fixedTime = String.format("%02d : %02d : %03d",
+                    m, s, millis
+                );        
+
+            timerLabel.setText(fixedTime);
+            } 
+        }
         
-        timerLabel.setText(time);
-        
+
     }
-    
-    public void stopTime(long startTime) {
-        int seconds2 = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
-        int minutes2 = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        int milliseconds2 = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
-        
-        String time;
-        time = String.format("%02d : %02d : %03d",
-            minutes2, seconds2, milliseconds2
-        );
-        
-        timerLabel.setText(time);
-    }
-    
+
     public int getTotalTime() {
         return milliseconds+seconds+minutes;
     }
@@ -334,14 +344,17 @@ public class Hud {
         needle2.setRotation(166-(fuel*1.55f));
 
         if (fuel <= 30) {
-        //fuelAlert.addAction(Actions.alpha(2));
-        fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
-                Actions.fadeOut(2))));
-        if(!fuelAlertLooped){
-            fuelAlertSound.loop();
-            fuelAlertLooped = true;
-        }
+            //fuelAlert.addAction(Actions.alpha(2));
+            fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
+                    Actions.fadeOut(2))));
+
             stage.addActor(fuelAlert);
+
+            if(fuelAlertLooped == false){
+                fuelAlertSound.loop();
+                fuelAlertLooped = true;
+            }
+
         }
         
         else if (fuel > 30) {
@@ -365,7 +378,7 @@ public class Hud {
     }
     
     public void updateGameOver() {
-        gameOver = new Label(" GAME OVER ", lbl_style);
+        gameOver.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
         stage.addActor(gameOver);
     }
     
