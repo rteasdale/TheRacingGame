@@ -322,12 +322,14 @@ public final class GameScreen implements Screen {
             
             //update fuel tank
             hud.updateFuel(fuel, car);
+            
             if (twoPlayers) {
                 float fuel2 = car2.getFuelTank();
                 hud2.updateFuel(fuel2, car2);
             }
             
             hud.updateLap(car);
+            
             if (twoPlayers) {
                 hud2.updateLap(car2);
             }
@@ -341,40 +343,65 @@ public final class GameScreen implements Screen {
                 gamingState = false;
                 inputManager.disposeAll();
                 hud.updateFinish(twoPlayers);
-                
-                if (finishState == true) {
-                    Timer.schedule(new Task(){
-                        @Override
-                        public void run() {
-                            //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
-                            System.out.println("set leaderboard screen");
-                        }
-                    }, 3);
-                }
             }
         }
 
         if (twoPlayers) {
-            if (GameScreen.car.getLapCounter() == maxLap) {
+            if (car.getLapCounter() == maxLap) {
                 inputManager.disposeP1();
                 hud.updateFinish(twoPlayers);   
                 P1Finished = true;
-                if (car.getLapCounter() > car2.getLapCounter()) {
-                    
+                //if car1 and car2 have the same num of laps, game is over
+                if (car2.getLapCounter() == car.getLapCounter()) {
+                    finishState = true;
                 }
             }
             
-            if (GameScreen.car2.getLapCounter() == maxLap) {
+            if (car2.getLapCounter() == maxLap) {
                 inputManager.disposeP2();
                 hud2.updateFinish(twoPlayers);  
                 P2Finished = true;
+                if (car2.getLapCounter() == car.getLapCounter()) {
+                    finishState = true;
+                }
+            }
+        }
+            
+        /** Game over state*/
+        //two players mode
+        if (twoPlayers == true) {
+            //if tank is zero, then -1 lap penalty 
+            if (car.getFuelTank() == 0) {
+                car.setLapNumber(car.getLapNumber()-1);
+                hud.updateLap(car);
             }
             
-            if (finishState == true) {
-                
+            if (car2.getFuelTank() == 0) {
+                car2.setLapNumber(car2.getLapNumber()-1);
+                hud2.updateLap(car2);
             }
-        }            
-
+        }
+        
+        //single player mode
+        if (twoPlayers == false) {
+            //if tank has zero, game over
+            if (car.getFuelTank() == 0) {
+                hud.updateGameOver();
+                inputManager.disposeAll();
+                finishState = true;
+            }
+        }
+        
+        if (finishState == true) {
+            Timer.schedule(new Task(){
+                @Override
+                public void run() {
+                    //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
+                    System.out.println("set leaderboard screen");
+                }
+            }, 3);                
+        }
+                
     }
     
     
