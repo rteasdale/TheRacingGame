@@ -1,7 +1,6 @@
 package car;
 
 import Screens.CarSelectionScreen;
-import Screens.GameScreen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import handlers.InputManager.Key;
 import handlers.ScreenAssets;
-import static handlers.ScreenAssets.getting_on_fuel_sound;
 
 public class Car {
     
@@ -39,7 +37,7 @@ public class Car {
     
     
     int car = 0;
-    int lapCounter = 0;
+    int lapCounter = 5;
     int i = 0;
     float pitch = 0.5f;
     boolean fuel = true;

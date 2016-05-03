@@ -14,9 +14,6 @@ import car.FixtureUserDataType;
 import car.FuelAreaType;
 import car.GroundAreaType;
 import car.Tire;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
 
 public class CarContactListener implements ContactListener {
 

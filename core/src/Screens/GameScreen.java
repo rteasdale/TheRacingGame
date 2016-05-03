@@ -21,7 +21,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import car.Car;
-import car.CarMath;
 import car.CarType;
 import car.Constants;
 import car.FinishLineType;
@@ -43,13 +42,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
-import com.sun.prism.image.ViewPort;
 import handlers.CarContactListener;
 import handlers.InputManager;
 import handlers.ScreenAssets;
-import java.util.Random;
 
 public final class GameScreen implements Screen {
 
@@ -120,7 +116,7 @@ public final class GameScreen implements Screen {
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
-    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets) {
+    public GameScreen(RacingGame game, boolean twoPlayers, final int mapNum, ScreenAssets assets) {
         this.game = game;
         this.assets = assets;
         this.twoPlayers = twoPlayers;
@@ -187,7 +183,15 @@ public final class GameScreen implements Screen {
         
         choseMap(mapNum);
         bg = new Texture(mapAddressI);
-        playMusic(mapNum);
+        
+        Timer.schedule(new Task(){
+            @Override
+            public void run() {
+                 playMusic(mapNum);
+            }
+        }, 5);   
+        
+       
        
         tileMap = new TmxMapLoader().load(mapAddressT);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
@@ -346,7 +350,7 @@ public final class GameScreen implements Screen {
         if (!twoPlayers) {
             if (GameScreen.car.getLapCounter() == maxLap) {
                 finishState = true;
-                hud.stopTime();
+//                hud.stopTime();
                 gamingState = false;
                 inputManager.disposeAll();
                 hud.updateFinish(twoPlayers);
@@ -358,7 +362,7 @@ public final class GameScreen implements Screen {
             if (car.getLapCounter() == maxLap) {
                 inputManager.disposeP1();
                 hud.updateFinish(twoPlayers);   
-                hud.stopTime();
+ //               hud.stopTime();
                 P1Finished = true;
                 //if car1 and car2 have the same num of laps, game is over
                 if (car2.getLapCounter() == car.getLapCounter()) {
@@ -369,7 +373,7 @@ public final class GameScreen implements Screen {
             if (car2.getLapCounter() == maxLap) {
                 inputManager.disposeP2();
                 hud2.updateFinish(twoPlayers);  
-                hud2.stopTime();
+ //               hud2.stopTime();
                 P2Finished = true;
                 if (car2.getLapCounter() == car.getLapCounter()) {
                     finishState = true;
