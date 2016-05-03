@@ -179,13 +179,12 @@ public final class GameScreen implements Screen {
         song4 = assets.manager.get(ScreenAssets.song4);
         song5 = assets.manager.get(ScreenAssets.song5);
         song6 = assets.manager.get(ScreenAssets.song6);        
-        
         ////////////////////////////////////////////////////
         //Load Tiled Map
         
         choseMap(mapNum);
         bg = new Texture(mapAddressI);
-        //playMusic(mapNum);
+        playMusic(mapNum);
        
         tileMap = new TmxMapLoader().load(mapAddressT);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
@@ -1161,35 +1160,34 @@ public void isOutside(){ //Could work with car[]
         if(map == 0){
             Random rand = new Random();
             
-            int r = rand.nextInt(3);
-            switch(r){
-                case 0: song1.play();
-                song1.setVolume(0.75f);
-                song1.setLooping(true);
-                System.out.println("Song playing : Song1"); break;
-                case 1: song2.play();
-                song2.setVolume(0.75f);
+                song2.play();
+                try{
+                song2.setVolume(SettingsScreen.musicVolume.getPercent());
+                }catch(NullPointerException e1){
+                 song2.setVolume(0.75f);
+                }
                 song2.setLooping(true);
-                System.out.println("Song playing : Song2"); break;
-                case 2: song3.play();
-                song3.setVolume(0.75f);
-                song3.setLooping(true);
-                System.out.println("Song playing : Song3"); break;
-                default:  song4.play();
-                song4.setVolume(0.75f);
-                song4.setLooping(true);
-                System.out.println("Song playing : Song4");
-            }
+                System.out.println("Song playing : Song2");
+
+            
         }
         else if(map == 1){
             song5.play();
-            song5.setVolume(0.75f);
+            try{
+            song5.setVolume(SettingsScreen.musicVolume.getPercent());
+            }catch(NullPointerException e1){
+                song5.setVolume(0.75f);
+            }
             song5.setLooping(true);
             System.out.println("Song playing : Song4");
         }
         else if(map == 2){
             song6.play();
-            song6.setVolume(0.75f);
+            try{
+            song6.setVolume(SettingsScreen.musicVolume.getPercent());
+            }catch(NullPointerException e1){
+                song6.setVolume(0.75f);
+            }
             song6.setLooping(true);
             System.out.println("Song playing : Song4");
         }

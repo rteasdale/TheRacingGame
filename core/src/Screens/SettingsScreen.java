@@ -58,7 +58,7 @@ public class SettingsScreen implements Screen {
 
 
     private Slider SFXVolume;
-    private Slider musicVolume;
+    public static Slider musicVolume;
     private Slider.SliderStyle slider_style;
     
     public SettingsScreen(RacingGame game, ScreenAssets assets, MusicPlayer musicPlayer) {

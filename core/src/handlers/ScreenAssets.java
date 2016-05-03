@@ -196,11 +196,13 @@ public class ScreenAssets {
         manager.load(speed_needle);
         manager.load(fuel_needle);
         manager.load(hud_font);
+        manager.load(countdown_sound1);
+        manager.load(countdown_sound2);
+        manager.load(out_of_fuel_alarm);
     }
     
     public void loadGameScreen() {
-        manager.load(countdown_sound1);
-        manager.load(countdown_sound2);
+
         manager.load(song1);
         manager.load(song2);
         manager.load(song3);
