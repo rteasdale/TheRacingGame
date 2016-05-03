@@ -217,7 +217,7 @@ public class InputManager  implements InputProcessor  {
         pressedKeys.clear();
         pressedKeys2.clear();
         GameScreen.car.setIsAccelerating(false);
-        GameScreen.car2.setIsAccelerating(false);
+        //GameScreen.car2.setIsAccelerating(false);
     }
     
     public void disposeP1() {

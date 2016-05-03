@@ -70,6 +70,9 @@ public final class GameScreen implements Screen {
     public boolean p1Wins;
     public boolean p2Wins;
     
+    private boolean P1Finished = false;
+    private boolean P2Finished = false; 
+    
     Sprite tireSprite;
     
     private static int carNumP1;
@@ -337,53 +340,41 @@ public final class GameScreen implements Screen {
                 finishState = true;
                 gamingState = false;
                 inputManager.disposeAll();
-                hud.updateFinish(finishState, twoPlayers);
+                hud.updateFinish(twoPlayers);
                 
-                Timer.schedule(new Task(){
-                    @Override
-                    public void run() {
-                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car, null));
-                    }
-                }, 3);  
+                if (finishState == true) {
+                    Timer.schedule(new Task(){
+                        @Override
+                        public void run() {
+                            //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
+                            System.out.println("set leaderboard screen");
+                        }
+                    }, 3);
+                }
             }
         }
 
         if (twoPlayers) {
             if (GameScreen.car.getLapCounter() == maxLap) {
                 inputManager.disposeP1();
-                hud.updateFinish(finishState, twoPlayers);                
+                hud.updateFinish(twoPlayers);   
+                P1Finished = true;
+                if (car.getLapCounter() > car2.getLapCounter()) {
+                    
+                }
             }
             
             if (GameScreen.car2.getLapCounter() == maxLap) {
                 inputManager.disposeP2();
-                hud2.updateFinish(finishState, twoPlayers);                
+                hud2.updateFinish(twoPlayers);  
+                P2Finished = true;
+            }
+            
+            if (finishState == true) {
+                
             }
         }            
 
-        
-        if(twoPlayers){
-           if(GameScreen.car.getLapCounter() == maxLap){
-               p1Wins = true;
-               finishState = true;
-
-              
-           }
-           
-           else if(GameScreen.car2.getLapCounter() == maxLap){
-               p2Wins = true;
-               finishState = true;
-           }
-           else{}
-        }
-        
-        if(finishState && twoPlayers){
-            //TWO PLAYERS END
-        }
-        
-        if(finishState && !twoPlayers){
-            //ONE PLAYER END
-        }
-       
     }
     
     

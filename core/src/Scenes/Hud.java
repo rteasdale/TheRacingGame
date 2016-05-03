@@ -287,11 +287,15 @@ public class Hud {
  
     }
     
-    public void updateFinish(boolean finishState, boolean twoPlayers) {
+    public void updateFinish(boolean twoPlayers) {
         if (twoPlayers == false) {
             finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
             stage.addActor(finishLbl);
-            
+        }
+        
+        if (twoPlayers == true) {
+            finishLbl.setPosition(viewport.getScreenWidth()/2, viewport.getScreenHeight()/2);
+            stage.addActor(finishLbl);
         }
     }
     
