@@ -6,6 +6,8 @@
 package Screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.RacingGame;
 
 /**
  *
@@ -13,6 +15,16 @@ import com.badlogic.gdx.Screen;
  */
 public class CreditsScreen implements Screen{
 
+    private RacingGame game;
+    private Stage stage;
+    
+    
+    public CreditsScreen(RacingGame game){
+        this.game = game;
+        
+    }
+    
+    
     @Override
     public void show() {
         
@@ -20,7 +32,7 @@ public class CreditsScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        
+         
     }
 
     @Override

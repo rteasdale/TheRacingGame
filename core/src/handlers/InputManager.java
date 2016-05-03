@@ -62,7 +62,7 @@ public class InputManager  implements InputProcessor  {
         }
         
         /**ASDW*/
-        if(GameScreen.twoPlayers){
+        if(GameScreen.getTwoPlayers()){
            if (keycode == Input.Keys.W) {
               if (!pressedKeys2.contains(Key.w)) {
                 pressedKeys2.add(Key.w);
@@ -86,7 +86,7 @@ public class InputManager  implements InputProcessor  {
                 
         
         /**Debug buttons*/ 
-        if(GameScreen.debug){
+        if(GameScreen.getDebug()){
          if(keycode == Input.Keys.V){
             System.out.println("Position");
             System.out.println("x : " + GameScreen.car.body.getPosition().x);
@@ -195,7 +195,7 @@ public class InputManager  implements InputProcessor  {
     
     @Override
     public boolean scrolled(int amount) {
-        if(GameScreen.debug){
+        if(GameScreen.getDebug()){
             GameScreen.camera.zoom += amount / 100f;
             
             return true;

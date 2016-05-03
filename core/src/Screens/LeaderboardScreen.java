@@ -46,6 +46,7 @@ public class LeaderboardScreen implements Screen {
     private String[] playerNames;
     private String[] carNames;
     private String[] data;
+    
 
     private int totalTime; 
     
@@ -141,6 +142,10 @@ public class LeaderboardScreen implements Screen {
         playerNames = dataLines[0].split(",");
         carNames = dataLines[1].split(",");
         times = dataLines[2].split(",");
+        
+        String[][] final_matrix = GetNewMatrix(playerNames, carNames, times, playerNameString, timeString, timeString);
+        //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
+        
 System.out.println(Arrays.toString(playerNames));
         
     }
@@ -317,5 +322,72 @@ System.out.println(Arrays.toString(playerNames));
         skin.dispose();
         
     }
+    
+    public String[][] GetNewMatrix (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
+                
+        String[][] a = new String[9][3];
+        int[] unorderedTime = new int[9];
+        int[] orderedTime = new int[9];
+        String[][] b = new String[9][3];
+        String[][] final_one = new String[8][3];
+        
+        for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
+            a[i][0] = playerNames[i];
+            a[i][1] = carNames[i];
+            a[i][2] = times[i];
+        }
+        //INSERT NEW INFORMATION INTO STRING[][] a
+        a[9][1] = newPlayerName;
+        a[9][2] = newCarName;
+        a[9][3] = newTime;
+        
+        for(int i = 0; i < 9; i++){
+            String[] time = new String[3];
+            times = a[i][3].split(":");
+            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[0]);
+            unorderedTime[i] = t;
+            orderedTime[i] = t;
+        }
+            BubbleSort(orderedTime);
+        
+           for(int i = 0; i < 9; i++){
+               for(int j = 0; j < 9; j++){
+                   if(orderedTime[i] == unorderedTime[j]){
+                       b[i][0] = a[j][0];
+                       b[i][1] = a[j][1];
+                       b[i][2] = a[j][2];
+                       break;
+                   }
+               }
+           }
+               for(int z = 0; z < 8; z++){
+                   final_one[z][0] = b[z][0];
+                   final_one[z][1] = b[z][1];
+                   final_one[z][1] = b[z][2];
+               }
+               return final_one;
+    }
+    
+    
+    public static void BubbleSort( int [] num ){
+     int j;
+     boolean flag = true;   // set flag to true to begin first pass
+     int temp;   //holding variable
+
+     while ( flag )
+     {
+            flag= false;    //set flag to false awaiting a possible swap
+            for( j=0;  j < num.length -1;  j++ )
+            {
+                   if ( num[ j ] < num[j+1] )   // change to > for ascending sort
+                   {
+                           temp = num[ j ];                //swap elements
+                           num[ j ] = num[ j+1 ];
+                           num[ j+1 ] = temp;
+                          flag = true;              //shows a swap occurred  
+                  } 
+            } 
+      } 
+} 
     
 }

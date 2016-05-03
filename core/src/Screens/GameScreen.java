@@ -62,11 +62,11 @@ public final class GameScreen implements Screen {
     private boolean gamingState = false;
     private boolean finishState = false;
     
-    public static int mapNum = 0;
-    public static int maxLap = 0;
-    public static boolean twoPlayers;
-    public boolean p1Wins;
-    public boolean p2Wins;
+    private int mapNum = 0;
+    private int maxLap = 0;
+    private static boolean twoPlayers;
+    private boolean p1Wins;
+    private boolean p2Wins;
     
     private boolean P1Finished = false;
     private boolean P2Finished = false; 
@@ -80,7 +80,7 @@ public final class GameScreen implements Screen {
     
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-    public static boolean debug = true; //Boolean if I want B2D Debug on or off
+    private static boolean debug = true; //Boolean if I want B2D Debug on or off
 
     private Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
@@ -1240,6 +1240,14 @@ public void isOutside(){ //Could work with car[]
         }
         else
             return -200;
+    }
+    
+    public static boolean getTwoPlayers(){
+        return twoPlayers;
+    }
+    
+    public static boolean getDebug(){
+        return debug;
     }
 
     
