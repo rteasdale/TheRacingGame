@@ -37,6 +37,7 @@ public class Hud {
     private Viewport viewport;
     private BitmapFont font;
     private boolean gamingState;
+    private boolean fuelAlertLooped = false;
     private long startTime;
     private Sound countdown1;
     private Sound countdown2;
@@ -69,6 +70,7 @@ public class Hud {
     
     private int count;
     boolean c2HasPlayed = false;
+    boolean c1HasPlayed = false;
     private final String GO = "GO !";
 
     private Label.LabelStyle lbl_style;    
@@ -268,7 +270,10 @@ public class Hud {
         
         if (sec > 0) {
             countdownLbl.setText(Integer.toString(sec));
+            if(!c1HasPlayed){
             countdown1.loop();
+            c1HasPlayed = true;
+            }
         }
         else if (sec == 0) {
             countdown1.stop();
@@ -317,13 +322,16 @@ public class Hud {
         //fuelAlert.addAction(Actions.alpha(2));
         fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
                 Actions.fadeOut(2))));
-                //add sound? YUSSSS
+        if(!fuelAlertLooped){
             fuelAlertSound.loop();
+            fuelAlertLooped = true;
+        }
             stage.addActor(fuelAlert);
         }
         
         else if (fuel > 30) {
             fuelAlertSound.stop();
+            fuelAlertLooped = false;
             fuelAlert.remove();
         }
         

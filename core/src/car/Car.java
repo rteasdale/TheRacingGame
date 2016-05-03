@@ -36,7 +36,7 @@ public class Car {
     Array<Integer> currentCheckpoints;
     Array<FuelAreaType> fuelAreas;
     RevoluteJoint leftJoint, rightJoint;
-
+    
     
     int car = 0;
     int lapCounter = 0;
@@ -396,6 +396,7 @@ public class Car {
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
                 if(!loopedCar_fueling){
                     car_fueling.loop();
+                    loopedCar_fueling = true;
                 }
 
                 this.setFuelTank(FuelTank + 1/6f);
