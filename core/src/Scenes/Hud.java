@@ -288,13 +288,9 @@ public class Hud {
         else if (sec == 0) {
             countdown1.stop();
             setGamingState(true);
-<<<<<<< HEAD
             countdownLbl.setText(GO);
             
             if(!c2HasPlayed){
-=======
-            countdownLbl.setText(GO);   
->>>>>>> origin/master
             countdown2.play();
             c2HasPlayed = true;
                 }
