@@ -233,25 +233,33 @@ public class Hud {
         
     }
     
-    public void stopTime() {
-        seconds = getSeconds();
-        minutes = getMinute();
-        milliseconds = getMilliseconds();
+    public void stopTime(long startTime) {
+        int seconds2 = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
+        int minutes2 = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
+        int milliseconds2 = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
+        
+        String time;
+        time = String.format("%02d : %02d : %03d",
+            minutes2, seconds2, milliseconds2
+        );
+        
+        timerLabel.setText(time);
     }
     
     public int getTotalTime() {
         return milliseconds+seconds+minutes;
     }
 
-    public int getSeconds() {
-        return seconds;
+    public int getCurrentSeconds() {
+        int currentSeconds = seconds;
+        return currentSeconds;
     }
     
-    public int getMinute() {
+    public int getCurrentMinute() {
         return minutes;
     }
     
-    public int getMilliseconds() {
+    public int getCurrentMilliseconds() {
         return milliseconds;
     }
     
