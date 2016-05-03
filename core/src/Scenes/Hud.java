@@ -39,6 +39,8 @@ public class Hud {
     private boolean gamingState;
     private long startTime;
     private Sound countdown1;
+    private Sound countdown2;
+        private Sound fuelAlertSound;
     
     private ScreenAssets assets;
     private Texture speedgauge_texture;
@@ -80,6 +82,8 @@ public class Hud {
     private Label gameOver;
     private Label fuelAlert;
     
+
+    
     
     public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, int playerNum, ScreenAssets assets, int totalLap) {
         this.twoPlayers = twoPlayers;
@@ -107,6 +111,11 @@ public class Hud {
         fuelgauge_texture = assets.manager.get(ScreenAssets.fuel_gauge);
         speedneedle_texture = assets.manager.get(ScreenAssets.speed_needle);
         fuelneedle_texture = assets.manager.get(ScreenAssets.fuel_needle);
+        
+        /**Sounds**/
+        fuelAlertSound = assets.manager.get(ScreenAssets.out_of_fuel_alarm);
+        countdown1 = assets.manager.get(ScreenAssets.countdown_sound1);
+        countdown2 = assets.manager.get(ScreenAssets.countdown_sound2);
         
         /**Widgets*/
         speedgauge = new Image(speedgauge_texture);
@@ -263,11 +272,12 @@ public class Hud {
         
         if (sec > 0) {
             countdownLbl.setText(Integer.toString(sec));
-            //countdown1.play();
+            countdown1.play();
         }
         else if (sec == 0) {
             setGamingState(true);
             countdownLbl.setText(GO);
+            countdown2.play();
 
         Timer.schedule(new Task() {
             @Override
@@ -304,11 +314,13 @@ public class Hud {
         //fuelAlert.addAction(Actions.alpha(2));
         fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
                 Actions.fadeOut(2))));
-                //add sound?
+                //add sound? YUSSSS
+            fuelAlertSound.loop();
             stage.addActor(fuelAlert);
         }
         
         else if (fuel > 30) {
+            fuelAlertSound.stop();
             fuelAlert.remove();
         }
         
