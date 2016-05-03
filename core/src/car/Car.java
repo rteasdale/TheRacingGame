@@ -20,8 +20,14 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import handlers.InputManager.Key;
 import handlers.ScreenAssets;
+import static handlers.ScreenAssets.getting_on_fuel_sound;
 
 public class Car {
+    
+    boolean MetalPlayedOnce = false;
+    boolean BridgePlayedOnce = false;
+    boolean loopedCar_fueling = false;
+    
     private int playerNum;
     int carNum;
     
@@ -34,6 +40,8 @@ public class Car {
     
     int car = 0;
     int lapCounter = 0;
+    int i = 0;
+    float pitch = 0.5f;
     boolean fuel = true;
     float maxFSpeed;
     float maxBSpeed;
@@ -61,6 +69,11 @@ public class Car {
     Sound car_wall2;
     Sound car_wall3;
     Sound car_Tire;
+    Sound car_Bridge;
+    Sound car_Metal;
+    Sound car_lap_complete;
+    Sound car_fueling;
+    Sound car_going_on_fuel;
     
     ScreenAssets assets;
     
@@ -75,6 +88,11 @@ public class Car {
         car_wall2 = assets.manager.get(ScreenAssets.car_wall_sound2);
         car_wall3 = assets.manager.get(ScreenAssets.car_wall_sound3);
         car_Tire = assets.manager.get(ScreenAssets.car_tire_sound);
+        car_Bridge = assets.manager.get(ScreenAssets.car_bridge_loop);
+        car_Metal = assets.manager.get(ScreenAssets.car_metal_loop_sound);
+        car_lap_complete = assets.manager.get(ScreenAssets.lap_complete_sound);
+        car_fueling = assets.manager.get(ScreenAssets.refueling_loop);
+        car_going_on_fuel = assets.manager.get(ScreenAssets.getting_on_fuel_sound);
         
         fuelAreas = new Array<FuelAreaType>();
        currentCheckpoints = new Array<Integer>();
@@ -376,6 +394,9 @@ public class Car {
     
         private void addFuel(){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){
+                if(!loopedCar_fueling){
+                    car_fueling.loop();
+                }
 
                 this.setFuelTank(FuelTank + 1/6f);
 
@@ -478,7 +499,7 @@ public class Car {
               currentCheckpoints.contains(4, true)){  //Checks if car has gone on every checkpoint
              
               lapCounter++;  //If true, Add 1 to counter
-              
+              car_lap_complete.play(); // Plays sound to indicate that the lap is complete
               currentCheckpoints.clear(); //Clear the list of checkpoint
              
                }
@@ -499,30 +520,45 @@ public class Car {
      
          public void addFuelArea(FuelAreaType item) {
         fuelAreas.add(item);
+        car_going_on_fuel.play();
+        loopedCar_fueling = false;
         updateFuel();
     }
 
     public void removeFuelArea(FuelAreaType item) {
         fuelAreas.removeValue(item, false);
+        car_fueling.stop();
         updateFuel();
     }
     
     public void updateFuel(){
         if(fuelAreas.size != 0){
             onFuelPad = true;
+            
         }
         else
             onFuelPad = false;
+            
     }
     
     public int getLapCounter(){
         return lapCounter;
     }
     
-    public void doCarSounds(int whichCar){
+    public void doCarSounds(){
         //Car sounds
+        Sound carSound = null; //Sound we want for the motor
         if(isAccelerating){
-            
+            carSound.play(0.75f, pitch, 0);
+            if(pitch < 1.5){
+            pitch += 0.01f;
+            }
+        }
+        else if(!isAccelerating){
+            carSound.play(0.75f, pitch, 0);
+            if(pitch > 1){
+            pitch -= 0.5f;
+            }
         }
         
     }
@@ -556,7 +592,28 @@ public class Car {
     }
     public void playCarOnWall3(){
         car_wall3.play();
-      
-      
 }
+    public void loopMetalSounds(){
+        if(!MetalPlayedOnce){
+            car_Metal.loop();
+        }
+    }
+    public void loopBridgeSounds(){
+        if(!BridgePlayedOnce){
+        car_Bridge.loop();
+        BridgePlayedOnce = true;
+        }
+    }
+    
+    public void stopMetalSounds(){
+        
+        car_Metal.stop();
+        MetalPlayedOnce = false;
+    }
+    
+    public void stopBridgeSounds(){
+        car_Bridge.stop();
+        MetalPlayedOnce = false;
+    }
+    
 }

@@ -207,7 +207,6 @@ public class ScreenAssets {
         manager.load(song4);
         manager.load(song5);
         manager.load(song6);
-        manager.load(car_bridge_initial);
         manager.load(car_bridge_loop);
         manager.load(car_car_sound);
         manager.load(car_metal_loop_sound);
@@ -218,6 +217,7 @@ public class ScreenAssets {
         manager.load(getting_on_fuel_sound);
         manager.load(lap_complete_sound);
         manager.load(out_of_fuel_alarm);
+        manager.load(refueling_loop);
     }
     
     public void loadSettingsScreen() {

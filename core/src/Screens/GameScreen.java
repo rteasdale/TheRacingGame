@@ -27,6 +27,7 @@ import car.Constants;
 import car.FinishLineType;
 import car.FuelAreaType;
 import car.GroundAreaType;
+
 import car.TireObsType;
 import car.WallType;
 import com.badlogic.gdx.Screen;
@@ -126,8 +127,7 @@ public final class GameScreen implements Screen {
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0, 0f), true);
-        cl = new CarContactListener();
-        world.setContactListener(cl);      
+            
         
         /**Create cars*/
 	car = new Car(world, carNumP1, carColorP1, 1, assets);
@@ -158,6 +158,9 @@ public final class GameScreen implements Screen {
             camera2.position.x = 0;
             camera2.position.y = 0;
         }
+        
+        cl = new CarContactListener();
+        world.setContactListener(cl);  
         
         camera.zoom = 0.2f;
         camera.position.x = 0;
@@ -437,7 +440,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
                 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false,0));
         }
         
         ////////////////////////////////////////////////////////
@@ -466,7 +469,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false,0));
         }
             ////////////////////////////////////////////////////////
             //FUEL LAYER
@@ -599,7 +602,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
                 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false,0));
         }
         
         ////////////////////////////////////////////////////////
@@ -628,7 +631,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false,0));
         }
             ////////////////////////////////////////////////////////
             //FUEL LAYER
@@ -752,7 +755,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.001f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.001f, false,0));
         }
             
             
@@ -781,7 +784,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false,1));
         }    
             
         MapLayer WallLayer = tileMap.getLayers().get("Wall ObjectLayer");
@@ -848,7 +851,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
                 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.9f, false,0));
         }
         
         ////////////////////////////////////////////////////////
@@ -877,7 +880,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.02f, false,0));
         }
             ////////////////////////////////////////////////////////
             //FUEL LAYER
@@ -1000,7 +1003,7 @@ public final class GameScreen implements Screen {
             Body body = world.createBody(bdef);
 
             Fixture groundAreaFixture = body.createFixture(fdef);
-            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false));
+            groundAreaFixture.setUserData(new GroundAreaType(0.90f, false,2));
         }
                            
     }
