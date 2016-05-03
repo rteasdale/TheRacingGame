@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import handlers.InputManager.Key;
+import handlers.ScreenAssets;
 
 public class Car {
     private int playerNum;
@@ -55,10 +56,25 @@ public class Car {
     Sprite carSprite;
     public String carLink;
     
-    public Car(World world, int CarNum, int ColorNum, int playerNum) {
+    Sound car_car;
+    Sound car_wall1;
+    Sound car_wall2;
+    Sound car_wall3;
+    Sound car_Tire;
+    
+    ScreenAssets assets;
+    
+    public Car(World world, int CarNum, int ColorNum, int playerNum, ScreenAssets assets) {
         this.playerNum = playerNum;
         this.carNum = CarNum;
+        this.assets = assets;
         whichCar(CarNum, ColorNum);
+        
+        car_car =  assets.manager.get(ScreenAssets.car_car_sound);
+        car_wall1 = assets.manager.get(ScreenAssets.car_wall_sound1);
+        car_wall2 = assets.manager.get(ScreenAssets.car_wall_sound2);
+        car_wall3 = assets.manager.get(ScreenAssets.car_wall_sound3);
+        car_Tire = assets.manager.get(ScreenAssets.car_tire_sound);
         
         fuelAreas = new Array<FuelAreaType>();
        currentCheckpoints = new Array<Integer>();
@@ -512,18 +528,35 @@ public class Car {
     }
 
     public void playCarOnCarSound() {
-        
+        car_car.play();
     }
 
     public void playCarOnWallSound() {
-        
+        int r = (int)(Math.random() * 100)%2; 
+        if(r == 0){
+            playCarOnWall1();
+        }
+        else if(r == 1){
+            playCarOnWall2();
+        }
+        else if(r == 2){
+            playCarOnWall3();
+        }
     }
 
     public void playCarOnTireSound() {
-        
+        car_Tire.play();
     }
     
-    
+        public void playCarOnWall1(){
+        car_wall1.play();
+    }
+    public void playCarOnWall2(){
+        car_wall2.play();
+    }
+    public void playCarOnWall3(){
+        car_wall3.play();
       
       
+}
 }

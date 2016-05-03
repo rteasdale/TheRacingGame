@@ -28,6 +28,7 @@ import car.FinishLineType;
 import car.FuelAreaType;
 import car.GroundAreaType;
 import car.TireObsType;
+import car.WallType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapLayer;
@@ -129,7 +130,7 @@ public final class GameScreen implements Screen {
         world.setContactListener(cl);      
         
         /**Create cars*/
-	car = new Car(world, carNumP1, carColorP1, 1);
+	car = new Car(world, carNumP1, carColorP1, 1, assets);
      
         /**Cameras*/
         if (!twoPlayers) {
@@ -139,7 +140,7 @@ public final class GameScreen implements Screen {
 
         if (twoPlayers) {
             // If two players, construct another car
-            car2 = new Car(world, carNumP2, carColorP2, 2);
+            car2 = new Car(world, carNumP2, carColorP2, 2, assets);
             
             float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
             
@@ -783,7 +784,8 @@ public final class GameScreen implements Screen {
             fdef.filter.maskBits = Constants.CAR | Constants.GROUND;
 
             Body body = world.createBody(bdef);
-            body.createFixture(fdef);
+            Fixture fixture = body.createFixture(fdef);
+            fixture.setUserData(new WallType());
            
             
         }

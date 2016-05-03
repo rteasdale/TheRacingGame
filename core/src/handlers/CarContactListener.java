@@ -72,15 +72,17 @@ public class CarContactListener implements ContactListener {
             }
  
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_CAR){
+                System.out.println("Car on Car");
              carAndCar(a);
             }
             
             
             else if(fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_BRIDGE){
-             tireAndGround(a, b, began,1);
+                tireAndGround(a, b, began,1);
             }
             else if(fudA.type == FixtureUserDataType.FUD_BRIDGE && fudB.type == FixtureUserDataType.FUD_CAR_TIRE){
-             tireAndGround(b, a, began,1);
+             
+                tireAndGround(b, a, began,1);
             }
             
             
@@ -99,10 +101,12 @@ public class CarContactListener implements ContactListener {
             }
             
              else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_TIREOBJ){
-             carAndTire(a);
+             System.out.println("Car on Tire");
+                 carAndTire(a);
             }
             else if(fudA.type == FixtureUserDataType.FUD_TIREOBJ && fudB.type == FixtureUserDataType.FUD_CAR){
-             carAndTire(b);
+             System.out.println("Car on Tire");
+                carAndTire(b);
             }
          }
     }
