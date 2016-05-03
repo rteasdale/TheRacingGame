@@ -1,5 +1,6 @@
 package handlers;
 
+import Screens.GameScreen;
 import car.Car;
 import car.CarType;
 import car.FinishLineType;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CarContactListener implements ContactListener {
 
+   Car car = GameScreen.car;
+    
     @Override
     public void beginContact(Contact contact) {
             // TODO Auto-generated method stub
@@ -48,11 +51,11 @@ public class CarContactListener implements ContactListener {
 
             if (fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_GROUND_AREA) {
                 //What happens when the car touches the car   
-                tireAndGround(a, b, began,0);
+                tireAndGround(a, b, began);
                     
             } else if (fudA.type == FixtureUserDataType.FUD_GROUND_AREA && fudB.type == FixtureUserDataType.FUD_CAR_TIRE) {
                 //What happens when the ground touches the car   
-                tireAndGround(b, a, began,0);
+                tireAndGround(b, a, began);
             }
             
             
@@ -72,24 +75,10 @@ public class CarContactListener implements ContactListener {
             }
  
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_CAR){
+                System.out.println("Car on Car");
              carAndCar(a);
             }
             
-            
-            else if(fudA.type == FixtureUserDataType.FUD_CAR_TIRE && fudB.type == FixtureUserDataType.FUD_BRIDGE){
-             tireAndGround(a, b, began,1);
-            }
-            else if(fudA.type == FixtureUserDataType.FUD_BRIDGE && fudB.type == FixtureUserDataType.FUD_CAR_TIRE){
-             tireAndGround(b, a, began,1);
-            }
-            
-            
-            else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_METAL){
-             tireAndGround(a, b, began,2);
-            }
-            else if(fudA.type == FixtureUserDataType.FUD_METAL && fudB.type == FixtureUserDataType.FUD_CAR){
-            tireAndGround(b, a, began,2);
-            }
             
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_WALL){
              carAndWall(a);
@@ -99,18 +88,21 @@ public class CarContactListener implements ContactListener {
             }
             
              else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_TIREOBJ){
-             carAndTire(a);
+             System.out.println("Car on Tire");
+                 carAndTire(a);
             }
             else if(fudA.type == FixtureUserDataType.FUD_TIREOBJ && fudB.type == FixtureUserDataType.FUD_CAR){
-             carAndTire(b);
+             System.out.println("Car on Tire");
+                carAndTire(b);
             }
          }
     }
 
-    void tireAndGround(Fixture tireFixture, Fixture groundFixture, boolean began, int whichSound) { //What happens when the car touches the ground
+    void tireAndGround(Fixture tireFixture, Fixture groundFixture, boolean began) { //What happens when the car touches the ground
         
             Tire tire = (Tire) tireFixture.getBody().getUserData();
             GroundAreaType ground = (GroundAreaType) groundFixture.getUserData();
+            int whichSound = ground.sound;
             if (began) {
                 tire.addGroundArea(ground);
                 
@@ -118,8 +110,7 @@ public class CarContactListener implements ContactListener {
                     case 1 : 
                         //What happens when you are on the Bridge (Bridge Sounds)  (Initial Sound, then, if still on, looping sound if moving)
                         PlayBridgeSounds(tire);
-                        
-                        ;break;
+                         ;break;
                         
                     case 2 : 
                         //What happens when you are on the Metal (Metal Sounds)  (Initial Sound, then, if still on, looping sound if moving)
@@ -132,7 +123,8 @@ public class CarContactListener implements ContactListener {
             } else {
                 tire.removeGroundArea(ground);
               //Stop the sound for the terrain
-              //stopTerrainSound(whichSound);
+              car.stopBridgeSounds();
+              car.stopMetalSounds();
             }
             
     }
@@ -198,15 +190,14 @@ public class CarContactListener implements ContactListener {
     }
     
     public void PlayBridgeSounds(Tire tire){
-    
-    if(!tire.getForwardVelocity().equals(new Vector2(0,0))){
-        
-    }
-    
-    }
-    
+                    car.loopBridgeSounds();
+        }
+
     public void PlayMetalSounds(Tire tire){
-        
+                    car.loopMetalSounds();
+        }
+    
     }
     
-}
+    
+
