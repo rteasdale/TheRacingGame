@@ -346,9 +346,11 @@ public final class GameScreen implements Screen {
         if (!twoPlayers) {
             if (GameScreen.car.getLapCounter() == maxLap) {
                 finishState = true;
+                hud.stopTime();
                 gamingState = false;
                 inputManager.disposeAll();
                 hud.updateFinish(twoPlayers);
+                
             }
         }
 
@@ -356,6 +358,7 @@ public final class GameScreen implements Screen {
             if (car.getLapCounter() == maxLap) {
                 inputManager.disposeP1();
                 hud.updateFinish(twoPlayers);   
+                hud.stopTime();
                 P1Finished = true;
                 //if car1 and car2 have the same num of laps, game is over
                 if (car2.getLapCounter() == car.getLapCounter()) {
@@ -366,6 +369,7 @@ public final class GameScreen implements Screen {
             if (car2.getLapCounter() == maxLap) {
                 inputManager.disposeP2();
                 hud2.updateFinish(twoPlayers);  
+                hud2.stopTime();
                 P2Finished = true;
                 if (car2.getLapCounter() == car.getLapCounter()) {
                     finishState = true;
@@ -378,6 +382,7 @@ public final class GameScreen implements Screen {
         if (twoPlayers == true) {
             //if tank is zero, then -1 lap penalty 
             if (car.getFuelTank() == 0) {
+                car.setFuelTank(60);
                 car.setLapNumber(car.getLapNumber()-1);
                 hud.updateLap(car);
             }
@@ -402,8 +407,16 @@ public final class GameScreen implements Screen {
             Timer.schedule(new Task(){
                 @Override
                 public void run() {
-                    //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
-                    System.out.println("set leaderboard screen");
+                    if (twoPlayers == true) {
+                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
+                        System.out.println("set leaderboard screen");
+                    }
+                    
+                    else if (twoPlayers == false) {
+                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
+                        System.out.println("set leaderboard screen");
+                    }
+
                 }
             }, 3);                
         }

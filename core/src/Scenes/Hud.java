@@ -221,7 +221,7 @@ public class Hud {
     public void updateTime(long startTime) {
         seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
         minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
-        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;       
+        milliseconds = ((int) TimeUtils.timeSinceMillis(startTime))%1000;
         
         //time format 
         String time;
@@ -231,7 +231,17 @@ public class Hud {
         
         timerLabel.setText(time);
         
-    }    
+    }
+    
+    public void stopTime() {
+        seconds = getSeconds();
+        minutes = getMinute();
+        milliseconds = getMilliseconds();
+    }
+    
+    public int getTotalTime() {
+        return milliseconds+seconds+minutes;
+    }
 
     public int getSeconds() {
         return seconds;
@@ -278,9 +288,13 @@ public class Hud {
         else if (sec == 0) {
             countdown1.stop();
             setGamingState(true);
+<<<<<<< HEAD
             countdownLbl.setText(GO);
             
             if(!c2HasPlayed){
+=======
+            countdownLbl.setText(GO);   
+>>>>>>> origin/master
             countdown2.play();
             c2HasPlayed = true;
                 }
