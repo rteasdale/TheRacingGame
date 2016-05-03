@@ -116,6 +116,9 @@ public final class GameScreen implements Screen {
     Music song5;
     Music song6;
     
+    boolean s1IsPlaying = false;
+    boolean s2IsPlaying = false;
+    boolean s3IsPlaying = false;
     
     public GameScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets) {
         this.game = game;
@@ -1158,8 +1161,8 @@ public void isOutside(){ //Could work with car[]
 
     private void playMusic(int map) { //Method for playing music inside the game
         if(map == 0){
-            Random rand = new Random();
             
+            if(!s1IsPlaying){
                 song2.play();
                 try{
                 song2.setVolume(SettingsScreen.musicVolume.getPercent());
@@ -1169,9 +1172,11 @@ public void isOutside(){ //Could work with car[]
                 song2.setLooping(true);
                 System.out.println("Song playing : Song2");
 
-            
+                s1IsPlaying = true;
+            }
         }
         else if(map == 1){
+            if(!s2IsPlaying){
             song5.play();
             try{
             song5.setVolume(SettingsScreen.musicVolume.getPercent());
@@ -1180,8 +1185,11 @@ public void isOutside(){ //Could work with car[]
             }
             song5.setLooping(true);
             System.out.println("Song playing : Song4");
+            s2IsPlaying = true;
+            }
         }
         else if(map == 2){
+            if(!s3IsPlaying){
             song6.play();
             try{
             song6.setVolume(SettingsScreen.musicVolume.getPercent());
@@ -1190,6 +1198,8 @@ public void isOutside(){ //Could work with car[]
             }
             song6.setLooping(true);
             System.out.println("Song playing : Song4");
+            s3IsPlaying = true;
+            }
         }
     }
 

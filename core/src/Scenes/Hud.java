@@ -68,7 +68,7 @@ public class Hud {
     private int playerNum;
     
     private int count;
-    private int i = 5;
+    boolean c2HasPlayed = false;
     private final String GO = "GO !";
 
     private Label.LabelStyle lbl_style;    
@@ -268,17 +268,24 @@ public class Hud {
         
         if (sec > 0) {
             countdownLbl.setText(Integer.toString(sec));
-            countdown1.play();
+            countdown1.loop();
         }
         else if (sec == 0) {
+            countdown1.stop();
             setGamingState(true);
             countdownLbl.setText(GO);
+            
+            if(!c2HasPlayed){
             countdown2.play();
+            c2HasPlayed = true;
+                }
 
         Timer.schedule(new Task() {
             @Override
             public void run() {
                 countdownLbl.remove();
+                c2HasPlayed = false;
+                
             }
 
         }, 3);
