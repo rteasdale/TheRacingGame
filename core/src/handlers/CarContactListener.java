@@ -13,6 +13,9 @@ import car.FixtureUserDataType;
 import car.FuelAreaType;
 import car.GroundAreaType;
 import car.Tire;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.Vector2;
 
 public class CarContactListener implements ContactListener {
 
@@ -114,13 +117,13 @@ public class CarContactListener implements ContactListener {
                 switch(whichSound){
                     case 1 : 
                         //What happens when you are on the Bridge (Bridge Sounds)  (Initial Sound, then, if still on, looping sound if moving)
-                        //PlayBridgeSounds();
+                        PlayBridgeSounds(tire);
                         
                         ;break;
                         
                     case 2 : 
                         //What happens when you are on the Metal (Metal Sounds)  (Initial Sound, then, if still on, looping sound if moving)
-                        //PlayMetalSounds();
+                        PlayMetalSounds(tire);
                         ; break;
                         
                     default: ;//What happens if you are on another fixture (No Extra Sounds)
@@ -163,7 +166,7 @@ public class CarContactListener implements ContactListener {
         CarType type = (CarType) carFixture.getBody().getUserData();
         Car car =  (Car) type.car;
         //Method to play the Car on Car sound
-        //car.playCarOnCarSound();
+        car.playCarOnCarSound();
         
     }
 
@@ -171,14 +174,14 @@ public class CarContactListener implements ContactListener {
        CarType type = (CarType) carFixture.getBody().getUserData();
         Car car =  (Car) type.car;
         //Method to play the Car on wall sound
-        //car.playCarOnWallSound();
+        car.playCarOnWallSound();
     }
 
     private void carAndTire(Fixture carFixture) {
         CarType type = (CarType) carFixture.getBody().getUserData();
         Car car =  (Car) type.car;
         //Method to play the Car on tire sound
-      //  car.playCarOnTireSound();
+        car.playCarOnTireSound();
     }
 
 
@@ -193,6 +196,17 @@ public class CarContactListener implements ContactListener {
             // TODO Auto-generated method stub
 
     }
-
+    
+    public void PlayBridgeSounds(Tire tire){
+    
+    if(!tire.getForwardVelocity().equals(new Vector2(0,0))){
+        
+    }
+    
+    }
+    
+    public void PlayMetalSounds(Tire tire){
+        
+    }
     
 }

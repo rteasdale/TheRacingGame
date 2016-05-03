@@ -503,11 +503,23 @@ public class Car {
         return lapCounter;
     }
     
-    public void doCarSounds(){
-        
+    public void doCarSounds(int whichCar){
+        //Car sounds
         if(isAccelerating){
             
         }
+        
+    }
+
+    public void playCarOnCarSound() {
+        
+    }
+
+    public void playCarOnWallSound() {
+        
+    }
+
+    public void playCarOnTireSound() {
         
     }
     

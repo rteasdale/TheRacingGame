@@ -191,14 +191,7 @@ public class Hud {
         stage.addActor(needle2);
         stage.addActor(countdownLbl);
         stage.addActor(playerOne);
-<<<<<<< HEAD
-        if(twoPlayers){
-        stage.addActor(playerTwo);
-        }
-=======
-        
 
->>>>>>> origin/master
     }
     
     public void updateTime(long startTime) {
