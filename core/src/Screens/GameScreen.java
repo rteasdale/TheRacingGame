@@ -95,8 +95,8 @@ public final class GameScreen implements Screen {
     InputManager inputManager;
     CarContactListener cl;
     
-    public static Car car;
-    public static Car car2;
+    private static Car car;
+    private static Car car2;
 
     float red;
     float green;
@@ -122,6 +122,8 @@ public final class GameScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
+        
+        choseMap(mapNum);
         
         batch = new SpriteBatch();
 
@@ -180,13 +182,13 @@ public final class GameScreen implements Screen {
         ////////////////////////////////////////////////////
         //Load Tiled Map
         
-        choseMap(mapNum);
+        
         bg = new Texture(mapAddressI);
         
         Timer.schedule(new Task(){
             @Override
             public void run() {
-                 playMusic(mapNum);
+                // playMusic(mapNum);  ////////////////////////////////// MUSIC IS TURNED OFF FOR TESTING!
             }
         }, 5);   
         
@@ -258,8 +260,6 @@ public final class GameScreen implements Screen {
         hud.stage.act();
         }
         
-//            Vector2 CameraPosition = CarMath.getCenterPoint(car.body.getPosition(), car2.body.getPosition());
-//            camera.position.set(new Vector3(CameraPosition.x, CameraPosition.y, camera.position.z));
         
         if (twoPlayers)  {
             /**NOTE: ORDER IN WHICH YOU RENDER IT MATTERS!*/
@@ -349,11 +349,8 @@ public final class GameScreen implements Screen {
         if (!twoPlayers) {
             if (car.getLapNumber()== maxLap) {
                 finishState = true;
-<<<<<<< HEAD
-//                hud.stopTime();
-=======
+
                 hud.updateTime(startTime, finishState);
->>>>>>> origin/master
                 gamingState = false;
                 inputManager.disposeAll(car);
                 hud.updateFinish(twoPlayers);
@@ -364,11 +361,8 @@ public final class GameScreen implements Screen {
             if (car.getLapNumber()== maxLap) {
                 inputManager.disposeP1(car);
                 hud.updateFinish(twoPlayers);   
-<<<<<<< HEAD
- //               hud.stopTime();
-=======
+
                 hud.updateTime(startTime, finishState);
->>>>>>> origin/master
                 P1Finished = true;
                 //if car1 and car2 have the same num of laps, game is over
                 if (car2.getLapNumber()== car.getLapNumber()) {
@@ -379,11 +373,7 @@ public final class GameScreen implements Screen {
             if (car2.getLapNumber()== maxLap) {
                 inputManager.disposeP2(car2);
                 hud2.updateFinish(twoPlayers);  
-<<<<<<< HEAD
- //               hud2.stopTime();
-=======
                 hud2.updateTime(startTime, finishState);
->>>>>>> origin/master
                 P2Finished = true;
                 if (car2.getLapNumber()== car.getLapNumber()) {
                     finishState = true;
@@ -1178,11 +1168,7 @@ public final class GameScreen implements Screen {
     public int getCarNumP2() {
         return carNumP2;
     }    
-
-    public static void setPosition(){
-     car.body.setTransform(new Vector2(200,500), 90);
-    //car.body.applyForceToCenter(new Vector2(100000, 0), debug);
-    }    
+   
 
 public void isOutside(){ //Could work with car[]
         car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
@@ -1264,6 +1250,13 @@ public void isOutside(){ //Could work with car[]
         return debug;
     }
 
+    public static Car getCar(){
+        return car;
+    }
+    
+    public static Car getCar2(){
+        return car2;
+    }
     
 }
 

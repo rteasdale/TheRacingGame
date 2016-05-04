@@ -36,49 +36,43 @@ public class Car {
     RevoluteJoint leftJoint, rightJoint;
     
     
-<<<<<<< HEAD
-    int car = 0;
-    int lapCounter = 5;
-    int i = 0;
-    float pitch = 0.5f;
-=======
+
     private int car = 0;
     private int lapCounter = 0;
     private int i = 0;
     private float pitch = 0.5f;
->>>>>>> origin/master
     boolean fuel = true;
-    float maxFSpeed;
-    float maxBSpeed;
-    float backTireMDriveForce;
-    float frontTireMDriveForce;
-    float backTireMLateralImpulse;
-    float frontTireMLateralImpulse;
-    float breakingFPourcentage;
-    float density;
+    private float maxFSpeed;
+    private float maxBSpeed;
+    private float backTireMDriveForce;
+    private float frontTireMDriveForce;
+    private float backTireMLateralImpulse;
+    private float frontTireMLateralImpulse;
+    private float breakingFPourcentage;
+    private float density;
     
-    float FuelTank;
-    float MaxFuelCapacity;
-    float fuelConsumption;
+    private float FuelTank;
+    private float MaxFuelCapacity;
+    private float fuelConsumption;
     
-    boolean isAccelerating;
-    boolean onFuelPad;
+    private boolean isAccelerating;
+    private boolean onFuelPad;
     
-    Vector2 InitialPosition;
+    private Vector2 InitialPosition;
                         
-    Sprite carSprite;
-    public String carLink;
+    private Sprite carSprite;
+    private String carLink;
     
-    Sound car_car;
-    Sound car_wall1;
-    Sound car_wall2;
-    Sound car_wall3;
-    Sound car_Tire;
-    Sound car_Bridge;
-    Sound car_Metal;
-    Sound car_lap_complete;
-    Sound car_fueling;
-    Sound car_going_on_fuel;
+    private Sound car_car;
+    private Sound car_wall1;
+    private Sound car_wall2;
+    private Sound car_wall3;
+    private Sound car_Tire;
+    private Sound car_Bridge;
+    private Sound car_Metal;
+    private Sound car_lap_complete;
+    private Sound car_fueling;
+    private Sound car_going_on_fuel;
     
     ScreenAssets assets;
     
@@ -398,7 +392,7 @@ public class Car {
     }
     
         private void addFuel(){
-            if(this.getFuelTank() <= this.getMaxFuelCapacity()){
+            if(this.getFuelTank() <= this.getMaxFuelCapacity()){ 
                 if(!loopedCar_fueling){
                     car_fueling.loop();
                     loopedCar_fueling = true;

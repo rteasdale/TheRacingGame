@@ -73,9 +73,9 @@ public class Tire {
     
     void updateTraction() {
         if (groundAreas.size == 0) {
-            GameScreen.car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
+            GameScreen.getCar().body.setLinearVelocity(GameScreen.getCar().body.getLinearVelocity().scl(0.3f));
             if(GameScreen.getTwoPlayers()){
-            GameScreen.car2.body.setLinearVelocity(GameScreen.car2.body.getLinearVelocity().scl(0.3f));
+            GameScreen.getCar2().body.setLinearVelocity(GameScreen.getCar2().body.getLinearVelocity().scl(0.3f));
             }
             currentTraction = 0.2f;
             return;
@@ -156,7 +156,7 @@ public class Tire {
         float currentSpeed = getForwardVelocity().dot(currentForwardNormal);
 
         float force = 0;
-        if(GameScreen.car.getFuelTank() > 0){
+        if(GameScreen.getCar().getFuelTank() > 0){
         if (desiredSpeed > currentSpeed) {
             force = maxDriveForce;
         } else if (desiredSpeed < currentSpeed) {
@@ -165,7 +165,7 @@ public class Tire {
             return;
         }
         }
-        else if(GameScreen.car.getFuelTank() < 0){
+        else if(GameScreen.getCar().getFuelTank() < 0){
             force = 0;
         }
         body.applyForce(

@@ -16,8 +16,6 @@ import car.GroundAreaType;
 import car.Tire;
 
 public class CarContactListener implements ContactListener {
-
-   Car car = GameScreen.car;
     
     @Override
     public void beginContact(Contact contact) {
@@ -120,8 +118,8 @@ public class CarContactListener implements ContactListener {
             } else {
                 tire.removeGroundArea(ground);
               //Stop the sound for the terrain
-              car.stopBridgeSounds();
-              car.stopMetalSounds();
+              GameScreen.getCar().stopBridgeSounds();
+              GameScreen.getCar().stopMetalSounds();
             }
             
     }
@@ -187,11 +185,11 @@ public class CarContactListener implements ContactListener {
     }
     
     public void PlayBridgeSounds(Tire tire){
-                    car.loopBridgeSounds();
+                    GameScreen.getCar().loopBridgeSounds();
         }
 
     public void PlayMetalSounds(Tire tire){
-                    car.loopMetalSounds();
+                    GameScreen.getCar().loopMetalSounds();
         }
     
     }

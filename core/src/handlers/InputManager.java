@@ -27,10 +27,10 @@ public class InputManager  implements InputProcessor  {
 
 
     public void updateControls(boolean twoPlayers){
-        GameScreen.car.update(pressedKeys);
+        GameScreen.getCar().update(pressedKeys);
         
         if (twoPlayers == true) {
-            GameScreen.car2.update(pressedKeys2);
+            GameScreen.getCar2().update(pressedKeys2);
         }
     }
 
@@ -41,13 +41,13 @@ public class InputManager  implements InputProcessor  {
         if (keycode == Input.Keys.UP) {
             if (!pressedKeys.contains(Key.Up)) {
                     pressedKeys.add(Key.Up);
-                    GameScreen.car.setIsAccelerating(true);
+                    GameScreen.getCar().setIsAccelerating(true);
             }
         }     
         else if (keycode == Input.Keys.DOWN) {
             if (!pressedKeys.contains(Key.Down)) {
                     pressedKeys.add(Key.Down);
-                    GameScreen.car.setIsAccelerating(true);
+                    GameScreen.getCar().setIsAccelerating(true);
                 
             }
         } else if (keycode == Input.Keys.LEFT) {
@@ -67,12 +67,12 @@ public class InputManager  implements InputProcessor  {
            if (keycode == Input.Keys.W) {
               if (!pressedKeys2.contains(Key.w)) {
                 pressedKeys2.add(Key.w);
-                GameScreen.car2.setIsAccelerating(true);
+                GameScreen.getCar2().setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.S) {
               if (!pressedKeys2.contains(Key.s)) {
                 pressedKeys2.add(Key.s);
-                GameScreen.car2.setIsAccelerating(true);
+                GameScreen.getCar2().setIsAccelerating(true);
             }
         } else if (keycode == Input.Keys.A) {
               if (!pressedKeys2.contains(Key.a)) {
@@ -90,8 +90,8 @@ public class InputManager  implements InputProcessor  {
         if(GameScreen.getDebug()){
          if(keycode == Input.Keys.V){
             System.out.println("Position");
-            System.out.println("x : " + GameScreen.car.body.getPosition().x);
-            System.out.println("y : " + GameScreen.car.body.getPosition().y);
+            System.out.println("x : " + GameScreen.getCar().body.getPosition().x);
+            System.out.println("y : " + GameScreen.getCar().body.getPosition().y);
         }
         else if(keycode == Input.Keys.B){
             System.out.println("Camera Position");
@@ -103,14 +103,14 @@ public class InputManager  implements InputProcessor  {
             System.out.println("x : " + GameScreen.camera.zoom);
         }
          
-         else if(keycode == Input.Keys.M){
-             if(GameScreen.car.getOnFuelPad()){
+         else if(keycode == Input.Keys.M){ //This activates the fueling bubble sound since you turn OnFuelPad true
+             if(GameScreen.getCar().getOnFuelPad()){
              System.out.println("onFuelPas : false");
-             GameScreen.car.setOnFuelPad(false);
+             GameScreen.getCar().setOnFuelPad(false);
              }
-             else if(!GameScreen.car.getOnFuelPad()){
+             else if(!GameScreen.getCar().getOnFuelPad()){
              System.out.println("onFuelPas : true");
-             GameScreen.car.setOnFuelPad(true);
+             GameScreen.getCar().setOnFuelPad(true);
              }
             }
          
@@ -125,11 +125,12 @@ public class InputManager  implements InputProcessor  {
         if (keycode == Input.Keys.UP) {
             if (pressedKeys.contains(Key.Up)) {
                 pressedKeys.remove(Key.Up);
-                GameScreen.car.setIsAccelerating(false);
+                GameScreen.getCar().setIsAccelerating(false);
             }
         } else if (keycode == Input.Keys.DOWN) {
             if (pressedKeys.contains(Key.Down)) {
                 pressedKeys.remove(Key.Down);
+                GameScreen.getCar().setIsAccelerating(false);
             }
         } else if (keycode == Input.Keys.LEFT) {
             if (pressedKeys.contains(Key.Left)) {
@@ -145,11 +146,13 @@ public class InputManager  implements InputProcessor  {
         else if (keycode == Input.Keys.W) {
             if (pressedKeys2.contains(Key.w)) {
                 pressedKeys2.remove(Key.w);
+                GameScreen.getCar2().setIsAccelerating(false);
             }
         }
         else if (keycode == Input.Keys.S) {
             if (pressedKeys2.contains(Key.s)) {
                 pressedKeys2.remove(Key.s);
+                GameScreen.getCar2().setIsAccelerating(false);
             }
         } else if (keycode == Input.Keys.A) {
             if (pressedKeys2.contains(Key.a)) {
