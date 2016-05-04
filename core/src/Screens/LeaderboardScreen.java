@@ -46,6 +46,7 @@ public class LeaderboardScreen implements Screen {
     private String[] playerNames;
     private String[] carNames;
     private String[] data;
+    private String[][] final_matrix;
     
 
     private int totalTime; 
@@ -78,6 +79,13 @@ public class LeaderboardScreen implements Screen {
     private Label carName7;
     private Label carName8;
     private Label time1;
+    private Label time2;
+    private Label time3;
+    private Label time4;
+    private Label time5;
+    private Label time6;
+    private Label time7;
+    private Label time8;
     private Label map;
     private Label totalFuelConsumption;
     private Label numberOfStopsForFuel;
@@ -143,8 +151,12 @@ public class LeaderboardScreen implements Screen {
         carNames = dataLines[1].split(",");
         times = dataLines[2].split(",");
         
-        String[][] final_matrix = GetNewMatrix(playerNames, carNames, times, playerNameString, timeString, timeString);
+        final_matrix = GetNewMatrix(playerNames, carNames, times, playerNameString, timeString, timeString);
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
+        //This method reads and classes the the names, car names and times according to the fastest times
+        //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
+        
+        setValues();
         
 System.out.println(Arrays.toString(playerNames));
         
@@ -155,28 +167,36 @@ System.out.println(Arrays.toString(playerNames));
         
         /**Player name*/
         //car.getPlayerNum(); if playerNum == 1, then playerName = PlayerScreen.PlayerOneName, etc.
-        playerName1 = new Label(playerNames[0], lbl_style); 
-        playerName2 = new Label(playerNames[1], lbl_style);
-        playerName3 = new Label(playerNames[2], lbl_style);
-        playerName4 = new Label(playerNames[3], lbl_style);
-        playerName5 = new Label(playerNames[4], lbl_style);
-        playerName6 = new Label(playerNames[5], lbl_style);
-        playerName7 = new Label(playerNames[6], lbl_style);
-        playerName8 = new Label(playerNames[7], lbl_style);
+        playerName1 = new Label(final_matrix[0][0], lbl_style); 
+        playerName2 = new Label(final_matrix[1][0], lbl_style);
+        playerName3 = new Label(final_matrix[2][0], lbl_style);
+        playerName4 = new Label(final_matrix[3][0], lbl_style);
+        playerName5 = new Label(final_matrix[4][0], lbl_style);
+        playerName6 = new Label(final_matrix[5][0], lbl_style);
+        playerName7 = new Label(final_matrix[6][0], lbl_style);
+        playerName8 = new Label(final_matrix[7][0], lbl_style);
         
         
         /** Car name*/
         carNameString = ""; 
         //car.getCarNum(); if carNum == 1, then carNameString = " VW Golf", etc. 
-        carName1 = new Label(carNames[0], lbl_style);
-        carName2 = new Label(carNames[1], lbl_style);
-        carName3 = new Label(carNames[2], lbl_style);
-        carName4 = new Label(carNames[3], lbl_style);
-        carName5 = new Label(carNames[4], lbl_style);
-        carName6 = new Label(carNames[5], lbl_style);
-        carName7 = new Label(carNames[6], lbl_style);
-        carName8 = new Label(carNames[7], lbl_style);
+        carName1 = new Label(final_matrix[0][1], lbl_style);
+        carName2 = new Label(final_matrix[1][1], lbl_style);
+        carName3 = new Label(final_matrix[2][1], lbl_style);
+        carName4 = new Label(final_matrix[3][1], lbl_style);
+        carName5 = new Label(final_matrix[4][1], lbl_style);
+        carName6 = new Label(final_matrix[5][1], lbl_style);
+        carName7 = new Label(final_matrix[6][1], lbl_style);
+        carName8 = new Label(final_matrix[7][1], lbl_style);
         
+        time1 = new Label(final_matrix[0][2], lbl_style);
+        time2 = new Label(final_matrix[1][2], lbl_style);
+        time3 = new Label(final_matrix[2][2], lbl_style);
+        time4 = new Label(final_matrix[3][2], lbl_style);
+        time5 = new Label(final_matrix[4][2], lbl_style);
+        time6 = new Label(final_matrix[5][2], lbl_style);
+        time7 = new Label(final_matrix[6][2], lbl_style);
+        time8 = new Label(final_matrix[7][2], lbl_style);
         
         /** Time */
         //time format 
@@ -203,6 +223,15 @@ System.out.println(Arrays.toString(playerNames));
     }
     
     private void writeData(FileHandle file, int mapNum) {
+        
+        String newTextFile = (final_matrix[0][0] + "," + final_matrix[1][0] + "," + final_matrix[2][0] + "," + final_matrix[3][0] + "," + final_matrix[4][0]
+                 + "," + final_matrix[5][0] + "," + final_matrix[6][0] + "," + final_matrix[7][0] + "\n" + final_matrix[0][1] + "," + final_matrix[1][1]
+                 + "," + final_matrix[2][1] + "," + final_matrix[3][1] + "," + final_matrix[4][1] + "," + final_matrix[5][1] + "," + final_matrix[6][1]
+                 + "," + final_matrix[7][1] + "\n" + final_matrix[0][2] + "," + final_matrix[1][2] + "," + final_matrix[2][2] + "," + final_matrix[3][2]
+                 + "," + final_matrix[4][2]+ "," + final_matrix[5][2]+ "," + final_matrix[6][2]+ "," + final_matrix[7][2]);
+        
+        leaderboard_data.writeString(newTextFile, true);
+        
         file.writeString("name"+ ","+"time", true);
     }
     
