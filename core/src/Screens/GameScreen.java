@@ -31,6 +31,7 @@ import car.TireObsType;
 import car.WallType;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -38,6 +39,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -53,20 +58,18 @@ public final class GameScreen implements Screen {
     private Hud hud;
     private Hud hud2;
     private ScreenAssets assets;
-
+    
     private FitViewport viewport1;
     private FitViewport viewport2;
     
     private long startTime;
-    private boolean countdownState;
+    private boolean countdownState = false;
     private boolean gamingState = false;
     private boolean finishState = false;
     
     private int mapNum = 0;
     private int maxLap = 0;
     private static boolean twoPlayers;
-    private boolean p1Wins;
-    private boolean p2Wins;
     
     private boolean P1Finished = false;
     private boolean P2Finished = false; 
@@ -116,6 +119,11 @@ public final class GameScreen implements Screen {
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
+    private Stage stage;
+    private Skin skin;
+    private ImageButtonStyle style;
+    private ImageButton exit_button; 
+    
     public GameScreen(RacingGame game, boolean twoPlayers, final int mapNum, ScreenAssets assets) {
         this.game = game;
         this.assets = assets;
@@ -125,6 +133,19 @@ public final class GameScreen implements Screen {
         
         choseMap(mapNum);
         
+        Gdx.input.setInputProcessor(stage);
+        
+        stage = new Stage();
+        
+        TextureAtlas atlas = new TextureAtlas("menu/homelogo_atlas.txt");
+        skin = new Skin(atlas);
+        style = new ImageButtonStyle(skin.getDrawable("home_logo"), skin.getDrawable("home_logo2"), null, null, null, null);
+        exit_button = new ImageButton(style);
+        exit_button.setPosition(100, 100);
+        
+        stage.draw();
+        stage.act();
+
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0, 0f), true);
@@ -298,7 +319,7 @@ public final class GameScreen implements Screen {
         }
         
         /**CountdownState*/ 
-        if (countdownState) {
+        if (countdownState == true) {
             hud.updateCountDown(f);
             if (twoPlayers) {
                 hud2.updateCountDown(f);
@@ -307,7 +328,7 @@ public final class GameScreen implements Screen {
         }
         
         /**Gaming state*/
-        if (gamingState) {
+        if (gamingState == true) {
             Gdx.input.setInputProcessor(inputManager);
             inputManager.updateControls(twoPlayers); //update controls for two players
 
@@ -344,6 +365,8 @@ public final class GameScreen implements Screen {
             }
         }
         
+        
+        
         /** Finish state*/
         //for single player, game ends if current lap number = max lap number
         if (!twoPlayers) {
@@ -360,6 +383,7 @@ public final class GameScreen implements Screen {
             if (car.getLapNumber()== maxLap) {
                 inputManager.disposeP1(car);
                 P1Finished = true;
+                car.setCarDone(P1Finished);
                 hud.updateTime(startTime, P1Finished);
                 hud.updateFinish(twoPlayers);
                 //if car1 and car2 have the same num of laps, game is over
@@ -371,6 +395,7 @@ public final class GameScreen implements Screen {
             if (car2.getLapNumber()== maxLap) {
                 inputManager.disposeP2(car2);
                 P2Finished = true;
+                car2.setCarDone(P2Finished);
                 hud2.updateTime(startTime, P2Finished);
                 hud2.updateFinish(twoPlayers);  
                 if (car2.getLapNumber()== car.getLapNumber()) {
@@ -1099,6 +1124,7 @@ public final class GameScreen implements Screen {
         song4.dispose();
         song5.dispose();
         song6.dispose();
+        stage.dispose();
         
     }
     
@@ -1107,6 +1133,7 @@ public final class GameScreen implements Screen {
     batch.begin();
     batch.setProjectionMatrix(camera.combined);
 
+    
         //System.out.println(mapNum);
         batch.draw(bg, xPositionDraw(mapNum), yPositionDraw(mapNum));
         

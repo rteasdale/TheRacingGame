@@ -19,7 +19,7 @@ public class PauseScreen implements Screen{
     private Image image;
     private Texture pauseTexture;
     
-    public PauseScreen(RacingGame game) {
+    public PauseScreen(RacingGame game, Screen screen) {
         this.game = game;
     }
 

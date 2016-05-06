@@ -315,11 +315,7 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
-                
             }
 
         }, 3);

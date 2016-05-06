@@ -1,19 +1,19 @@
-checkbox_atlas.png
-size: 60, 30
+homelogo_atlas.png
+size: 100, 50
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-checkbox
+home_logo
   rotate: false
   xy: 0, 0
-  size: 30, 30
-  orig: 30, 30
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
-checkbox2
+home_logo2
   rotate: false
-  xy: 30, 0
-  size: 30, 30
-  orig: 30, 30
+  xy: 50, 0
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
