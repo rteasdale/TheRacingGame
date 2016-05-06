@@ -5,6 +5,7 @@
  */
 package Scenes;
 
+import Screens.SettingsScreen;
 import car.Car;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -296,7 +297,7 @@ public class Hud {
         if (sec > 0) {
             countdownLbl.setText(Integer.toString(sec));
             if(!c1HasPlayed){
-            countdown1.loop();
+            countdown1.loop(SettingsScreen.getSFXPourcentage());
             c1HasPlayed = true;
             }
         }
@@ -306,7 +307,7 @@ public class Hud {
             countdownLbl.setText(GO);
             
             if(!c2HasPlayed){
-            countdown2.play();
+            countdown2.play(SettingsScreen.getSFXPourcentage());
             c2HasPlayed = true;
                 }
 
@@ -314,7 +315,6 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
-                c2HasPlayed = false;
                 
             }
 
@@ -351,7 +351,7 @@ public class Hud {
             stage.addActor(fuelAlert);
 
             if(fuelAlertLooped == false){
-                fuelAlertSound.loop();
+                fuelAlertSound.loop(SettingsScreen.getSFXPourcentage());
                 fuelAlertLooped = true;
             }
 

@@ -55,7 +55,7 @@ public class SettingsScreen implements Screen {
     private Label.LabelStyle lbl_style;
 
 
-    private Slider SFXVolume;
+    private static Slider SFXVolume;
     public static Slider musicVolume;
     private Slider.SliderStyle slider_style;
     
@@ -181,5 +181,13 @@ public class SettingsScreen implements Screen {
 //        font.dispose();
         
     }
+    
+        public static float getSFXPourcentage(){
+        return SFXVolume.getPercent();
+    }
+        
+        public static float getMusicPourcentage(){
+            return musicVolume.getPercent();
+        }
     
 }

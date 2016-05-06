@@ -1,6 +1,7 @@
 package car;
 
 import Screens.CarSelectionScreen;
+import Screens.SettingsScreen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,6 +26,8 @@ public class Car {
     boolean MetalPlayedOnce = false;
     boolean BridgePlayedOnce = false;
     boolean loopedCar_fueling = false;
+    
+    boolean carDone = false;
     
     private int playerNum;
     int carNum;
@@ -233,12 +236,14 @@ public class Car {
         
         if(fuel){
             
+        if(!carDone){    
         UseFuel(isAccelerating, fuelConsumption);
         
         if(onFuelPad){
             
         addFuel();
         
+        }
         }
         }
         
@@ -394,7 +399,7 @@ public class Car {
         private void addFuel(){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){ 
                 if(!loopedCar_fueling){
-                    car_fueling.loop();
+                    car_fueling.loop(SettingsScreen.getSFXPourcentage());
                     loopedCar_fueling = true;
                 }
 
@@ -498,7 +503,7 @@ public class Car {
               currentCheckpoints.contains(4, true)){  //Checks if car has gone on every checkpoint
              
               lapCounter++;  //If true, Add 1 to counter
-              car_lap_complete.play(); // Plays sound to indicate that the lap is complete
+              car_lap_complete.play(SettingsScreen.getSFXPourcentage()); // Plays sound to indicate that the lap is complete
               currentCheckpoints.clear(); //Clear the list of checkpoint
              
                }
@@ -520,7 +525,7 @@ public class Car {
     
      public void addFuelArea(FuelAreaType item) {
         fuelAreas.add(item);
-        car_going_on_fuel.play();
+        car_going_on_fuel.play(SettingsScreen.getSFXPourcentage());
         loopedCar_fueling = false;
         updateFuel();
     }
@@ -542,26 +547,9 @@ public class Car {
             
     }
 
-    public void doCarSounds(){
-        //Car sounds
-        Sound carSound = null; //Sound we want for the motor
-        if(isAccelerating){
-            carSound.play(0.75f, pitch, 0);
-            if(pitch < 1.5){
-            pitch += 0.01f;
-            }
-        }
-        else if(!isAccelerating){
-            carSound.play(0.75f, pitch, 0);
-            if(pitch > 1){
-            pitch -= 0.5f;
-            }
-        }
-        
-    }
 
     public void playCarOnCarSound() {
-        car_car.play();
+        car_car.play(SettingsScreen.getSFXPourcentage());
     }
 
     public void playCarOnWallSound() {
@@ -578,26 +566,26 @@ public class Car {
     }
 
     public void playCarOnTireSound() {
-        car_Tire.play();
+        car_Tire.play(SettingsScreen.getSFXPourcentage());
     }
     
         public void playCarOnWall1(){
-        car_wall1.play();
+        car_wall1.play(SettingsScreen.getSFXPourcentage());
     }
     public void playCarOnWall2(){
-        car_wall2.play();
+        car_wall2.play(SettingsScreen.getSFXPourcentage());
     }
     public void playCarOnWall3(){
-        car_wall3.play();
+        car_wall3.play(SettingsScreen.getSFXPourcentage());
 }
     public void loopMetalSounds(){
         if(!MetalPlayedOnce){
-            car_Metal.loop();
+            car_Metal.loop(SettingsScreen.getSFXPourcentage());
         }
     }
     public void loopBridgeSounds(){
         if(!BridgePlayedOnce){
-        car_Bridge.loop();
+        car_Bridge.loop(SettingsScreen.getSFXPourcentage());
         BridgePlayedOnce = true;
         }
     }
@@ -611,6 +599,10 @@ public class Car {
     public void stopBridgeSounds(){
         car_Bridge.stop();
         MetalPlayedOnce = false;
+    }
+    
+    public void setCarDone(boolean carDone){
+        this.carDone = carDone;
     }
     
 }
