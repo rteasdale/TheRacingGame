@@ -5,18 +5,6 @@
  */
 package com.mygdx.game;
 
-import Screens.CarSelectionScreen;
-import Screens.GameScreen;
-import Screens.LeaderboardScreen;
-import Screens.LoadingScreen;
-import Screens.PlayScreen;
-
-import Screens.MainMenuScreen;
-import Screens.MapSelectionScreen;
-
-import Screens.PlayScreen;
-import Screens.PlayerScreen;
-import Screens.SettingsScreen;
 import Screens.SplashScreen;
 
 import com.badlogic.gdx.Game;

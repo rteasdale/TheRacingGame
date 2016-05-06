@@ -314,7 +314,7 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
-                c2HasPlayed = false;
+
                 
             }
 
@@ -323,6 +323,7 @@ public class Hud {
         }
 
     }
+    
     public boolean getGamingState() {
         return gamingState;
         

@@ -349,7 +349,6 @@ public final class GameScreen implements Screen {
         if (!twoPlayers) {
             if (car.getLapNumber()== maxLap) {
                 finishState = true;
-
                 hud.updateTime(startTime, finishState);
                 gamingState = false;
                 inputManager.disposeAll(car);
@@ -360,10 +359,9 @@ public final class GameScreen implements Screen {
         if (twoPlayers) {
             if (car.getLapNumber()== maxLap) {
                 inputManager.disposeP1(car);
-                hud.updateFinish(twoPlayers);   
-
-                hud.updateTime(startTime, finishState);
                 P1Finished = true;
+                hud.updateTime(startTime, P1Finished);
+                hud.updateFinish(twoPlayers);
                 //if car1 and car2 have the same num of laps, game is over
                 if (car2.getLapNumber()== car.getLapNumber()) {
                     finishState = true;
@@ -372,9 +370,9 @@ public final class GameScreen implements Screen {
             
             if (car2.getLapNumber()== maxLap) {
                 inputManager.disposeP2(car2);
-                hud2.updateFinish(twoPlayers);  
-                hud2.updateTime(startTime, finishState);
                 P2Finished = true;
+                hud2.updateTime(startTime, P2Finished);
+                hud2.updateFinish(twoPlayers);  
                 if (car2.getLapNumber()== car.getLapNumber()) {
                     finishState = true;
                 }
