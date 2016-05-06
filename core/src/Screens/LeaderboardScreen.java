@@ -99,9 +99,14 @@ public class LeaderboardScreen implements Screen {
     private Label positionNum7;
     private Label positionNum8;
     
-    private String timeString;
-    private String playerNameString;
-    private String carNameString;
+    private String timeString1;
+    private String playerNameString1;
+    private String carNameString1;
+    
+    private String playerNameString2;
+    private String timeString2;
+    private String carNameString2;
+    
     private String mapNameString;
     
     private final Label.LabelStyle lbl_style;
@@ -151,10 +156,15 @@ public class LeaderboardScreen implements Screen {
         carNames = dataLines[1].split(",");
         times = dataLines[2].split(",");
         
-        final_matrix = GetNewMatrix(playerNames, carNames, times, playerNameString, timeString, timeString);
+        if(!twoPlayers){
+        final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1,carNameString1, timeString1);
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
         //This method reads and classes the the names, car names and times according to the fastest times
         //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
+        }
+        else
+            final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, timeString1, timeString1, playerNameString2, timeString2, timeString2);
+        
         
         setValues();
         
@@ -178,7 +188,7 @@ System.out.println(Arrays.toString(playerNames));
         
         
         /** Car name*/
-        carNameString = ""; 
+        carNameString1 = ""; 
         //car.getCarNum(); if carNum == 1, then carNameString = " VW Golf", etc. 
         carName1 = new Label(final_matrix[0][1], lbl_style);
         carName2 = new Label(final_matrix[1][1], lbl_style);
@@ -200,11 +210,11 @@ System.out.println(Arrays.toString(playerNames));
         
         /** Time */
         //time format 
-        timeString = String.format("%02d : %02d : %03d",
+        timeString1 = String.format("%02d : %02d : %03d",
             2, 45, 345
             //hud.getSeconds(), hud.getMinutes(), etc.
         );
-        time1.setText(timeString);
+        time1.setText(timeString1);
         
         /** Map */
         map = new Label("", lbl_style);
@@ -352,7 +362,7 @@ System.out.println(Arrays.toString(playerNames));
         
     }
     
-    public String[][] GetNewMatrix (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
+    public String[][] GetNewMatrix1P (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
                 
         String[][] a = new String[9][3];
         int[] unorderedTime = new int[9];
@@ -366,12 +376,11 @@ System.out.println(Arrays.toString(playerNames));
             a[i][2] = times[i];
         }
         //INSERT NEW INFORMATION INTO STRING[][] a
-        a[9][1] = newPlayerName;
-        a[9][2] = newCarName;
-        a[9][3] = newTime;
+        a[8][1] = newPlayerName;
+        a[8][2] = newCarName;
+        a[8][3] = newTime;
         
         for(int i = 0; i < 9; i++){
-            String[] time = new String[3];
             times = a[i][3].split(":");
             int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[0]);
             unorderedTime[i] = t;
@@ -381,6 +390,55 @@ System.out.println(Arrays.toString(playerNames));
         
            for(int i = 0; i < 9; i++){
                for(int j = 0; j < 9; j++){
+                   if(orderedTime[i] == unorderedTime[j]){
+                       b[i][0] = a[j][0];
+                       b[i][1] = a[j][1];
+                       b[i][2] = a[j][2];
+                       break;
+                   }
+               }
+           }
+               for(int z = 0; z < 8; z++){
+                   final_one[z][0] = b[z][0];
+                   final_one[z][1] = b[z][1];
+                   final_one[z][1] = b[z][2];
+               }
+               return final_one;
+    }
+  
+        public String[][] GetNewMatrix2P (String[] playerNames, String[] carNames, String[] times, String newPlayerName1, String newCarName1, String newTime1
+        , String newPlayerName2, String newCarName2, String newTime2){
+                
+        String[][] a = new String[10][3];
+        int[] unorderedTime = new int[10];
+        int[] orderedTime = new int[10];
+        String[][] b = new String[10][3];
+        String[][] final_one = new String[8][3];
+        
+        for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
+            a[i][0] = playerNames[i];
+            a[i][1] = carNames[i];
+            a[i][2] = times[i];
+        }
+        //INSERT NEW INFORMATION INTO STRING[][] a
+        a[8][1] = newPlayerName1;
+        a[8][2] = newCarName1;
+        a[8][3] = newTime1;
+        
+        a[9][1] = newPlayerName2;
+        a[9][2] = newCarName2;
+        a[9][3] = newTime2;
+        
+        for(int i = 0; i < 10; i++){
+            times = a[i][3].split(":");
+            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[0]);
+            unorderedTime[i] = t;
+            orderedTime[i] = t;
+        }
+            BubbleSort(orderedTime);
+        
+           for(int i = 0; i < 10; i++){
+               for(int j = 0; j < 10; j++){
                    if(orderedTime[i] == unorderedTime[j]){
                        b[i][0] = a[j][0];
                        b[i][1] = a[j][1];
@@ -418,5 +476,6 @@ System.out.println(Arrays.toString(playerNames));
             } 
       } 
 } 
+    
     
 }
