@@ -39,7 +39,7 @@ public class Car {
     RevoluteJoint leftJoint, rightJoint;
     
     
-
+    private String carName = null;
     private int car = 0;
     private int lapCounter = 0;
     private int i = 0;
@@ -257,6 +257,7 @@ public class Car {
         
         if(car ==0){
             //Golf
+            carName = "Volkswagen Golf";
             maxFSpeed = 80;
             maxBSpeed = -30;
             backTireMDriveForce = 172; //was 130
@@ -274,6 +275,7 @@ public class Car {
         }
         else if(car == 1){
             //Lamborghini
+            carName = "Lamborghini Gallardo";
             maxFSpeed = 110;
             maxBSpeed = -40;
             backTireMDriveForce = 278; //was 130
@@ -290,6 +292,7 @@ public class Car {
         }
         else if(car ==2){
             //prius
+            carName = "Toyota Prius";
             maxFSpeed = 70;
             maxBSpeed = -20;
             backTireMDriveForce = 150; //was 130
@@ -306,6 +309,7 @@ public class Car {
         }
         else if(car ==3){
             //Porsche
+            carName = "Porsche 911";
             maxFSpeed = 100;
             maxBSpeed = -30;
             backTireMDriveForce = 350; //was 130
@@ -322,6 +326,7 @@ public class Car {
         }
         else if(car == 4){
             //Truck
+            carName = "F-150 Raptor";
             maxFSpeed = 80;
             maxBSpeed = -30;
             backTireMDriveForce = 170; 
@@ -338,6 +343,7 @@ public class Car {
         }
         else if(car == 5){
             //Zonda
+            carName = "ZondaF";
             maxFSpeed = 121;
             maxBSpeed = -50;
             backTireMDriveForce = 301; //was 130
@@ -399,7 +405,11 @@ public class Car {
         private void addFuel(){
             if(this.getFuelTank() <= this.getMaxFuelCapacity()){ 
                 if(!loopedCar_fueling){
+                    try{
                     car_fueling.loop(SettingsScreen.getSFXPourcentage());
+                    }catch(NullPointerException e1){
+                            car_fueling.loop(0.75f);
+                            }
                     loopedCar_fueling = true;
                 }
 
@@ -503,7 +513,12 @@ public class Car {
               currentCheckpoints.contains(4, true)){  //Checks if car has gone on every checkpoint
              
               lapCounter++;  //If true, Add 1 to counter
+              
+              try{
               car_lap_complete.play(SettingsScreen.getSFXPourcentage()); // Plays sound to indicate that the lap is complete
+              }catch (NullPointerException e1){
+                  car_lap_complete.play(0.75f);
+              }
               currentCheckpoints.clear(); //Clear the list of checkpoint
              
                }
@@ -525,7 +540,12 @@ public class Car {
     
      public void addFuelArea(FuelAreaType item) {
         fuelAreas.add(item);
+        
+        try{
         car_going_on_fuel.play(SettingsScreen.getSFXPourcentage());
+        }catch(NullPointerException e1){
+            car_going_on_fuel.play(0.75f);
+        }
         loopedCar_fueling = false;
         updateFuel();
     }
@@ -549,7 +569,12 @@ public class Car {
 
 
     public void playCarOnCarSound() {
-        car_car.play(SettingsScreen.getSFXPourcentage());
+        try{
+            car_car.play(SettingsScreen.getSFXPourcentage());
+        }catch(NullPointerException e1){
+            car_car.play(0.75f);
+        }
+        
     }
 
     public void playCarOnWallSound() {
@@ -566,26 +591,55 @@ public class Car {
     }
 
     public void playCarOnTireSound() {
+
+        try{
         car_Tire.play(SettingsScreen.getSFXPourcentage());
+        }catch(NullPointerException e1){
+            car_Tire.play(0.75f);
+        }
     }
     
         public void playCarOnWall1(){
+                            
+            try{
         car_wall1.play(SettingsScreen.getSFXPourcentage());
+            }catch(NullPointerException e1){
+                car_wall1.play(0.75f);
+            }
     }
     public void playCarOnWall2(){
+        try{
         car_wall2.play(SettingsScreen.getSFXPourcentage());
+        }catch (NullPointerException e1){
+            car_wall2.play(0.75f);
+        }
     }
     public void playCarOnWall3(){
-        car_wall3.play(SettingsScreen.getSFXPourcentage());
+
+        try{
+            car_wall3.play(SettingsScreen.getSFXPourcentage());
+        } catch(NullPointerException e1){
+            car_wall3.play(0.75f);
+        }
+       
 }
     public void loopMetalSounds(){
         if(!MetalPlayedOnce){
+            
+            try{
             car_Metal.loop(SettingsScreen.getSFXPourcentage());
+            }catch(NullPointerException e1){
+                car_Metal.loop(0.75f);
+            }
         }
     }
     public void loopBridgeSounds(){
         if(!BridgePlayedOnce){
+            try{
         car_Bridge.loop(SettingsScreen.getSFXPourcentage());
+            }catch(NullPointerException e1){
+                car_Bridge.loop(0.75f);
+            }
         BridgePlayedOnce = true;
         }
     }
@@ -603,6 +657,10 @@ public class Car {
     
     public void setCarDone(boolean carDone){
         this.carDone = carDone;
+    }
+    
+    public String getCarName(){
+        return carName;
     }
     
 }

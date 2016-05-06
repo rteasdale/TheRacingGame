@@ -124,7 +124,7 @@ public class SettingsScreen implements Screen {
         musicVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click.play();
+                click.play(getSFXPourcentage());
                 musicPlayer.setVolumeValue(musicVolume.getValue()/100);
             }
         });
@@ -132,7 +132,7 @@ public class SettingsScreen implements Screen {
         OKButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click.play();
+                click.play(getSFXPourcentage());
                 //save values of sliders
                 game.setScreen(new MainMenuScreen(game, assets));
             }

@@ -285,7 +285,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         next_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                click.play();
+                try{
+                click.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click.play(0.75f);
+                }
                 if (twoPlayers == true && playerNum == 1) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                          
@@ -307,7 +311,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                click.play();
+                try{
+                click.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click.play(0.75f);
+                }
                 if (twoPlayers == true && playerNum == 2) {
                     //return to car selection P1
                     game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets, musicPlayer));
@@ -327,7 +335,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         color_select.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{
+                click2.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click2.play(0.75f);
+                }
             /** Default*/
                 if (color_select.getSelected().equals("-- Select Car Color --")) {
                     Gdx.app.log("color selected:", color_select.getSelected());
@@ -849,7 +861,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{
+                    click2.play(SettingsScreen.getSFXPourcentage());                
+                }catch(NullPointerException e1){                    
+                    click2.play(0.75f);                
+                };
                 //System.out.print(currentCar);
                 color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
@@ -884,7 +900,12 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{                
+                    click2.play(SettingsScreen.getSFXPourcentage());                
+                }catch(NullPointerException e1){
+                    click2.play(0.75f);                
+                };
+                
                 color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {
                 currentCar--;

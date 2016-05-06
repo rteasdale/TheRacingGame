@@ -151,7 +151,11 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{
+                click2.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click2.play(0.75f);
+                }
                 //if two players, generate game screen with 2 cars
                 if (twoPlayers == true) {
                 game.setScreen(new LoadingScreen(game, true, currentMap, assets, musicPlayer)); //Change two players value 
@@ -165,7 +169,11 @@ public class MapSelectionScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click.play();
+                try{
+                click.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click.play(0.75f);
+                }
                 if(twoPlayers == true) {
                     game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets, musicPlayer));
                 }
@@ -178,7 +186,11 @@ public class MapSelectionScreen implements Screen {
         selectNextMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{
+                click2.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click2.play(0.75f);
+                }
                 if (currentMap < 2) {
                 currentMap++;
                 Gdx.app.log("Current map", map[currentMap]);
@@ -206,7 +218,12 @@ public class MapSelectionScreen implements Screen {
         selectPreviousMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click2.play();
+                try{
+                click2.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    click2.play(0.75f);
+                }
+                
                 if (currentMap > 0) {
                 currentMap--;
                 //System.out.println(currentMap);

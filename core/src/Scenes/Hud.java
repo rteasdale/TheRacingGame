@@ -297,7 +297,11 @@ public class Hud {
         if (sec > 0) {
             countdownLbl.setText(Integer.toString(sec));
             if(!c1HasPlayed){
+                try{
             countdown1.loop(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    countdown1.loop(0.75f);
+                }
             c1HasPlayed = true;
             }
         }
@@ -315,10 +319,6 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
                 
             }
 
@@ -356,7 +356,12 @@ public class Hud {
             stage.addActor(fuelAlert);
 
             if(fuelAlertLooped == false){
+
+                try{
                 fuelAlertSound.loop(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    fuelAlertSound.loop(0.75f);
+                }
                 fuelAlertLooped = true;
             }
 

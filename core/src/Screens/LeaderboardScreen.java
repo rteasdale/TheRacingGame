@@ -240,9 +240,7 @@ System.out.println(Arrays.toString(playerNames));
                  + "," + final_matrix[7][1] + "\n" + final_matrix[0][2] + "," + final_matrix[1][2] + "," + final_matrix[2][2] + "," + final_matrix[3][2]
                  + "," + final_matrix[4][2]+ "," + final_matrix[5][2]+ "," + final_matrix[6][2]+ "," + final_matrix[7][2]);
         
-        leaderboard_data.writeString(newTextFile, true);
-        
-        file.writeString("name"+ ","+"time", true);
+        file.writeString(newTextFile, false);
     }
     
     private void sortTime(int[] list) {
@@ -382,7 +380,7 @@ System.out.println(Arrays.toString(playerNames));
         
         for(int i = 0; i < 9; i++){
             times = a[i][3].split(":");
-            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[0]);
+            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[2]);
             unorderedTime[i] = t;
             orderedTime[i] = t;
         }
@@ -431,7 +429,7 @@ System.out.println(Arrays.toString(playerNames));
         
         for(int i = 0; i < 10; i++){
             times = a[i][3].split(":");
-            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[0]);
+            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[2]);
             unorderedTime[i] = t;
             orderedTime[i] = t;
         }
@@ -477,5 +475,21 @@ System.out.println(Arrays.toString(playerNames));
       } 
 } 
     
+    public void obtainCarData(boolean twoPlayers){
+        if(twoPlayers){
+   //timeString1 = hud.getTIME1;
+  // playerNameString1 = PlayerScreen.playerOne;
+   // carNameString1 = GameScreen.getCar().getCarName();
+    
+  //  playerNameString2 = ;
+   // timeString2 = ;
+  //  carNameString2 =  = GameScreen.getCar2().getCarName();
+        }
+        else if(!twoPlayers){
+    //timeString1 = hud.getTIME1;
+   //playerNameString1 = PlayerScreen.playerOne;
+   //carNameString1 = GameScreen.getCar().getCarName();
+    }
+    }
     
 }
