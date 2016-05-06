@@ -315,6 +315,10 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
                 
             }
 
@@ -323,6 +327,7 @@ public class Hud {
         }
 
     }
+    
     public boolean getGamingState() {
         return gamingState;
         
@@ -378,7 +383,7 @@ public class Hud {
     }
     
     public void updateGameOver() {
-        gameOver.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
+        gameOver.setPosition((RacingGame.V_WIDTH/2)-200, RacingGame.V_HEIGHT/2);
         stage.addActor(gameOver);
     }
     

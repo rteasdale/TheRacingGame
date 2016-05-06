@@ -6,6 +6,8 @@
 package Screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.RacingGame;
 
 /**
@@ -14,6 +16,8 @@ import com.mygdx.game.RacingGame;
  */
 public class PauseScreen implements Screen{
     private RacingGame game;
+    private Image image;
+    private Texture pauseTexture;
     
     public PauseScreen(RacingGame game) {
         this.game = game;
@@ -21,6 +25,8 @@ public class PauseScreen implements Screen{
 
     @Override
     public void show() {
+        pauseTexture = new Texture("");
+        image = new Image();
     }
 
     @Override
@@ -29,6 +35,7 @@ public class PauseScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
+        
         
 
     }
