@@ -53,11 +53,13 @@ public class SettingsScreen implements Screen {
     private ImageButton OKButton;
     private ImageButton.ImageButtonStyle OK_style;    
     private Label.LabelStyle lbl_style;
-
-
+    
     private static Slider SFXVolume;
     public static Slider musicVolume;
     private Slider.SliderStyle slider_style;
+    
+    private int musicSliderValue;
+    private float musicVolumeValue;
     
     public SettingsScreen(RacingGame game, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
@@ -104,35 +106,39 @@ public class SettingsScreen implements Screen {
         SFXVolume.setSize(500, 40);
         SFXVolume.setPosition(400, 400);
         SFXVolume.setRange(0, 100);
-        SFXVolume.setValue(40);
+        //SFXVolume.setValue(40);
         
         musicVolume = new Slider(0, 10, 4, false, slider_style);
         musicVolume.setSize(500, 40);
         musicVolume.setPosition(400, 300);
         musicVolume.setRange(0, 100);
-        musicVolume.setValue(30);
+        //musicVolume.setValue(40);
         
         /** Listeners*/
         SFXVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //change value of slider
+                click.play();
                 
             }
         });
         
+        //slider: value from 0 to 100
         musicVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click.play(getSFXPourcentage());
-                musicPlayer.setVolumeValue(musicVolume.getValue()/100);
+                click.play();
+                musicVolume.setValue(musicVolume.getValue());
+                musicVolumeValue = musicVolume.getValue()/100;
             }
         });
         
         OKButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                click.play(getSFXPourcentage());
+                click.play();
+                
                 //save values of sliders
                 game.setScreen(new MainMenuScreen(game, assets));
             }
@@ -146,11 +152,29 @@ public class SettingsScreen implements Screen {
         stage.addActor(title);
 
     }
+    
+    public void setCurrentVolume(float volume) {
+        this.musicVolumeValue = volume;
+    }
+    
+    public float getCurrentVolume() {
+        return musicVolumeValue;
+    }
+    
+    public void setMusicSliderValue(int value) {
+        this.musicSliderValue = value;
+    }
+    
+    public int getMusicSliderValue() {
+        return musicSliderValue;
+    }
 
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,0); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        
         
         stage.act();
         stage.draw();             
@@ -175,11 +199,12 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-//        skin.dispose();
-//        check_skin.dispose();
-//        stage.dispose();
-//        font.dispose();
-        
+        click.dispose();
+        skin.dispose();
+        title_texture.dispose();
+        check_skin.dispose();
+        stage.dispose();
+        font.dispose();
     }
     
         public static float getSFXPourcentage(){

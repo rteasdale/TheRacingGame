@@ -80,7 +80,8 @@ public class MainMenuScreen implements Screen {
         
         menu_song = assets.manager.get(ScreenAssets.menu_music);
 
-        musicPlayer = new MusicPlayer(menu_song);
+        musicPlayer = new MusicPlayer();
+        musicPlayer.setSong(menu_song);
         musicPlayer.playMusic();
 
         
@@ -199,7 +200,6 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("MainMenuScreen", "dispose called");
-        game.dispose();
         click.dispose();
         stage.dispose();
         background.dispose();

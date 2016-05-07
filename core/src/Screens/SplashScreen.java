@@ -130,11 +130,9 @@ public class SplashScreen extends InputListener implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("SplashScreen", "dispose called");
-//        game.dispose();
-//        splash_image.dispose();
-//        stage.dispose();
-//        stage.getBatch().dispose();
-//        font.dispose();
+        splash_image.dispose();
+        stage.dispose();
+        font.dispose();
     }
     
 

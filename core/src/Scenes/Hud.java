@@ -298,7 +298,7 @@ public class Hud {
             countdownLbl.setText(Integer.toString(sec));
             if(!c1HasPlayed){
                 try{
-            countdown1.loop(SettingsScreen.getSFXPourcentage());
+                    countdown1.loop(SettingsScreen.getSFXPourcentage());
                 }catch(NullPointerException e1){
                     countdown1.loop(0.75f);
                 }
@@ -311,7 +311,11 @@ public class Hud {
             countdownLbl.setText(GO);
             
             if(!c2HasPlayed){
+                try{
             countdown2.play(SettingsScreen.getSFXPourcentage());
+                }catch(NullPointerException e1){
+                    countdown2.play(0.75f);
+                }
             c2HasPlayed = true;
                 }
 
@@ -319,11 +323,6 @@ public class Hud {
             @Override
             public void run() {
                 countdownLbl.remove();
-<<<<<<< HEAD
-                
-=======
-
->>>>>>> origin/master
             }
 
         }, 3);
@@ -352,10 +351,7 @@ public class Hud {
     public void updateFuel(float fuel, Car car) {
         needle2.setRotation(166-(fuel*1.55f));
 
-        if (fuel <= 30) {
-            //fuelAlert.addAction(Actions.alpha(2));
-            fuelAlert.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeIn(2), 
-                    Actions.fadeOut(2))));
+        if (fuel <= 20) {
 
             stage.addActor(fuelAlert);
 
@@ -371,7 +367,7 @@ public class Hud {
 
         }
         
-        else if (fuel > 30) {
+        else if (fuel > 20) {
             fuelAlertSound.stop();
             fuelAlertLooped = false;
             fuelAlert.remove();

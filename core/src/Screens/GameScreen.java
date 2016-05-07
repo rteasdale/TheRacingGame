@@ -2,6 +2,7 @@ package Screens;
 
 
 import Scenes.Hud;
+import Scenes.MusicPlayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -29,6 +30,7 @@ import car.GroundAreaType;
 
 import car.TireObsType;
 import car.WallType;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -39,10 +41,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -61,6 +65,7 @@ public final class GameScreen implements Screen {
     
     private FitViewport viewport1;
     private FitViewport viewport2;
+    private MusicPlayer musicPlayer;
     
     private long startTime;
     private boolean countdownState = false;
@@ -93,10 +98,13 @@ public final class GameScreen implements Screen {
     public World world;
     public static OrthographicCamera camera;
     public static OrthographicCamera camera2;
+    
+    private float aspectRatio;
 
     Box2DDebugRenderer renderer;
     InputManager inputManager;
     CarContactListener cl;
+    private InputMultiplexer multiplexer; 
     
     private static Car car;
     private static Car car2;
@@ -133,19 +141,27 @@ public final class GameScreen implements Screen {
         
         choseMap(mapNum);
         
-        Gdx.input.setInputProcessor(stage);
-        
         stage = new Stage();
+        multiplexer = new InputMultiplexer();
+        
+        multiplexer.addProcessor(stage);
         
         TextureAtlas atlas = new TextureAtlas("menu/homelogo_atlas.txt");
         skin = new Skin(atlas);
-        style = new ImageButtonStyle(skin.getDrawable("home_logo"), skin.getDrawable("home_logo2"), null, null, null, null);
-        exit_button = new ImageButton(style);
-        exit_button.setPosition(100, 100);
+        style = new ImageButtonStyle(skin.getDrawable("home_logo"), null,null, null, null, null);
+        style.over = skin.getDrawable("home_logo2");
         
-        stage.draw();
-        stage.act();
-
+        exit_button = new ImageButton(style);
+        
+        if (!twoPlayers) {
+            exit_button.setPosition(15, 665);
+        }
+        if (twoPlayers) {
+            exit_button.setPosition(15, 560);
+        }
+        
+        stage.addActor(exit_button);
+        
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0, 0f), true);
@@ -164,7 +180,7 @@ public final class GameScreen implements Screen {
             // If two players, construct another car
             car2 = new Car(world, carNumP2, carColorP2, 2, assets);
             
-            float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+            aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
             
             camera = new OrthographicCamera();
             viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
@@ -193,13 +209,12 @@ public final class GameScreen implements Screen {
         
         inputManager = new InputManager(this);
 
-        /** Songs*/
-        song1 = assets.manager.get(ScreenAssets.song1);
+
         song2 = assets.manager.get(ScreenAssets.song2);
-        song3 = assets.manager.get(ScreenAssets.song3);
-        song4 = assets.manager.get(ScreenAssets.song4);
         song5 = assets.manager.get(ScreenAssets.song5);
-        song6 = assets.manager.get(ScreenAssets.song6);        
+        song6 = assets.manager.get(ScreenAssets.song6);
+        
+        
         ////////////////////////////////////////////////////
         //Load Tiled Map
         
@@ -232,7 +247,19 @@ public final class GameScreen implements Screen {
             createCollisionsM3();
         }
        
-	
+
+    }
+    
+    private void listeners() {
+        /**Exit button*/
+        exit_button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                game.setScreen(new MainMenuScreen(game, assets));
+                musicPlayer.stopMusic();
+                
+            }
+        });
     }
 
     @Override
@@ -254,13 +281,22 @@ public final class GameScreen implements Screen {
             }
         }, 7);   
         
+        Timer.schedule(new Task(){
+            @Override
+            public void run() {
+                playMusic(mapNum);
+            }
+        }, 3);           
+        
+        listeners();
     }
     
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
+        
         world.step(1 / 60f, 6, 2);
 
         //draw tile map
@@ -279,6 +315,8 @@ public final class GameScreen implements Screen {
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();   
         hud.stage.act();
+        stage.draw();
+        stage.act();        
         }
         
         
@@ -295,6 +333,7 @@ public final class GameScreen implements Screen {
             hud.stage.draw();
             hud.stage.act();
 
+
             /*Left Half*/
             Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
             camera2.viewportHeight = Gdx.graphics.getHeight();
@@ -305,7 +344,11 @@ public final class GameScreen implements Screen {
             batch.setProjectionMatrix(hud2.stage.getCamera().combined);
             hud2.stage.draw();
             hud2.stage.act();
-
+            exit_button.setSize(100, 50);
+            
+            stage.draw();
+            stage.act();
+            
         }  
 
         //Box2D Debug Renderer
@@ -329,7 +372,8 @@ public final class GameScreen implements Screen {
         
         /**Gaming state*/
         if (gamingState == true) {
-            Gdx.input.setInputProcessor(inputManager);
+            multiplexer.addProcessor(inputManager);
+            Gdx.input.setInputProcessor(multiplexer);
             inputManager.updateControls(twoPlayers); //update controls for two players
 
             hud.updateTime(startTime, finishState);
@@ -1113,6 +1157,8 @@ public final class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        skin.dispose();
+        stage.dispose();
         batch.dispose();
         renderer.dispose();
         tmr.dispose();
@@ -1124,8 +1170,6 @@ public final class GameScreen implements Screen {
         song4.dispose();
         song5.dispose();
         song6.dispose();
-        stage.dispose();
-        
     }
     
     public void renderSprites(SpriteBatch batch, OrthographicCamera camera){
@@ -1202,45 +1246,44 @@ public void isOutside(){ //Could work with car[]
 ///////////////////////////////////////////////////////////////////////////////////////
 
     private void playMusic(int map) { //Method for playing music inside the game
-        if(map == 0){
-            
-            if(!s1IsPlaying){
-                song2.play();
-                try{
-                song2.setVolume(SettingsScreen.musicVolume.getPercent());
-                }catch(NullPointerException e1){
-                 song2.setVolume(0.75f);
-                }
-                song2.setLooping(true);
-                System.out.println("Song playing : Song2");
+        
+        Music[] song_list = new Music[3];
+        song_list[0] = song2;
+        song_list[1] = song5;
+        song_list[2] = song6;
+        
+        musicPlayer = new MusicPlayer();
+        musicPlayer.addList(song_list);
 
+        if(map == 0){
+            musicPlayer.setSong(song2);
+            System.out.println("Song playing : Song2");
+            if(!s1IsPlaying){
+                musicPlayer.playMusic();
+                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                song2.setLooping(true);
                 s1IsPlaying = true;
             }
         }
+
         else if(map == 1){
+            System.out.println("Song playing : Song5");
+            musicPlayer.setSong(song5);
             if(!s2IsPlaying){
-            song5.play();
-            try{
-            song5.setVolume(SettingsScreen.musicVolume.getPercent());
-            }catch(NullPointerException e1){
-                song5.setVolume(0.75f);
-            }
-            song5.setLooping(true);
-            System.out.println("Song playing : Song4");
-            s2IsPlaying = true;
+                musicPlayer.playMusic();
+                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                song5.setLooping(true);
+                s2IsPlaying = true;
             }
         }
         else if(map == 2){
-            if(!s3IsPlaying){
-            song6.play();
-            try{
-            song6.setVolume(SettingsScreen.musicVolume.getPercent());
-            }catch(NullPointerException e1){
-                song6.setVolume(0.75f);
-            }
-            song6.setLooping(true);
-            System.out.println("Song playing : Song4");
-            s3IsPlaying = true;
+            System.out.println("Song playing : Song6");
+            musicPlayer.setSong(song6);
+            if (!s3IsPlaying) {
+                musicPlayer.playMusic();
+                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                song6.setLooping(true);
+                s3IsPlaying = true;
             }
         }
     }
@@ -1252,8 +1295,9 @@ public void isOutside(){ //Could work with car[]
         else if(mapNum == 1){
             return -300;
         }
-        else
+        else {
             return -408;
+        }
     }
     
     private int yPositionDraw(int mapNum){
@@ -1263,8 +1307,9 @@ public void isOutside(){ //Could work with car[]
         else if(mapNum == 1){
             return -220;
         }
-        else
+        else {
             return -200;
+        }
     }
     
     public static boolean getTwoPlayers(){

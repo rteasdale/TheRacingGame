@@ -5,17 +5,33 @@
  */
 package Scenes;
 
+import Screens.SettingsScreen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import handlers.ScreenAssets;
 
 /**
  *
  * @author ROSY
  */
 public class MusicPlayer {
-    private final Music song;
+    private Music song;
+    private Music[] list;
     
-    public MusicPlayer(Music song) {
-        this.song = song;
+    public MusicPlayer() {
+
+    }
+    
+    public void addList(Music[] list) {
+        this.list = list;
+    }
+    
+    public void setSong(Music song) {
+        this.song = song; 
+    }
+
+    public Music getSong() {
+        return song;
     }
     
     public void stopMusic() {
@@ -32,18 +48,13 @@ public class MusicPlayer {
     
     public void setVolumeValue(float volume) {
         song.setVolume(volume);
+        
     }
     
     public float getVolumeValue() {
         return song.getVolume();
     }
-    
-    public void setPitch(float pitch){
 
-    }
-    
-    public void getNextTrack() {
-        
-    }
+
     
 }
