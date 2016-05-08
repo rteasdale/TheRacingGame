@@ -172,7 +172,8 @@ public class MainMenuScreen implements Screen {
 
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-                //game.setScreen(new LeaderboardScreen(game, true, null, null, assets, null, null, mapNum));
+                click.play();
+                game.setScreen(new LeaderboardScreen(game, assets));
             }
         });
         

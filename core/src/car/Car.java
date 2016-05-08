@@ -41,7 +41,7 @@ public class Car {
     
     private String carName = null;
     private int car = 0;
-    private int lapCounter = 4;
+    private int lapCounter = 2;
     private int i = 0;
     private float pitch = 0.5f;
     boolean fuel = true;

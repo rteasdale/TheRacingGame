@@ -56,15 +56,19 @@ public class LeaderboardScreen implements Screen {
     private ImageButton return_mainmenu;
     private ImageButton.ImageButtonStyle image_style;
     
+    private ImageButton selectNextMapButton;
+    private ImageButton selectPreviousMapButton;
+    private ImageButton.ImageButtonStyle nextmap_style;
+    private ImageButton.ImageButtonStyle prevmap_style;      
+    
     private String[] times;
     private String[] playerNames;
     private String[] carNames;
     private String[][] final_matrix;
     
+    private String[] maps;
 
     private Sound click;
-    
-    private int totalTime; 
     
     private final BitmapFont font;
     
@@ -122,26 +126,19 @@ public class LeaderboardScreen implements Screen {
     
     private String mapNameString;
     
+    private int currentMap;
+    
     private final Label.LabelStyle lbl_style;
     
-    public LeaderboardScreen(RacingGame game, FileHandle file) {
+    public LeaderboardScreen(RacingGame game, ScreenAssets assets) {
         this.game = game;
-        leaderboard_data = file;
+        this.assets = assets;
         
         click = assets.manager.get(ScreenAssets.click_sound2);
         
-        /** FileHandle */ 
-        if (mapNum == 1) {
-            leaderboard_data = Gdx.files.local("map1_table.txt");
-        }
-        else if (mapNum == 2) {
-            leaderboard_data = Gdx.files.local("map2_table.txt");
-        }
-        else if (mapNum == 3) {
-            leaderboard_data = Gdx.files.local("map3_table.txt");
-        }        
+        leaderboard_data = Gdx.files.local("data/map1_table.txt");
+        mapNum = 0;
 
-        
         table = new Table();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -161,8 +158,23 @@ public class LeaderboardScreen implements Screen {
         image_style = new ImageButton.ImageButtonStyle();
         image_style.imageUp = buttons_skin.getDrawable("pause_return");
         
+        nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
+        prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);        
+
+        String[] dataLines = leaderboard_data.readString().split("\n");
         
         
+        /**File data*/
+        playerNames = dataLines[0].split(",");
+        carNames = dataLines[1].split(",");
+        times = dataLines[2].split(",");        
+        
+        //two players = false 
+        final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1);
+        //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
+        //This method reads and classes the the names, car names and times according to the fastest times
+        //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
+    
     }
     
     public LeaderboardScreen(RacingGame game, boolean twoPlayers, Car car, 
@@ -184,13 +196,13 @@ public class LeaderboardScreen implements Screen {
         leaderboard_data = Gdx.files.local("data/map1_table.txt");
         
         /** FileHandle */ 
-        if (mapNum == 1) {
+        if (mapNum == 0) {
             leaderboard_data = Gdx.files.local("data/map1_table.txt");
         }
-        else if (mapNum == 2) {
+        else if (mapNum == 1) {
             leaderboard_data = Gdx.files.local("data/map2_table.txt");
         }
-        else if (mapNum == 3) {
+        else if (mapNum == 2) {
             leaderboard_data = Gdx.files.local("data/map3_table.txt");
         }
 
@@ -208,6 +220,9 @@ public class LeaderboardScreen implements Screen {
         
         image_style = new ImageButton.ImageButtonStyle();
         image_style.imageUp = buttons_skin.getDrawable("pause_return");
+        
+        nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
+        prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);        
         
         String[] dataLines = leaderboard_data.readString().split("\n");
         
@@ -294,8 +309,8 @@ public class LeaderboardScreen implements Screen {
     @Override
     public void show() {
         
-        map = new Label(" For map #" + (mapNum+1), lbl_style);
-        map.setPosition(640,600);
+        map = new Label("For Map #" + Integer.toString(mapNum+1), lbl_style);
+        map.setPosition(590,600);
         
         title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
         
@@ -303,7 +318,7 @@ public class LeaderboardScreen implements Screen {
         title.setPosition(280, 648);
         
         return_mainmenu = new ImageButton(image_style);
-        return_mainmenu.setPosition(800, 10);
+        return_mainmenu.setPosition(950, 10);
         
         /**Column Labels*/
         positionLbl = new Label(" POSITION ", lbl_style);
@@ -321,6 +336,13 @@ public class LeaderboardScreen implements Screen {
         //map = new Label("", lbl_style);
         //totalFuelConsumption = new Label("", lbl_style);
         //numberOfStopsForFuel = new Label("", lbl_style);
+        
+        selectPreviousMapButton = new ImageButton(prevmap_style);
+        selectPreviousMapButton.setX(70);
+        selectPreviousMapButton.setY(360);
+        selectNextMapButton = new ImageButton(nextmap_style);
+        selectNextMapButton.setX(1150);
+        selectNextMapButton.setY(360);           
         
         /** Position numbers*/
         positionNum1 = new Label(Integer.toString(1), lbl_style);
@@ -391,12 +413,14 @@ public class LeaderboardScreen implements Screen {
         table.add(playerName8).pad(10);
         table.add(carName8).pad(10);   
         table.add(time8).pad(10);
-        table.setPosition(500, 350);
+        table.setPosition(600, 350);
         
         stage.addActor(table);
         stage.addActor(title);
         stage.addActor(return_mainmenu);
         stage.addActor(map);
+        stage.addActor(selectNextMapButton);
+        stage.addActor(selectPreviousMapButton);
         
         listeners();
     }
@@ -409,6 +433,51 @@ public class LeaderboardScreen implements Screen {
                 game.setScreen(new MainMenuScreen(game, assets));
             }
         });
+        
+        selectNextMapButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                click.play();
+                if (mapNum == 0) {
+                    leaderboard_data = Gdx.files.local("data/map2_table.txt");
+                    map.setText("For Map #"+ Integer.toString(2));
+                    mapNum = 1;
+                }
+                else if (mapNum == 1) {
+                    leaderboard_data = Gdx.files.local("data/map3_table.txt");
+                    map.setText("For Map #"+ Integer.toString(3));
+                    mapNum = 2;
+                }
+                else if (mapNum == 2) {
+                    leaderboard_data = Gdx.files.local("data/map1_table.txt");
+                    map.setText("For Map #"+ Integer.toString(1));
+                    mapNum = 0;
+                }
+            }        
+        });
+        
+        selectPreviousMapButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                click.play();
+                if (mapNum == 0) {
+                    leaderboard_data = Gdx.files.local("data/map3_table.txt");
+                    map.setText("For Map #"+ Integer.toString(3));
+                    mapNum = 2;
+                }
+                else if (mapNum == 1) {
+                    leaderboard_data = Gdx.files.local("data/map1_table.txt");
+                    map.setText("For Map #"+ Integer.toString(1));
+                    mapNum = 0;
+                }
+                else if (mapNum == 2) {
+                    leaderboard_data = Gdx.files.local("data/map2_table.txt");
+                    map.setText("For Map #"+ Integer.toString(2));
+                    mapNum = 1;
+                }
+            }
+        });
+                
     }
 
     @Override
