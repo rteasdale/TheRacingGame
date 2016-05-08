@@ -53,10 +53,15 @@ public class ScreenAssets {
     public static final AssetDescriptor<Texture> settingsTitle = 
         new AssetDescriptor<Texture>(Gdx.files.internal("menu/settings_title.png"), Texture.class);    
     
+    //leader board screen title
+    public static final AssetDescriptor<Texture> leaderboardTitle = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/leaderboard_title.png"), Texture.class);    
+    
     //car selection screen assets
     public static final AssetDescriptor<Texture> stat_box = 
         new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class); 
     
+
 
     
     //HUD assets
@@ -227,6 +232,10 @@ public class ScreenAssets {
     public void loadSounds() {
         manager.load(click_sound);
         manager.load(click_sound2);
+    }
+    
+    public void loadLeaderboard() {
+        manager.load(leaderboardTitle);
     }
 
 }

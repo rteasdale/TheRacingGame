@@ -12,9 +12,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -33,19 +35,23 @@ public class LeaderboardScreen implements Screen {
     private Car car;
     private Car car2;
     private ScreenAssets assets;
+    private Texture title_texture;
     
     private FileHandle leaderboard_data;
     private Hud hud;
     private Table table;
     private Stage stage;
     private Skin skin; 
+    private Skin buttons_skin;
     
+    private Image title;
+    private TextureAtlas buttons_atlas;
     private ImageButton return_mainmenu;
+    private ImageButton.ImageButtonStyle image_style;
     
     private String[] times;
     private String[] playerNames;
     private String[] carNames;
-    private String[] data;
     private String[][] final_matrix;
     
 
@@ -60,7 +66,6 @@ public class LeaderboardScreen implements Screen {
     private Label mapNameLbl;
     private Label totalFuelConsumptionLbl; // TO DO???
     private Label numberOfStopsForFuelLbl;
-    
     
     private Label playerName1;
     private Label playerName2;
@@ -102,7 +107,6 @@ public class LeaderboardScreen implements Screen {
     private String timeString1;
     private String playerNameString1;
     private String carNameString1;
-    
     private String playerNameString2;
     private String timeString2;
     private String carNameString2;
@@ -141,6 +145,9 @@ public class LeaderboardScreen implements Screen {
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/uiskin.txt"));
         skin = new Skin(atlas);
         
+        //buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
+        //buttons_skin = new Skin(buttons_atlas);
+        
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);
         
@@ -148,6 +155,9 @@ public class LeaderboardScreen implements Screen {
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
         lbl_style.fontColor = new Color(Color.WHITE);
+        
+        //image_style = new ImageButton.ImageButtonStyle();
+        //image_style.imageUp = skin.getDrawable("menu_leaderboard");
         
         String[] dataLines = leaderboard_data.readString().split("\n");
         
@@ -157,9 +167,13 @@ public class LeaderboardScreen implements Screen {
         carNames = dataLines[1].split(",");
         times = dataLines[2].split(",");
         
+        System.out.println(Arrays.toString(playerNames));
+        System.out.println(Arrays.toString(carNames));
+        System.out.println(Arrays.toString(times));
+        
         //two players = false 
         if(!twoPlayers){
-        final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1,carNameString1, timeString1);
+        final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1);
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
         //This method reads and classes the the names, car names and times according to the fastest times
         //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
@@ -184,7 +198,6 @@ public class LeaderboardScreen implements Screen {
         playerName6 = new Label(final_matrix[5][0], lbl_style);
         playerName7 = new Label(final_matrix[6][0], lbl_style);
         playerName8 = new Label(final_matrix[7][0], lbl_style);
-        
         
         /** Car name*/
         //car.getCarNum(); if carNum == 1, then carNameString = " VW Golf", etc. 
@@ -229,6 +242,15 @@ public class LeaderboardScreen implements Screen {
     public void show() {
         
         //map = new Label(" For map #" + mapNum, lbl_style);
+        //map.setPosition(600,100);
+        
+        //title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
+        
+        //title = new Image(title_texture);
+        //title.setPosition(280, 648);
+        
+        //return_mainmenu = new ImageButton(image_style);
+        //return_mainmenu.setPosition(500, 10);
         
         /**Column Labels*/
         positionLbl = new Label(" POSITION ", lbl_style);
@@ -353,20 +375,21 @@ public class LeaderboardScreen implements Screen {
         
     }
     
-    public String[][] GetNewMatrix1P (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
+    private String[][] GetNewMatrix1P (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
                 
         String[][] a = new String[9][3];
         int[] unorderedTime = new int[9];
         int[] orderedTime = new int[9];
         String[][] b = new String[9][3];
-        String[][] final_one = new String[8][3];
-        String[] time = new String[3];
+        String[][] final_one = new String[9][3];
+        String[] time;
         
         for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
             a[i][0] = playerNames[i];
             a[i][1] = carNames[i];
             a[i][2] = times[i];
         }
+        
         //INSERT NEW INFORMATION INTO STRING[][] a
         a[8][0] = newPlayerName;
         a[8][1] = newCarName;
@@ -380,38 +403,43 @@ public class LeaderboardScreen implements Screen {
         }
             BubbleSort(orderedTime);
         
-           for(int i = 0; i < 9; i++){
-               for(int j = 0; j < 9; j++){
-                   if(orderedTime[i] == unorderedTime[j]){
-                       b[8-i][0] = a[j][0];
-                       b[8-i][1] = a[j][1];
-                       b[8-i][2] = a[j][2];
-                       break;
-                   }
-               }
-           }
-               for(int z = 0; z < 8; z++){
-                   final_one[z][0] = b[z][0];
-                   final_one[z][1] = b[z][1];
-                   final_one[z][1] = b[z][2];
-               }
-               return final_one;
+            for(int i = 0; i < 9; i++){
+                for(int j = 0; j < 9; j++){
+                    if(orderedTime[i] == unorderedTime[j]){
+                        b[8-i][0] = a[j][0];
+                        b[8-i][1] = a[j][1];
+                        b[8-i][2] = a[j][2];
+                        //System.out.println(b[8-i][0]);
+                        break;
+                    }
+                }
+            }
+            
+            for(int z = 0; z < 9; z++){
+                final_one[8-z][0] = b[z][0];
+                final_one[8-z][1] = b[z][1];
+                final_one[8-z][2] = b[z][2];
+            }
+        return final_one;
     }
   
-        public String[][] GetNewMatrix2P (String[] playerNames, String[] carNames, String[] times, String newPlayerName1, String newCarName1, String newTime1
-        , String newPlayerName2, String newCarName2, String newTime2){
+    private String[][] GetNewMatrix2P (String[] playerNames, String[] carNames, 
+            String[] times, String newPlayerName1, String newCarName1, String newTime1, 
+            String newPlayerName2, String newCarName2, String newTime2){
                 
         String[][] a = new String[10][3];
         int[] unorderedTime = new int[10];
         int[] orderedTime = new int[10];
         String[][] b = new String[10][3];
-        String[][] final_one = new String[8][3];
-        String[] time = new String[3];
+        String[][] final_one = new String[10][3];
+        String[] time;
         
-        for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
+        for(int i = 0; i < 10; i++){  //Only obtains the characteristics of the ones collected
             a[i][0] = playerNames[i];
             a[i][1] = carNames[i];
             a[i][2] = times[i];
+            
+            System.out.println(a[i][1]);
         }
         //INSERT NEW INFORMATION INTO STRING[][] a
         a[8][0] = newPlayerName1;
@@ -422,7 +450,7 @@ public class LeaderboardScreen implements Screen {
         a[9][1] = newCarName2;
         a[9][2] = newTime2;
         
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 8; i++){
             time = a[i][2].split(":");
             int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
@@ -430,21 +458,22 @@ public class LeaderboardScreen implements Screen {
         }
             BubbleSort(orderedTime);
         
-           for(int i = 0; i < 10; i++){
-               for(int j = 0; j < 10; j++){
-                   if(orderedTime[i] == unorderedTime[j]){
-                       b[9-i][0] = a[j][0];
-                       b[9-i][1] = a[j][1];
-                       b[9-i][2] = a[j][2];
-                       break;
-                   }
-               }
-           }
-               for(int z = 0; z < 8; z++){
-                   final_one[z][0] = b[z][0];
-                   final_one[z][1] = b[z][1];
-                   final_one[z][1] = b[z][2];
-               }
+            for(int i = 0; i < 10; i++){
+                for(int j = 0; j < 10; j++){
+                    if(orderedTime[i] == unorderedTime[j]){
+                        b[9-i][0] = a[j][0];
+                        b[9-i][1] = a[j][1];
+                        b[9-i][2] = a[j][2];
+                        break;
+                    }
+                }
+            }
+            
+            for(int z = 0; z < 8; z++){
+                final_one[9-z][0] = b[z][0];
+                final_one[9-z][1] = b[z][1];
+                final_one[9-z][2] = b[z][2];
+            }
                return final_one;
     }
     

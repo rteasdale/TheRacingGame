@@ -54,6 +54,9 @@ public class Car {
     private float breakingFPourcentage;
     private float density;
     
+    private int numOfFuelStops;
+    private float totalFuelConsum;
+    
     private float FuelTank;
     private float MaxFuelCapacity;
     private float fuelConsumption;
@@ -408,8 +411,8 @@ public class Car {
                     try{
                     car_fueling.loop(SettingsScreen.getSFXPourcentage());
                     }catch(NullPointerException e1){
-                            car_fueling.loop(0.75f);
-                            }
+                        car_fueling.loop(0.75f);
+                        }
                     loopedCar_fueling = true;
                 }
 
@@ -661,6 +664,14 @@ public class Car {
     
     public String getCarName(){
         return carName;
+    }
+    
+    public void setCarFuelStops(int numOffuelStops) {
+        this.numOfFuelStops = numOffuelStops;
+    }
+    
+    public void setCarTotalFuelConsumption(float totalFuelConsum) {
+        this.totalFuelConsum = totalFuelConsum;
     }
     
 }
