@@ -369,6 +369,7 @@ System.out.println(Arrays.toString(playerNames));
         int[] orderedTime = new int[9];
         String[][] b = new String[9][3];
         String[][] final_one = new String[8][3];
+        String[] time = new String[3];
         
         for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
             a[i][0] = playerNames[i];
@@ -381,8 +382,8 @@ System.out.println(Arrays.toString(playerNames));
         a[8][2] = newTime;
         
         for(int i = 0; i < 9; i++){
-            times = a[i][3].split(":");
-            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[2]);
+            time = a[i][2].split(":");
+            int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
             orderedTime[i] = t;
         }
@@ -414,6 +415,7 @@ System.out.println(Arrays.toString(playerNames));
         int[] orderedTime = new int[10];
         String[][] b = new String[10][3];
         String[][] final_one = new String[8][3];
+        String[] time = new String[3];
         
         for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
             a[i][0] = playerNames[i];
@@ -430,8 +432,8 @@ System.out.println(Arrays.toString(playerNames));
         a[9][2] = newTime2;
         
         for(int i = 0; i < 10; i++){
-            times = a[i][3].split(":");
-            int t = Integer.parseInt(times[0])*60000 + Integer.parseInt(times[1])*100 + Integer.parseInt(times[2]);
+            time = a[i][2].split(":");
+            int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
             orderedTime[i] = t;
         }
