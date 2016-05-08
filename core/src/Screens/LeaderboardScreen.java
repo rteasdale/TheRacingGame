@@ -416,9 +416,9 @@ public class LeaderboardScreen implements Screen {
             }
             
             for(int z = 0; z < 9; z++){
-                final_one[8-z][0] = b[z][0];
-                final_one[8-z][1] = b[z][1];
-                final_one[8-z][2] = b[z][2];
+                final_one[z][0] = b[z][0];
+                final_one[z][1] = b[z][1];
+                final_one[z][2] = b[z][2];
             }
         return final_one;
     }
@@ -434,7 +434,7 @@ public class LeaderboardScreen implements Screen {
         String[][] final_one = new String[10][3];
         String[] time;
         
-        for(int i = 0; i < 10; i++){  //Only obtains the characteristics of the ones collected
+        for(int i = 0; i < 8; i++){  //Only obtains the characteristics of the ones collected
             a[i][0] = playerNames[i];
             a[i][1] = carNames[i];
             a[i][2] = times[i];
@@ -450,7 +450,7 @@ public class LeaderboardScreen implements Screen {
         a[9][1] = newCarName2;
         a[9][2] = newTime2;
         
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 10; i++){
             time = a[i][2].split(":");
             int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
@@ -470,9 +470,9 @@ public class LeaderboardScreen implements Screen {
             }
             
             for(int z = 0; z < 8; z++){
-                final_one[9-z][0] = b[z][0];
-                final_one[9-z][1] = b[z][1];
-                final_one[9-z][2] = b[z][2];
+                final_one[z][0] = b[z][0];
+                final_one[z][1] = b[z][1];
+                final_one[z][2] = b[z][2];
             }
                return final_one;
     }
