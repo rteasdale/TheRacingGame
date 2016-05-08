@@ -383,9 +383,9 @@ public class LeaderboardScreen implements Screen {
            for(int i = 0; i < 9; i++){
                for(int j = 0; j < 9; j++){
                    if(orderedTime[i] == unorderedTime[j]){
-                       b[8-i][0] = a[j][0];
-                       b[8-i][1] = a[j][1];
-                       b[8-i][2] = a[j][2];
+                       b[7-i][0] = a[j][0];
+                       b[7-i][1] = a[j][1];
+                       b[7-i][2] = a[j][2];
                        break;
                    }
                }
@@ -433,9 +433,9 @@ public class LeaderboardScreen implements Screen {
            for(int i = 0; i < 10; i++){
                for(int j = 0; j < 10; j++){
                    if(orderedTime[i] == unorderedTime[j]){
-                       b[9-i][0] = a[j][0];
-                       b[9-i][1] = a[j][1];
-                       b[9-i][2] = a[j][2];
+                       b[8-i][0] = a[j][0];
+                       b[8-i][1] = a[j][1];
+                       b[8-i][2] = a[j][2];
                        break;
                    }
                }
