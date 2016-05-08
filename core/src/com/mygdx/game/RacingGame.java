@@ -5,6 +5,7 @@
  */
 package com.mygdx.game;
 
+import Screens.CreditsScreen;
 import Screens.LeaderboardScreen;
 import Screens.SplashScreen;
 
