@@ -156,14 +156,16 @@ public class LeaderboardScreen implements Screen {
         carNames = dataLines[1].split(",");
         times = dataLines[2].split(",");
         
+        //two players = false 
         if(!twoPlayers){
         final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1,carNameString1, timeString1);
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
         //This method reads and classes the the names, car names and times according to the fastest times
         //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
         }
-        else
+        else {
             final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, timeString1, timeString1, playerNameString2, timeString2, timeString2);
+        }
         
         
         setValues();

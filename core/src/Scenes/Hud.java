@@ -64,6 +64,9 @@ public class Hud {
     private int minutes;
     private int seconds;
     private int milliseconds;
+    private int s;
+    private int m;
+    private int millis;
     private float totalTime = 6;
     
     private int playerNum;
@@ -236,9 +239,9 @@ public class Hud {
         
         if(finishState == true) {
             if (hasCollectedTime == false) {
-                int s = seconds;
-                int m = minutes;
-                int millis = milliseconds;
+                s = seconds;
+                m = minutes;
+                millis = milliseconds;
                 hasCollectedTime = true;
 
             //time format 
@@ -254,21 +257,16 @@ public class Hud {
 
     }
 
-    public int getTotalTime() {
-        return milliseconds+seconds+minutes;
-    }
-
-    public int getCurrentSeconds() {
-        int currentSeconds = seconds;
-        return currentSeconds;
+    public int getSeconds() {
+        return s;
     }
     
-    public int getCurrentMinute() {
-        return minutes;
+    public int getMinutes() {
+        return m;
     }
     
-    public int getCurrentMilliseconds() {
-        return milliseconds;
+    public int getMillis() {
+        return millis;
     }
     
     public void updateLap(Car car) {
