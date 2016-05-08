@@ -125,6 +125,7 @@ public class LeaderboardScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         
         leaderboard_data = Gdx.files.local("data/map1_table.txt");
+        
         /** FileHandle */ 
 //        if (mapNum == 1) {
 //            leaderboard_data = Gdx.files.local("map1_table.txt");
@@ -166,11 +167,7 @@ public class LeaderboardScreen implements Screen {
         else {
             final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, timeString1, timeString1, playerNameString2, timeString2, timeString2);
         }
-        
-        
-        setValues();
-        
-System.out.println(Arrays.toString(playerNames));
+
         
     }
     
@@ -190,7 +187,6 @@ System.out.println(Arrays.toString(playerNames));
         
         
         /** Car name*/
-        carNameString1 = ""; 
         //car.getCarNum(); if carNum == 1, then carNameString = " VW Golf", etc. 
         carName1 = new Label(final_matrix[0][1], lbl_style);
         carName2 = new Label(final_matrix[1][1], lbl_style);
@@ -201,6 +197,7 @@ System.out.println(Arrays.toString(playerNames));
         carName7 = new Label(final_matrix[6][1], lbl_style);
         carName8 = new Label(final_matrix[7][1], lbl_style);
         
+        /**Time*/
         time1 = new Label(final_matrix[0][2], lbl_style);
         time2 = new Label(final_matrix[1][2], lbl_style);
         time3 = new Label(final_matrix[2][2], lbl_style);
@@ -209,24 +206,6 @@ System.out.println(Arrays.toString(playerNames));
         time6 = new Label(final_matrix[5][2], lbl_style);
         time7 = new Label(final_matrix[6][2], lbl_style);
         time8 = new Label(final_matrix[7][2], lbl_style);
-        
-        /** Time */
-        //time format 
-        timeString1 = String.format("%02d : %02d : %03d",
-            2, 45, 345
-            //hud.getSeconds(), hud.getMinutes(), etc.
-        );
-        time1.setText(timeString1);
-        
-        /** Map */
-        map = new Label("", lbl_style);
-        
-        /** Total fuel consumption */
-        totalFuelConsumption = new Label("", lbl_style);
-        
-        /** Total number of stops for fuel */ 
-        numberOfStopsForFuel = new Label("", lbl_style);
-        
         
     }
     
@@ -244,16 +223,12 @@ System.out.println(Arrays.toString(playerNames));
         
         file.writeString(newTextFile, false);
     }
-    
-    private void sortTime(int[] list) {
-        //sort from lowest to highest
-        Arrays.sort(list);
-        
-    }
+
     
     @Override
     public void show() {
-        table.setSkin(skin);
+        
+        //map = new Label(" For map #" + mapNum, lbl_style);
         
         /**Column Labels*/
         positionLbl = new Label(" POSITION ", lbl_style);
@@ -265,9 +240,9 @@ System.out.println(Arrays.toString(playerNames));
         //numberOfStopsForFuelLbl = new Label(" TOTAL NUMBER OF\nSTOPS FOR FUEL ", lbl_style);
         
         /**Labels*/ 
-        playerName1 = new Label("", lbl_style);
-        carName1 = new Label("", lbl_style);
-        time1 = new Label("", lbl_style);
+        //playerName1 = new Label("", lbl_style);
+        //carName1 = new Label("", lbl_style);
+        //time1 = new Label("", lbl_style);
         //map = new Label("", lbl_style);
         //totalFuelConsumption = new Label("", lbl_style);
         //numberOfStopsForFuel = new Label("", lbl_style);
@@ -294,7 +269,6 @@ System.out.println(Arrays.toString(playerNames));
         //table.add(totalFuelConsumptionLbl).pad(10);
         //table.add(numberOfStopsForFuelLbl).pad(10);
         table.row();
-        
         /**Row 2*/
         table.add(positionNum1).pad(10);
         table.add(playerName1).pad(10);
@@ -303,28 +277,45 @@ System.out.println(Arrays.toString(playerNames));
         table.row();
         /**Row 3*/
         table.add(positionNum2).pad(10);
-        //table.add(playerName)
-        
-        
+        table.add(playerName2).pad(10);
+        table.add(carName2).pad(10);
+        table.add(time2).pad(10);        
         table.row();
         /**Row 4*/
         table.add(positionNum3).pad(10);
+        table.add(playerName3).pad(10);
+        table.add(carName3).pad(10);   
+        table.add(time3).pad(10);
         table.row();
         /**Row 5*/
         table.add(positionNum4).pad(10);
+        table.add(playerName4).pad(10);
+        table.add(carName4).pad(10);   
+        table.add(time4).pad(10);        
         table.row();
         /**Row 6*/
         table.add(positionNum5).pad(10);
+        table.add(playerName5).pad(10);
+        table.add(carName5).pad(10);   
+        table.add(time5).pad(10);        
         table.row();
         /**Row 7*/
         table.add(positionNum6).pad(10);
+        table.add(playerName6).pad(10);
+        table.add(carName6).pad(10);   
+        table.add(time6).pad(10);        
         table.row();
         /**Row 8*/
         table.add(positionNum7).pad(10);
+        table.add(playerName7).pad(10);
+        table.add(carName7).pad(10);   
+        table.add(time7).pad(10);        
         table.row();
         /**Row 9*/
         table.add(positionNum8).pad(10);         
-
+        table.add(playerName8).pad(10);
+        table.add(carName8).pad(10);   
+        table.add(time8).pad(10);
         table.setPosition(500, 350);
         stage.addActor(table);
     }
@@ -381,7 +372,7 @@ System.out.println(Arrays.toString(playerNames));
         a[8][1] = newCarName;
         a[8][2] = newTime;
         
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 8; i++){
             time = a[i][2].split(":");
             int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
