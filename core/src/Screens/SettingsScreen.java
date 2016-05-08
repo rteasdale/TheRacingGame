@@ -6,6 +6,7 @@
 package Screens;
 
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -65,6 +66,7 @@ public class SettingsScreen implements Screen {
         this.game = game;
         this.assets = assets;
         this.musicPlayer = musicPlayer;
+        this.musicVolumeValue = musicVolumeValue;
         
         click = assets.manager.get(ScreenAssets.click_sound);
     }
@@ -106,13 +108,14 @@ public class SettingsScreen implements Screen {
         SFXVolume.setSize(500, 40);
         SFXVolume.setPosition(400, 400);
         SFXVolume.setRange(0, 100);
-        //SFXVolume.setValue(40);
+        SFXVolume.setValue(70);
         
         musicVolume = new Slider(0, 10, 4, false, slider_style);
         musicVolume.setSize(500, 40);
         musicVolume.setPosition(400, 300);
         musicVolume.setRange(0, 100);
-        //musicVolume.setValue(40);
+        musicVolume.setValue(70);
+
         
         /** Listeners*/
         SFXVolume.addListener(new ChangeListener() {
@@ -129,8 +132,7 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 click.play();
-                musicVolume.setValue(musicVolume.getValue());
-                musicVolumeValue = musicVolume.getValue()/100;
+                musicPlayer.setVolumeValue(musicVolume.getValue()/100);
             }
         });
         
@@ -138,7 +140,6 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 click.play();
-                
                 //save values of sliders
                 game.setScreen(new MainMenuScreen(game, assets));
             }
@@ -173,9 +174,7 @@ public class SettingsScreen implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,0); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
-        
+
         stage.act();
         stage.draw();             
     }
@@ -207,12 +206,12 @@ public class SettingsScreen implements Screen {
         font.dispose();
     }
     
-        public static float getSFXPourcentage(){
+    public static float getSFXPourcentage(){
         return SFXVolume.getPercent();
     }
         
-        public static float getMusicPourcentage(){
-            return musicVolume.getPercent();
-        }
+    public static float getMusicPourcentage(){
+        return musicVolume.getPercent();
+    }
     
 }

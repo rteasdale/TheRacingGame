@@ -6,6 +6,7 @@
 package Screens;
 
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -74,6 +75,7 @@ public class PlayerScreen implements Screen {
         this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.musicPlayer = musicPlayer;
+        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
@@ -158,6 +160,8 @@ public class PlayerScreen implements Screen {
         stage.addActor(back_btn);
         stage.addActor(next_btn);
         stage.addActor(title);
+        
+        listeners();
     }
     
     private void listeners() {
@@ -205,9 +209,7 @@ public class PlayerScreen implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);     
-        
-        listeners();
-        
+
         stage.act();
         stage.draw();
     }

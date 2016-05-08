@@ -4,6 +4,7 @@
 package Screens;
 
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -118,13 +119,15 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
     
     private Label player;
     
-    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, String playerName, ScreenAssets assets, MusicPlayer musicPlayer) {
+    public CarSelectionScreen(RacingGame game, boolean twoPlayers, int playerNum, 
+            String playerName, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
         this.assets = assets;
         this.playerNum = playerNum;
         this.playerName = playerName;
         this.twoPlayers = twoPlayers;
         this.musicPlayer = musicPlayer;
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false);        
         renderer = new ShapeRenderer();
@@ -286,10 +289,11 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
                 try{
-                click.play(SettingsScreen.getSFXPourcentage());
+                    click.play();
                 }catch(NullPointerException e1){
                     click.play(0.75f);
                 }
+                
                 if (twoPlayers == true && playerNum == 1) {
                     GameScreen.setCarNumP1(getCarNum());
                     GameScreen.setCarColorP1(getCarColor());                          
@@ -311,11 +315,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click.play(0.75f);
-                }
+                click.play();
+
                 if (twoPlayers == true && playerNum == 2) {
                     //return to car selection P1
                     game.setScreen(new CarSelectionScreen(game, twoPlayers, 1, PlayerScreen.playerNameP1, assets, musicPlayer));
@@ -335,11 +336,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         color_select.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click2.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click2.play(0.75f);
-                }
+                click2.play();
             /** Default*/
                 if (color_select.getSelected().equals("-- Select Car Color --")) {
                     Gdx.app.log("color selected:", color_select.getSelected());
@@ -861,11 +858,8 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectNextCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                    click2.play(SettingsScreen.getSFXPourcentage());                
-                }catch(NullPointerException e1){                    
-                    click2.play(0.75f);                
-                };
+                click2.play();
+
                 //System.out.print(currentCar);
                 color_select.setSelected("-- Select Car Color --");
                 /*Car description*/
@@ -900,11 +894,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         selectPreviousCarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{                
-                    click2.play(SettingsScreen.getSFXPourcentage());                
-                }catch(NullPointerException e1){
-                    click2.play(0.75f);                
-                };
+                click2.play();
                 
                 color_select.setSelected("-- Select Car Color --");
                 if (currentCar > 0) {

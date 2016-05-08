@@ -14,19 +14,49 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
  * @author ROSY
  */
 public class SoundPlayer {
-    //private final Sound sound;
+    private Sound sound;
     
-    public SoundPlayer(List<Sound> soundList) {
-        //for (int i = 0; i < soundL)
+    public SoundPlayer() {
+        
+    }
+    
+    public void setSound(Sound sound) {
+        this.sound = sound; 
     }
 
-    public void setPitch(){
-//        sound.setPitch(soundId, pitch); 
- //soundID ("HOW TO GET IT ----->  long soundID = nameOfSong.play())
-  // pitch ("HOW IT WORKS" ------> Value between 0.5 and 2.0 // pitch < 1 = low pitch ; pitch > 1 high pitch ; pitch == 1 : normal value)
+    public Sound getSound() {
+        return sound;
     }
     
-    public void getNextTrack() {
+    public void stopSound() {
+        sound.stop();
+    }
+    
+    public void pauseSound() {
+        sound.pause();
+    }
+    
+    public void playSound() {
+        sound.play();
+    }
+    
+    public void playSound(float f) {
+        sound.play(f);
+    }
+  
+    public void loopSound(float f) {
+        sound.loop(f);
+    }
+    
+    public void setVolumeValue(long soundID, float pitch) {
+        sound.setVolume(soundID, pitch);
         
-    }    
+    }
+
+    public void setPitch(long soundID, float pitch){
+        sound.setPitch(soundID, pitch); 
+        //soundID ("HOW TO GET IT ----->  long soundID = nameOfSong.play())
+        //pitch ("HOW IT WORKS" ------> Value between 0.5 and 2.0 // pitch < 1 = low pitch ; pitch > 1 high pitch ; pitch == 1 : normal value)
+    }
+
 }

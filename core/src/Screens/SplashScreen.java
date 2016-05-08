@@ -80,6 +80,7 @@ public class SplashScreen extends InputListener implements Screen {
         
         stage.addActor(lbl);
         
+        
         /** Actions */
         float fadeTime = .8f;
         lbl.addAction(Actions.alpha(0)); //make text transparent
@@ -90,6 +91,7 @@ public class SplashScreen extends InputListener implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
         
         stage.getBatch().begin();
         stage.getBatch().draw(splash_image, 0, 0);

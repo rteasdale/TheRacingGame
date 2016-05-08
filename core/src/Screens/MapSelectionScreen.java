@@ -6,6 +6,7 @@
 package Screens;
 
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -72,6 +73,7 @@ public class MapSelectionScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.assets = assets;
         this.musicPlayer = musicPlayer;
+        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
@@ -151,11 +153,8 @@ public class MapSelectionScreen implements Screen {
         ready_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click2.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click2.play(0.75f);
-                }
+                click2.play();
+
                 //if two players, generate game screen with 2 cars
                 if (twoPlayers == true) {
                 game.setScreen(new LoadingScreen(game, true, currentMap, assets, musicPlayer)); //Change two players value 
@@ -169,11 +168,7 @@ public class MapSelectionScreen implements Screen {
         back_btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click.play(0.75f);
-                }
+                click.play();
                 if(twoPlayers == true) {
                     game.setScreen(new CarSelectionScreen(game, twoPlayers, 2, PlayerScreen.playerNameP2, assets, musicPlayer));
                 }
@@ -186,11 +181,8 @@ public class MapSelectionScreen implements Screen {
         selectNextMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click2.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click2.play(0.75f);
-                }
+                click2.play();
+                
                 if (currentMap < 2) {
                 currentMap++;
                 Gdx.app.log("Current map", map[currentMap]);
@@ -218,11 +210,7 @@ public class MapSelectionScreen implements Screen {
         selectPreviousMapButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                try{
-                click2.play(SettingsScreen.getSFXPourcentage());
-                }catch(NullPointerException e1){
-                    click2.play(0.75f);
-                }
+                click2.play();
                 
                 if (currentMap > 0) {
                 currentMap--;

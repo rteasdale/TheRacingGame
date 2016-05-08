@@ -3,6 +3,7 @@ package Screens;
 
 import Scenes.Hud;
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -33,6 +34,7 @@ import car.WallType;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -66,6 +68,8 @@ public final class GameScreen implements Screen {
     private FitViewport viewport1;
     private FitViewport viewport2;
     private MusicPlayer musicPlayer;
+    private SoundPlayer soundPlayer; 
+    private Sound click;
     
     private long startTime;
     private boolean countdownState = false;
@@ -139,7 +143,12 @@ public final class GameScreen implements Screen {
         this.mapNum = mapNum;
         //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
         
+        click = assets.manager.get(ScreenAssets.click_sound2);
+        
+        soundPlayer = new SoundPlayer();
+        
         choseMap(mapNum);
+        
         
         stage = new Stage();
         multiplexer = new InputMultiplexer();
@@ -255,9 +264,10 @@ public final class GameScreen implements Screen {
         exit_button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                soundPlayer.setSound(click);
+                soundPlayer.playSound(SettingsScreen.getSFXPourcentage());
                 game.setScreen(new MainMenuScreen(game, assets));
                 musicPlayer.stopMusic();
-                
             }
         });
     }
@@ -333,7 +343,6 @@ public final class GameScreen implements Screen {
             hud.stage.draw();
             hud.stage.act();
 
-
             /*Left Half*/
             Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight());
             camera2.viewportHeight = Gdx.graphics.getHeight();
@@ -345,10 +354,8 @@ public final class GameScreen implements Screen {
             hud2.stage.draw();
             hud2.stage.act();
             exit_button.setSize(100, 50);
-            
             stage.draw();
-            stage.act();
-            
+            stage.act();           
         }  
 
         //Box2D Debug Renderer
@@ -376,10 +383,10 @@ public final class GameScreen implements Screen {
             Gdx.input.setInputProcessor(multiplexer);
             inputManager.updateControls(twoPlayers); //update controls for two players
 
-            hud.updateTime(startTime, finishState);
+            hud.updateTime(startTime, P1Finished);
             
             if (twoPlayers) {
-                hud2.updateTime(startTime, finishState);
+                hud2.updateTime(startTime, P2Finished);
             }
             
             float carSpeed = car.body.getLinearVelocity().len();
@@ -413,17 +420,18 @@ public final class GameScreen implements Screen {
         
         /** Finish state*/
         //for single player, game ends if current lap number = max lap number
-        if (!twoPlayers) {
+        if (twoPlayers == false) {
             if (car.getLapNumber()== maxLap) {
                 finishState = true;
-                hud.updateTime(startTime, finishState);
+                P1Finished = true;
+                hud.updateTime(startTime, P1Finished);
                 gamingState = false;
                 inputManager.disposeAll(car);
                 hud.updateFinish(twoPlayers);
             }
         }
 
-        if (twoPlayers) {
+        if (twoPlayers == true) {
             if (car.getLapNumber()== maxLap) {
                 inputManager.disposeP1(car);
                 P1Finished = true;
@@ -1247,41 +1255,37 @@ public void isOutside(){ //Could work with car[]
 
     private void playMusic(int map) { //Method for playing music inside the game
         
-        Music[] song_list = new Music[3];
-        song_list[0] = song2;
-        song_list[1] = song5;
-        song_list[2] = song6;
-        
         musicPlayer = new MusicPlayer();
-        musicPlayer.addList(song_list);
+        
 
+        //Always change the volume setting before going into Game mode
         if(map == 0){
             musicPlayer.setSong(song2);
-            System.out.println("Song playing : Song2");
+            //System.out.println("Song playing : Song2");
             if(!s1IsPlaying){
                 musicPlayer.playMusic();
-                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
                 song2.setLooping(true);
                 s1IsPlaying = true;
             }
         }
 
         else if(map == 1){
-            System.out.println("Song playing : Song5");
+            //System.out.println("Song playing : Song5");
             musicPlayer.setSong(song5);
             if(!s2IsPlaying){
                 musicPlayer.playMusic();
-                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
                 song5.setLooping(true);
                 s2IsPlaying = true;
             }
         }
         else if(map == 2){
-            System.out.println("Song playing : Song6");
+            //System.out.println("Song playing : Song6");
             musicPlayer.setSong(song6);
             if (!s3IsPlaying) {
                 musicPlayer.playMusic();
-                //musicPlayer.setVolumeValue(SettingsScreen.musicVolValue);
+                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
                 song6.setLooping(true);
                 s3IsPlaying = true;
             }

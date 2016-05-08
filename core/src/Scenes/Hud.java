@@ -299,7 +299,9 @@ public class Hud {
             if(!c1HasPlayed){
                 try{
                     countdown1.loop(SettingsScreen.getSFXPourcentage());
+                    System.out.println(SettingsScreen.getSFXPourcentage());
                 }catch(NullPointerException e1){
+                    
                     countdown1.loop(0.75f);
                 }
             c1HasPlayed = true;
@@ -356,7 +358,6 @@ public class Hud {
             stage.addActor(fuelAlert);
 
             if(fuelAlertLooped == false){
-
                 try{
                 fuelAlertSound.loop(SettingsScreen.getSFXPourcentage());
                 }catch(NullPointerException e1){

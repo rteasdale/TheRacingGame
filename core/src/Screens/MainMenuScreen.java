@@ -6,6 +6,7 @@
 package Screens;
 
 import Scenes.MusicPlayer;
+import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -124,6 +125,8 @@ public class MainMenuScreen implements Screen {
         stage.addActor(twoPlayersButton);
         stage.addActor(onePlayerButton);
         stage.addActor(title);
+        
+        listeners();
     }
 
     private void listeners() {
@@ -171,8 +174,6 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(3/255f,13/255f,128/255f,1); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        listeners();
-        
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0);
         stage.getBatch().end();
