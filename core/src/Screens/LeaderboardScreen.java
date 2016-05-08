@@ -181,15 +181,17 @@ public class LeaderboardScreen implements Screen {
         
         click = assets.manager.get(ScreenAssets.click_sound2);
         
+        leaderboard_data = Gdx.files.local("data/map1_table.txt");
+        
         /** FileHandle */ 
         if (mapNum == 1) {
-            leaderboard_data = Gdx.files.local("map1_table.txt");
+            leaderboard_data = Gdx.files.local("data/map1_table.txt");
         }
         else if (mapNum == 2) {
-            leaderboard_data = Gdx.files.local("map2_table.txt");
+            leaderboard_data = Gdx.files.local("data/map2_table.txt");
         }
         else if (mapNum == 3) {
-            leaderboard_data = Gdx.files.local("map3_table.txt");
+            leaderboard_data = Gdx.files.local("data/map3_table.txt");
         }
 
         /**TextureAtlas and skin */ 

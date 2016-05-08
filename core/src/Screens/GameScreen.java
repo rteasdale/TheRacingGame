@@ -75,6 +75,7 @@ public final class GameScreen implements Screen {
     private boolean countdownState = false;
     private boolean gamingState = false;
     private boolean finishState = false;
+    private boolean RanLeaderBoard = false;
     
     private int mapNum = 0;
     private int maxLap = 0;
@@ -482,6 +483,7 @@ public final class GameScreen implements Screen {
 
         //single player mode
             //if tank has zero, game over 
+
         if (!twoPlayers) {
         if (car.getFuelTank() < 0.5) {
             finishState = true;
@@ -493,6 +495,7 @@ public final class GameScreen implements Screen {
         }
         
         if (finishState == true) {
+            if(!RanLeaderBoard){
             Timer.schedule(new Task(){
                 @Override
                 public void run() {
@@ -506,8 +509,10 @@ public final class GameScreen implements Screen {
                     }
 
                 }
-            }, 3);                
+            }, 3);          
+            RanLeaderBoard = true;
         }
+      }
                 
     }
     

@@ -227,6 +227,7 @@ public class Hud {
     }
     
     public void updateTime(long startTime, boolean finishState) {
+        
         if (finishState == false) {
             seconds = (((int) TimeUtils.timeSinceMillis(startTime)) / 1000) %60;
             minutes = (((int) TimeUtils.timeSinceMillis(startTime)) / (1000*60)) %60;
@@ -262,7 +263,7 @@ public class Hud {
     }
     
     public String getTimeString() {
-        String string = String.format("%2d : %2d : %3d",
+        String string = String.format("%02d:%02d:%03d",
                     getMinutes(), getSeconds(), getMillis()
                 );        
         return string;
