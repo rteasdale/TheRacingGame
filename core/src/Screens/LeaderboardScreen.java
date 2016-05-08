@@ -374,9 +374,9 @@ System.out.println(Arrays.toString(playerNames));
             a[i][2] = times[i];
         }
         //INSERT NEW INFORMATION INTO STRING[][] a
-        a[8][1] = newPlayerName;
-        a[8][2] = newCarName;
-        a[8][3] = newTime;
+        a[8][0] = newPlayerName;
+        a[8][1] = newCarName;
+        a[8][2] = newTime;
         
         for(int i = 0; i < 9; i++){
             times = a[i][3].split(":");
@@ -419,13 +419,13 @@ System.out.println(Arrays.toString(playerNames));
             a[i][2] = times[i];
         }
         //INSERT NEW INFORMATION INTO STRING[][] a
-        a[8][1] = newPlayerName1;
-        a[8][2] = newCarName1;
-        a[8][3] = newTime1;
+        a[8][0] = newPlayerName1;
+        a[8][1] = newCarName1;
+        a[8][2] = newTime1;
         
-        a[9][1] = newPlayerName2;
-        a[9][2] = newCarName2;
-        a[9][3] = newTime2;
+        a[9][0] = newPlayerName2;
+        a[9][1] = newCarName2;
+        a[9][2] = newTime2;
         
         for(int i = 0; i < 10; i++){
             times = a[i][3].split(":");
