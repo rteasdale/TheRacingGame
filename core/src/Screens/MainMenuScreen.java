@@ -166,7 +166,24 @@ public class MainMenuScreen implements Screen {
                 click.play();
                 Gdx.app.exit();
             }
-        });        
+        });    
+        
+        leaderboard.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                //game.setScreen(new LeaderboardScreen(game, true, null, null, assets, null, null, mapNum));
+            }
+        });
+        
+        credits.addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                click.play();
+                game.setScreen(new CreditsScreen(game, assets));
+            }
+        });
     }
     
     @Override

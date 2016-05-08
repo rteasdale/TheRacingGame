@@ -17,4 +17,4 @@ public class DesktopLauncher {
 
         new LwjglApplication(new RacingGame(), cfg);
     }
-}
+} 

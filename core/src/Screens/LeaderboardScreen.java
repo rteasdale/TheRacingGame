@@ -125,6 +125,27 @@ public class LeaderboardScreen implements Screen {
     private final Label.LabelStyle lbl_style;
     
     public LeaderboardScreen(RacingGame game, FileHandle file) {
+        this.game = game;
+        leaderboard_data = file;
+        
+        click = assets.manager.get(ScreenAssets.click_sound2);
+        
+        /** FileHandle */ 
+        if (mapNum == 1) {
+            leaderboard_data = Gdx.files.local("map1_table.txt");
+        }
+        else if (mapNum == 2) {
+            leaderboard_data = Gdx.files.local("map2_table.txt");
+        }
+        else if (mapNum == 3) {
+            leaderboard_data = Gdx.files.local("map3_table.txt");
+        }        
+
+        
+        table = new Table();
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        
         /**TextureAtlas and skin */ 
         buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
         buttons_skin = new Skin(buttons_atlas);
@@ -139,6 +160,8 @@ public class LeaderboardScreen implements Screen {
         
         image_style = new ImageButton.ImageButtonStyle();
         image_style.imageUp = buttons_skin.getDrawable("pause_return");
+        
+        
         
     }
     
@@ -156,20 +179,18 @@ public class LeaderboardScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
-        leaderboard_data = Gdx.files.local("data/map1_table.txt");
-        
         click = assets.manager.get(ScreenAssets.click_sound2);
         
         /** FileHandle */ 
-//        if (mapNum == 1) {
-//            leaderboard_data = Gdx.files.local("map1_table.txt");
-//        }
-//        else if (mapNum == 2) {
-//            leaderboard_data = Gdx.files.local("map2_table.txt");
-//        }
-//        else if (mapNum == 3) {
-//            leaderboard_data = Gdx.files.local("map3_table.txt");
-//        }
+        if (mapNum == 1) {
+            leaderboard_data = Gdx.files.local("map1_table.txt");
+        }
+        else if (mapNum == 2) {
+            leaderboard_data = Gdx.files.local("map2_table.txt");
+        }
+        else if (mapNum == 3) {
+            leaderboard_data = Gdx.files.local("map3_table.txt");
+        }
 
         /**TextureAtlas and skin */ 
         buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
@@ -272,7 +293,7 @@ public class LeaderboardScreen implements Screen {
     public void show() {
         
         map = new Label(" For map #" + (mapNum+1), lbl_style);
-        map.setPosition(650,600);
+        map.setPosition(640,600);
         
         title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
         
