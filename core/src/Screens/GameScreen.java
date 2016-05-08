@@ -423,6 +423,7 @@ public final class GameScreen implements Screen {
         if (twoPlayers == false) {
             if (car.getLapNumber()== maxLap) {
                 finishState = true;
+                musicPlayer.stopMusic();
                 P1Finished = true;
                 hud.updateTime(startTime, P1Finished);
                 gamingState = false;
@@ -433,6 +434,7 @@ public final class GameScreen implements Screen {
 
         if (twoPlayers == true) {
             if (car.getLapNumber()== maxLap) {
+                musicPlayer.stopMusic();
                 inputManager.disposeP1(car);
                 P1Finished = true;
                 car.setCarDone(P1Finished);
@@ -440,7 +442,9 @@ public final class GameScreen implements Screen {
                 hud.updateFinish(twoPlayers);
                 //if car1 and car2 have the same num of laps, game is over
                 if (car2.getLapNumber()== car.getLapNumber()) {
+                    musicPlayer.stopMusic();
                     finishState = true;
+                    
                 }
             }
             
@@ -451,7 +455,9 @@ public final class GameScreen implements Screen {
                 hud2.updateTime(startTime, P2Finished);
                 hud2.updateFinish(twoPlayers);  
                 if (car2.getLapNumber()== car.getLapNumber()) {
+                    musicPlayer.stopMusic();
                     finishState = true;
+                    
                 }
             }
         }
@@ -490,6 +496,7 @@ public final class GameScreen implements Screen {
             Timer.schedule(new Task(){
                 @Override
                 public void run() {
+                    
                     if (twoPlayers == true) {
                         game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum));
                     }
