@@ -1262,9 +1262,14 @@ public void isOutside(){ //Could work with car[]
         if(map == 0){
             musicPlayer.setSong(song2);
             //System.out.println("Song playing : Song2");
+            
             if(!s1IsPlaying){
                 musicPlayer.playMusic();
-                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            try{
+           musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            }catch(NullPointerException e1){
+                musicPlayer.setVolumeValue(0.75f);
+            } 
                 song2.setLooping(true);
                 s1IsPlaying = true;
             }
@@ -1275,7 +1280,11 @@ public void isOutside(){ //Could work with car[]
             musicPlayer.setSong(song5);
             if(!s2IsPlaying){
                 musicPlayer.playMusic();
-                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            try{
+           musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            }catch(NullPointerException e1){
+                musicPlayer.setVolumeValue(0.75f);
+            } 
                 song5.setLooping(true);
                 s2IsPlaying = true;
             }
@@ -1285,7 +1294,11 @@ public void isOutside(){ //Could work with car[]
             musicPlayer.setSong(song6);
             if (!s3IsPlaying) {
                 musicPlayer.playMusic();
-                musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            try{
+           musicPlayer.setVolumeValue(SettingsScreen.getMusicPourcentage());
+            }catch(NullPointerException e1){
+                musicPlayer.setVolumeValue(0.75f);
+            } 
                 song6.setLooping(true);
                 s3IsPlaying = true;
             }
