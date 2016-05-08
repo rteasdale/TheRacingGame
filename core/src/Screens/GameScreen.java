@@ -1176,6 +1176,13 @@ public final class GameScreen implements Screen {
         song4.dispose();
         song5.dispose();
         song6.dispose();
+        if(twoPlayers){
+            hud.dispose();
+            hud2.dispose();
+        }
+        else{
+            hud.dispose();
+        }
     }
     
     public void renderSprites(SpriteBatch batch, OrthographicCamera camera){

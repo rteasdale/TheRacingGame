@@ -40,6 +40,7 @@ public class Hud {
     private Sound countdown1;
     private Sound countdown2;
     private Sound fuelAlertSound;
+    private Sound end_race_gingle;
     
     private boolean hasCollectedTime = false;
     
@@ -121,6 +122,7 @@ public class Hud {
         fuelAlertSound = assets.manager.get(ScreenAssets.out_of_fuel_alarm);
         countdown1 = assets.manager.get(ScreenAssets.countdown_sound1);
         countdown2 = assets.manager.get(ScreenAssets.countdown_sound2);
+        end_race_gingle = assets.manager.get(ScreenAssets.end_race_gingle);
         
         /**Widgets*/
         speedgauge = new Image(speedgauge_texture);
@@ -380,6 +382,13 @@ public class Hud {
     }
     
     public void updateFinish(boolean twoPlayers) {
+        //Put end_race_gingle HERE!!
+        try{
+         end_race_gingle.play(SettingsScreen.getSFXPourcentage());   
+        }catch(NullPointerException e1){
+            end_race_gingle.play(0.75f);
+        }
+        
         if (twoPlayers == false) {
             finishLbl.setPosition(RacingGame.V_WIDTH/2, RacingGame.V_HEIGHT/2);
             stage.addActor(finishLbl);
@@ -399,6 +408,10 @@ public class Hud {
     public void dispose() {
         stage.dispose(); 
         font.dispose();
+        fuelAlertSound.dispose();
+        countdown1.dispose();
+        countdown2.dispose();
+        end_race_gingle.dispose();
     }
     
 }

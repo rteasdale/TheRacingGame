@@ -151,6 +151,8 @@ public class ScreenAssets {
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/refueling_loop.mp3"), Sound.class);
     public static final AssetDescriptor<Sound> car_metal_loop_sound = 
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_metal_loop_sound.mp3"), Sound.class);
+    public static final AssetDescriptor<Sound> end_race_gingle = 
+            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/end_race_gingle.mp3"), Sound.class);
 
     
    
@@ -201,6 +203,7 @@ public class ScreenAssets {
         manager.load(countdown_sound1);
         manager.load(countdown_sound2);
         manager.load(out_of_fuel_alarm);
+        manager.load(end_race_gingle);
     }
     
     public void loadGameScreen() {
