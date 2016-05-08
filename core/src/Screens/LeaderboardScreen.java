@@ -140,7 +140,7 @@ public class LeaderboardScreen implements Screen {
         else if (mapNum == 3) {
             leaderboard_data = Gdx.files.local("map3_table.txt");
         }        
-        
+
         
         table = new Table();
         stage = new Stage();
@@ -160,6 +160,8 @@ public class LeaderboardScreen implements Screen {
         
         image_style = new ImageButton.ImageButtonStyle();
         image_style.imageUp = buttons_skin.getDrawable("pause_return");
+        
+        
         
     }
     
@@ -290,7 +292,7 @@ public class LeaderboardScreen implements Screen {
     public void show() {
         
         map = new Label(" For map #" + (mapNum+1), lbl_style);
-        map.setPosition(650,600);
+        map.setPosition(640,600);
         
         title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
         
