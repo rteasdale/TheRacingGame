@@ -211,6 +211,7 @@ public class LeaderboardScreen implements Screen {
             final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1, playerNameString2, carNameString2, timeString2);
         }
 
+        writeData(leaderboard_data);
         
     }
     
@@ -255,7 +256,7 @@ public class LeaderboardScreen implements Screen {
        
     }
     
-    private void writeData(FileHandle file, int mapNum) {
+    private void writeData(FileHandle file) {
         
         String newTextFile = (final_matrix[0][0] + "," + final_matrix[1][0] + "," + final_matrix[2][0] + "," + final_matrix[3][0] + "," + final_matrix[4][0]
                  + "," + final_matrix[5][0] + "," + final_matrix[6][0] + "," + final_matrix[7][0] + "\n" + final_matrix[0][1] + "," + final_matrix[1][1]

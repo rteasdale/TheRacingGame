@@ -67,7 +67,7 @@ public final class GameScreen implements Screen {
     
     private FitViewport viewport1;
     private FitViewport viewport2;
-    private MusicPlayer musicPlayer;
+    private static MusicPlayer musicPlayer;
     private SoundPlayer soundPlayer; 
     private Sound click;
     
@@ -1349,6 +1349,7 @@ public void isOutside(){ //Could work with car[]
     public static Car getCar2(){
         return car2;
     }
+    
     
 }
 

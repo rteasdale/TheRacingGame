@@ -5,6 +5,7 @@
  */
 package Scenes;
 
+import Screens.GameScreen;
 import Screens.SettingsScreen;
 import car.Car;
 import com.badlogic.gdx.audio.Sound;
@@ -36,6 +37,7 @@ public class Hud {
     private BitmapFont font;
     private boolean gamingState;
     private boolean fuelAlertLooped = false;
+    private boolean endRaceActivated = false;
     private long startTime;
     private Sound countdown1;
     private Sound countdown2;
@@ -260,7 +262,9 @@ public class Hud {
     }
     
     public String getTimeString() {
-        String string = Integer.toString(getMinutes() + getSeconds() + getMillis());
+        String string = String.format("%2d : %2d : %3d",
+                    getMinutes(), getSeconds(), getMillis()
+                );        
         return string;
     }
 
@@ -382,11 +386,14 @@ public class Hud {
     }
     
     public void updateFinish(boolean twoPlayers) {
-        //Put end_race_gingle HERE!!
+        //Make Music END HERE
+        if(!endRaceActivated){
         try{
          end_race_gingle.play(SettingsScreen.getSFXPourcentage());   
         }catch(NullPointerException e1){
             end_race_gingle.play(0.75f);
+        }
+        endRaceActivated = true;
         }
         
         if (twoPlayers == false) {
