@@ -139,6 +139,7 @@ public class LeaderboardScreen implements Screen {
         leaderboard_data = Gdx.files.local("data/map1_table.txt");
         mapNum = 0;
 
+
         table = new Table();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -533,7 +534,7 @@ public class LeaderboardScreen implements Screen {
         a[8][1] = newCarName;
         a[8][2] = newTime;
         
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 9; i++){
             time = a[i][2].split(":");
             int t = Integer.parseInt(time[0])*60000 + Integer.parseInt(time[1])*100 + Integer.parseInt(time[2]);
             unorderedTime[i] = t;
