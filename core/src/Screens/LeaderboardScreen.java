@@ -171,6 +171,8 @@ public class LeaderboardScreen implements Screen {
         System.out.println(Arrays.toString(carNames));
         System.out.println(Arrays.toString(times));
         
+        obtainCarData(twoPlayers);
+        
         //two players = false 
         if(!twoPlayers){
         final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1);
@@ -179,7 +181,7 @@ public class LeaderboardScreen implements Screen {
         //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
         }
         else {
-            final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, timeString1, timeString1, playerNameString2, timeString2, timeString2);
+            final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1, playerNameString2, carNameString2, timeString2);
         }
 
         
@@ -409,11 +411,14 @@ public class LeaderboardScreen implements Screen {
                         b[8-i][0] = a[j][0];
                         b[8-i][1] = a[j][1];
                         b[8-i][2] = a[j][2];
-                        //System.out.println(b[8-i][0]);
+                        
                         break;
                     }
+                    
                 }
+                
             }
+            
             
             for(int z = 0; z < 9; z++){
                 final_one[z][0] = b[z][0];
@@ -501,18 +506,29 @@ public class LeaderboardScreen implements Screen {
     
     public void obtainCarData(boolean twoPlayers){
         if(twoPlayers){
+        timeString1 = "00:00:00";
    //timeString1 = hud.getTIME1;
+        playerNameString1 = "NEW PLAYER";
   // playerNameString1 = PlayerScreen.playerOne;
+        carNameString1 = "Lamborghini Gallardo";
    // carNameString1 = GameScreen.getCar().getCarName();
     
+        playerNameString2 = "NEW PLAYER 2";
   //  playerNameString2 = ;
+        
+        timeString2 = "01:00:00";
    // timeString2 = ;
+        
+        carNameString2 = "Volkswagon Golf";
   //  carNameString2 =  = GameScreen.getCar2().getCarName();
         }
         else if(!twoPlayers){
-    //timeString1 = hud.getTIME1;
-   //playerNameString1 = PlayerScreen.playerOne;
-   //carNameString1 = GameScreen.getCar().getCarName();
+     timeString1 = "00:00:00";
+   //timeString1 = hud.getTIME1;
+        playerNameString1 = "NEW PLAYER";
+  // playerNameString1 = PlayerScreen.playerOne;
+        carNameString1 = "Lamborghini Gallardo";
+   // carNameString1 = GameScreen.getCar().getCarName();
     }
     }
     
