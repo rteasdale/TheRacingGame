@@ -491,13 +491,11 @@ public final class GameScreen implements Screen {
                 @Override
                 public void run() {
                     if (twoPlayers == true) {
-                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
-                        System.out.println("set leaderboard screen");
+                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum));
                     }
                     
                     else if (twoPlayers == false) {
-                        //game.setScreen(new LeaderboardScreen(game, twoPlayers, assets, car));
-                        System.out.println("set leaderboard screen");
+                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, null, assets, hud, null, mapNum));
                     }
 
                 }

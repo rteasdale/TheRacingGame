@@ -256,6 +256,11 @@ public class Hud {
         
 
     }
+    
+    public String getTimeString() {
+        String string = Integer.toString(getMinutes() + getSeconds() + getMillis());
+        return string;
+    }
 
     public int getSeconds() {
         return s;
@@ -392,8 +397,8 @@ public class Hud {
     }
     
     public void dispose() {
-//        stage.dispose(); 
-//        font.dispose();
+        stage.dispose(); 
+        font.dispose();
     }
     
 }

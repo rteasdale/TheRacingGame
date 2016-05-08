@@ -9,18 +9,21 @@ import Scenes.Hud;
 import car.Car;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
 import handlers.ScreenAssets;
 import java.io.File;
@@ -32,6 +35,7 @@ import java.util.Arrays;
  */
 public class LeaderboardScreen implements Screen {
     private RacingGame game;
+            
     private Car car;
     private Car car2;
     private ScreenAssets assets;
@@ -39,9 +43,12 @@ public class LeaderboardScreen implements Screen {
     
     private FileHandle leaderboard_data;
     private Hud hud;
+    private Hud hud2;
+    
+    private int mapNum;
+    
     private Table table;
     private Stage stage;
-    private Skin skin; 
     private Skin buttons_skin;
     
     private Image title;
@@ -55,6 +62,8 @@ public class LeaderboardScreen implements Screen {
     private String[][] final_matrix;
     
 
+    private Sound click;
+    
     private int totalTime; 
     
     private final BitmapFont font;
@@ -115,20 +124,41 @@ public class LeaderboardScreen implements Screen {
     
     private final Label.LabelStyle lbl_style;
     
-    public LeaderboardScreen(RacingGame game, boolean twoPlayers) {
-                        //variables in constructor: car, car2, assets, hud1, hud2, mapNum
+    public LeaderboardScreen(RacingGame game, FileHandle file) {
+        /**TextureAtlas and skin */ 
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
+        buttons_skin = new Skin(buttons_atlas);
+        
+        /** BitmapFont */
+        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);   
+        
+        /**Style*/
+        lbl_style = new Label.LabelStyle();
+        lbl_style.font = font;
+        lbl_style.fontColor = new Color(Color.WHITE);
+        
+        image_style = new ImageButton.ImageButtonStyle();
+        image_style.imageUp = buttons_skin.getDrawable("pause_return");
+        
+    }
+    
+    public LeaderboardScreen(RacingGame game, boolean twoPlayers, Car car, 
+            Car car2, ScreenAssets assets, Hud hud, Hud hud2, int mapNum) {
         this.game = game;
-        //this.assets = assets;
-        //this.car = car;
-        //this.car2 = car2;
-        //this.hud = hud;
-        //this.mapNum = mapNum;
+        this.assets = assets;
+        this.car = car;
+        this.car2 = car2;
+        this.hud = hud;
+        this.hud2 = hud2;
+        this.mapNum = mapNum;
 
         table = new Table();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
         leaderboard_data = Gdx.files.local("data/map1_table.txt");
+        
+        click = assets.manager.get(ScreenAssets.click_sound2);
         
         /** FileHandle */ 
 //        if (mapNum == 1) {
@@ -142,11 +172,8 @@ public class LeaderboardScreen implements Screen {
 //        }
 
         /**TextureAtlas and skin */ 
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/uiskin.txt"));
-        skin = new Skin(atlas);
-        
-        //buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
-        //buttons_skin = new Skin(buttons_atlas);
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
+        buttons_skin = new Skin(buttons_atlas);
         
         /** BitmapFont */
         font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);
@@ -156,8 +183,8 @@ public class LeaderboardScreen implements Screen {
         lbl_style.font = font;
         lbl_style.fontColor = new Color(Color.WHITE);
         
-        //image_style = new ImageButton.ImageButtonStyle();
-        //image_style.imageUp = skin.getDrawable("menu_leaderboard");
+        image_style = new ImageButton.ImageButtonStyle();
+        image_style.imageUp = buttons_skin.getDrawable("pause_return");
         
         String[] dataLines = leaderboard_data.readString().split("\n");
         
@@ -243,16 +270,16 @@ public class LeaderboardScreen implements Screen {
     @Override
     public void show() {
         
-        //map = new Label(" For map #" + mapNum, lbl_style);
-        //map.setPosition(600,100);
+        map = new Label(" For map #" + (mapNum+1), lbl_style);
+        map.setPosition(650,600);
         
-        //title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
+        title_texture = assets.manager.get(ScreenAssets.leaderboardTitle);
         
-        //title = new Image(title_texture);
-        //title.setPosition(280, 648);
+        title = new Image(title_texture);
+        title.setPosition(280, 648);
         
-        //return_mainmenu = new ImageButton(image_style);
-        //return_mainmenu.setPosition(500, 10);
+        return_mainmenu = new ImageButton(image_style);
+        return_mainmenu.setPosition(800, 10);
         
         /**Column Labels*/
         positionLbl = new Label(" POSITION ", lbl_style);
@@ -341,7 +368,23 @@ public class LeaderboardScreen implements Screen {
         table.add(carName8).pad(10);   
         table.add(time8).pad(10);
         table.setPosition(500, 350);
+        
         stage.addActor(table);
+        stage.addActor(title);
+        stage.addActor(return_mainmenu);
+        stage.addActor(map);
+        
+        listeners();
+    }
+    
+    private void listeners() {
+        return_mainmenu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                click.play();
+                game.setScreen(new MainMenuScreen(game, assets));
+            }
+        });
     }
 
     @Override
@@ -373,8 +416,8 @@ public class LeaderboardScreen implements Screen {
     public void dispose() {
         stage.dispose();
         font.dispose();
-        skin.dispose();
-        
+        buttons_atlas.dispose();
+        buttons_skin.dispose();
     }
     
     private String[][] GetNewMatrix1P (String[] playerNames, String[] carNames, String[] times, String newPlayerName, String newCarName, String newTime ){
@@ -504,32 +547,21 @@ public class LeaderboardScreen implements Screen {
       } 
 } 
     
-    public void obtainCarData(boolean twoPlayers){
+    private void obtainCarData(boolean twoPlayers){
         if(twoPlayers){
-        timeString1 = "00:00:00";
-   //timeString1 = hud.getTIME1;
-        playerNameString1 = "NEW PLAYER";
-  // playerNameString1 = PlayerScreen.playerOne;
-        carNameString1 = "Lamborghini Gallardo";
-   // carNameString1 = GameScreen.getCar().getCarName();
-    
-        playerNameString2 = "NEW PLAYER 2";
-  //  playerNameString2 = ;
-        
-        timeString2 = "01:00:00";
-   // timeString2 = ;
-        
-        carNameString2 = "Volkswagon Golf";
-  //  carNameString2 =  = GameScreen.getCar2().getCarName();
+            timeString1 = hud.getTimeString();
+            playerNameString1 = PlayerScreen.playerNameP1;
+            carNameString1 = car.getCarName();
+
+            playerNameString2 = PlayerScreen.playerNameP2;
+            timeString2 = hud2.getTimeString();
+            carNameString2 = car2.getCarName();
         }
         else if(!twoPlayers){
-     timeString1 = "00:00:00";
-   //timeString1 = hud.getTIME1;
-        playerNameString1 = "NEW PLAYER";
-  // playerNameString1 = PlayerScreen.playerOne;
-        carNameString1 = "Lamborghini Gallardo";
-   // carNameString1 = GameScreen.getCar().getCarName();
-    }
+            timeString1 = hud.getTimeString();
+            playerNameString1 = PlayerScreen.playerNameP1;
+            carNameString1 = car.getCarName();
+        }
     }
     
 }

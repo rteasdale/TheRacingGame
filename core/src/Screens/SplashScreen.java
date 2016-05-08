@@ -66,6 +66,7 @@ public class SplashScreen extends InputListener implements Screen {
         assets.loadMapSelectionScreen();
         assets.loadSettingsScreen();
         assets.loadSounds();
+        assets.loadLeaderboard();
         assets.manager.finishLoading();   
     }
     
