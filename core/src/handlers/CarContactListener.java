@@ -17,6 +17,8 @@ import car.Tire;
 
 public class CarContactListener implements ContactListener {
     
+    private static boolean carOnCarCollisions = false;
+    
     @Override
     public void beginContact(Contact contact) {
             // TODO Auto-generated method stub
@@ -71,7 +73,10 @@ public class CarContactListener implements ContactListener {
  
             else if(fudA.type == FixtureUserDataType.FUD_CAR && fudB.type == FixtureUserDataType.FUD_CAR){
                 System.out.println("Car on Car");
+                //Add delay until we see a 5 on the counter for this one
+                if(carOnCarCollisions){
              carAndCar(a);
+                }
             }
             
             
@@ -191,6 +196,10 @@ public class CarContactListener implements ContactListener {
     public void PlayMetalSounds(Tire tire){
                     GameScreen.getCar().loopMetalSounds();
         }
+    
+    public static void setCarOnCarCollisions(boolean Status){
+        carOnCarCollisions = Status;
+    }
     
     }
     

@@ -76,6 +76,7 @@ public final class GameScreen implements Screen {
     private boolean gamingState = false;
     private boolean finishState = false;
     private boolean RanLeaderBoard = false;
+    private boolean carCollisionSet = false;
     
     private int mapNum = 0;
     private int maxLap = 0;
@@ -371,6 +372,10 @@ public final class GameScreen implements Screen {
         /**CountdownState*/ 
         if (countdownState == true) {
             hud.updateCountDown(f);
+            if(!carCollisionSet){
+            CarContactListener.setCarOnCarCollisions(countdownState);
+            carCollisionSet = true;
+            }
             if (twoPlayers) {
                 hud2.updateCountDown(f);
             }
