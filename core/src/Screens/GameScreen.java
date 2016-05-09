@@ -265,8 +265,7 @@ public final class GameScreen implements Screen {
         exit_button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-                soundPlayer.setSound(click);
-                soundPlayer.playSound(SettingsScreen.getSFXPourcentage());
+                click.play();
                 game.setScreen(new MainMenuScreen(game, assets));
                 musicPlayer.stopMusic();
             }
