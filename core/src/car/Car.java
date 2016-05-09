@@ -94,7 +94,7 @@ public class Car {
             lapCounter = 4;
             }
             else {
-                lapCounter = 2;
+                lapCounter = 1;
             }
                
             

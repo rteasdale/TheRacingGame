@@ -124,7 +124,7 @@ public class LoadingScreen implements Screen {
         progress = MathUtils.lerp(progress, assets.manager.getProgress(),0.1f);
         progress_percentage.setText("Loading " + "(" + Integer.toString((int)(progress*100)) + " % )");
         
-        float delay = 5; // seconds
+        float delay = 4; // seconds
 
         Timer.schedule(new Task(){
             @Override

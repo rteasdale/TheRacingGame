@@ -134,7 +134,7 @@ public final class GameScreen implements Screen {
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
-    boolean testing = false; //for presentation
+    boolean testing = true; //for presentation
     
     private Stage stage;
     private Skin skin;
@@ -233,16 +233,7 @@ public final class GameScreen implements Screen {
         //Load Tiled Map
         
         
-        bg = new Texture(mapAddressI);
-        
-        Timer.schedule(new Task(){
-            @Override
-            public void run() {
-                // playMusic(mapNum);  ////////////////////////////////// MUSIC IS TURNED OFF FOR TESTING!
-            }
-        }, 5);   
-        
-       
+        bg = new Texture(mapAddressI); 
        
         tileMap = new TmxMapLoader().load(mapAddressT);
         tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
@@ -304,7 +295,7 @@ public final class GameScreen implements Screen {
             public void run() {
                 playMusic(mapNum);
             }
-        }, 5);           
+        }, 4);           
         
         listeners();
     }
