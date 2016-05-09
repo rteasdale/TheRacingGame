@@ -61,6 +61,13 @@ public class ScreenAssets {
     public static final AssetDescriptor<Texture> stat_box = 
         new AssetDescriptor<Texture>(Gdx.files.internal("menu/car_stat.png"), Texture.class); 
     
+    //controls ASDW
+    public static final AssetDescriptor<Texture> ASDW_controls = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/ASDW_controls.png"), Texture.class);     
+
+    //controls arrows
+    public static final AssetDescriptor<Texture> arrows_controls = 
+        new AssetDescriptor<Texture>(Gdx.files.internal("menu/arrowkeys_controls.png"), Texture.class);     
 
 
     
@@ -149,8 +156,6 @@ public class ScreenAssets {
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/getting_on_fuel_sound.mp3"), Sound.class);
     public static final AssetDescriptor<Sound> refueling_loop = 
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/refueling_loop.mp3"), Sound.class);
-    public static final AssetDescriptor<Sound> car_metal_loop_sound = 
-            new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/car_metal_loop_sound.mp3"), Sound.class);
     public static final AssetDescriptor<Sound> end_race_gingle = 
             new AssetDescriptor<Sound>(Gdx.files.internal("FXSounds/end_race_gingle.mp3"), Sound.class);
 
@@ -191,7 +196,9 @@ public class ScreenAssets {
     }
     
     public void loadLoadingScreen() {
-        manager.load(font);
+        //manager.load(font);
+        manager.load(ASDW_controls);
+        manager.load(arrows_controls);        
     }
     
     public void loadHUD() {
@@ -216,7 +223,6 @@ public class ScreenAssets {
         manager.load(song6);
         manager.load(car_bridge_loop);
         manager.load(car_car_sound);
-        manager.load(car_metal_loop_sound);
         manager.load(car_tire_sound);
         manager.load(car_wall_sound1);
         manager.load(car_wall_sound2);

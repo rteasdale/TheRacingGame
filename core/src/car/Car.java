@@ -1,6 +1,7 @@
 package car;
 
 import Screens.CarSelectionScreen;
+import Screens.GameScreen;
 import Screens.SettingsScreen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,7 +42,7 @@ public class Car {
     
     private String carName = null;
     private int car = 0;
-    private int lapCounter = 2;
+    private int lapCounter = 0;
     private int i = 0;
     private float pitch = 0.5f;
     boolean fuel = true;
@@ -82,11 +83,22 @@ public class Car {
     
     ScreenAssets assets;
     
-    public Car(World world, int CarNum, int ColorNum, int playerNum, ScreenAssets assets) {
+    public Car(World world, int CarNum, int ColorNum, int playerNum, ScreenAssets assets, boolean testing) {
         this.playerNum = playerNum;
         this.carNum = CarNum;
         this.assets = assets;
         whichCar(CarNum, ColorNum);
+        
+        if (testing) {
+            if (GameScreen.getMapNum() == 0) {
+            lapCounter = 4;
+            }
+            else {
+                lapCounter = 2;
+            }
+               
+            
+        }
         
         car_car =  assets.manager.get(ScreenAssets.car_car_sound);
         car_wall1 = assets.manager.get(ScreenAssets.car_wall_sound1);
@@ -94,7 +106,6 @@ public class Car {
         car_wall3 = assets.manager.get(ScreenAssets.car_wall_sound3);
         car_Tire = assets.manager.get(ScreenAssets.car_tire_sound);
         car_Bridge = assets.manager.get(ScreenAssets.car_bridge_loop);
-        car_Metal = assets.manager.get(ScreenAssets.car_metal_loop_sound);
         car_lap_complete = assets.manager.get(ScreenAssets.lap_complete_sound);
         car_fueling = assets.manager.get(ScreenAssets.refueling_loop);
         car_going_on_fuel = assets.manager.get(ScreenAssets.getting_on_fuel_sound);
@@ -647,16 +658,16 @@ public class Car {
         }
     }
     
-    public void stopMetalSounds(){
-        
-        car_Metal.stop();
-        MetalPlayedOnce = false;
-    }
+//    public void stopMetalSounds(){
+//        
+//       car_Metal.stop();
+//        MetalPlayedOnce = false;
+//    }
     
-    public void stopBridgeSounds(){
-        car_Bridge.stop();
-        MetalPlayedOnce = false;
-    }
+//    public void stopBridgeSounds(){
+//        car_Bridge.stop();
+//        MetalPlayedOnce = false;
+//    }
     
     public void setCarDone(boolean carDone){
         this.carDone = carDone;

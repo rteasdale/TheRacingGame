@@ -1,3 +1,3 @@
-Rosy,Map3,Map3,name6,name8,name4,name2,name2
-Volkswagen Golf,car1,car1,car6,car8,car4,car2,car2
-00:30:703,01:01:100,01:01:100,01:02:100,01:02:200,02:02:100,02:02:200,02:02:200
+Rosy,Enter Name,Rosy,Rosy,Enter Name,Map3,Map3,name6
+Volkswagen Golf,ZondaF,Volkswagen Golf,Volkswagen Golf,Volkswagen Golf,car1,car1,car6
+00:30:703,00:38:284,00:33:958,00:37:887,00:46:874,01:01:100,01:01:100,01:02:100

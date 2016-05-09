@@ -1,3 +1,3 @@
-Map1,name1,name6,name8,name4,name2,name2,name5
-car1,car1,car6,car8,car4,car2,car2,car5
-01:01:100,01:01:100,01:02:100,01:02:200,02:02:100,02:02:200,02:02:200,03:03:100
+Enter Name,Map1,Map1,name6,name8,Rosy,Rosy,name4
+ZondaF,car1,car1,car6,car8,Volkswagen Golf,Volkswagen Golf,car4
+00:18:452,01:01:100,01:01:100,01:02:100,01:02:200,01:20:429,01:51:249,02:02:100

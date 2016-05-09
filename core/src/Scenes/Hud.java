@@ -388,6 +388,7 @@ public class Hud {
     
     public void updateFinish(boolean twoPlayers) {
         //Make Music END HERE
+        fuelAlertSound.stop();
         if(!endRaceActivated){
         try{
          end_race_gingle.play(SettingsScreen.getSFXPourcentage());   
@@ -411,15 +412,17 @@ public class Hud {
     public void updateGameOver() {
         gameOver.setPosition((RacingGame.V_WIDTH/2)-200, RacingGame.V_HEIGHT/2);
         stage.addActor(gameOver);
+        fuelAlert.remove();
+        fuelAlertSound.stop();
     }
     
     public void dispose() {
         stage.dispose(); 
         font.dispose();
-        fuelAlertSound.dispose();
+        //fuelAlertSound.dispose();
         countdown1.dispose();
         countdown2.dispose();
-        end_race_gingle.dispose();
+        //end_race_gingle.dispose();
     }
     
 }

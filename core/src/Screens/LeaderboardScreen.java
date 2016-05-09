@@ -41,6 +41,8 @@ public class LeaderboardScreen implements Screen {
     private ScreenAssets assets;
     private Texture title_texture;
     
+    private boolean gameOver;
+    
     private FileHandle leaderboard_data;
     private Hud hud;
     private Hud hud2;
@@ -182,7 +184,7 @@ public class LeaderboardScreen implements Screen {
     }
     
     public LeaderboardScreen(RacingGame game, boolean twoPlayers, Car car, 
-            Car car2, ScreenAssets assets, Hud hud, Hud hud2, int mapNum) {
+            Car car2, ScreenAssets assets, Hud hud, Hud hud2, int mapNum, boolean gameOver) {
         this.game = game;
         this.assets = assets;
         this.car = car;
@@ -190,6 +192,7 @@ public class LeaderboardScreen implements Screen {
         this.hud = hud;
         this.hud2 = hud2;
         this.mapNum = mapNum;
+        this.gameOver = gameOver;
 
         table = new Table();
         stage = new Stage();
@@ -244,7 +247,12 @@ public class LeaderboardScreen implements Screen {
         
         //two players = false 
         if(!twoPlayers){
-        final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1);
+            if (gameOver == false) {
+                final_matrix = GetNewMatrix1P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1);
+            }
+            else if (gameOver == true) {
+                final_matrix = GetNewMatrix1P(playerNames, carNames, times, "", "", "50:00:000");
+            }
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
         //This method reads and classes the the names, car names and times according to the fastest times
         //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
@@ -253,7 +261,9 @@ public class LeaderboardScreen implements Screen {
             final_matrix = GetNewMatrix2P(playerNames, carNames, times, playerNameString1, carNameString1, timeString1, playerNameString2, carNameString2, timeString2);
         }
 
-        writeData(leaderboard_data);
+        if (gameOver == false) {
+            writeData(leaderboard_data);
+        }
         
     }
 
@@ -359,7 +369,7 @@ public class LeaderboardScreen implements Screen {
         positionNum7 = new Label(Integer.toString(7), lbl_style);
         positionNum8 = new Label(Integer.toString(8), lbl_style);
 
-        setValues();        
+        setValues();  
         
         /** TABLE */
         /**Row 1*/

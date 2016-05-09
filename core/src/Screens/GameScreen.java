@@ -77,8 +77,9 @@ public final class GameScreen implements Screen {
     private boolean finishState = false;
     private boolean RanLeaderBoard = false;
     private boolean carCollisionSet = false;
+    private boolean gameOver = false;
     
-    private int mapNum = 0;
+    private static int mapNum = 0;
     private int maxLap = 0;
     private static boolean twoPlayers;
     
@@ -133,6 +134,8 @@ public final class GameScreen implements Screen {
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
+    boolean testing = true; //for presentation
+    
     private Stage stage;
     private Skin skin;
     private ImageButtonStyle style;
@@ -179,7 +182,7 @@ public final class GameScreen implements Screen {
             
         
         /**Create cars*/
-	car = new Car(world, carNumP1, carColorP1, 1, assets);
+	car = new Car(world, carNumP1, carColorP1, 1, assets, testing);
      
         /**Cameras*/
         if (!twoPlayers) {
@@ -189,7 +192,7 @@ public final class GameScreen implements Screen {
 
         if (twoPlayers) {
             // If two players, construct another car
-            car2 = new Car(world, carNumP2, carColorP2, 2, assets);
+            car2 = new Car(world, carNumP2, carColorP2, 2, assets, testing);
             
             aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
             
@@ -439,7 +442,6 @@ public final class GameScreen implements Screen {
 
         if (twoPlayers == true) {
             if (car.getLapNumber()== maxLap) {
-                musicPlayer.stopMusic();
                 inputManager.disposeP1(car);
                 P1Finished = true;
                 car.setCarDone(P1Finished);
@@ -487,29 +489,32 @@ public final class GameScreen implements Screen {
 
         //single player mode
             //if tank has zero, game over 
-
-        if (!twoPlayers) {
-        if (car.getFuelTank() < 0.5) {
-            finishState = true;
-            hud.updateTime(startTime, finishState);
-            gamingState = false;
-            inputManager.disposeAll(car);
-            hud.updateGameOver();
-        }
+        if (twoPlayers == false) {
+            if (car.getFuelTank() < 0.5) {
+                P1Finished = true;
+                hud.updateTime(startTime, P1Finished);
+                gamingState = false;
+                //musicPlayer.stopMusic();
+                finishState = true;
+                gameOver = true;
+                inputManager.disposeAll(car);
+                hud.updateGameOver();
+            }
         }
         
         if (finishState == true) {
+            musicPlayer.stopMusic();
             if(!RanLeaderBoard){
             Timer.schedule(new Task(){
                 @Override
                 public void run() {
                     
                     if (twoPlayers == true) {
-                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum));
+                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum, gameOver));
                     }
                     
                     else if (twoPlayers == false) {
-                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, null, assets, hud, null, mapNum));
+                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, null, assets, hud, null, mapNum, gameOver));
                     }
 
                 }
@@ -1364,6 +1369,10 @@ public void isOutside(){ //Could work with car[]
     
     public static Car getCar2(){
         return car2;
+    }
+    
+    public static int getMapNum() {
+        return mapNum;
     }
     
     

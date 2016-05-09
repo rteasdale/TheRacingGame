@@ -122,9 +122,6 @@ public class CarContactListener implements ContactListener {
                 
             } else {
                 tire.removeGroundArea(ground);
-              //Stop the sound for the terrain
-              GameScreen.getCar().stopBridgeSounds();
-              GameScreen.getCar().stopMetalSounds();
             }
             
     }

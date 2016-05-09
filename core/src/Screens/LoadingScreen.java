@@ -11,12 +11,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -33,11 +35,21 @@ public class LoadingScreen implements Screen {
     private boolean twoPlayers;
     private int mapNum;
     
+    private Texture ASDW_controls;
+    private Texture arrows_controls;
+    
+    private Image ASDW_Image;
+    private Image arrows_Image;
+    
     private MusicPlayer musicPlayer;
     
     private Stage stage;
     private Label progress_percentage;
     private Label.LabelStyle lbl_style;
+    
+    private Label OnePlayer;
+    private Label TwoPlayer;
+    
     private OrthographicCamera camera;
             
     private BitmapFont font;
@@ -52,6 +64,7 @@ public class LoadingScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
         this.musicPlayer = musicPlayer;
+        
         
         //stop music 
         musicPlayer.stopMusic();
@@ -78,7 +91,31 @@ public class LoadingScreen implements Screen {
        progress_percentage = new Label("Loading : " + "(" + progress + ")", lbl_style);
        progress_percentage.setPosition(RacingGame.V_HEIGHT/2, RacingGame.V_WIDTH/2-510);
        
+       OnePlayer = new Label("Controls for Player 1", lbl_style);
+       OnePlayer.setPosition(600, 600);
+       
+       arrows_controls = assets.manager.get(ScreenAssets.arrows_controls);
+       arrows_Image = new Image(arrows_controls);
+       arrows_Image.setPosition(650, 400);
+       
+        if (twoPlayers) {
+            //put 1P and 2P controls
+            ASDW_controls = assets.manager.get(ScreenAssets.ASDW_controls);
+            TwoPlayer = new Label("Controls for Player 2", lbl_style);
+            ASDW_Image = new Image(ASDW_controls);
+            
+            arrows_Image.setPosition(700, 400);
+            ASDW_Image.setPosition(500, 400);
+            OnePlayer.setPosition(700, 700);
+            TwoPlayer.setPosition(500, 700);
+            
+            stage.addActor(ASDW_Image);
+            stage.addActor(TwoPlayer);
+        }  
+       
        stage.addActor(progress_percentage);
+       stage.addActor(arrows_Image);
+       stage.addActor(OnePlayer);
         
     }
     
@@ -86,7 +123,7 @@ public class LoadingScreen implements Screen {
         progress = MathUtils.lerp(progress, assets.manager.getProgress(),0.1f);
         progress_percentage.setText("Loading " + "(" + Integer.toString((int)(progress*100)) + " % )");
         
-        float delay = 2; // seconds
+        float delay = 7; // seconds
 
         Timer.schedule(new Task(){
             @Override
