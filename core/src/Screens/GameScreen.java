@@ -272,6 +272,10 @@ public final class GameScreen implements Screen {
                 click.play();
                 game.setScreen(new MainMenuScreen(game, assets));
                 musicPlayer.stopMusic();
+                hud.stopFuelAlert();
+                if (twoPlayers) {
+                    hud2.stopFuelAlert();
+                }
             }
         });
     }
@@ -300,7 +304,7 @@ public final class GameScreen implements Screen {
             public void run() {
                 playMusic(mapNum);
             }
-        }, 3);           
+        }, 5);           
         
         listeners();
     }

@@ -91,23 +91,23 @@ public class LoadingScreen implements Screen {
        progress_percentage = new Label("Loading : " + "(" + progress + ")", lbl_style);
        progress_percentage.setPosition(RacingGame.V_HEIGHT/2, RacingGame.V_WIDTH/2-510);
        
-       OnePlayer = new Label("Controls for Player 1", lbl_style);
-       OnePlayer.setPosition(600, 600);
+       OnePlayer = new Label("CONTROLS FOR PLAYER 1", lbl_style);
+       OnePlayer.setPosition(500, 500);
        
        arrows_controls = assets.manager.get(ScreenAssets.arrows_controls);
        arrows_Image = new Image(arrows_controls);
-       arrows_Image.setPosition(650, 400);
+       arrows_Image.setPosition(550, 400);
        
         if (twoPlayers) {
             //put 1P and 2P controls
             ASDW_controls = assets.manager.get(ScreenAssets.ASDW_controls);
-            TwoPlayer = new Label("Controls for Player 2", lbl_style);
+            TwoPlayer = new Label("CONTROLS FOR PLAYER 2", lbl_style);
             ASDW_Image = new Image(ASDW_controls);
             
             arrows_Image.setPosition(700, 400);
-            ASDW_Image.setPosition(500, 400);
-            OnePlayer.setPosition(700, 700);
-            TwoPlayer.setPosition(500, 700);
+            ASDW_Image.setPosition(300, 400);
+            OnePlayer.setPosition(650, 500);
+            TwoPlayer.setPosition(250, 500);
             
             stage.addActor(ASDW_Image);
             stage.addActor(TwoPlayer);
@@ -123,7 +123,7 @@ public class LoadingScreen implements Screen {
         progress = MathUtils.lerp(progress, assets.manager.getProgress(),0.1f);
         progress_percentage.setText("Loading " + "(" + Integer.toString((int)(progress*100)) + " % )");
         
-        float delay = 7; // seconds
+        float delay = 5; // seconds
 
         Timer.schedule(new Task(){
             @Override

@@ -416,6 +416,10 @@ public class Hud {
         fuelAlertSound.stop();
     }
     
+    public void stopFuelAlert() {
+        fuelAlertSound.stop();
+    }
+    
     public void dispose() {
         stage.dispose(); 
         font.dispose();
