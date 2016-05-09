@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RacingGame;
+import handlers.CarContactListener;
 import handlers.ScreenAssets;
 
 /**
@@ -43,6 +44,7 @@ public class Hud {
     private Sound countdown2;
     private Sound fuelAlertSound;
     private Sound end_race_gingle;
+    private boolean carCollisionSet = false;
     
     private boolean hasCollectedTime = false;
     
@@ -305,6 +307,10 @@ public class Hud {
         }, 7);         
         
         if (sec > 0) {
+            if(!carCollisionSet){
+            CarContactListener.setCarOnCarCollisions(true);
+            carCollisionSet = true;
+            }
             countdownLbl.setText(Integer.toString(sec));
             if(!c1HasPlayed){
                 try{
