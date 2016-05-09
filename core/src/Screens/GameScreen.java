@@ -470,14 +470,18 @@ public final class GameScreen implements Screen {
         if (twoPlayers == true) {
         if (car.getFuelTank() < 0.5) {
             car.setFuelTank(60);
+            if (car.getLapNumber() > 0) {
             car.setLapNumber(car.getLapNumber()-1);
+            }
             hud.updateLap(car);
         }
 
         
         if (car2.getFuelTank() < 0.5) {
             car2.setFuelTank(60);
+            if (car2.getLapNumber() > 0) {
             car2.setLapNumber(car2.getLapNumber()-1);
+            }
             hud2.updateLap(car2);
         }
         }
