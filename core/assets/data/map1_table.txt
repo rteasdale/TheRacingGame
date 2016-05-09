@@ -1,3 +1,3 @@
-name1,name2,name3,name4,name5,name6,name7,name8
-car1,car2,car3,car4,car5,car6,car7,car8
-01:01:100,02:02:200,02:02:200,02:02:100,03:03:100,01:02:100,01:02:000,01:02:200
+Map1,name1,name6,name8,name4,name2,name2,name5
+car1,car1,car6,car8,car4,car2,car2,car5
+01:01:100,01:01:100,01:02:100,01:02:200,02:02:100,02:02:200,02:02:200,03:03:100

@@ -161,20 +161,24 @@ public class LeaderboardScreen implements Screen {
         nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
         prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);        
 
-        String[] dataLines = leaderboard_data.readString().split("\n");
-        
+
+        updateLeaderboard(leaderboard_data);
+    
+    }
+    
+    private void updateLeaderboard(FileHandle leaderboardData) {
+        String[] dataLines = leaderboardData.readString().split("\n");
         
         /**File data*/
         playerNames = dataLines[0].split(",");
         carNames = dataLines[1].split(",");
-        times = dataLines[2].split(",");        
+        times = dataLines[2].split(",");    
         
         //two players = false 
-        final_matrix = GetNewMatrix1P(playerNames, carNames, times, null, null, "50:00:000");
+        final_matrix = GetNewMatrix1P(playerNames, carNames, times, "Nom", "Automobile", "50:00:000");
         //List of names from last list, list of cars from last list, lits of times from last list, new name, new time, new String
         //This method reads and classes the the names, car names and times according to the fastest times
-        //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time
-    
+        //The output is a matrix containing [] (the position) []the characteristic [0] = name, [1] = carName, [2] = time        
     }
     
     public LeaderboardScreen(RacingGame game, boolean twoPlayers, Car car, 
@@ -252,6 +256,7 @@ public class LeaderboardScreen implements Screen {
         writeData(leaderboard_data);
         
     }
+
     
     private void setValues() {
         //note, STORE IN ARRAY? 
@@ -425,6 +430,70 @@ public class LeaderboardScreen implements Screen {
         listeners();
     }
     
+    private void updateTable() {
+        /** TABLE */
+        /**Row 1*/
+        table.add(positionLbl).pad(10);
+        table.add(playerNameLbl).pad(10);
+        table.add(carNameLbl).pad(10);
+        table.add(timeLbl).pad(10);
+        //table.add(mapNameLbl).pad(10);
+        //table.add(totalFuelConsumptionLbl).pad(10);
+        //table.add(numberOfStopsForFuelLbl).pad(10);
+        table.row();
+        /**Row 2*/
+        table.add(positionNum1).pad(10);
+        table.add(playerName1).pad(10);
+        table.add(carName1).pad(10);
+        table.add(time1).pad(10);
+        table.row();
+        /**Row 3*/
+        table.add(positionNum2).pad(10);
+        table.add(playerName2).pad(10);
+        table.add(carName2).pad(10);
+        table.add(time2).pad(10);        
+        table.row();
+        /**Row 4*/
+        table.add(positionNum3).pad(10);
+        table.add(playerName3).pad(10);
+        table.add(carName3).pad(10);   
+        table.add(time3).pad(10);
+        table.row();
+        /**Row 5*/
+        table.add(positionNum4).pad(10);
+        table.add(playerName4).pad(10);
+        table.add(carName4).pad(10);   
+        table.add(time4).pad(10);        
+        table.row();
+        /**Row 6*/
+        table.add(positionNum5).pad(10);
+        table.add(playerName5).pad(10);
+        table.add(carName5).pad(10);   
+        table.add(time5).pad(10);        
+        table.row();
+        /**Row 7*/
+        table.add(positionNum6).pad(10);
+        table.add(playerName6).pad(10);
+        table.add(carName6).pad(10);   
+        table.add(time6).pad(10);        
+        table.row();
+        /**Row 8*/
+        table.add(positionNum7).pad(10);
+        table.add(playerName7).pad(10);
+        table.add(carName7).pad(10);   
+        table.add(time7).pad(10);        
+        table.row();
+        /**Row 9*/
+        table.add(positionNum8).pad(10);         
+        table.add(playerName8).pad(10);
+        table.add(carName8).pad(10);   
+        table.add(time8).pad(10);
+        table.setPosition(600, 350);
+        
+        stage.addActor(table);        
+    }
+    
+    
     private void listeners() {
         return_mainmenu.addListener(new ChangeListener() {
             @Override
@@ -441,17 +510,29 @@ public class LeaderboardScreen implements Screen {
                 if (mapNum == 0) {
                     leaderboard_data = Gdx.files.local("data/map2_table.txt");
                     map.setText("For Map #"+ Integer.toString(2));
-                    mapNum = 1;
+                    mapNum = 1; 
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
                 else if (mapNum == 1) {
                     leaderboard_data = Gdx.files.local("data/map3_table.txt");
                     map.setText("For Map #"+ Integer.toString(3));
                     mapNum = 2;
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
                 else if (mapNum == 2) {
                     leaderboard_data = Gdx.files.local("data/map1_table.txt");
                     map.setText("For Map #"+ Integer.toString(1));
                     mapNum = 0;
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
             }        
         });
@@ -464,16 +545,28 @@ public class LeaderboardScreen implements Screen {
                     leaderboard_data = Gdx.files.local("data/map3_table.txt");
                     map.setText("For Map #"+ Integer.toString(3));
                     mapNum = 2;
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
                 else if (mapNum == 1) {
                     leaderboard_data = Gdx.files.local("data/map1_table.txt");
                     map.setText("For Map #"+ Integer.toString(1));
                     mapNum = 0;
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
                 else if (mapNum == 2) {
                     leaderboard_data = Gdx.files.local("data/map2_table.txt");
                     map.setText("For Map #"+ Integer.toString(2));
                     mapNum = 1;
+                    updateLeaderboard(leaderboard_data);
+                    table.clear();
+                    setValues();
+                    updateTable();
                 }
             }
         });
