@@ -1,3 +1,3 @@
-Jo,Enter Name,AA,JO!!!!!!!!!!!!!!,Enter Name,JO,Rosy,Map2
-Volkswagen Golf,Volkswagen Golf,Porsche 911,ZondaF,ZondaF,Lamborghini Gallardo,Volkswagen Golf,car1
-00:32:489,00:37:124,00:37:422,00:40:209,00:39:490,00:53:091,00:54:708,01:01:100
+Jo,Jo,Enter Name,AA,JO!!!!!!!!!!!!!!,Enter Name,JO,Rosy
+ZondaF,Volkswagen Golf,Volkswagen Golf,Porsche 911,ZondaF,ZondaF,Lamborghini Gallardo,Volkswagen Golf
+00:24:432,00:32:489,00:37:124,00:37:422,00:40:209,00:39:490,00:53:091,00:54:708

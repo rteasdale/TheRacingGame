@@ -274,7 +274,7 @@ public class Car {
             carName = "Volkswagen Golf";
             maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 172; //was 130
+            backTireMDriveForce = 152; //was 130
             frontTireMDriveForce = 172;
             backTireMLateralImpulse = 3.1875f;
             frontTireMLateralImpulse = 2.8125f;
@@ -292,7 +292,7 @@ public class Car {
             carName = "Lamborghini Gallardo";
             maxFSpeed = 110;
             maxBSpeed = -40;
-            backTireMDriveForce = 278; //was 130
+            backTireMDriveForce = 258; //was 130
             frontTireMDriveForce = 278;
             backTireMLateralImpulse = 4f;
             frontTireMLateralImpulse = 3.5f;
@@ -309,7 +309,7 @@ public class Car {
             carName = "Toyota Prius";
             maxFSpeed = 70;
             maxBSpeed = -20;
-            backTireMDriveForce = 150; //was 130
+            backTireMDriveForce = 130; //was 130
             frontTireMDriveForce = 150;
             backTireMLateralImpulse = 4.25f;
             frontTireMLateralImpulse = 3.75f;
@@ -326,7 +326,7 @@ public class Car {
             carName = "Porsche 911";
             maxFSpeed = 100;
             maxBSpeed = -30;
-            backTireMDriveForce = 350; //was 130
+            backTireMDriveForce = 330; //was 130
             frontTireMDriveForce = 350;
             backTireMLateralImpulse = 4f;
             frontTireMLateralImpulse = 3.75f;
@@ -343,7 +343,7 @@ public class Car {
             carName = "F-150 Raptor";
             maxFSpeed = 80;
             maxBSpeed = -30;
-            backTireMDriveForce = 170; 
+            backTireMDriveForce = 150; 
             frontTireMDriveForce = 170;
             backTireMLateralImpulse = 2.125f;
             frontTireMLateralImpulse =1.875f;
@@ -360,7 +360,7 @@ public class Car {
             carName = "ZondaF";
             maxFSpeed = 121;
             maxBSpeed = -50;
-            backTireMDriveForce = 301; //was 130
+            backTireMDriveForce = 281; //was 130
             frontTireMDriveForce = 301;
             backTireMLateralImpulse = 4f;
             frontTireMLateralImpulse = 3.5f;

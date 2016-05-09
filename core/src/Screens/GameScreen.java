@@ -134,7 +134,7 @@ public final class GameScreen implements Screen {
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
-    boolean testing = true; //for presentation
+    boolean testing = false; //for presentation
     
     private Stage stage;
     private Skin skin;

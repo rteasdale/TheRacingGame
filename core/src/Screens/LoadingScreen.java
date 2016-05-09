@@ -91,8 +91,13 @@ public class LoadingScreen implements Screen {
        progress_percentage = new Label("Loading : " + "(" + progress + ")", lbl_style);
        progress_percentage.setPosition(RacingGame.V_HEIGHT/2, RacingGame.V_WIDTH/2-510);
        
+<<<<<<< Updated upstream
        OnePlayer = new Label("CONTROLS FOR PLAYER 1", lbl_style);
        OnePlayer.setPosition(500, 500);
+=======
+       OnePlayer = new Label("Controls for Player 1", lbl_style);
+       OnePlayer.setPosition(650, 600);
+>>>>>>> Stashed changes
        
        arrows_controls = assets.manager.get(ScreenAssets.arrows_controls);
        arrows_Image = new Image(arrows_controls);
