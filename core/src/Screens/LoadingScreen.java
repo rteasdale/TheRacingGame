@@ -13,10 +13,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -31,9 +29,10 @@ import handlers.ScreenAssets;
  */
 public class LoadingScreen implements Screen {
     private final RacingGame game; 
-    private ScreenAssets assets;
-    private boolean twoPlayers;
-    private int mapNum;
+    private final ScreenAssets assets;
+    private final boolean twoPlayers;
+    private final MusicPlayer musicPlayer;
+    private final int mapNum;
     
     private Texture ASDW_controls;
     private Texture arrows_controls;
@@ -41,7 +40,8 @@ public class LoadingScreen implements Screen {
     private Image ASDW_Image;
     private Image arrows_Image;
     
-    private MusicPlayer musicPlayer;
+    
+    private OrthographicCamera camera;  
     
     private Stage stage;
     private Label progress_percentage;
@@ -49,12 +49,10 @@ public class LoadingScreen implements Screen {
     
     private Label OnePlayer;
     private Label TwoPlayer;
-    
-    private OrthographicCamera camera;
             
     private BitmapFont font;
     
-    private final ShapeRenderer renderer;
+    private ShapeRenderer renderer;
     
     private float progress;
     
@@ -65,10 +63,13 @@ public class LoadingScreen implements Screen {
         this.mapNum = mapNum;
         this.musicPlayer = musicPlayer;
         
-        
         //stop music 
         musicPlayer.stopMusic();
-        
+        queueAssets();
+    }
+    
+    @Override
+    public void show() {
         stage = new Stage();
         camera = new OrthographicCamera();
         
@@ -80,14 +81,7 @@ public class LoadingScreen implements Screen {
         /**Styles*/
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
-        lbl_style.fontColor = new Color(Color.WHITE);        
-
-        queueAssets();
-        
-    }
-    
-    @Override
-    public void show() {
+        lbl_style.fontColor = new Color(Color.WHITE); 
        progress_percentage = new Label("Loading : " + "(" + progress + ")", lbl_style);
        progress_percentage.setPosition(RacingGame.V_HEIGHT/2, RacingGame.V_WIDTH/2-510);
        
@@ -120,7 +114,7 @@ public class LoadingScreen implements Screen {
         
     }
     
-    private void update(float delta) {
+    private void updatePourcentage() {
         progress = MathUtils.lerp(progress, assets.manager.getProgress(),0.1f);
         progress_percentage.setText("Loading " + "(" + Integer.toString((int)(progress*100)) + " % )");
         
@@ -142,7 +136,7 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClearColor(0f,0f,0f,1f); //set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        update(f);
+        updatePourcentage();
         
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(Color.WHITE);

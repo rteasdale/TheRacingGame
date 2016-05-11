@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
-import com.sun.javafx.scene.control.skin.LabelSkin;
 import handlers.ScreenAssets;
 
 /**
@@ -29,14 +28,11 @@ import handlers.ScreenAssets;
  */
 public class CreditsScreen implements Screen{
 
-    private RacingGame game;
+    private final RacingGame game;
     private Stage stage;
     private BitmapFont font;
-    private ScreenAssets assets;
+    private final ScreenAssets assets;
 
-    private Label author1;
-    private Label author2;
-    private Label musicLbl;
     private Label music1;
     private Label music2;
     private Label music3;
@@ -54,9 +50,11 @@ public class CreditsScreen implements Screen{
     
     public CreditsScreen(RacingGame game, ScreenAssets assets){
         this.game = game;
-        this.assets = assets;
-        
-        
+        this.assets = assets;      
+    }
+    
+    @Override
+    public void show() {
         stage = new Stage();
         
         Gdx.input.setInputProcessor(stage);
@@ -76,17 +74,14 @@ public class CreditsScreen implements Screen{
         image_style = new ImageButton.ImageButtonStyle();
         image_style.imageUp = buttons_skin.getDrawable("pause_return");
         
-    }
-    
-    @Override
-    public void show() {
-
+        /**Music labels*/
         music1 = new Label("Menu: \n" + "Mason - Exceeder (Original Mix) ", lbl_style);
         music2 = new Label("MAP 1 - Classic: \n" + "Wiggle (8 Bit Remix Cover Version)\n" + "8 Bit Universe", lbl_style);
         music3 = new Label("MAP 2 - Snow: \n" + "Lensko - Cetus", lbl_style);
         music4 = new Label("MAP 3 - Space: \n" + "Asura - Dust and Daffodils", lbl_style);
         winningSound = new Label("Finish Sound - Mario Kart 64", lbl_style);
 
+        /**Table*/
         Table table = new Table();
         
         table.add(new Label("Authors: ", lbl_style)).pad(20);

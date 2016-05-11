@@ -4,7 +4,6 @@
 package Screens;
 
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -29,37 +28,33 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.game.RacingGame;
 import handlers.ScreenAssets;
-import java.util.Arrays;
 
 /**
  *
  * @author ROSY
  */
 public class CarSelectionScreen implements Screen { //extends PlayerScreen
-    private RacingGame game;
-    private MusicPlayer musicPlayer;
+    private final RacingGame game;
+    private final MusicPlayer musicPlayer;
     private Sound click;
     private Sound click2;
     
-    private Screen scr = this;
     private OrthographicCamera camera;
     private Stage stage;
     private BitmapFont font;
     
     private final ScreenAssets assets;
-    private final Texture title_texture;
-    private final Texture stat_box;
+    private Texture title_texture;
+    private Texture stat_box;
     
     private ShapeRenderer renderer;
     
     public int playerNum;
-    private boolean twoPlayers;
-    private String playerName;
+    private final boolean twoPlayers;
+    private final String playerName;
     
-    private String currentPlayer;
     
     public int currentColor;
     public int currentCar = 0;
@@ -127,9 +122,13 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         this.playerName = playerName;
         this.twoPlayers = twoPlayers;
         this.musicPlayer = musicPlayer;
+    }
 
+    @Override
+    public void show() {
+        //Gdx.app.log("CarSelection", "show called");         
         camera = new OrthographicCamera();
-        camera.setToOrtho(false);        
+        camera.setToOrtho(false);    
         renderer = new ShapeRenderer();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **// 
@@ -187,12 +186,6 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
         lbl_style.fontColor = new Color(Color.WHITE);
-        
-    }
-
-    @Override
-    public void show() {
-        //Gdx.app.log("CarSelection", "show called");         
         
         /** Title */
         title = new Image(title_texture);
@@ -984,7 +977,7 @@ public class CarSelectionScreen implements Screen { //extends PlayerScreen
 
     @Override
     public void dispose() {
-        Gdx.app.log("Car Selection", "dispose called");
+        //Gdx.app.log("Car Selection", "dispose called");
 //        game.dispose();
 //        click.dispose();
 //        click2.dispose();

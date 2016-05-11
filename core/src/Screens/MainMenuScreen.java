@@ -6,7 +6,6 @@
 package Screens;
 
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -29,7 +28,7 @@ import handlers.ScreenAssets;
  * @author ROSY
  */
 public class MainMenuScreen implements Screen {
-    private RacingGame game;
+    private final RacingGame game;
     
     private MusicPlayer musicPlayer;
     private Sound click;
@@ -37,13 +36,13 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private Texture background;
     
-    private ScreenAssets assets;
+    private final ScreenAssets assets;
     private Texture title_texture;
     
     private TextureAtlas buttons_atlas;
     private Skin buttons_skin;
     
-    private static Music menu_song;
+    private Music menu_song;
 
     private Image title;
     private ImageButton onePlayerButton;
@@ -63,8 +62,13 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(RacingGame game, ScreenAssets assets) {
         this.assets = assets;
         this.game = game;
+    }
+    @Override
+    public void show() {
+        //Gdx.app.log("MainMenuScreen", "show called");
+        
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage); //** stage is responsive **//
+        Gdx.input.setInputProcessor(stage); //stage is responsive
         
         click = assets.manager.get(ScreenAssets.click_sound);
         
@@ -93,11 +97,6 @@ public class MainMenuScreen implements Screen {
         style_exit = new ImageButtonStyle(buttons_skin.getDrawable("menu_exit"), null, null, null, null, null);
         style_credits = new ImageButtonStyle(buttons_skin.getDrawable("menu_credits"), null, null, null, null, null);
         style_leader = new ImageButtonStyle(buttons_skin.getDrawable("menu_leaderboard"), null, null, null, null, null);
-        
-    }
-    @Override
-    public void show() {
-        //Gdx.app.log("MainMenuScreen", "show called");
         
         /** Position actors */
         title = new Image(title_texture);
@@ -218,7 +217,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        Gdx.app.log("MainMenuScreen", "dispose called");
+        //Gdx.app.log("MainMenuScreen", "dispose called");
         click.dispose();
         stage.dispose();
         background.dispose();

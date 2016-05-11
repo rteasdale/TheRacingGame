@@ -26,8 +26,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.RacingGame;
 import handlers.ScreenAssets;
-import java.io.File;
-import java.util.Arrays;
 
 /**
  *
@@ -40,8 +38,6 @@ public class LeaderboardScreen implements Screen {
     private Car car2;
     private ScreenAssets assets;
     private Texture title_texture;
-    
-    private boolean gameOver;
     
     private FileHandle leaderboard_data;
     private Hud hud;
@@ -67,20 +63,15 @@ public class LeaderboardScreen implements Screen {
     private String[] playerNames;
     private String[] carNames;
     private String[][] final_matrix;
-    
-    private String[] maps;
 
     private Sound click;
     
-    private final BitmapFont font;
+    private BitmapFont font;
     
     private Label positionLbl;
-    private Label carNameLbl; //get description?
-    private Label playerNameLbl; //get player names
+    private Label carNameLbl;
+    private Label playerNameLbl;
     private Label timeLbl;
-    private Label mapNameLbl;
-    private Label totalFuelConsumptionLbl; // TO DO???
-    private Label numberOfStopsForFuelLbl;
     
     private Label playerName1;
     private Label playerName2;
@@ -107,8 +98,6 @@ public class LeaderboardScreen implements Screen {
     private Label time7;
     private Label time8;
     private Label map;
-    private Label totalFuelConsumption;
-    private Label numberOfStopsForFuel;
     
     private Label positionNum1;
     private Label positionNum2;
@@ -126,43 +115,14 @@ public class LeaderboardScreen implements Screen {
     private String timeString2;
     private String carNameString2;
     
-    private String mapNameString;
-    
-    private int currentMap;
-    
-    private final Label.LabelStyle lbl_style;
+    private Label.LabelStyle lbl_style;
     
     public LeaderboardScreen(RacingGame game, ScreenAssets assets) {
         this.game = game;
         this.assets = assets;
-        
-        click = assets.manager.get(ScreenAssets.click_sound2);
-        
+
         leaderboard_data = Gdx.files.local("data/map1_table.txt");
-        mapNum = 0;
-
-        table = new Table();
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        
-        /**TextureAtlas and skin */ 
-        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
-        buttons_skin = new Skin(buttons_atlas);
-        
-        /** BitmapFont */
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);   
-        
-        /**Style*/
-        lbl_style = new Label.LabelStyle();
-        lbl_style.font = font;
-        lbl_style.fontColor = new Color(Color.WHITE);
-        
-        image_style = new ImageButton.ImageButtonStyle();
-        image_style.imageUp = buttons_skin.getDrawable("pause_return");
-        
-        nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
-        prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);        
-
+        mapNum = 0;   
 
         updateLeaderboard(leaderboard_data);
     
@@ -192,16 +152,7 @@ public class LeaderboardScreen implements Screen {
         this.hud = hud;
         this.hud2 = hud2;
         this.mapNum = mapNum;
-        this.gameOver = gameOver;
 
-        table = new Table();
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        
-        click = assets.manager.get(ScreenAssets.click_sound2);
-        
-        leaderboard_data = Gdx.files.local("data/map1_table.txt");
-        
         /** FileHandle */ 
         if (mapNum == 0) {
             leaderboard_data = Gdx.files.local("data/map1_table.txt");
@@ -213,35 +164,7 @@ public class LeaderboardScreen implements Screen {
             leaderboard_data = Gdx.files.local("data/map3_table.txt");
         }
 
-        /**TextureAtlas and skin */ 
-        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
-        buttons_skin = new Skin(buttons_atlas);
-        
-        /** BitmapFont */
-        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);
-        
-        /**Style*/
-        lbl_style = new Label.LabelStyle();
-        lbl_style.font = font;
-        lbl_style.fontColor = new Color(Color.WHITE);
-        
-        image_style = new ImageButton.ImageButtonStyle();
-        image_style.imageUp = buttons_skin.getDrawable("pause_return");
-        
-        nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
-        prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);        
-        
-        String[] dataLines = leaderboard_data.readString().split("\n");
-        
-        
-        /**File data*/
-        playerNames = dataLines[0].split(",");
-        carNames = dataLines[1].split(",");
-        times = dataLines[2].split(",");
-        
-        System.out.println(Arrays.toString(playerNames));
-        System.out.println(Arrays.toString(carNames));
-        System.out.println(Arrays.toString(times));
+        updateLeaderboard(leaderboard_data);
         
         obtainCarData(twoPlayers);
         
@@ -305,10 +228,6 @@ public class LeaderboardScreen implements Screen {
         
     }
     
-    private void readData(FileHandle file, int mapNum) {
-       
-    }
-    
     private void writeData(FileHandle file) {
         
         String newTextFile = (final_matrix[0][0] + "," + final_matrix[1][0] + "," + final_matrix[2][0] + "," + final_matrix[3][0] + "," + final_matrix[4][0]
@@ -323,6 +242,29 @@ public class LeaderboardScreen implements Screen {
     
     @Override
     public void show() {
+        table = new Table();
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage); 
+            
+        click = assets.manager.get(ScreenAssets.click_sound2);
+        
+        /**TextureAtlas and skin */ 
+        buttons_atlas = assets.manager.get(ScreenAssets.buttons_atlas);
+        buttons_skin = new Skin(buttons_atlas);
+        
+        /** BitmapFont */
+        font = new BitmapFont(Gdx.files.internal("menu/button_font.fnt"), Gdx.files.internal("menu/button_font.png"), false);   
+        
+        /**Style*/
+        lbl_style = new Label.LabelStyle();
+        lbl_style.font = font;
+        lbl_style.fontColor = new Color(Color.WHITE);
+        
+        image_style = new ImageButton.ImageButtonStyle();
+        image_style.imageUp = buttons_skin.getDrawable("pause_return");
+        
+        nextmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("nextarrow_big"), null, null, null, null, null);
+        prevmap_style = new ImageButton.ImageButtonStyle(buttons_skin.getDrawable("backarrow_big"), null, null, null, null, null);  
         
         map = new Label("For Map #" + Integer.toString(mapNum+1), lbl_style);
         map.setPosition(590,600);
@@ -340,17 +282,6 @@ public class LeaderboardScreen implements Screen {
         carNameLbl = new Label(" CAR\nUSED ", lbl_style);
         playerNameLbl = new Label(" PLAYER\nNAME ", lbl_style);
         timeLbl = new Label(" TIME ", lbl_style);
-        //mapNameLbl = new Label(" MAP ", lbl_style);
-        //totalFuelConsumptionLbl = new Label(" TOTAL FUEL\nCONSUMPTION ", lbl_style);
-        //numberOfStopsForFuelLbl = new Label(" TOTAL NUMBER OF\nSTOPS FOR FUEL ", lbl_style);
-        
-        /**Labels*/ 
-        //playerName1 = new Label("", lbl_style);
-        //carName1 = new Label("", lbl_style);
-        //time1 = new Label("", lbl_style);
-        //map = new Label("", lbl_style);
-        //totalFuelConsumption = new Label("", lbl_style);
-        //numberOfStopsForFuel = new Label("", lbl_style);
         
         selectPreviousMapButton = new ImageButton(prevmap_style);
         selectPreviousMapButton.setX(70);
@@ -369,9 +300,10 @@ public class LeaderboardScreen implements Screen {
         positionNum7 = new Label(Integer.toString(7), lbl_style);
         positionNum8 = new Label(Integer.toString(8), lbl_style);
 
+        //assign the table values
         setValues();  
         
-        /** TABLE */
+        /** DRAW THE TABLE */
         /**Row 1*/
         table.add(positionLbl).pad(10);
         table.add(playerNameLbl).pad(10);

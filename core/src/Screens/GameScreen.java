@@ -3,8 +3,6 @@ package Screens;
 
 import Scenes.Hud;
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -60,15 +58,18 @@ import handlers.ScreenAssets;
 
 public final class GameScreen implements Screen {
 
-    private RacingGame game;
+    private final RacingGame game;
+    private final ScreenAssets assets;
+    private static boolean twoPlayers;
+    private static int mapNum = 0;
+    
+    private TextureAtlas atlas; 
     private Hud hud;
     private Hud hud2;
-    private ScreenAssets assets;
     
     private FitViewport viewport1;
     private FitViewport viewport2;
-    private static MusicPlayer musicPlayer;
-    private SoundPlayer soundPlayer; 
+    private MusicPlayer musicPlayer;
     private Sound click;
     
     private long startTime;
@@ -78,14 +79,13 @@ public final class GameScreen implements Screen {
     private boolean RanLeaderBoard = false;
     private boolean gameOver = false;
     
-    private static int mapNum = 0;
+
     private int maxLap = 0;
-    private static boolean twoPlayers;
-    
+
     private boolean P1Finished = false;
     private boolean P2Finished = false; 
     
-    Sprite tireSprite;
+    private Sprite tireSprite;
     
     private static int carNumP1;
     private static int carNumP2;
@@ -96,10 +96,9 @@ public final class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer tmr;
     private static boolean debug = false; //Boolean if I want B2D Debug on or off
 
-    private Array<Body> tmpBodies = new Array<Body>();
+    private final Array<Body> tmpBodies = new Array<Body>();
     private Texture bg;
-    private SpriteBatch batch;
-    private Sprite carSprite;
+    private final SpriteBatch batch;
     
     public World world;
     public static OrthographicCamera camera;
@@ -107,151 +106,46 @@ public final class GameScreen implements Screen {
     
     private float aspectRatio;
 
-    Box2DDebugRenderer renderer;
-    InputManager inputManager;
-    CarContactListener cl;
+    private Box2DDebugRenderer renderer;
+    private InputManager inputManager;
+    private CarContactListener cl;
     private InputMultiplexer multiplexer; 
     
     private static Car car;
     private static Car car2;
 
-    float red;
-    float green;
-    float blue;
-    float alpha;
-    String mapAddressT; //Map Adress for the TiledMap
-    String mapAddressI; // Map Adress for the Image
+    private float red;
+    private float green;
+    private float blue;
+    private float alpha;
+    private String mapAddressT; //Map Adress for the TiledMap
+    private String mapAddressI; // Map Adress for the Image
     
-    Music song1;
-    Music song2;
-    Music song3;
-    Music song4;
-    Music song5;
-    Music song6;
+    private Music song1;
+    private Music song2;
+    private Music song3;
+    private Music song4;
+    private Music song5;
+    private Music song6;
     
     boolean s1IsPlaying = false;
     boolean s2IsPlaying = false;
     boolean s3IsPlaying = false;
     
-    boolean testing = false; //for presentation
+    boolean testing = true; //for presentation
     
     private Stage stage;
     private Skin skin;
     private ImageButtonStyle style;
     private ImageButton exit_button; 
     
-    public GameScreen(RacingGame game, boolean twoPlayers, final int mapNum, ScreenAssets assets) {
+    public GameScreen(RacingGame game, boolean twoPlayers, int mapNum, ScreenAssets assets) {
         this.game = game;
         this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.mapNum = mapNum;
-        //Gdx.app.log("twoPlayers", Boolean.toString(twoPlayers));
-        
-        click = assets.manager.get(ScreenAssets.click_sound2);
-        
-        soundPlayer = new SoundPlayer();
-        
-        choseMap(mapNum);
-        
-        
-        stage = new Stage();
-        multiplexer = new InputMultiplexer();
-        
-        multiplexer.addProcessor(stage);
-        
-        TextureAtlas atlas = new TextureAtlas("menu/homelogo_atlas.txt");
-        skin = new Skin(atlas);
-        style = new ImageButtonStyle(skin.getDrawable("home_logo"), null,null, null, null, null);
-        style.over = skin.getDrawable("home_logo2");
-        
-        exit_button = new ImageButton(style);
-        
-        if (!twoPlayers) {
-            exit_button.setPosition(15, 665);
-        }
-        if (twoPlayers) {
-            exit_button.setPosition(15, 560);
-        }
-        
-        stage.addActor(exit_button);
         
         batch = new SpriteBatch();
-
-        world = new World(new Vector2(0, 0f), true);
-            
-        
-        /**Create cars*/
-	car = new Car(world, carNumP1, carColorP1, 1, assets, testing);
-     
-        /**Cameras*/
-        if (!twoPlayers) {
-            camera = new OrthographicCamera();
-            hud = new Hud(batch, twoPlayers, gamingState, finishState, 1, assets, maxLap);
-        }
-
-        if (twoPlayers) {
-            // If two players, construct another car
-            car2 = new Car(world, carNumP2, carColorP2, 2, assets, testing);
-            
-            aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
-            
-            camera = new OrthographicCamera();
-            viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud = new Hud(batch, twoPlayers,gamingState, finishState, 1, assets, maxLap);
-            viewport1.apply();
-
-            camera2 = new OrthographicCamera();
-            viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
-            hud2 = new Hud(batch, twoPlayers, gamingState, finishState, 2, assets, maxLap); 
-            viewport2.apply();
-
-            camera2.zoom = 0.2f;
-            camera2.position.x = 0;
-            camera2.position.y = 0;
-        }
-        
-        cl = new CarContactListener();
-        world.setContactListener(cl);  
-        
-        camera.zoom = 0.2f;
-        camera.position.x = 0;
-        camera.position.y = 0;
-
-        renderer = new Box2DDebugRenderer();
-        renderer.setDrawJoints(false);
-        
-        inputManager = new InputManager(this);
-
-
-        song2 = assets.manager.get(ScreenAssets.song2);
-        song5 = assets.manager.get(ScreenAssets.song5);
-        song6 = assets.manager.get(ScreenAssets.song6);
-        
-        
-        ////////////////////////////////////////////////////
-        //Load Tiled Map
-        
-        
-        bg = new Texture(mapAddressI); 
-       
-        tileMap = new TmxMapLoader().load(mapAddressT);
-        tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
-
-        if(mapNum == 0){
-        createCollisionsM1();
-        }
-        if(mapNum == 1){
-            car.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
-            if(twoPlayers){
-            car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
-            }
-            createCollisionsM2();
-        }
-        if(mapNum == 2){
-            createCollisionsM3();
-        }
-       
-
     }
     
     private void listeners() {
@@ -272,15 +166,108 @@ public final class GameScreen implements Screen {
 
     @Override
     public void show() {
+        /**Create stage and set input*/
+        stage = new Stage();
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
         
-        float delay = 2; // seconds
+        click = assets.manager.get(ScreenAssets.click_sound2);
+        
+        /**Texture and Home Button*/
+        atlas = new TextureAtlas("menu/homelogo_atlas.txt");
+        skin = new Skin(atlas);
+        style = new ImageButtonStyle(skin.getDrawable("home_logo"), null,null, null, null, null);
+        style.over = skin.getDrawable("home_logo2");
+        exit_button = new ImageButton(style);
+        
+        if (!twoPlayers) {
+            exit_button.setPosition(15, 665);
+        }
+        if (twoPlayers) {
+            exit_button.setPosition(15, 560);
+        }
+        
+        stage.addActor(exit_button);
 
+        //chose a map
+        choseMap(mapNum);
+
+        /**Create world*/
+        world = new World(new Vector2(0, 0f), true);
+        cl = new CarContactListener();
+        world.setContactListener(cl);             
+        
+        /**Create cars*/
+	car = new Car(world, carNumP1, carColorP1, 1, assets, testing);
+     
+        /**Cameras*/
+        camera = new OrthographicCamera();
+        hud = new Hud(batch, twoPlayers, gamingState, finishState, 1, assets, maxLap);
+        camera.zoom = 0.2f;
+        camera.position.x = 0;
+        camera.position.y = 0;
+        
+        /**If two players, construct another car, camera, viewport and HUD */
+        if (twoPlayers) {
+            car2 = new Car(world, carNumP2, carColorP2, 2, assets, testing);
+            
+            //keeps viewport aspect ratio
+            aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+            
+            camera = new OrthographicCamera();
+            viewport1 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            hud = new Hud(batch, twoPlayers,gamingState, finishState, 1, assets, maxLap);
+            viewport1.apply();
+
+            camera2 = new OrthographicCamera();
+            viewport2 = new FitViewport(RacingGame.V_HEIGHT*aspectRatio, RacingGame.V_HEIGHT);
+            hud2 = new Hud(batch, twoPlayers, gamingState, finishState, 2, assets, maxLap); 
+            viewport2.apply();
+
+            camera2.zoom = 0.2f;
+            camera2.position.x = 0;
+            camera2.position.y = 0;
+        }
+
+
+        renderer = new Box2DDebugRenderer();
+        renderer.setDrawJoints(false);
+        
+        inputManager = new InputManager(this);
+
+        song2 = assets.manager.get(ScreenAssets.song2);
+        song5 = assets.manager.get(ScreenAssets.song5);
+        song6 = assets.manager.get(ScreenAssets.song6);
+        
+        
+        /**Load Tiled Map*/
+        bg = new Texture(mapAddressI); 
+       
+        tileMap = new TmxMapLoader().load(mapAddressT);
+        tmr = new OrthogonalTiledMapRenderer(tileMap, 1/4f);
+
+        /**Create collisions for each map*/
+        if(mapNum == 0){
+            createCollisionsM1();
+        }
+        if(mapNum == 1){
+            car.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            if(twoPlayers){
+            car2.body.setTransform(new Vector2(0,0), 90*Constants.DEGTORAD);
+            }
+            createCollisionsM2();
+        }
+        if(mapNum == 2){
+            createCollisionsM3();
+        }
+        
+        /**Delays*/
         Timer.schedule(new Task(){
             @Override
             public void run() {
                 countdownState = true;
             }
-        }, delay);      
+        }, 2);      
        
         Timer.schedule(new Task(){
             @Override
@@ -296,6 +283,7 @@ public final class GameScreen implements Screen {
             }
         }, 4);           
         
+        //call listeners
         listeners();
     }
     
@@ -303,31 +291,31 @@ public final class GameScreen implements Screen {
     public void render(float f) {
         Gdx.gl.glClearColor(red,green,blue,alpha);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        
+
         world.step(1 / 60f, 6, 2);
 
         //draw tile map
         //tmr.setView(camera);
         //tmr.render();
 
+        //if single player 
         if(!twoPlayers){
-        camera.viewportHeight = Gdx.graphics.getHeight();
-        camera.viewportWidth = Gdx.graphics.getWidth();
-        camera.update();
-        camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
+            camera.viewportHeight = Gdx.graphics.getHeight();
+            camera.viewportWidth = Gdx.graphics.getWidth();
+            camera.update();
+            camera.position.set(new Vector3(car.body.getPosition().x, car.body.getPosition().y, camera.position.z));
 
-        renderSprites(batch, camera);  
-        
-        //load HUD 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();   
-        hud.stage.act();
-        stage.draw();
-        stage.act();        
+            renderSprites(batch, camera);  
+
+            //load HUD 
+            batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            hud.stage.draw();   
+            hud.stage.act();
+            stage.draw();
+            stage.act();        
         }
         
-        
+        //if two players
         if (twoPlayers)  {
             /**NOTE: ORDER IN WHICH YOU RENDER IT MATTERS!*/
             /*Right Half*/
@@ -414,9 +402,7 @@ public final class GameScreen implements Screen {
                 hud2.updateLap(car2);
             }
         }
-        
-        
-        
+
         /** Finish state*/
         //for single player, game ends if current lap number = max lap number
         if (twoPlayers == false) {
@@ -455,35 +441,33 @@ public final class GameScreen implements Screen {
                 if (car2.getLapNumber()== car.getLapNumber()) {
                     musicPlayer.stopMusic();
                     finishState = true;
-                    
+
                 }
             }
         }
             
         /** Game over state*/
-        //if in two players mode
-            //if tank is zero, then -1 lap penalty
+        //if in two players mode, if tank is zero, then -1 lap penalty
         if (twoPlayers == true) {
-        if (car.getFuelTank() < 0.5) {
-            car.setFuelTank(60);
-            if (car.getLapNumber() > 0) {
-            car.setLapNumber(car.getLapNumber()-1);
+            if (car.getFuelTank() < 0.5) {
+                car.setFuelTank(60);
+                if (car.getLapNumber() > 0) {
+                    car.setLapNumber(car.getLapNumber()-1);
+                }
+                hud.updateLap(car);
             }
-            hud.updateLap(car);
-        }
 
         
-        if (car2.getFuelTank() < 0.5) {
-            car2.setFuelTank(60);
-            if (car2.getLapNumber() > 0) {
-            car2.setLapNumber(car2.getLapNumber()-1);
+            if (car2.getFuelTank() < 0.5) {
+                car2.setFuelTank(60);
+                if (car2.getLapNumber() > 0) {
+                    car2.setLapNumber(car2.getLapNumber()-1);
+                }
+                hud2.updateLap(car2);
             }
-            hud2.updateLap(car2);
-        }
         }
 
-        //single player mode
-            //if tank has zero, game over 
+        //single player mode, if tank has zero, game over 
         if (twoPlayers == false) {
             if (car.getFuelTank() < 0.5) {
                 P1Finished = true;
@@ -497,31 +481,29 @@ public final class GameScreen implements Screen {
             }
         }
         
+        /**What happens when Finish state becomes true*/
         if (finishState == true) {
             musicPlayer.stopMusic();
             if(!RanLeaderBoard){
-            Timer.schedule(new Task(){
-                @Override
-                public void run() {
-                    
-                    if (twoPlayers == true) {
-                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum, gameOver));
-                    }
-                    
-                    else if (twoPlayers == false) {
-                        game.setScreen(new LeaderboardScreen(game, twoPlayers, car, null, assets, hud, null, mapNum, gameOver));
-                    }
+                Timer.schedule(new Task(){
+                    @Override
+                    public void run() {
+                        if (twoPlayers == true) {
+                            game.setScreen(new LeaderboardScreen(game, twoPlayers, car, car2, assets, hud, hud2, mapNum, gameOver));
+                        }
 
-                }
-            }, 3);          
-            RanLeaderBoard = true;
-        }
+                        else if (twoPlayers == false) {
+                            game.setScreen(new LeaderboardScreen(game, twoPlayers, car, null, assets, hud, null, mapNum, gameOver));
+                        }
+                    }
+                }, 3);          
+                RanLeaderBoard = true;
+            }
       }
                 
     }
-    
-    
-    
+ 
+    /**Collisions for Map1*/
     private void createCollisionsM1(){
         //Road Layer
         MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
@@ -683,8 +665,8 @@ public final class GameScreen implements Screen {
     }
     
     
-    //Create collisions for map 2
-    public void createCollisionsM2(){
+    /**Collisions for Map2*/
+    private void createCollisionsM2(){
          
                 MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
            
@@ -933,7 +915,8 @@ public final class GameScreen implements Screen {
         }
     }
     
-    public void createCollisionsM3() {
+    /**Collisions for Map1*/
+    private void createCollisionsM3() {
         
     MapLayer Roadlayer = tileMap.getLayers().get("Road ObjectLayer");
            
@@ -1121,8 +1104,7 @@ public final class GameScreen implements Screen {
     }
     
     /** Chose map*/
-
-    public void choseMap(int mapNum){
+    private void choseMap(int mapNum){
         if(mapNum == 0){
             //System.out.println("Map 1 Selected");
             red = 71/255f;
@@ -1201,7 +1183,8 @@ public final class GameScreen implements Screen {
         }
     }
     
-    public void renderSprites(SpriteBatch batch, OrthographicCamera camera){
+    /**Render Sprites*/
+    private void renderSprites(SpriteBatch batch, OrthographicCamera camera){
     //draw Object sprites
     batch.begin();
     batch.setProjectionMatrix(camera.combined);
@@ -1232,10 +1215,8 @@ public final class GameScreen implements Screen {
         }
     batch.end();
     }
-    
-   
 
-    static void setCarColorP1(int currentColor) {
+    public static void setCarColorP1(int currentColor) {
         carColorP1 = currentColor;
     }
     
@@ -1243,7 +1224,7 @@ public final class GameScreen implements Screen {
         return carColorP1;
     }
     
-    static void setCarNumP1(int currentCar) {
+    public static void setCarNumP1(int currentCar) {
         carNumP1 = currentCar;
     }    
     
@@ -1259,25 +1240,18 @@ public final class GameScreen implements Screen {
         return carColorP2;
     }
 
-    static void setCarNumP2(int currentCar) {
+    public static void setCarNumP2(int currentCar) {
         carNumP2 = currentCar;
     }
     
     public int getCarNumP2() {
         return carNumP2;
     }    
-   
-
-public void isOutside(){ //Could work with car[]
-        car.body.setLinearVelocity(GameScreen.car.body.getLinearVelocity().scl(0.3f));
-    }
-
-///////////////////////////////////////////////////////////////////////////////////////
-
+    
+    /**Music*/
     private void playMusic(int map) { //Method for playing music inside the game
         
         musicPlayer = new MusicPlayer();
-        
 
         //Always change the volume setting before going into Game mode
         if(map == 0){
@@ -1326,6 +1300,7 @@ public void isOutside(){ //Could work with car[]
         }
     }
 
+    /**Position draw X*/
     private int xPositionDraw(int mapNum){
         if(mapNum == 0){
             return -60;
@@ -1338,6 +1313,7 @@ public void isOutside(){ //Could work with car[]
         }
     }
     
+    /**Position draw Y*/
     private int yPositionDraw(int mapNum){
         if(mapNum == 0){
             return -175;

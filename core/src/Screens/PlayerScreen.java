@@ -6,7 +6,6 @@
 package Screens;
 
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -31,20 +30,19 @@ import handlers.ScreenAssets;
  * @author ROSY
  */
 public class PlayerScreen implements Screen {
-    private RacingGame game;
+    private final RacingGame game;
 
-    private MusicPlayer musicPlayer;
+    private final MusicPlayer musicPlayer;
     private Sound click;
     private Stage stage;
     private BitmapFont font;
     
-    static public String playerNameP1;
-    static public String playerNameP2;
-    private boolean twoPlayers;
+    public static String playerNameP1;
+    public static String playerNameP2;
+    private final boolean twoPlayers;
     
     private final ScreenAssets assets;
     private Texture title_texture;
-    private Texture playerNameBox;
 
     private Image title;
     private ImageButton next_btn;
@@ -75,7 +73,11 @@ public class PlayerScreen implements Screen {
         this.assets = assets;
         this.twoPlayers = twoPlayers;
         this.musicPlayer = musicPlayer;
-        
+    }
+    
+    @Override
+    public void show() {
+        //Gdx.app.log("PlayerScreen", "show called");
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
@@ -104,13 +106,8 @@ public class PlayerScreen implements Screen {
         txt_style.fontColor = new Color(Color.WHITE);
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
-        lbl_style.fontColor = new Color(Color.WHITE);
-    }
-    
-    @Override
-    public void show() {
-        //Gdx.app.log("PlayerScreen", "show called");
-       
+        lbl_style.fontColor = new Color(Color.WHITE);    
+        
         /**Title*/
         title = new Image(title_texture);
         title.setPosition(280, 648);

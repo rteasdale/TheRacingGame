@@ -5,13 +5,10 @@
  */
 package com.mygdx.game;
 
-import Screens.CreditsScreen;
-import Screens.LeaderboardScreen;
 import Screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
@@ -22,7 +19,6 @@ public class RacingGame extends Game {
     public static final String TITLE = "Fuel2D";
     public static final int V_WIDTH = 1280; //virtual dimensions
     public static final int V_HEIGHT = 720;
-    public OrthographicCamera camera;
     
     private int rendCount;
     private long startTime;

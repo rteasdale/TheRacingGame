@@ -6,7 +6,6 @@
 package Screens;
 
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -31,11 +30,11 @@ import handlers.ScreenAssets;
  * @author ROSY
  */
 public class MapSelectionScreen implements Screen {
-    private RacingGame game;
+    private final RacingGame game;
     private Stage stage;
-    private ScreenAssets assets;
+    private final ScreenAssets assets;
     private Texture title_texture;
-    private MusicPlayer musicPlayer;
+    private final MusicPlayer musicPlayer;
     private Sound click;
     private Sound click2;
     
@@ -73,7 +72,11 @@ public class MapSelectionScreen implements Screen {
         this.twoPlayers = twoPlayers;
         this.assets = assets;
         this.musicPlayer = musicPlayer;
-        
+    }
+    
+    @Override
+    public void show() {
+        //Gdx.app.log("Map Selection", "show called");
         stage = new Stage();
         Gdx.input.setInputProcessor(stage); //** stage is responsive **//
         
@@ -103,13 +106,8 @@ public class MapSelectionScreen implements Screen {
  
         lbl_style = new Label.LabelStyle();
         lbl_style.font = font;
-        lbl_style.fontColor = new Color(Color.WHITE);        
+        lbl_style.fontColor = new Color(Color.WHITE);          
         
-    }
-    
-    @Override
-    public void show() {
-        //Gdx.app.log("Map Selection", "show called");
         /** Title */
         title = new Image(title_texture);
         title.setPosition(280, 648);        
@@ -265,7 +263,7 @@ public class MapSelectionScreen implements Screen {
 
     @Override
     public void dispose() {
-        Gdx.app.log("Map Selection", "dispose called");
+        //Gdx.app.log("Map Selection", "dispose called");
 //        game.dispose();
 //        click.dispose();
 //        click2.dispose();

@@ -6,7 +6,6 @@
 package Screens;
 
 import Scenes.MusicPlayer;
-import Scenes.SoundPlayer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -37,14 +36,14 @@ public class SettingsScreen implements Screen {
     private Skin skin;
     private Skin check_skin;
     
-    private MusicPlayer musicPlayer;
+    private final MusicPlayer musicPlayer;
     private Sound click; 
     
     private Texture title_texture; 
     
     private TextureAtlas atlas;
     private TextureAtlas menubtns_atlas;
-    private ScreenAssets assets;
+    private final ScreenAssets assets;
     
     private Image title;
 
@@ -59,16 +58,12 @@ public class SettingsScreen implements Screen {
     public static Slider musicVolume;
     private Slider.SliderStyle slider_style;
     
-    private int musicSliderValue;
     private float musicVolumeValue;
     
     public SettingsScreen(RacingGame game, ScreenAssets assets, MusicPlayer musicPlayer) {
         this.game = game;
         this.assets = assets;
         this.musicPlayer = musicPlayer;
-        this.musicVolumeValue = musicVolumeValue;
-        
-        click = assets.manager.get(ScreenAssets.click_sound);
     }
         
     @Override
@@ -76,6 +71,7 @@ public class SettingsScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         
+        click = assets.manager.get(ScreenAssets.click_sound);
         font = assets.manager.get(ScreenAssets.font);
         
         atlas = assets.manager.get(ScreenAssets.settings_atlas);
@@ -115,15 +111,13 @@ public class SettingsScreen implements Screen {
         musicVolume.setPosition(400, 300);
         musicVolume.setRange(0, 100);
         musicVolume.setValue(70);
-
         
         /** Listeners*/
         SFXVolume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //change value of slider
                 click.play();
-                
+                //used with SFXVolume.getPercent(), see static method.
             }
         });
         
@@ -140,7 +134,6 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 click.play();
-                //save values of sliders
                 game.setScreen(new MainMenuScreen(game, assets));
             }
         });
@@ -160,14 +153,6 @@ public class SettingsScreen implements Screen {
     
     public float getCurrentVolume() {
         return musicVolumeValue;
-    }
-    
-    public void setMusicSliderValue(int value) {
-        this.musicSliderValue = value;
-    }
-    
-    public int getMusicSliderValue() {
-        return musicSliderValue;
     }
 
     @Override
@@ -198,12 +183,12 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
-        click.dispose();
-        skin.dispose();
-        title_texture.dispose();
-        check_skin.dispose();
-        stage.dispose();
-        font.dispose();
+//        click.dispose();
+//        skin.dispose();
+//        title_texture.dispose();
+//        check_skin.dispose();
+//        stage.dispose();
+//        font.dispose();
     }
     
     public static float getSFXPourcentage(){
