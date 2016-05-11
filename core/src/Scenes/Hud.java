@@ -5,7 +5,6 @@
  */
 package Scenes;
 
-import Screens.GameScreen;
 import Screens.SettingsScreen;
 import car.Car;
 import com.badlogic.gdx.audio.Sound;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -33,9 +31,8 @@ import handlers.ScreenAssets;
  */
 public class Hud {
     public Stage stage;
-    private boolean twoPlayers;
     private Viewport viewport;
-    private BitmapFont font;
+    private final BitmapFont font;
     private boolean gamingState;
     private boolean fuelAlertLooped = false;
     private boolean endRaceActivated = false;
@@ -47,8 +44,7 @@ public class Hud {
     private boolean carCollisionSet = false;
     
     private boolean hasCollectedTime = false;
-    
-    private ScreenAssets assets;
+
     private Texture speedgauge_texture;
     private Texture fuelgauge_texture;
     private Texture speedneedle_texture;
@@ -61,10 +57,6 @@ public class Hud {
     private Image speedgauge;
     private Image needle;
     private Image needle2;
-    private Image speedgaugeP2;
-    private Image fuelgaugeP2;
-    private Image needleP2;
-    private Image needle2P2;
     
     private int minutes;
     private int seconds;
@@ -73,10 +65,7 @@ public class Hud {
     private int m;
     private int millis;
     private float totalTime = 6;
-    
-    private int playerNum;
-    
-    private int count;
+
     boolean c2HasPlayed = false;
     boolean c1HasPlayed = false;
     private final String GO = "GO !";
@@ -88,19 +77,13 @@ public class Hud {
     private Label finishLbl;
     private Label playerOne;
     private Label playerTwo;
-    
     private Label gameOver;
     private Label fuelAlert;
-    
 
-    
-    
-    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, boolean finishState, int playerNum, ScreenAssets assets, int totalLap) {
-        this.twoPlayers = twoPlayers;
-        this.assets = assets;
+    public Hud(SpriteBatch batch, boolean twoPlayers, boolean gamingState, 
+            boolean finishState, int playerNum, ScreenAssets assets, int totalLap) {
         this.gamingState = gamingState;
         this.totalLap = totalLap;
-        this.playerNum = playerNum;
         
         if (!twoPlayers) {
             viewport = new FitViewport(RacingGame.V_WIDTH, RacingGame.V_HEIGHT, new OrthographicCamera());

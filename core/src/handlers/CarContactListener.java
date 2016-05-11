@@ -31,7 +31,7 @@ public class CarContactListener implements ContactListener {
             contact(contact, false);
     }
 
-    void contact(Contact contact, boolean began) {
+    public void contact(Contact contact, boolean began) {
 
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
@@ -98,7 +98,7 @@ public class CarContactListener implements ContactListener {
          }
     }
 
-    void tireAndGround(Fixture tireFixture, Fixture groundFixture, boolean began) { //What happens when the car touches the ground
+    public void tireAndGround(Fixture tireFixture, Fixture groundFixture, boolean began) { //What happens when the car touches the ground
         
             Tire tire = (Tire) tireFixture.getBody().getUserData();
             GroundAreaType ground = (GroundAreaType) groundFixture.getUserData();
@@ -126,7 +126,7 @@ public class CarContactListener implements ContactListener {
             
     }
     
-    void carAndFuel(Fixture carFixture, Fixture FuelLaneFixture, boolean began){ //What happens when the car touches the fuel pad
+    public void carAndFuel(Fixture carFixture, Fixture FuelLaneFixture, boolean began){ //What happens when the car touches the fuel pad
         
         CarType type = (CarType) carFixture.getBody().getUserData();
         Car car = type.car;
@@ -143,7 +143,7 @@ public class CarContactListener implements ContactListener {
         }
     }
     
-    void carAndFinishLine(Fixture carFixture, Fixture FinishLineFixture){ //What happens when the car touches the finish line
+    public void carAndFinishLine(Fixture carFixture, Fixture FinishLineFixture){ //What happens when the car touches the finish line
         CarType type = (CarType) carFixture.getBody().getUserData();
         Car car = (Car) type.car;
         FinishLineType finish = (FinishLineType) FinishLineFixture.getUserData();
