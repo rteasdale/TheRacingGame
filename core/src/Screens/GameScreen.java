@@ -203,9 +203,6 @@ public final class GameScreen implements Screen {
         /**Cameras*/
         camera = new OrthographicCamera();
         hud = new Hud(batch, twoPlayers, gamingState, finishState, 1, assets, maxLap);
-        camera.zoom = 0.2f;
-        camera.position.x = 0;
-        camera.position.y = 0;
         
         /**If two players, construct another car, camera, viewport and HUD */
         if (twoPlayers) {
@@ -228,7 +225,10 @@ public final class GameScreen implements Screen {
             camera2.position.x = 0;
             camera2.position.y = 0;
         }
-
+        
+        camera.zoom = 0.2f;
+        camera.position.x = 0;
+        camera.position.y = 0;
 
         renderer = new Box2DDebugRenderer();
         renderer.setDrawJoints(false);
