@@ -1,3 +1,3 @@
-DAV,Jo,Albert,Billy,Carl,Dennis,Eric,Francis
-Toyota Prius,Toyota Prius,Lamborghini Gallardo,Volkswagen Golf,ZondaF,Toyota Prius,ZondaF,Volkswagen Golf
-01:18:490,01:30:990,02:10:456,02:17:418,02:18:452,03:01:100,03:01:100,03:02:100
+Enter Name,DAV,Jo,Albert,Billy,Carl,Dennis,Dennis
+Lamborghini Gallardo,Toyota Prius,Toyota Prius,Lamborghini Gallardo,Volkswagen Golf,ZondaF,Toyota Prius,Toyota Prius
+00:37:102,01:18:490,01:30:990,02:10:456,02:17:418,02:18:452,03:01:100,03:01:100

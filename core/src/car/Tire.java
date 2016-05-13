@@ -24,8 +24,8 @@ public class Tire {
     float maxLateralImpulse;
     float breakingForcePourcentage;
     
-    Array<GroundAreaType> groundAreas;
-    float currentTraction;
+    private Array<GroundAreaType> groundAreas;
+    private float currentTraction;
 
     public Tire(World world, int playerNum) {
         this.playerNum = playerNum;
@@ -62,7 +62,7 @@ public class Tire {
         updateTraction();
     }
 
-    void setCharacteristics(float maxForwardSpeed, float maxBackwardSpeed,
+    public void setCharacteristics(float maxForwardSpeed, float maxBackwardSpeed,
         float maxDriveForce, float maxLateralImpulse, float breakingForcePourcentage) {
         this.maxForwardSpeed = maxForwardSpeed;
         this.maxBackwardSpeed = maxBackwardSpeed;
@@ -71,7 +71,7 @@ public class Tire {
         this.breakingForcePourcentage = breakingForcePourcentage;
     }
     
-    void updateTraction() {
+  public void updateTraction() {
         if (groundAreas.size == 0) {
             if(playerNum == 1){
             GameScreen.getCar().body.setLinearVelocity(GameScreen.getCar().body.getLinearVelocity().scl(0.3f));
@@ -130,7 +130,7 @@ public class Tire {
                 currentForwardNormal), body.getWorldCenter(), true);
     }
 
-    void updateDrive(HashSet<Key> keys) {
+    public void updateDrive(HashSet<Key> keys) {
         float desiredSpeed = 0;
         
         /** if player 1 */
@@ -178,7 +178,7 @@ public class Tire {
                 body.getWorldCenter(), true);
     }
 
-    void updateTurn(CarMoves moves){
+   public void updateTurn(CarMoves moves){
         float desiredTorque = 0;
          /** if player 1 */
         if (playerNum == 1) {
@@ -198,10 +198,6 @@ public class Tire {
         }        
 
         body.applyTorque(desiredTorque, true);
-    }
-    
-    public void setAngle(float angle){
-        body.applyTorque(90, true);
     }
     
 }

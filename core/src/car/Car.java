@@ -24,28 +24,23 @@ import handlers.ScreenAssets;
 
 public class Car {
     
-    boolean MetalPlayedOnce = false;
-    boolean BridgePlayedOnce = false;
-    boolean loopedCar_fueling = false;
+    private boolean loopedCar_fueling = false;
     
-    boolean carDone = false;
+    private boolean carDone = false;
     
     private int playerNum;
-    int carNum;
+    private int carNum;
     
     public Body body;
-    Array<Tire> tires;
-    Array<Integer> currentCheckpoints;
-    Array<FuelAreaType> fuelAreas;
-    RevoluteJoint leftJoint, rightJoint;
+    private Array<Tire> tires;
+    private Array<Integer> currentCheckpoints;
+    private Array<FuelAreaType> fuelAreas;
+    private RevoluteJoint leftJoint, rightJoint;
     
     
     private String carName = null;
-    private int car = 0;
     private int lapCounter = 0;
-    private int i = 0;
-    private float pitch = 0.5f;
-    boolean fuel = true;
+    private boolean fuel = true;
     private float maxFSpeed;
     private float maxBSpeed;
     private float backTireMDriveForce;
@@ -55,11 +50,8 @@ public class Car {
     private float breakingFPourcentage;
     private float density;
     
-    private int numOfFuelStops;
-    private float totalFuelConsum;
-    
-    private float FuelTank;
-    private float MaxFuelCapacity;
+    private float fuelTank;
+    private float maxFuelCapacity;
     private float fuelConsumption;
     
     private boolean isAccelerating;
@@ -75,13 +67,11 @@ public class Car {
     private Sound car_wall2;
     private Sound car_wall3;
     private Sound car_Tire;
-    private Sound car_Bridge;
-    private Sound car_Metal;
     private Sound car_lap_complete;
     private Sound car_fueling;
     private Sound car_going_on_fuel;
     
-    ScreenAssets assets;
+    private ScreenAssets assets;
     
     public Car(World world, int CarNum, int ColorNum, int playerNum, ScreenAssets assets, boolean testing) {
         this.playerNum = playerNum;
@@ -105,7 +95,6 @@ public class Car {
         car_wall2 = assets.manager.get(ScreenAssets.car_wall_sound2);
         car_wall3 = assets.manager.get(ScreenAssets.car_wall_sound3);
         car_Tire = assets.manager.get(ScreenAssets.car_tire_sound);
-        car_Bridge = assets.manager.get(ScreenAssets.car_bridge_loop);
         car_lap_complete = assets.manager.get(ScreenAssets.lap_complete_sound);
         car_fueling = assets.manager.get(ScreenAssets.refueling_loop);
         car_going_on_fuel = assets.manager.get(ScreenAssets.getting_on_fuel_sound);
@@ -281,8 +270,8 @@ public class Car {
             breakingFPourcentage = 0.095f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 8/255f;
             density = 0.1f;
             
@@ -299,8 +288,8 @@ public class Car {
             breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.lambo_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 13/204f;
             density = 0.1f;
         }
@@ -316,8 +305,8 @@ public class Car {
             breakingFPourcentage = 0.1f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.prius_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 5/204f;
             density = 0.1f;
         }
@@ -333,8 +322,8 @@ public class Car {
             breakingFPourcentage = 0.15f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.porsche_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 5/68f;
             density = 0.1f;
         }
@@ -350,8 +339,8 @@ public class Car {
             breakingFPourcentage = 0.125f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.truck_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 7/102f;
             density = 0.1f;
         }
@@ -367,8 +356,8 @@ public class Car {
             breakingFPourcentage = 0.09f;
             InitialPosition = Position();
             carLink = CarSelectionScreen.zondaf_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 1/12f;
             density = 0.1f;
         }
@@ -382,8 +371,8 @@ public class Car {
             breakingFPourcentage = 0.3f;
             InitialPosition  = Position();
             carLink = CarSelectionScreen.golf_colors[Color];
-            MaxFuelCapacity = 100;
-            FuelTank = MaxFuelCapacity;
+            maxFuelCapacity = 100;
+            fuelTank = maxFuelCapacity;
             fuelConsumption = 1/12f;
             density = 0.1f;
         }
@@ -398,7 +387,7 @@ public class Car {
         return position;
     }                           
 
-    private void UseFuel(boolean isAccelerating, float fuelConsumption) {
+    public  void UseFuel(boolean isAccelerating, float fuelConsumption) {
         if(this.getFuelTank() > 0){
         if(this.getOnFuelPad() == false){
             if(isAccelerating) {
@@ -416,8 +405,8 @@ public class Car {
         
     }
     
-        private void addFuel(){
-            if(this.getFuelTank() <= this.getMaxFuelCapacity()){ 
+        public void addFuel(){
+            if(this.getFuelTank() <= this.getmaxFuelCapacity()){ 
                 if(!loopedCar_fueling){
                     try{
                     car_fueling.loop(SettingsScreen.getSFXPourcentage());
@@ -427,7 +416,7 @@ public class Car {
                     loopedCar_fueling = true;
                 }
 
-                this.setFuelTank(FuelTank + 1/6f);
+                this.setFuelTank(fuelTank + 1/6f);
 
             }
             
@@ -450,11 +439,11 @@ public class Car {
     }
         
     public void setFuelTank(float fuelTank){
-        this.FuelTank = fuelTank;
+        this.fuelTank = fuelTank;
     }
     
     public float getFuelTank(){
-        return FuelTank;
+        return fuelTank;
     }
     
     public boolean getIsAccelerating(){
@@ -473,8 +462,8 @@ public class Car {
         this.onFuelPad = onFuelPad;
     }
     
-    public float getMaxFuelCapacity(){
-        return MaxFuelCapacity;
+    public float getmaxFuelCapacity(){
+        return maxFuelCapacity;
     }
     
     
@@ -636,39 +625,7 @@ public class Car {
             car_wall3.play(0.75f);
         }
        
-}
-    public void loopMetalSounds(){
-        if(!MetalPlayedOnce){
-            
-            try{
-            car_Metal.loop(SettingsScreen.getSFXPourcentage());
-            }catch(NullPointerException e1){
-                car_Metal.loop(0.75f);
-            }
-        }
-    }
-    public void loopBridgeSounds(){
-        if(!BridgePlayedOnce){
-            try{
-        car_Bridge.loop(SettingsScreen.getSFXPourcentage());
-            }catch(NullPointerException e1){
-                car_Bridge.loop(0.75f);
-            }
-        BridgePlayedOnce = true;
-        }
-    }
-    
-//    public void stopMetalSounds(){
-//        
-//       car_Metal.stop();
-//        MetalPlayedOnce = false;
-//    }
-    
-//    public void stopBridgeSounds(){
-//        car_Bridge.stop();
-//        MetalPlayedOnce = false;
-//    }
-    
+}    
     public void setCarDone(boolean carDone){
         this.carDone = carDone;
     }
@@ -677,12 +634,5 @@ public class Car {
         return carName;
     }
     
-    public void setCarFuelStops(int numOffuelStops) {
-        this.numOfFuelStops = numOffuelStops;
-    }
-    
-    public void setCarTotalFuelConsumption(float totalFuelConsum) {
-        this.totalFuelConsum = totalFuelConsum;
-    }
     
 }

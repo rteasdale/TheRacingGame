@@ -106,19 +106,6 @@ public class CarContactListener implements ContactListener {
             if (began) {
                 tire.addGroundArea(ground);
                 
-                switch(whichSound){
-                    case 1 : 
-                        //What happens when you are on the Bridge (Bridge Sounds)  (Initial Sound, then, if still on, looping sound if moving)
-                        PlayBridgeSounds(tire);
-                         ;break;
-                        
-                    case 2 : 
-                        //What happens when you are on the Metal (Metal Sounds)  (Initial Sound, then, if still on, looping sound if moving)
-                        PlayMetalSounds(tire);
-                        ; break;
-                        
-                    default: ;//What happens if you are on another fixture (No Extra Sounds)
-                }
                 
             } else {
                 tire.removeGroundArea(ground);
@@ -186,13 +173,6 @@ public class CarContactListener implements ContactListener {
 
     }
     
-    public void PlayBridgeSounds(Tire tire){
-                    GameScreen.getCar().loopBridgeSounds();
-        }
-
-    public void PlayMetalSounds(Tire tire){
-                    GameScreen.getCar().loopMetalSounds();
-        }
     
     public static void setCarOnCarCollisions(boolean Status){
         carOnCarCollisions = Status;
