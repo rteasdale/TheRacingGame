@@ -10,7 +10,7 @@ import car.Car;
 
 public class InputManager  implements InputProcessor  {
 
-    private GameScreen mainClass;
+    private final GameScreen mainClass;
     private boolean shiftMode = false;
 
     public InputManager(GameScreen main){
