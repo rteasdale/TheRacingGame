@@ -1,3 +1,3 @@
-Jamie,Rosy,Arnold,Greg,James,Monty,Jared,Kyle
-Volkswagen Golf,Volkswagen Golf,ZondaF,Volkswagen Golf,Volkswagen Golf,Volkswagen Golf,ZondaF,ZondaF
-01:10:539,01:30:703,01:38:284,01:33:958,01:37:887,01:46:874,02:01:100,02:01:123
+Ron,Jamie,Enter Name,Arnold,Greg,James,Monty,Rosy
+Toyota Prius,Volkswagen Golf,ZondaF,ZondaF,Volkswagen Golf,Volkswagen Golf,Volkswagen Golf,Volkswagen Golf
+00:47:961,01:10:539,01:29:132,01:31:284,01:33:958,01:37:887,01:46:874,01:50:703
