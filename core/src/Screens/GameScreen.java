@@ -201,8 +201,10 @@ public final class GameScreen implements Screen {
 	car = new Car(world, carNumP1, carColorP1, 1, assets, testing);
      
         /**Cameras*/
+        if (twoPlayers == false) {
         camera = new OrthographicCamera();
         hud = new Hud(batch, twoPlayers, gamingState, finishState, 1, assets, maxLap);
+        }
         
         /**If two players, construct another car, camera, viewport and HUD */
         if (twoPlayers) {

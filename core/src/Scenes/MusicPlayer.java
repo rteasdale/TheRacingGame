@@ -13,16 +13,11 @@ import com.badlogic.gdx.audio.Music;
  */
 public class MusicPlayer {
     private Music song;
-    private Music[] list;
-    
+
     public MusicPlayer() {
 
     }
-    
-    public void addList(Music[] list) {
-        this.list = list;
-    }
-    
+
     public void setSong(Music song) {
         this.song = song; 
     }
