@@ -208,14 +208,7 @@ public class InputManager  implements InputProcessor  {
             return true;
         }
     }
-    
-    public void setShiftMode(boolean state){
-        shiftMode = state;
-    }
-    
-    public boolean getShiftMode(){
-        return shiftMode;
-    }
+
     
     public void disposeAll(Car car) {
         pressedKeys.clear();

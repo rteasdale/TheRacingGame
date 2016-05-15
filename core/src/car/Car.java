@@ -561,11 +561,11 @@ public class Car {
     
     public void updateFuel(){
         if(fuelAreas.size != 0){
-            onFuelPad = true;
+            setOnFuelPad(true);
             
         }
         else {
-            onFuelPad = false;
+            setOnFuelPad(false);
         }
             
     }
